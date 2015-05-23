@@ -1,0 +1,24 @@
+{
+    "name": "bovigo/assert",
+    "description": "Provides assertions for unit tests.",
+    "license": "BSD-3-Clause",
+    "require": {
+        "php": ">=5.4.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~4.6"
+    },
+    "autoload": {
+        "psr-4": {
+            "bovigo\\assert\\": "src/main/php"
+        },
+        "files": ["src/main/php/functions.php"]
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

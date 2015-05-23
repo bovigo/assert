@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<phpdoc>
+  <title>bovigo/callmap API Doc</title>
+  <parser>
+    <target>docs/api</target>
+  </parser>
+  <transformer>
+    <target>docs/api</target>
+  </transformer>
+  <transformations>
+        <template name="responsive-twig" />
+    </transformations>
+  <files>
+    <directory>src/main/php</directory>
+  </files>
+</phpdoc>
