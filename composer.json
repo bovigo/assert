@@ -6,13 +6,14 @@
         "php": ">=5.4.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "~4.6"
+        "phpunit/phpunit": "^4.6",
+        "mikey179/vfsStream": "^1.5"
     },
     "autoload": {
         "psr-4": {
             "bovigo\\assert\\": "src/main/php"
         },
-        "files": ["src/main/php/functions.php"]
+        "files": ["src/main/php/functions.php", "vendor/phpunit/phpunit/src/Framework/Assert/Functions.php"]
     },
     "extra": {
         "branch-alias": {
