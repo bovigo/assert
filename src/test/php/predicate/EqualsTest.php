@@ -14,15 +14,6 @@ namespace bovigo\assert\predicate;
 class EqualsTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @test
-     * @expectedException  InvalidArgumentException
-     */
-    public function constructionWithObjectThrowsIllegalArgumentException()
-    {
-        new Equals(new \stdClass());
-    }
-
-    /**
      * @return  array
      */
     public function tuplesEvaluatingToTrue()
@@ -31,7 +22,10 @@ class EqualsTest extends \PHPUnit_Framework_TestCase
                 [false, false],
                 [5, 5],
                 [null, null],
-                ['foo', 'foo']
+                ['foo', 'foo'],
+                [true, 5],
+                [false, 0],
+                [false, null]
         ];
     }
 
@@ -55,11 +49,8 @@ class EqualsTest extends \PHPUnit_Framework_TestCase
         return [[true, false],
                 [false, true],
                 [false, new \stdClass()],
-                [false, null],
                 [5, 'foo'],
                 [5, 6],
-                [true, 5],
-                [false, 0],
                 [true, 'foo'],
                 ['foo', 'bar'],
                 [5, new \stdClass()],
