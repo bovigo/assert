@@ -44,6 +44,53 @@ class NegatePredicate extends Predicate
      */
     public function __toString()
     {
-        return 'not (' . $this->predicate . ')';
+        switch (get_class($this->predicate)) {
+            case 'bovigo\assert\predicate\AndPredicate':
+            case 'bovigo\assert\predicate\CallablePredicate':
+            case 'bovigo\assert\predicate\NegatePredicate':
+            case 'bovigo\assert\predicate\OrPredicate':
+                return 'not (' . $this->predicate . ')';
+
+            default:
+                return $this->reverse((string) $this->predicate);
+
+        }
+    }
+
+    /**
+     * returns a negation of the given string
+     *
+     * @param   string  $string
+     * @return  string
+     */
+    private function reverse($string)
+    {
+        return str_replace(
+                [
+                    'contains ',
+                    'exists',
+                    'has ',
+                    'is ',
+                    'are ',
+                    'matches ',
+                    'starts with ',
+                    'ends with ',
+                    'reference ',
+                    'not not '
+                ],
+                [
+                    'does not contain ',
+                    'does not exist',
+                    'does not have ',
+                    'is not ',
+                    'are not ',
+                    'does not match ',
+                    'starts not with ',
+                    'ends not with ',
+                    'don\'t reference ',
+                    'not '
+                ],
+                $string
+        );
     }
 }
