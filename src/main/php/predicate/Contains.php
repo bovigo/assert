@@ -55,4 +55,14 @@ class Contains extends Predicate
 
         return false;
     }
+
+    /**
+     * returns string representation of predicate
+     *
+     * @return  string
+     */
+    public function __toString()
+    {
+
+    }
 }

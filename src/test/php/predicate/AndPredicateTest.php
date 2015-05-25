@@ -47,4 +47,15 @@ class AndPredicateTest extends \PHPUnit_Framework_TestCase
     {
         assertFalse($this->andPredicate->test('baz'));
     }
+
+    /**
+     * @test
+     */
+    public function hasStringRepresentation()
+    {
+        assertEquals(
+                '(callable<lambda> and callable<lambda>)',
+                $this->andPredicate
+        );
+    }
 }

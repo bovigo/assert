@@ -21,6 +21,16 @@ class FooPredicate extends Predicate
     {
         return 'foo' === $value;
     }
+
+    /**
+     * returns string representation of predicate
+     *
+     * @return  string
+     */
+    public function __toString()
+    {
+        return 'foo';
+    }
 }
 /**
  * Test for bovigo\assert\predicate\Predicate.

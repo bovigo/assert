@@ -81,4 +81,11 @@ abstract class Predicate
     {
         return new NegatePredicate($this);
     }
+
+    /**
+     * returns string representation of predicate
+     *
+     * @return  string
+     */
+    public abstract function __toString();
 }

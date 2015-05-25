@@ -111,4 +111,26 @@ class IsExistingDirectoryTest extends \PHPUnit_Framework_TestCase
         $isExistingDirectory = new IsExistingDirectory();
         assertFalse($isExistingDirectory(__FILE__));
     }
+
+    /**
+     * @return  array
+     */
+    public function instances()
+    {
+        return [
+                [new IsExistingDirectory(), 'is a existing directory'],
+                [new IsExistingDirectory(vfsStream::url('root')), 'is a existing directory in basepath ' . vfsStream::url('root')]
+        ];
+    }
+
+    /**
+     * @param  \bovigo\assert\predicate\IsExistingDirectory  $instance
+     * @param  string                                        $message
+     * @test
+     * @dataProvider  instances
+     */
+    public function hasStringRepresentation(IsExistingDirectory $instance, $message)
+    {
+        assertEquals($message, (string) $instance);
+    }
 }

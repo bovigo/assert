@@ -50,4 +50,14 @@ class Regex extends Predicate
 
         return ((1 != $check) ? (false) : (true));
     }
+
+    /**
+     * returns string representation of predicate
+     *
+     * @return  string
+     */
+    public function __toString()
+    {
+        return 'matches regular expression ' . $this->regex;
+    }
 }

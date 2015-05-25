@@ -139,12 +139,19 @@ class Assertion
      */
     private function describeFailure(Predicate $predicate, $export, $description)
     {
-        $failureDescription = sprintf(
-                'Failed asserting that %s %s',
-                $this->exporter->$export($this->value),
-                $predicate
+        // Leaky abstraction from Equals predicate: leaks texts from
+        // SebastianBergmann\Comparator
+        $predicateText = (string) $predicate;
+        if (substr($predicateText, 0, 6) !== 'Failed') {
+            $failureDescription = sprintf(
+                    'Failed asserting that %s %s',
+                    $this->exporter->$export($this->value),
+                    $predicateText
+            );
+        } else {
+            $failureDescription = $predicateText;
+        }
 
-        );
         if (!empty($description)) {
             $failureDescription = $description . "\n" . $failureDescription;
         }

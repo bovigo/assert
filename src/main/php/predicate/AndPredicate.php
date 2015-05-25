@@ -21,6 +21,16 @@ class AndPredicate extends Predicate
      */
     public function test($value)
     {
-        return $this->predicate1->test($value) && $this->predicate2->test($value);
+        return $this->leftPredicate->test($value) && $this->rightPredicate->test($value);
+    }
+
+    /**
+     * returns combination operator as string
+     *
+     * @return  string
+     */
+    protected function operator()
+    {
+        return 'and';
     }
 }

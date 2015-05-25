@@ -37,4 +37,34 @@ class CallablePredicate extends Predicate
         $predicate = $this->predicate;
         return $predicate($value);
     }
+
+    /**
+     * returns string representation of predicate
+     *
+     * @return  string
+     */
+    public function __toString()
+    {
+        return sprintf('callable<%s>', $this->predicateName());
+    }
+
+    /**
+     * tries to determine a name for the callable
+     *
+     * @return  string
+     */
+    private function predicateName()
+    {
+        if (is_array($this->predicate)) {
+            if (is_string($this->predicate[0])) {
+                return $this->predicate[0] . '::' . $this->predicate[1] . '()';
+            }
+
+            return get_class($this->predicate[0]) . '->' . $this->predicate[1] . '()';
+        } elseif (is_string($this->predicate)) {
+            return $this->predicate . '()';
+        }
+
+        return 'lambda';
+    }
 }

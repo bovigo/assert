@@ -14,11 +14,36 @@ namespace bovigo\assert\predicate;
 class NegatePredicateTest extends \PHPUnit_Framework_TestCase
 {
     /**
+     *
+     * @type  \bovigo\assert\predicate\NegatePredicate
+     */
+    private $negatePredicate;
+
+    /**
+     * set up test environment
+     */
+    public function setUp()
+    {
+        $this->negatePredicate = new NegatePredicate(
+                function($value) { return 'foo' === $value; }
+        );
+    }
+    /**
      * @test
      */
     public function negatesWrappedPredicate()
     {
-        $negatePredicate = new NegatePredicate(function($value) { return 'foo' === $value; });
-        assertTrue($negatePredicate('bar'));
+        assertTrue($this->negatePredicate->test('bar'));
+    }
+
+    /**
+     * @test
+     */
+    public function hasStringRepresentation()
+    {
+        assertEquals(
+                'not (callable<lambda>)',
+                $this->negatePredicate
+        );
     }
 }

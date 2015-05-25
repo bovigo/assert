@@ -70,4 +70,15 @@ class RegexTest extends \PHPUnit_Framework_TestCase
         $regex = new Regex('^([a-z]{3})$');
         $regex('foo');
     }
+
+    /**
+     * @test
+     */
+    public function stringRepresentationContainsRegex()
+    {
+        assertEquals(
+                'matches regular expression /^([a-z]{3})$/',
+                new Regex('/^([a-z]{3})$/')
+        );
+    }
 }

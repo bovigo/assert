@@ -14,11 +14,11 @@ trait CombinedPredicate
     /**
      * @type  Predicate
      */
-    private $predicate1;
+    private $leftPredicate;
     /**
      * @type  Predicate
      */
-    private $predicate2;
+    private $rightPredicate;
 
     /**
      * constructor
@@ -28,7 +28,26 @@ trait CombinedPredicate
      */
     public function __construct($predicate1, $predicate2)
     {
-        $this->predicate1 = Predicate::castFrom($predicate1);
-        $this->predicate2 = Predicate::castFrom($predicate2);
+        $this->leftPredicate  = Predicate::castFrom($predicate1);
+        $this->rightPredicate = Predicate::castFrom($predicate2);
     }
+
+    /**
+     * returns string representation of predicate
+     *
+     * @return  string
+     */
+    public function __toString()
+    {
+        return '(' . $this->leftPredicate
+                . ' ' . $this->operator() . ' '
+                . $this->rightPredicate . ')';
+    }
+
+    /**
+     * returns combination operator as string
+     *
+     * @return  string
+     */
+    protected abstract function operator();
 }

@@ -57,4 +57,25 @@ abstract class FilesystemPredicate extends Predicate
      * @return  bool
      */
     protected abstract function fileExists($path);
+
+    /**
+     * returns string representation of predicate
+     *
+     * @return  string
+     */
+    public function __toString()
+    {
+        return sprintf(
+                'is a existing %s%s',
+                $this->type(),
+                null !== $this->basePath ? ' in basepath ' . $this->basePath : ''
+        );
+    }
+
+    /**
+     * returns file system type which is checked
+     *
+     * @return  string
+     */
+    protected abstract function type();
 }

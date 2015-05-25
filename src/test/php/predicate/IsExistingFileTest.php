@@ -109,4 +109,26 @@ class IsExistingFileTest extends \PHPUnit_Framework_TestCase
         $isExistingFile = new IsExistingFile();
         assertFalse($isExistingFile(__DIR__));
     }
+
+    /**
+     * @return  array
+     */
+    public function instances()
+    {
+        return [
+                [new IsExistingFile(), 'is a existing file'],
+                [new IsExistingFile(vfsStream::url('root')), 'is a existing file in basepath ' . vfsStream::url('root')]
+        ];
+    }
+
+    /**
+     * @param  \bovigo\assert\predicate\IsExistingFile  $instance
+     * @param  string                                   $message
+     * @test
+     * @dataProvider  instances
+     */
+    public function hasStringRepresentation(IsExistingFile $instance, $message)
+    {
+        assertEquals($message, (string) $instance);
+    }
 }

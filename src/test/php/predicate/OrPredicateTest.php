@@ -46,4 +46,15 @@ class OrPredicateTest extends \PHPUnit_Framework_TestCase
     {
         assertFalse($this->orPredicate->test('baz'));
     }
+
+    /**
+     * @test
+     */
+    public function hasStringRepresentation()
+    {
+        assertEquals(
+                '(callable<lambda> or callable<lambda>)',
+                $this->orPredicate
+        );
+    }
 }

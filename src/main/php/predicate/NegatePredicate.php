@@ -36,4 +36,14 @@ class NegatePredicate extends Predicate
     {
         return !$this->predicate->test($value);
     }
+
+    /**
+     * returns string representation of predicate
+     *
+     * @return  string
+     */
+    public function __toString()
+    {
+        return 'not (' . $this->predicate . ')';
+    }
 }

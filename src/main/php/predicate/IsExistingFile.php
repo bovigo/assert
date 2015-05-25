@@ -21,4 +21,14 @@ class IsExistingFile extends FilesystemPredicate
     {
         return file_exists($path) && filetype($path) === 'file';
     }
+
+    /**
+     * returns file system type which is checked
+     *
+     * @return  string
+     */
+    protected function type()
+    {
+        return 'file';
+    }
 }

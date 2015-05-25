@@ -21,4 +21,14 @@ class IsExistingDirectory extends FilesystemPredicate
     {
         return file_exists($path . '/.') && filetype($path) === 'dir';
     }
+
+    /**
+     * returns file system type which is checked
+     *
+     * @return  string
+     */
+    protected function type()
+    {
+        return 'directory';
+    }
 }
