@@ -6,6 +6,7 @@
  * file that was distributed with this source code.
  */
 namespace bovigo\assert\predicate;
+use bovigo\assert;
 /**
  * Predicate to test that something is equal.
  *
@@ -60,20 +61,15 @@ class Equals extends Predicate
         if (is_string($this->expected)) {
             if (strpos($this->expected, "\n") !== false) {
                 return 'is equal to <text>';
-            } else {
-                return sprintf('is equal to <string:%s>', $this->expected);
-            }
-        } else {
-            $delta = '';
-            if ($this->delta != 0) {
-                $delta = sprintf(' with delta <%F>', $this->delta);
             }
 
-            return sprintf(
-                'is equal to %s%s',
-                \bovigo\assert\export($this->expected),
-                $delta
-            );
+            return sprintf('is equal to <string:%s>', $this->expected);
         }
+
+        return sprintf(
+                'is equal to %s%s',
+                assert\exporter()->export($this->expected),
+                $this->delta != 0 ? sprintf(' with delta <%F>', $this->delta) : ''
+        );
     }
 }
