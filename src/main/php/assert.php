@@ -23,7 +23,7 @@ function that($value)
     return new Assertion($value, $exporter);
 }
 
-// blacklist our own classes from being display in PHPUnit error stacks
+// blacklist our own classes from being displayed in PHPUnit error stacks
 if (class_exists('PHPUnit_Util_Blacklist')) {
     \PHPUnit_Util_Blacklist::$blacklistedClassNames = array_merge(
             \PHPUnit_Util_Blacklist::$blacklistedClassNames,
