@@ -6,6 +6,7 @@
  * file that was distributed with this source code.
  */
 namespace bovigo\assert\predicate;
+use bovigo\assert;
 /**
  * Test for bovigo\assert\assert\predicate\AndPredicate.
  *

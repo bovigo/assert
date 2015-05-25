@@ -16,7 +16,7 @@ namespace bovigo\assert\predicate;
 class Equals extends Predicate
 {
     /**
-     * the expected password
+     * the expected value
      *
      * @type  string
      */
@@ -48,5 +48,32 @@ class Equals extends Predicate
     public function test($value)
     {
         return $this->expected === $value;
+    }
+
+    /**
+     * returns string representation of predicate
+     *
+     * @return  string
+     */
+    public function __toString()
+    {
+        if (is_string($this->expected)) {
+            if (strpos($this->expected, "\n") !== false) {
+                return 'is equal to <text>';
+            } else {
+                return sprintf('is equal to <string:%s>', $this->expected);
+            }
+        } else {
+            $delta = '';
+            if ($this->delta != 0) {
+                $delta = sprintf(' with delta <%F>', $this->delta);
+            }
+
+            return sprintf(
+                'is equal to %s%s',
+                \bovigo\assert\export($this->expected),
+                $delta
+            );
+        }
     }
 }

@@ -13,7 +13,10 @@
         "psr-4": {
             "bovigo\\assert\\": "src/main/php"
         },
-        "files": ["src/main/php/functions.php", "vendor/phpunit/phpunit/src/Framework/Assert/Functions.php"]
+        "files": ["src/main/php/assert.php"]
+    },
+    "autoload-dev": {
+        "files": ["src/main/php/functions.php"]
     },
     "extra": {
         "branch-alias": {
