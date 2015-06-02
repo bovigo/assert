@@ -10,6 +10,7 @@ use bovigo\assert\predicate\Equals;
 use bovigo\assert\predicate\IsFalse;
 use bovigo\assert\predicate\IsIdentical;
 use bovigo\assert\predicate\IsInstanceOf;
+use bovigo\assert\predicate\IsNull;
 use bovigo\assert\predicate\IsTrue;
 use bovigo\assert\predicate\Predicate;
 use SebastianBergmann\Exporter\Exporter;
@@ -51,7 +52,20 @@ class Assertion
      */
     public function equals($expected, $message = null, $delta = 0.0)
     {
-        return $this->evaluate(new Equals($expected, $delta), $message);
+        return $this->compliesTo(new Equals($expected, $delta), $message);
+    }
+
+    /**
+     * asserts that value is not equal to expected value
+     *
+     * @param   mixed   $expected  expected value
+     * @param   string  $message   optional  additional description for failure message
+     * @param   float   $delta     optional  allowed numerical distance between two values to consider them equal
+     * @return  bool
+     */
+    public function isNotEqualTo($expected, $message = null, $delta = 0.0)
+    {
+        return $this->compliesTo(not(new Equals($expected, $delta)), $message);
     }
 
     /**
@@ -62,7 +76,7 @@ class Assertion
      */
     public function isFalse($message = null)
     {
-        return $this->evaluate(IsFalse::instance(), $message);
+        return $this->compliesTo(IsFalse::instance(), $message);
     }
 
     /**
@@ -73,7 +87,18 @@ class Assertion
      */
     public function isTrue($message = null)
     {
-        return $this->evaluate(IsTrue::instance(), $message);
+        return $this->compliesTo(IsTrue::instance(), $message);
+    }
+
+    /**
+     * asserts that value is null
+     *
+     * @param   string  $message
+     * @return  bool
+     */
+    public function isNull($message = null)
+    {
+        return $this->compliesTo(IsNull::instance(), $message);
     }
 
     /**
@@ -85,7 +110,7 @@ class Assertion
      */
     public function isInstanceOf($expectedType, $message = null)
     {
-        return $this->evaluate(
+        return $this->compliesTo(
                 new IsInstanceOf($expectedType),
                 $message,
                 'shortenedExport'
@@ -99,27 +124,26 @@ class Assertion
      * @param   string  $message   optional  additional description for failure message
      * @return  bool
      */
-    function isSameAs($expected, $message = null)
+    public function isSameAs($expected, $message = null)
     {
         if (is_bool($expected) && is_bool($this->value)) {
             return $this->equals($expected, $message);
         }
 
-        return $this->evaluate(new IsIdentical($expected), $message);
+        return $this->compliesTo(new IsIdentical($expected), $message);
     }
 
     /**
      * evaluates predicate against value, throwing an AssertionFailure when predicate fails
      *
-     * @param   \bovigo\assert\predicate\Predicate|callable  $test         predicate or callable to test given value
-     * @param   string                                       $description  optional  additional description for failure message
-     * @param   string                                       $export       optional  how value should be exported to string in case of failure
+     * @param   \bovigo\assert\predicate\Predicate  $predicate    predicate to test given value
+     * @param   string                              $description  optional  additional description for failure message
+     * @param   string                              $export       optional  how value should be exported to string in case of failure
      * @return  bool
      * @throws  \bovigo\assert\AssertionFailure
      */
-    function evaluate($test, $description = null, $export = 'export')
+    public function compliesTo(Predicate $predicate, $description = null, $export = 'export')
     {
-        $predicate = Predicate::castFrom($test);
         if ($predicate->test($this->value)) {
             return true;
         }
