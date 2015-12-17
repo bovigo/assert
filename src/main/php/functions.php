@@ -17,12 +17,113 @@ use function bovigo\assert\predicate\isNull;
 use function bovigo\assert\predicate\isTrue;
 use function bovigo\assert\predicate\isSameAs;
 /**
- * asserts that two values are equal
+ * asserts that a haystack contains a needle
  *
- * @param   mixed   $expected      expected value
+ * @param   mixed                      $needle
+ * @param   string|array|\Traversable  $haystack
+ * @param   string                     $message                    optional  additional description for failure message
+ * @param   bool                       $ignoreCase                 optional  ignore lower/upper case when $haystack is a string
+ * @param   bool                       $checkForObjectIdentity     optional  $needle must be of the same identity when in $haystack
+ * @param   bool                       $checkForNonObjectIdentity  optional  $needle must be equal to the value in $haystack
+ * @return  bool
+ */
+function assertContains(
+        $needle,
+        $haystack,
+        $message = null,
+        $ignoreCase = false,
+        $checkForObjectIdentity = true,
+        $checkForNonObjectIdentity = false)
+{
+    return assert(
+            $haystack,
+            contains(
+                    $needle,
+                    $ignoreCase,
+                    $checkForObjectIdentity,
+                    $checkForNonObjectIdentity
+            ),
+            $message
+    );
+}
+
+/**
+ * asserts that a haystack does not contain  needle
+ *
+ * @param   mixed                      $needle
+ * @param   string|array|\Traversable  $haystack
+ * @param   string                     $message                    optional  additional description for failure message
+ * @param   bool                       $ignoreCase                 optional  ignore lower/upper case when $haystack is a string
+ * @param   bool                       $checkForObjectIdentity     optional  $needle must be of the same identity when in $haystack
+ * @param   bool                       $checkForNonObjectIdentity  optional  $needle must be equal to the value in $haystack
+ * @return  bool
+ */
+function assertNotContains(
+        $needle,
+        $haystack,
+        $message = null,
+        $ignoreCase = false,
+        $checkForObjectIdentity = true,
+        $checkForNonObjectIdentity = false)
+{
+    return assert(
+            $haystack,
+            doesNotContain(
+                    $needle,
+                    $ignoreCase,
+                    $checkForObjectIdentity,
+                    $checkForNonObjectIdentity
+            ),
+            $message
+    );
+}
+
+/**
+ * Asserts that a value is greater than another value.
+ *
+ * @param   mixed   $expected  expected value
+ * @param   mixed   $actual    value to test
+ * @param   string  $message   optional  additional description for failure message
+ * @return  bool
+ */
+function assertGreaterThan($expected, $actual, $message = null)
+{
+    return assert($actual, isGreaterThan($expected), $message);
+}
+
+/**
+ * asserts that a variable is of a given type
+ *
+ * @param   mixed   $expectedType  expected type
  * @param   mixed   $actual        value to test
  * @param   string  $message       optional  additional description for failure message
- * @param   float   $delta         optional  allowed numerical distance between two values to consider them equal
+ * @return  bool
+ */
+function assertInternalType($expectedType, $actual, $message = null)
+{
+    return assert($actual, isInternalType($expectedType), $message);
+}
+
+/**
+ * asserts the number of elements of an array, Countable or Traversable
+ *
+ * @param   int                            $expectedSize  expected count size
+ * @param   array|\Countable|\Traversable  $countable      what to count
+ * @param   string                         $message       optional  additional description for failure message
+ * @return  bool
+ */
+function assertNotCount($expectedSize, $countable, $message = null)
+{
+    return assert($countable, isNotOfSize($expectedSize), $message);
+}
+
+/**
+ * asserts that two values are equal
+ *
+ * @param   mixed   $expected  expected value
+ * @param   mixed   $actual    value to test
+ * @param   string  $message   optional  additional description for failure message
+ * @param   float   $delta     optional  allowed numerical distance between two values to consider them equal
  * @return  bool
  */
 function assertEquals($expected, $actual, $message = null, $delta = 0.0)

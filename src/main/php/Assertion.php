@@ -46,8 +46,16 @@ class Assertion
      */
     public function compliesTo(Predicate $predicate, $description = null)
     {
-        if ($predicate->test($this->value)) {
-            return true;
+        try {
+            if ($predicate->test($this->value)) {
+                return true;
+            }
+        } catch (\Exception $e) {
+            if (empty($description)) {
+                $description = $e->getMessage();
+            } else {
+                $description .= "\ncaused by " . $e->getMessage();
+            }
         }
 
         throw new AssertionFailure(
