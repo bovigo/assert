@@ -5,8 +5,17 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-use bovigo\assert;
-
+use function bovigo\assert\assert;
+use function bovigo\assert\predicate\equals;
+use function bovigo\assert\predicate\isFalse;
+use function bovigo\assert\predicate\isInstanceOf;
+use function bovigo\assert\predicate\isNotEqualTo;
+use function bovigo\assert\predicate\isNotInstanceOf;
+use function bovigo\assert\predicate\isNotNull;
+use function bovigo\assert\predicate\isNotSameAs;
+use function bovigo\assert\predicate\isNull;
+use function bovigo\assert\predicate\isTrue;
+use function bovigo\assert\predicate\isSameAs;
 /**
  * asserts that two values are equal
  *
@@ -18,7 +27,7 @@ use bovigo\assert;
  */
 function assertEquals($expected, $actual, $message = null, $delta = 0.0)
 {
-    return assert\that($actual)->equals($expected, $message, $delta);
+    return assert($actual, equals($expected, $delta), $message);
 }
 
 /**
@@ -32,7 +41,7 @@ function assertEquals($expected, $actual, $message = null, $delta = 0.0)
  */
 function assertNotEquals($expected, $actual, $message = null, $delta = 0.0)
 {
-    return assert\that($actual)->isNotEqualTo($expected, $message, $delta);
+    return assert($actual, isNotEqualTo($expected, $delta), $message);
 }
 
 /**
@@ -44,7 +53,7 @@ function assertNotEquals($expected, $actual, $message = null, $delta = 0.0)
  */
 function assertFalse($value, $message = null)
 {
-    return assert\that($value)->isFalse($message);
+    return assert($value, isFalse(), $message);
 }
 
 /**
@@ -57,7 +66,7 @@ function assertFalse($value, $message = null)
  */
 function assertInstanceOf($expectedType, $actual, $message = null)
 {
-    return assert\that($actual)->isInstanceOf($expectedType, $message);
+    return assert($actual, isInstanceOf($expectedType), $message);
 }
 
 /**
@@ -70,7 +79,7 @@ function assertInstanceOf($expectedType, $actual, $message = null)
  */
 function assertNotInstanceOf($expectedType, $actual, $message = null)
 {
-    return assert\that($actual)->isNotInstanceOf($expectedType, $message);
+    return assert($actual, isNotInstanceOf($expectedType), $message);
 }
 
 /**
@@ -82,7 +91,7 @@ function assertNotInstanceOf($expectedType, $actual, $message = null)
  */
 function assertNull($value, $message = null)
 {
-    return assert\that($value)->isNull($message);
+    return assert($value, isNull(), $message);
 }
 
 /**
@@ -94,7 +103,7 @@ function assertNull($value, $message = null)
  */
 function assertNotNull($value, $message = null)
 {
-    return assert\that($value)->isNotNull($message);
+    return assert($value, isNotNull(), $message);
 }
 
 /**
@@ -107,7 +116,7 @@ function assertNotNull($value, $message = null)
  */
 function assertSame($expected, $actual, $message = null)
 {
-    return assert\that($actual)->isSameAs($expected, $message);
+    return assert($actual, isSameAs($expected), $message);
 }
 
 /**
@@ -120,7 +129,7 @@ function assertSame($expected, $actual, $message = null)
  */
 function assertNotSame($expected, $actual, $message = null)
 {
-    return assert\that($actual)->isNotSameAs($expected, $message);
+    return assert($actual, isNotSameAs($expected), $message);
 }
 
 /**
@@ -132,7 +141,7 @@ function assertNotSame($expected, $actual, $message = null)
  */
 function assertTrue($value, $description = null)
 {
-    return assert\that($value)->isTrue($description);
+    return assert($value, isTrue(), $description);
 }
 
 /**
@@ -145,5 +154,5 @@ function assertTrue($value, $description = null)
  */
 function assertThat($value, $expected, $message = null)
 {
-    return assert\that($value)->compliesTo($expected, $message);
+    return assert($value, $expected, $message);
 }

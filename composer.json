@@ -15,7 +15,10 @@
         "psr-4": {
             "bovigo\\assert\\": "src/main/php"
         },
-        "files": ["src/main/php/assert.php"]
+        "files": [
+            "src/main/php/assert.php",
+            "src/main/php/predicate/predicates.php"
+        ]
     },
     "autoload-dev": {
         "files": ["src/main/php/functions.php"]

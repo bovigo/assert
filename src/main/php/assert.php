@@ -6,17 +6,22 @@
  * file that was distributed with this source code.
  */
 namespace bovigo\assert;
+use bovigo\assert\predicate\Predicate;
 use SebastianBergmann\Exporter\Exporter;
+
 /**
- * creates assertion for given value
+ * assert that a value fulfills a predicate
  *
- * @api
- * @param   mixed  $value
- * @return  \bovigo\assert\Assertion
+ * @param   mixed                                        $value      value to test
+ * @param   \bovigo\assert\predicate\Predicate|callable  $predicate  predicate or callable to test given value
+ * @param   string                                       $message    optional  additional description for failure message
+ * @return  true
+ * @throws  \bovigo\assert\AssertionFailure
  */
-function that($value)
+function assert($value, $predicate, $message = null)
 {
-    return new Assertion($value, exporter());
+    return (new Assertion($value, exporter()))
+            ->compliesTo(Predicate::castFrom($predicate), $message);
 }
 
 /**
