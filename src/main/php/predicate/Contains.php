@@ -6,54 +6,60 @@
  * file that was distributed with this source code.
  */
 namespace bovigo\assert\predicate;
+use function bovigo\assert\export;
 /**
- * Predicate to test that something is contained.
+ * Predicate to test that a value contains something.
  */
 class Contains extends Predicate
 {
     /**
-     * the scalar value to be contained in value to validate
+     * the value to be contained in value to validate
      *
-     * @type  string
+     * @type  mixed
      */
-    private $contained = null;
+    private $needle;
 
     /**
      * constructor
      *
-     * @param   scalar|null  $contained
-     * @throws  \InvalidArgumentException
+     * @param  mixed  $needle  value that must be contained
      */
-    public function __construct($contained)
+    public function __construct($needle)
     {
-        if (!is_scalar($contained)) {
-            throw new \InvalidArgumentException('Can only check scalar values.');
-        }
-
-        $this->contained = $contained;
+        $this->needle = $needle;
     }
 
     /**
      * tests that the given value contains expected value
      *
-     * @param   scalar|null  $value
+     * @param   mixed  $value
      * @return  bool
+     * @throws  \InvalidArgumentException  in case given value can't contain another value
      */
     public function test($value)
     {
-        if (!is_scalar($value) || null === $value) {
+        if (null === $value) {
+            return is_null($this->needle);
+        }
+
+        if (is_string($value)) {
+            return false !== strpos($value, (string) $this->needle);
+        }
+
+        if (is_array($value) || $value instanceof \Traversable) {
+            foreach ($value as $element) {
+                if ($element === $this->needle) {
+                    return true;
+                }
+            }
+
             return false;
         }
 
-        if (is_bool($this->contained)) {
-            return ($value === $this->contained);
-        }
-
-        if ($value === $this->contained || false !== strpos($value, (string) $this->contained)) {
-            return true;
-        }
-
-        return false;
+        throw new \InvalidArgumentException(
+                'Given value of type ' . gettype($value)
+                . ' can not contain something'
+        );
     }
 
     /**
@@ -63,6 +69,9 @@ class Contains extends Predicate
      */
     public function __toString()
     {
-
+        return sprintf(
+            'contains "%s"',
+            export($this->needle)
+        );
     }
 }

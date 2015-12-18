@@ -44,7 +44,7 @@ function isTrue()
  */
 function isFalse()
 {
-    return isFalse::instance();
+    return IsFalse::instance();
 }
 
 /**
@@ -190,4 +190,26 @@ function isGreaterThan($expected)
 function isLessThan($expected)
 {
     return new IsLessThan($expected);
+}
+
+/**
+ * returns predicate which tests that $needle is contained in a value
+ *
+ * @param   mixed  $needle  value that must be contained
+ * @return  \bovigo\assert\predicate\Contains
+ */
+function contains($needle)
+{
+    return new Contains($needle);
+}
+
+/**
+ * returns predicate which tests that $needle is not contained in a value
+ *
+ * @param   mixed  $needle  value that must not be contained
+ * @return  \bovigo\assert\predicate\NegatePredicate
+ */
+function doesNotContain($needle)
+{
+    return not(contains($needle));
 }

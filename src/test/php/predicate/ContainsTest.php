@@ -6,6 +6,7 @@
  * file that was distributed with this source code.
  */
 namespace bovigo\assert\predicate;
+use function bovigo\assert\assert;
 /**
  * Tests for bovigo\assert\predicate\Contains.
  *
@@ -14,52 +15,32 @@ namespace bovigo\assert\predicate;
 class ContainsTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @test
-     * @expectedException  InvalidArgumentException
-     */
-    public function constructionWithObjectThrowsIllegalArgumentException()
-    {
-        new Contains(new \stdClass());
-    }
-
-    /**
-     * @test
-     * @expectedException  InvalidArgumentException
-     */
-    public function constructionWithNullThrowsIllegalArgumentException()
-    {
-        new Contains(null);
-    }
-
-    /**
      * returns tuples which evaluate to true
      *
      * @return  array
      */
     public function tuplesEvaluatingToTrue()
     {
-        return [[true, true],
-                [false, false],
-                [5, 5],
-                [5, 55],
-                [5, 25],
+        return [
+                [null, null],
                 [5, 'foo5'],
                 [5, 'fo5o'],
                 ['foo', 'foobar'],
-                ['foo', 'foo']
+                ['foo', 'foo'],
+                ['foo', ['foo', 'bar', 'baz']],
+                [null, ['foo', null, 'baz']]
         ];
     }
 
     /**
-     * @param  scalar  $contained
-     * @param  mixed   $value
+     * @param  mixed                      $needle
+     * @param  string|array|\Traversable  $haystack
      * @test
      * @dataProvider  tuplesEvaluatingToTrue
      */
-    public function evaluatesToTrue($contained, $value)
+    public function evaluatesToTrue($needle, $haystack)
     {
-        $contains = new Contains($contained);
-        assertTrue($contains($value));
+        assert(contains($needle)->test($haystack), isTrue());
     }
 
     /**
@@ -69,28 +50,31 @@ class ContainsTest extends \PHPUnit_Framework_TestCase
      */
     public function tuplesEvaluatingToFalse()
     {
-        return [[true, false],
-                [false, true],
-                [false, new \stdClass()],
-                [false, null],
+        return [
                 [5, 'foo'],
-                [5, 6],
-                [true, 5],
-                [false, 0],
-                [true, 'foo'],
-                ['foo', 'bar']
+                [true, 'blub'],
+                ['dummy', 'bar'],
+                ['nope', ['foo', 'bar', 'baz']]
         ];
     }
 
     /**
-     * @param  scalar  $contained
-     * @param  mixed   $value
+     * @param  mixed                      $needle
+     * @param  string|array|\Traversable  $haystack
      * @test
      * @dataProvider  tuplesEvaluatingToFalse
      */
-    public function evaluatesToFalse($contained, $value)
+    public function evaluatesToFalse($needle, $haystack)
     {
-        $contains = new Contains($contained);
-        assertFalse($contains($value));
+        assert(contains($needle)->test($haystack), isFalse());
+    }
+
+    /**
+     * @test
+     * @expectedException  InvalidArgumentException
+     */
+    public function throwsInvalidArgumentExceptionWhenValueCanNotContainAnything()
+    {
+        contains('foo')->test(303);
     }
 }
