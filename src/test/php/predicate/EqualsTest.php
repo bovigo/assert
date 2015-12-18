@@ -6,6 +6,7 @@
  * file that was distributed with this source code.
  */
 namespace bovigo\assert\predicate;
+use function bovigo\assert\assert;
 /**
  * Tests for bovigo\assert\predicate\Equals.
  *
@@ -37,8 +38,7 @@ class EqualsTest extends \PHPUnit_Framework_TestCase
      */
     public function evaluatesToTrue($expected, $value)
     {
-        $equals = new Equals($expected);
-        assertTrue($equals($value));
+        assert(equals($expected)->test($value), isTrue());
     }
 
     /**
@@ -66,7 +66,6 @@ class EqualsTest extends \PHPUnit_Framework_TestCase
      */
     public function evaluatesToFalse($expected, $value)
     {
-        $equals = new Equals($expected);
-        assertFalse($equals($value));
+        assert(equals($expected)->test($value), isFalse());
     }
 }
