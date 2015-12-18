@@ -172,10 +172,22 @@ function isNotOfType($unexpectedType)
 
 /**
  * returns predicate which tests something is greather than the expected value
+ *
  * @param   numeric  $expected
  * @return  \bovigo\assert\predicate\IsGreaterThan
  */
 function isGreaterThan($expected)
 {
     return new IsGreaterThan($expected);
+}
+
+/**
+ * returns predicate which tests something is smaller than the expected value
+ *
+ * @param   numeric  $expected
+ * @return  \bovigo\assert\predicate\IsLessThan
+ */
+function isLessThan($expected)
+{
+    return new IsLessThan($expected);
 }
