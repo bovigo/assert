@@ -6,7 +6,7 @@
  * file that was distributed with this source code.
  */
 namespace bovigo\assert\predicate;
-use bovigo\assert;
+use function bovigo\assert\exporter;
 /**
  * Predicate to test that something is identical.
  */
@@ -63,6 +63,6 @@ class IsIdentical extends Predicate
             );
         }
 
-        return 'is identical to ' . assert\export($this->value);
+        return 'is identical to ' . exporter()->export($this->value);
     }
 }
