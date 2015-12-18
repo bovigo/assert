@@ -125,3 +125,47 @@ function isNotSameAs($expected)
 {
     return not(isSameAs($expected));
 }
+
+/**
+ * returns predicate which tests for size
+ *
+ * @param   int  $expectedSize  expected count size
+ * @return  \bovigo\assert\predicate\IsOfSize
+ */
+function isOfSize($expectedSize)
+{
+    return new IsOfSize($expectedSize);
+}
+
+/**
+ * returns predicate which tests something has not the size
+ *
+ * @param   int  $nonExpectedSize  count size which is not expected
+ * @return  \bovigo\assert\predicate\NegatePredicate
+ */
+function isNotOfSize($nonExpectedSize)
+{
+    return not(isOfSize($nonExpectedSize));
+}
+
+/**
+ * returns predicate which tests something is a specific internal PHP type
+ *
+ * @param   string  $expectedType  name of type to test for
+ * @return  \bovigo\assert\predicate\IsOfType
+ */
+function isOfType($expectedType)
+{
+    return new IsOfType($expectedType);
+}
+
+/**
+ * returns predicate which tests something is not a specific internal PHP type
+ *
+ * @param   string  $unexpectedType  name of type to test for
+ * @return  \bovigo\assert\predicate\NegatePredicate
+ */
+function isNotOfType($unexpectedType)
+{
+    return not(isOfType($unexpectedType));
+}
