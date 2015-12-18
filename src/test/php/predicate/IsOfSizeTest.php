@@ -72,7 +72,7 @@ class IsOfSizeTest extends \PHPUnit_Framework_TestCase
      */
     public function evaluatesToTrueIfStringLengthMatchesExpectedSize()
     {
-        assert((new IsOfSize(3))->test('foo'), isTrue());
+        assert(isOfSize(3)->test('foo'), isTrue());
     }
 
     /**
@@ -80,7 +80,7 @@ class IsOfSizeTest extends \PHPUnit_Framework_TestCase
      */
     public function evaluatesToFalseIfStringLengthDoesNotMatchExpectedSize()
     {
-        assert((new IsOfSize(4))->test('foo'), isFalse());
+        assert(isOfSize(4)->test('foo'), isFalse());
     }
 
     /**
@@ -88,7 +88,7 @@ class IsOfSizeTest extends \PHPUnit_Framework_TestCase
      */
     public function evaluatesToTrueIfArraySizeMatchesExpectedSize()
     {
-        assert((new IsOfSize(3))->test([1, 2, 3]), isTrue());
+        assert(isOfSize(3)->test([1, 2, 3]), isTrue());
     }
 
     /**
@@ -96,7 +96,7 @@ class IsOfSizeTest extends \PHPUnit_Framework_TestCase
      */
     public function evaluatesToFalseIfArraySizeDoesNotMatchExpectedSize()
     {
-        assert((new IsOfSize(4))->test([1, 2, 3]), isFalse());
+        assert(isOfSize(4)->test([1, 2, 3]), isFalse());
     }
 
     /**
@@ -104,7 +104,7 @@ class IsOfSizeTest extends \PHPUnit_Framework_TestCase
      */
     public function evaluatesToTrueIfCountableSizeMatchesExpectedSize()
     {
-        assert((new IsOfSize(3))->test(new CountableExample()), isTrue());
+        assert(isOfSize(3)->test(new CountableExample()), isTrue());
     }
 
     /**
@@ -112,7 +112,7 @@ class IsOfSizeTest extends \PHPUnit_Framework_TestCase
      */
     public function evaluatesToFalseIfCountableSizeDoesNotMatchExpectedSize()
     {
-        assert((new IsOfSize(4))->test(new CountableExample()), isFalse());
+        assert(isOfSize(4)->test(new CountableExample()), isFalse());
     }
 
     /**
@@ -120,7 +120,7 @@ class IsOfSizeTest extends \PHPUnit_Framework_TestCase
      */
     public function evaluatesToTrueIfTraversableSizeMatchesExpectedSize()
     {
-        assert((new IsOfSize(3))->test(new TraversableExample()), isTrue());
+        assert(isOfSize(3)->test(new TraversableExample()), isTrue());
     }
 
     /**
@@ -128,7 +128,7 @@ class IsOfSizeTest extends \PHPUnit_Framework_TestCase
      */
     public function evaluatesToFalseIfTraversableSizeDoesNotMatchExpectedSize()
     {
-        assert((new IsOfSize(4))->test(new TraversableExample()), isFalse());
+        assert(isOfSize(4)->test(new TraversableExample()), isFalse());
     }
 
     /**
@@ -137,7 +137,7 @@ class IsOfSizeTest extends \PHPUnit_Framework_TestCase
     public function evaluatesToTrueIfIteratorAggregateSizeMatchesExpectedSize()
     {
         assert(
-                (new IsOfSize(3))->test(new IteratorAggregateExample()),
+                isOfSize(3)->test(new IteratorAggregateExample()),
                 isTrue()
         );
     }
@@ -148,7 +148,7 @@ class IsOfSizeTest extends \PHPUnit_Framework_TestCase
     public function evaluatesToFalseIfIteratorAggregateSizeDoesNotMatchExpectedSize()
     {
         assert(
-                (new IsOfSize(4))->test(new IteratorAggregateExample()),
+                isOfSize(4)->test(new IteratorAggregateExample()),
                 isFalse()
         );
     }
@@ -160,7 +160,7 @@ class IsOfSizeTest extends \PHPUnit_Framework_TestCase
     {
         $example = new TraversableExample();
         $example->next();
-        (new IsOfSize(3))->test($example);
+        isOfSize(3)->test($example);
         assert($example->current(), equals(1));
     }
 
@@ -170,6 +170,6 @@ class IsOfSizeTest extends \PHPUnit_Framework_TestCase
      */
     public function throwsInvalidArgumentExceptionWhenValueIsNotTestableForSize()
     {
-        (new IsOfSize(3))->test(true);
+        isOfSize(3)->test(true);
     }
 }

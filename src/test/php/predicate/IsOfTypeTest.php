@@ -63,7 +63,7 @@ class IsOfTypeTest extends \PHPUnit_Framework_TestCase
      */
     public function evaluatesToTrueIfTypeOfValueEqualsExpectedType($expectedType, $value)
     {
-        assert((new IsOfType($expectedType))->test($value), isTrue());
+        assert(isOfType($expectedType)->test($value), isTrue());
     }
 
     /**
@@ -71,6 +71,6 @@ class IsOfTypeTest extends \PHPUnit_Framework_TestCase
      */
     public function evaluatesToFalseIfTypeOfValueDoesNotEqualExpectedType()
     {
-        assert((new IsOfType('int'))->test('foo'), isFalse());
+        assert(isOfType('int')->test('foo'), isFalse());
     }
 }
