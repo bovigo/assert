@@ -6,84 +6,69 @@
  * file that was distributed with this source code.
  */
 use function bovigo\assert\assert;
+use function bovigo\assert\predicate\contains;
+use function bovigo\assert\predicate\doesNotContain;
 use function bovigo\assert\predicate\equals;
 use function bovigo\assert\predicate\isFalse;
+use function bovigo\assert\predicate\isGreaterThan;
 use function bovigo\assert\predicate\isInstanceOf;
+use function bovigo\assert\predicate\isLessThan;
 use function bovigo\assert\predicate\isNotEqualTo;
 use function bovigo\assert\predicate\isNotInstanceOf;
 use function bovigo\assert\predicate\isNotNull;
+use function bovigo\assert\predicate\isNotOfSize;
+use function bovigo\assert\predicate\isNotOfType;
 use function bovigo\assert\predicate\isNotSameAs;
 use function bovigo\assert\predicate\isNull;
+use function bovigo\assert\predicate\isOfSize;
+use function bovigo\assert\predicate\isOfType;
 use function bovigo\assert\predicate\isTrue;
 use function bovigo\assert\predicate\isSameAs;
 /**
  * asserts that a haystack contains a needle
  *
- * @param   mixed                      $needle
- * @param   string|array|\Traversable  $haystack
- * @param   string                     $message                    optional  additional description for failure message
- * @param   bool                       $ignoreCase                 optional  ignore lower/upper case when $haystack is a string
- * @param   bool                       $checkForObjectIdentity     optional  $needle must be of the same identity when in $haystack
- * @param   bool                       $checkForNonObjectIdentity  optional  $needle must be equal to the value in $haystack
+ * @param   mixed                      $needle    what must be contained in haystack
+ * @param   string|array|\Traversable  $haystack  where needle must be contained
+ * @param   string                     $message   optional  additional description for failure message
  * @return  bool
  */
-function assertContains(
-        $needle,
-        $haystack,
-        $message = null,
-        $ignoreCase = false,
-        $checkForObjectIdentity = true,
-        $checkForNonObjectIdentity = false)
+function assertContains($needle, $haystack, $message = null)
 {
-    return assert(
-            $haystack,
-            contains(
-                    $needle,
-                    $ignoreCase,
-                    $checkForObjectIdentity,
-                    $checkForNonObjectIdentity
-            ),
-            $message
-    );
+    return assert($haystack, contains($needle), $message);
 }
 
 /**
  * asserts that a haystack does not contain  needle
  *
- * @param   mixed                      $needle
- * @param   string|array|\Traversable  $haystack
- * @param   string                     $message                    optional  additional description for failure message
- * @param   bool                       $ignoreCase                 optional  ignore lower/upper case when $haystack is a string
- * @param   bool                       $checkForObjectIdentity     optional  $needle must be of the same identity when in $haystack
- * @param   bool                       $checkForNonObjectIdentity  optional  $needle must be equal to the value in $haystack
+ * @param   mixed                      $needle    what must not be contained in haystack
+ * @param   string|array|\Traversable  $haystack  where needle must not be contained
+ * @param   string                     $message   optional  additional description for failure message
  * @return  bool
  */
-function assertNotContains(
-        $needle,
-        $haystack,
-        $message = null,
-        $ignoreCase = false,
-        $checkForObjectIdentity = true,
-        $checkForNonObjectIdentity = false)
+function assertNotContains($needle, $haystack, $message = null)
 {
-    return assert(
-            $haystack,
-            doesNotContain(
-                    $needle,
-                    $ignoreCase,
-                    $checkForObjectIdentity,
-                    $checkForNonObjectIdentity
-            ),
-            $message
-    );
+    return assert($haystack, doesNotContain($needle), $message);
 }
 
 /**
- * Asserts that a value is greater than another value.
+ * asserts that a value is smaller than another value
  *
- * @param   mixed   $expected  expected value
- * @param   mixed   $actual    value to test
- * @param   string  $message   optional  additional description for failure message
+ * @param   numeric  $expected  expected value
+ * @param   mixed    $actual    value to test
+ * @param   string   $message   optional  additional description for failure message
+ * @return  bool
+ */
+function assertLessThan($expected, $actual, $message = null)
+{
+    return assert($actual, isLessThan($expected), $message);
+}
+
+/**
+ * asserts that a value is greater than another value
+ *
+ * @param   numeric  $expected  expected value
+ * @param   mixed    $actual    value to test
+ * @param   string   $message   optional  additional description for failure message
  * @return  bool
  */
 function assertGreaterThan($expected, $actual, $message = null)
@@ -92,7 +77,7 @@ function assertGreaterThan($expected, $actual, $message = null)
 }
 
 /**
- * asserts that a variable is of a given type
+ * asserts that a variable is of a given internal PHP type which is not a class
  *
  * @param   mixed   $expectedType  expected type
  * @param   mixed   $actual        value to test
@@ -101,15 +86,41 @@ function assertGreaterThan($expected, $actual, $message = null)
  */
 function assertInternalType($expectedType, $actual, $message = null)
 {
-    return assert($actual, isInternalType($expectedType), $message);
+    return assert($actual, isOfType($expectedType), $message);
+}
+
+/**
+ * asserts that a variable is of a given internal PHP type which is not a class
+ *
+ * @param   mixed   $unexpectedType  type which is not expected
+ * @param   mixed   $actual          value to test
+ * @param   string  $message         optional  additional description for failure message
+ * @return  bool
+ */
+function assertNotInternalType($unexpectedType, $actual, $message = null)
+{
+    return assert($actual, isNotOfType($unexpectedType), $message);
 }
 
 /**
  * asserts the number of elements of an array, Countable or Traversable
  *
- * @param   int                            $expectedSize  expected count size
- * @param   array|\Countable|\Traversable  $countable      what to count
- * @param   string                         $message       optional  additional description for failure message
+ * @param   int                                   $expectedSize  expected count size
+ * @param   string|array|\Countable|\Traversable  $countable     what to count
+ * @param   string                                $message       optional  additional description for failure message
+ * @return  bool
+ */
+function assertCount($expectedSize, $countable, $message = null)
+{
+    return assert($countable, isOfSize($expectedSize), $message);
+}
+
+/**
+ * asserts the number of elements of an array, Countable or Traversable
+ *
+ * @param   int                                   $expectedSize  expected count size
+ * @param   string|array|\Countable|\Traversable  $countable     what to count
+ * @param   string                                $message       optional  additional description for failure message
  * @return  bool
  */
 function assertNotCount($expectedSize, $countable, $message = null)
