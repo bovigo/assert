@@ -8,41 +8,33 @@
 namespace bovigo\assert\predicate;
 use function bovigo\assert\assert;
 /**
- * Tests for bovigo\assert\predicate\IsFalse.
+ * Tests for bovigo\assert\predicate\IsGreaterThan.
  *
  * @group  predicate
  */
-class IsFalseTest extends \PHPUnit_Framework_TestCase
+class IsGreaterThanTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @test
      */
-    public function evaluatesToTrueIfGivenValueIsFalse()
+    public function evaluatesToTrueIfGivenValueIsGreater()
     {
-        assert(isFalse()->test(false), isSameAs(true));
+        assert(isGreaterThan(3)->test(4), isTrue());
     }
 
     /**
-     * @return  array
-     */
-    public function trueValues()
-    {
-        return [
-          'boolean true'     => [true],
-          'non-empty string' => ['foo'],
-          'empty string'     => [''],
-          'empty array'      => [[]],
-          'non-empty array'  => [[1]]
-        ];
-    }
-
-    /**
-     * @param  mixed  $true
      * @test
-     * @dataProvider  trueValues
      */
-    public function evaluatesToFalseIfGivenValueIsFalse($true)
+    public function evaluatesToFalseIfGivenValueIsEqual()
     {
-        assert(isFalse()->test($true), isSameAs(false));
+        assert(isGreaterThan(3)->test(3), isFalse());
+    }
+
+    /**
+     * @test
+     */
+    public function evaluatesToFalseIfGivenValueIsLesser()
+    {
+        assert(isGreaterThan(3)->test(2), isFalse());
     }
 }
