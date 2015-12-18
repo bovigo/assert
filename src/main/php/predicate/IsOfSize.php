@@ -78,9 +78,6 @@ class IsOfSize extends Predicate
      */
     public function __toString()
     {
-        return sprintf(
-            'size matches %d',
-            $this->expectedSize
-        );
+        return sprintf('size matches %d', $this->expectedSize);
     }
 }
