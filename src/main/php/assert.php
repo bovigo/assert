@@ -25,6 +25,17 @@ function assert($value, $predicate, $message = null)
 }
 
 /**
+ * exports a value as a string
+ *
+ * @param   mixed   $value
+ * @return  string
+ */
+function export($value)
+{
+    return exporter()->export($value);
+}
+
+/**
  * returns always the same exporter instance
  *
  * @internal
