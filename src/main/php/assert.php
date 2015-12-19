@@ -21,7 +21,31 @@ use SebastianBergmann\Exporter\Exporter;
 function assert($value, $predicate, $message = null)
 {
     return (new Assertion($value, exporter()))
-            ->compliesTo(Predicate::castFrom($predicate), $message);
+            ->compliesTo(counting(Predicate::castFrom($predicate)), $message);
+}
+
+/**
+ * adds predicate count as constraint count to PHPUnit if present
+ *
+ * @internal
+ * @staticvar  \ReflectionProperty  $property
+ * @param   \bovigo\assert\predicate\Predicate  $predicate
+ * @return  \bovigo\assert\predicate\Predicate
+ */
+function counting(Predicate $predicate)
+{
+    static $property;
+    if (null === $property && class_exists('\PHPUnit_Framework_Assert')) {
+        $assertClass = new \ReflectionClass('\PHPUnit_Framework_Assert');
+        $property = $assertClass->getProperty('count');
+        $property->setAccessible(true);
+    }
+
+    if (null !== $property) {
+        $property->setValue(null, $property->getValue() + count($predicate));
+    }
+
+    return $predicate;
 }
 
 /**
