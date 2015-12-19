@@ -27,6 +27,8 @@ function assert($value, $predicate, $message = null)
 /**
  * adds predicate count as constraint count to PHPUnit if present
  *
+ * This is definitely a hack and might break with future PHPUnit releases.
+ *
  * @internal
  * @staticvar  \ReflectionProperty  $property
  * @param   \bovigo\assert\predicate\Predicate  $predicate
