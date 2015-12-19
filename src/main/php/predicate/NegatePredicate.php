@@ -38,6 +38,16 @@ class NegatePredicate extends Predicate
     }
 
     /**
+     * returns amount of checks done in this predicate
+     *
+     * @return  int
+     */
+    public function count()
+    {
+        return count($this->predicate);
+    }
+
+    /**
      * returns string representation of predicate
      *
      * @return  string

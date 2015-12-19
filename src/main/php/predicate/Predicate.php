@@ -9,7 +9,7 @@ namespace bovigo\assert\predicate;
 /**
  * Evaluates if a given value fulfills a criteria.
  */
-abstract class Predicate
+abstract class Predicate implements \Countable
 {
     /**
      * casts given predicate to a predicate instance
@@ -80,6 +80,16 @@ abstract class Predicate
     public function negate()
     {
         return new NegatePredicate($this);
+    }
+
+    /**
+     * returns amount of checks done in this predicate
+     *
+     * @return  int
+     */
+    public function count()
+    {
+        return 1;
     }
 
     /**

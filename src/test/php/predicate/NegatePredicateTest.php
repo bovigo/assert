@@ -6,6 +6,7 @@
  * file that was distributed with this source code.
  */
 namespace bovigo\assert\predicate;
+use function bovigo\assert\assert;
 /**
  * Test for bovigo\assert\predicate\NegatePredicate.
  *
@@ -33,7 +34,7 @@ class NegatePredicateTest extends \PHPUnit_Framework_TestCase
      */
     public function negatesWrappedPredicate()
     {
-        assertTrue($this->negatePredicate->test('bar'));
+        assert($this->negatePredicate->test('bar'), isTrue());
     }
 
     /**
@@ -41,9 +42,19 @@ class NegatePredicateTest extends \PHPUnit_Framework_TestCase
      */
     public function hasStringRepresentation()
     {
-        assertEquals(
-                'not (callable<lambda>)',
-                $this->negatePredicate
+        assert($this->negatePredicate, equals('not (callable<lambda>)'));
+    }
+
+    /**
+     * @test
+     */
+    public function countEqualsCountOfNegatedPredicate()
+    {
+        assert(
+                count(new NegatePredicate(
+                        new AndPredicate(function() {}, function() {})
+                )),
+                equals(2)
         );
     }
 }

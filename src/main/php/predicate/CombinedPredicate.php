@@ -33,6 +33,16 @@ trait CombinedPredicate
     }
 
     /**
+     * returns amount of checks done in this predicate
+     *
+     * @return  int
+     */
+    public function count()
+    {
+        return count($this->leftPredicate) + count($this->rightPredicate);
+    }
+
+    /**
      * returns string representation of predicate
      *
      * @return  string

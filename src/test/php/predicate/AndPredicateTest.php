@@ -6,7 +6,7 @@
  * file that was distributed with this source code.
  */
 namespace bovigo\assert\predicate;
-use bovigo\assert;
+use function bovigo\assert\assert;
 /**
  * Test for bovigo\assert\assert\predicate\AndPredicate.
  *
@@ -37,7 +37,7 @@ class AndPredicateTest extends \PHPUnit_Framework_TestCase
      */
     public function returnsTrueWhenBothPredicatesReturnsTrue()
     {
-        assertTrue($this->andPredicate->test('foo'));
+        assert($this->andPredicate->test('foo'), isTrue());
     }
 
     /**
@@ -45,7 +45,7 @@ class AndPredicateTest extends \PHPUnit_Framework_TestCase
      */
     public function returnsFalseWhenOnePredicateReturnsFalse()
     {
-        assertFalse($this->andPredicate->test('baz'));
+        assert($this->andPredicate->test('baz'), isFalse());
     }
 
     /**
@@ -53,9 +53,26 @@ class AndPredicateTest extends \PHPUnit_Framework_TestCase
      */
     public function hasStringRepresentation()
     {
-        assertEquals(
-                '(callable<lambda> and callable<lambda>)',
-                $this->andPredicate
+        assert(
+                $this->andPredicate,
+                equals('(callable<lambda> and callable<lambda>)')
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function countEqualsSumOfCountOfBothPredicates()
+    {
+        assert(
+                count(new AndPredicate(
+                        new AndPredicate(
+                            function($value) { return 'foo' === $value; },
+                            function($value) { return 'foo' === $value; }
+                        ),
+                        function($value) { return 'foo' === $value; }
+                )),
+                equals(3)
         );
     }
 }

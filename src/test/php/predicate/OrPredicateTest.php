@@ -6,6 +6,7 @@
  * file that was distributed with this source code.
  */
 namespace bovigo\assert\predicate;
+use function bovigo\assert\assert;
 /**
  * Test for bovigo\assert\predicate\OrPredicate.
  *
@@ -36,7 +37,7 @@ class OrPredicateTest extends \PHPUnit_Framework_TestCase
      */
     public function returnsTrueWhenOnePredicateReturnsTrue()
     {
-        assertTrue($this->orPredicate->test('foo'));
+        assert($this->orPredicate->test('foo'), isTrue());
     }
 
     /**
@@ -44,7 +45,7 @@ class OrPredicateTest extends \PHPUnit_Framework_TestCase
      */
     public function returnsFalseWhenBothPredicatesReturnsFalse()
     {
-        assertFalse($this->orPredicate->test('baz'));
+        assert($this->orPredicate->test('baz'), isFalse());
     }
 
     /**
@@ -52,9 +53,26 @@ class OrPredicateTest extends \PHPUnit_Framework_TestCase
      */
     public function hasStringRepresentation()
     {
-        assertEquals(
-                '(callable<lambda> or callable<lambda>)',
-                $this->orPredicate
+        assert(
+                $this->orPredicate,
+                equals('(callable<lambda> or callable<lambda>)')
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function countEqualsSumOfCountOfBothPredicates()
+    {
+        assert(
+                count(new OrPredicate(
+                        new AndPredicate(
+                            function($value) { return 'foo' === $value; },
+                            function($value) { return 'foo' === $value; }
+                        ),
+                        function($value) { return 'bar' === $value; }
+                )),
+                equals(3)
         );
     }
 }
