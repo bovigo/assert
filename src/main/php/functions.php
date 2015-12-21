@@ -24,6 +24,33 @@ use function bovigo\assert\predicate\isOfSize;
 use function bovigo\assert\predicate\isOfType;
 use function bovigo\assert\predicate\isTrue;
 use function bovigo\assert\predicate\isSameAs;
+
+/**
+ * asserts that an array has a key
+ *
+ * @param   int|string          $key      key which must be in array
+ * @param   array|\ArrayAccess  $array    array which should have given key
+ * @param   string              $message  optional  additional description for failure message
+ * @return  bool
+ */
+function assertArrayHasKey($key, $array, $message = null)
+{
+    return assert($array, hasKey($key), $message);
+}
+
+/**
+ * asserts that an array does not have a key
+ *
+ * @param   int|string          $key      key which must be in array
+ * @param   array|\ArrayAccess  $array    array which should have given key
+ * @param   string              $message  optional  additional description for failure message
+ * @return  bool
+ */
+function assertArrayNotHasKey($key, $array, $message = null)
+{
+    return assert($array, doesNotHaveKey($key), $message);
+}
+
 /**
  * asserts that a haystack contains a needle
  *

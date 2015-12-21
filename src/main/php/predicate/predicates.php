@@ -213,3 +213,25 @@ function doesNotContain($needle)
 {
     return not(contains($needle));
 }
+
+/**
+ * returns predicate which tests that $key is the key of an element
+ *
+ * @param   int|string  $key
+ * @return  \bovigo\assert\predicate\HasKey
+ */
+function hasKey($key)
+{
+    return new HasKey($key);
+}
+
+/**
+ * returns predicate which tests that $key is not the key of an element
+ *
+ * @param   int|string  $key
+ * @return  \bovigo\assert\predicate\NegatePredicate
+ */
+function doesNotHaveKey($key)
+{
+    return not(hasKey($key));
+}
