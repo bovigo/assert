@@ -78,6 +78,30 @@ function assertNotContains($needle, $haystack, $message = null)
 }
 
 /**
+ * assers that a value is empty
+ *
+ * @param   mixed   $actual    value that must be empty
+ * @param   string  $message   optional  additional description for failure message
+ * @return  bool
+ */
+function assertEmpty($actual, $message = null)
+{
+    return assert($actual, isEmpty(), $message);
+}
+
+/**
+ * assers that a value is empty
+ *
+ * @param   mixed   $actual    value that must be empty
+ * @param   string  $message   optional  additional description for failure message
+ * @return  bool
+ */
+function assertNotEmpty($actual, $message = null)
+{
+    return assert($actual, isNotEmpty(), $message);
+}
+
+/**
  * asserts that a value is smaller than another value
  *
  * @param   numeric  $expected  expected value

@@ -28,6 +28,26 @@ function isNotNull()
 }
 
 /**
+ * returns predicate which test that something is empty
+ *
+ * @return  \bovigo\assert\predicate\IsEmpty
+ */
+function isEmpty()
+{
+    return IsEmpty::instance();
+}
+
+/**
+ * returns a predicate which tests that something is not empty
+ *
+ * @return  \bovigo\assert\predicate\NegatePredicate
+ */
+function isNotEmpty()
+{
+    return not(isEmpty());
+}
+
+/**
  * returns predicate which tests for truthiness
  *
  * @return  \bovigo\assert\predicate\IsFalse
