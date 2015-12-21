@@ -298,6 +298,32 @@ function assertNotSame($expected, $actual, $message = null)
 }
 
 /**
+ * asserts that a string matches a regular expression
+ *
+ * @param   string  $pattern   regular expression to match string with
+ * @param   string  $string    string to match
+ * @param   string  $message   optional  additional description for failure message
+ * @return  bool
+ */
+function assertRegExp($pattern, $string, $message = null)
+{
+    return assert($string, matches($pattern), $message);
+}
+
+/**
+ * asserts that a string does not match a regular expression
+ *
+ * @param   string  $pattern   regular expression to match string with
+ * @param   string  $string    string to match
+ * @param   string  $message   optional  additional description for failure message
+ * @return  bool
+ */
+function assertNotRegExp($pattern, $string, $message = null)
+{
+    return assert($string, doesNotMatch($pattern), $message);
+}
+
+/**
  * asserts that given value is true
  *
  * @param   mixed   $value        value to test

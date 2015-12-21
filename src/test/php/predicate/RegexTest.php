@@ -6,6 +6,7 @@
  * file that was distributed with this source code.
  */
 namespace bovigo\assert\predicate;
+use function bovigo\assert\assert;
 /**
  * Tests for bovigo\assert\predicate\Regex.
  *
@@ -25,15 +26,14 @@ class RegexTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param  string  $regex
+     * @param  string  $pattern
      * @param  string  $value
      * @test
      * @dataProvider  validValues
      */
-    public function validValueEvaluatesToTrue($regex, $value)
+    public function validValueEvaluatesToTrue($pattern, $value)
     {
-        $validate = new Regex($regex);
-        assertTrue($validate($value));
+        assert(matches($pattern)->test($value), isTrue());
     }
 
     /**
@@ -50,20 +50,20 @@ class RegexTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param  string  $regex
+     * @param  string  $pattern
      * @param  string  $value
      * @test
      * @dataProvider  invalidValues
      */
-    public function invalidValueEvaluatesToFalse($regex, $value)
+    public function invalidValueEvaluatesToFalse($pattern, $value)
     {
-        $validate = new Regex($regex);
-        assertFalse($validate($value));
+        assert(matches($pattern)->test($value), isFalse());
     }
 
     /**
      * @test
      * @expectedException  RuntimeException
+     * @expectedExceptionMessage  Failure while matching "^([a-z]{3})$", reason: invalid regular expression.
      */
     public function invalidRegexThrowsRuntimeExceptionOnEvaluation()
     {
@@ -76,9 +76,9 @@ class RegexTest extends \PHPUnit_Framework_TestCase
      */
     public function stringRepresentationContainsRegex()
     {
-        assertEquals(
-                'matches regular expression /^([a-z]{3})$/',
-                new Regex('/^([a-z]{3})$/')
+        assert(
+                (string) new Regex('/^([a-z]{3})$/'),
+                equals('matches regular expression "/^([a-z]{3})$/"')
         );
     }
 }

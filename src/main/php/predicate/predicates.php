@@ -257,3 +257,25 @@ function doesNotHaveKey($key)
 {
     return not(hasKey($key));
 }
+
+/**
+ * returns predicate which tests against a regular expression
+ *
+ * @param   string  $pattern
+ * @return  \bovigo\assert\predicate\Regex
+ */
+function matches($pattern)
+{
+    return new Regex($pattern);
+}
+
+/**
+ * returns predicate which tests against a regular expression
+ *
+ * @param   string  $pattern
+ * @return  \bovigo\assert\predicate\NegatePredicate
+ */
+function doesNotMatch($pattern)
+{
+    return not(matches($pattern));
+}

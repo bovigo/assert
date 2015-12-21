@@ -9,10 +9,10 @@ namespace bovigo\assert\predicate;
 /**
  * Predicate to ensure a value complies to a given regular expression.
  *
- * The predicate uses preg_match() and checks if the value occurs exactly
- * one time. Please make sure that the supplied regular expression contains
- * correct delimiters, they will not be applied automatically. The test()
- * method throws a \RuntimeException in case the regular expression is invalid.
+ * The predicate uses preg_match() and checks if the value occurs one or more
+ * times. Please make sure that the supplied regular expression contains correct
+ * delimiters, they will not be applied automatically. The test() method throws
+ * a \RuntimeException in case the regular expression is invalid.
  */
 class Regex extends Predicate
 {
@@ -21,16 +21,30 @@ class Regex extends Predicate
      *
      * @type  string
      */
-    private $regex;
+    private $pattern;
+    /**
+     * map of pcre error codes and according error messages
+     *
+     * @array
+     */
+    private static $errors = [
+            PREG_NO_ERROR              => 'invalid regular expression',
+            PREG_INTERNAL_ERROR        => 'internal PCRE error',
+            PREG_BACKTRACK_LIMIT_ERROR => 'backtrack limit exhausted',
+            PREG_RECURSION_LIMIT_ERROR => 'recursion limit exhausted',
+            PREG_BAD_UTF8_ERROR        => 'malformed UTF-8 data',
+            PREG_BAD_UTF8_OFFSET_ERROR => 'did not end at valid UTF-8 codepoint',
+            PREG_JIT_STACKLIMIT_ERROR  => 'failed because of limited JIT stack space'
+    ];
 
     /**
      * constructor
      *
-     * @param  string  $regex  regular expression to use for validation
+     * @param  string  $pattern  regular expression to use for validation
      */
-    public function __construct($regex)
+    public function __construct($pattern)
     {
-        $this->regex = $regex;
+        $this->pattern = $pattern;
     }
 
     /**
@@ -42,13 +56,31 @@ class Regex extends Predicate
      */
     public function test($value)
     {
-        $check = @preg_match($this->regex, $value);
+        $check = @preg_match($this->pattern, $value);
         if (false === $check) {
-            // TODO make use of preg_last_error()
-            throw new \RuntimeException('Invalid regular expression ' . $this->regex);
+            throw new \RuntimeException(sprintf(
+                    'Failure while matching "%s", reason: %s.',
+                    $this->pattern,
+                    $this->messageFor(preg_last_error())
+            ));
         }
 
-        return ((1 != $check) ? (false) : (true));
+        return 0 < $check;
+    }
+
+    /**
+     * translates error code into proper error message
+     *
+     * @param   int  $errorCode
+     * @return  string
+     */
+    private function messageFor($errorCode)
+    {
+        if (isset(self::$errors[$errorCode])) {
+            return self::$errors[$errorCode];
+        }
+
+        return 'Unknown error with error code ' . $errorCode;
     }
 
     /**
@@ -58,6 +90,6 @@ class Regex extends Predicate
      */
     public function __toString()
     {
-        return 'matches regular expression ' . $this->regex;
+        return 'matches regular expression "' . $this->pattern . '"';
     }
 }
