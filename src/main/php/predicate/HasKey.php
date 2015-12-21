@@ -38,11 +38,11 @@ class HasKey extends Predicate
     }
 
     /**
-     * tests that the given value contains expected value
+     * tests that the given value contains expected key
      *
      * @param   mixed  $value
      * @return  bool
-     * @throws  \InvalidArgumentException  in case given value can't contain another value
+     * @throws  \InvalidArgumentException  in case given value can't have a key
      */
     public function test($value)
     {
