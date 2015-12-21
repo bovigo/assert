@@ -37,4 +37,28 @@ class IsGreaterThanTest extends \PHPUnit_Framework_TestCase
     {
         assert(isGreaterThan(3)->test(2), isFalse());
     }
+
+    /**
+     * @test
+     */
+    public function evaluatesToTrueWhenCombinedWithEqualsAndGivenValueIsEqual()
+    {
+        assert(isGreaterThanOrEqualTo(3)->test(3), isTrue());
+    }
+
+    /**
+     * @test
+     */
+    public function evaluatesToTrueWhenCombinedWithEqualsIfGivenValueIsGreater()
+    {
+        assert(isGreaterThanOrEqualTo(3)->test(4), isTrue());
+    }
+
+    /**
+     * @test
+     */
+    public function evaluatesToFalseWhenCombinedWithEqualsIfGivenValueIsLesser()
+    {
+        assert(isGreaterThanOrEqualTo(3)->test(2), isFalse());
+    }
 }

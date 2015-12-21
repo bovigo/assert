@@ -182,6 +182,17 @@ function isGreaterThan($expected)
 }
 
 /**
+ * returns predicate which tests something is greater than or equal to the expected value
+ *
+ * @param   numeric  $expected
+ * @return  \bovigo\assert\predicate\OrPredicate
+ */
+function isGreaterThanOrEqualTo($expected)
+{
+    return isGreaterThan($expected)->orElse(equals($expected));
+}
+
+/**
  * returns predicate which tests something is smaller than the expected value
  *
  * @param   numeric  $expected
@@ -190,6 +201,17 @@ function isGreaterThan($expected)
 function isLessThan($expected)
 {
     return new IsLessThan($expected);
+}
+
+/**
+ * returns predicate which tests something is smaller than or equal to the expected value
+ *
+ * @param   numeric  $expected
+ * @return  \bovigo\assert\predicate\OrPredicate
+ */
+function isLessThanOrEqual($expected)
+{
+    return isLessThan($expected)->orElse(equals($expected));
 }
 
 /**

@@ -91,6 +91,19 @@ function assertLessThan($expected, $actual, $message = null)
 }
 
 /**
+ * asserts that a value is smaller than or equal to another value
+ *
+ * @param   numeric  $expected  expected value
+ * @param   mixed    $actual    value to test
+ * @param   string   $message   optional  additional description for failure message
+ * @return  bool
+ */
+function assertLessThanOrEqual($expected, $actual, $message = null)
+{
+    return assert($actual, isLessThanOrEqual($expected), $message);
+}
+
+/**
  * asserts that a value is greater than another value
  *
  * @param   numeric  $expected  expected value
@@ -101,6 +114,19 @@ function assertLessThan($expected, $actual, $message = null)
 function assertGreaterThan($expected, $actual, $message = null)
 {
     return assert($actual, isGreaterThan($expected), $message);
+}
+
+/**
+ * asserts that a value is greater than or equal to another value
+ *
+ * @param   numeric  $expected  expected value
+ * @param   mixed    $actual    value to test
+ * @param   string   $message   optional  additional description for failure message
+ * @return  bool
+ */
+function assertGreaterThanOrEqual($expected, $actual, $message = null)
+{
+    return assert($actual, isGreaterThanOrEqualTo($expected), $message);
 }
 
 /**
