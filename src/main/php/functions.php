@@ -102,6 +102,36 @@ function assertNotEmpty($actual, $message = null)
 }
 
 /**
+ * asserts a file does exist
+ *
+ * The file must either be in the current working directory, or a full path must
+ * be specified with the filename.
+ *
+ * @param   string  $filename  name of file that must exist
+ * @param   string  $message   optional  additional description for failure message
+ * @return  bool
+ */
+function assertFileExists($filename, $message = null)
+{
+    return assert($filename, isExistingFile(), $message);
+}
+
+/**
+ * asserts a file does exist
+ *
+ * The file must either be in the current working directory, or a full path must
+ * be specified with the filename.
+ *
+ * @param   string  $filename  name of file that must exist
+ * @param   string  $message   optional  additional description for failure message
+ * @return  bool
+ */
+function assertFileNotExists($filename, $message = null)
+{
+    return assert($filename, isNonExistingFile(), $message);
+}
+
+/**
  * asserts that a value is smaller than another value
  *
  * @param   numeric  $expected  expected value

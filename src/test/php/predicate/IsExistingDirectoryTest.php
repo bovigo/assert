@@ -6,6 +6,7 @@
  * file that was distributed with this source code.
  */
 namespace bovigo\assert\predicate;
+use function bovigo\assert\assert;
 use org\bovigo\vfs\vfsStream;
 /**
  * Tests for bovigo\assert\predicate\IsExistingDirectory.
@@ -36,8 +37,7 @@ class IsExistingDirectoryTest extends \PHPUnit_Framework_TestCase
      */
     public function evaluatesToFalseForNull()
     {
-        $isExistingDirectory = new IsExistingDirectory();
-        assertFalse($isExistingDirectory(null));
+        assert(isExistingDirectory()->test(null), isFalse());
     }
 
     /**
@@ -45,8 +45,7 @@ class IsExistingDirectoryTest extends \PHPUnit_Framework_TestCase
      */
     public function evaluatesToFalseForEmptyString()
     {
-        $isExistingDirectory = new IsExistingDirectory();
-        assertFalse($isExistingDirectory(''));
+        assert(isExistingDirectory()->test(''), isFalse());
     }
 
     /**
@@ -54,8 +53,11 @@ class IsExistingDirectoryTest extends \PHPUnit_Framework_TestCase
      */
     public function evaluatesToTrueForRelativePath()
     {
-        $isExistingDirectory = new IsExistingDirectory(vfsStream::url('root/basic'));
-        assertTrue($isExistingDirectory('../other'));
+        assert(
+                isExistingDirectory(vfsStream::url('root/basic'))
+                        ->test('../other'),
+                isTrue()
+        );
     }
 
     /**
@@ -63,8 +65,11 @@ class IsExistingDirectoryTest extends \PHPUnit_Framework_TestCase
      */
     public function evaluatesToFalseIfDirDoesNotExistRelatively()
     {
-        $isExistingDirectory = new IsExistingDirectory(vfsStream::url('root/basic'));
-        assertFalse($isExistingDirectory('other'));
+        assert(
+                isExistingDirectory(vfsStream::url('root/basic'))
+                        ->test('other'),
+                isFalse()
+        );
     }
 
     /**
@@ -72,8 +77,7 @@ class IsExistingDirectoryTest extends \PHPUnit_Framework_TestCase
      */
     public function evaluatesToFalseIfDirDoesNotExistGlobally()
     {
-        $isExistingDirectory = new IsExistingDirectory();
-        assertFalse($isExistingDirectory(__DIR__ . '/../doesNotExist'));
+        assert(isExistingDirectory()->test(__DIR__ . '/../doesNotExist'), isFalse());
     }
 
     /**
@@ -81,8 +85,10 @@ class IsExistingDirectoryTest extends \PHPUnit_Framework_TestCase
      */
     public function evaluatesToTrueIfDirDoesExistRelatively()
     {
-        $isExistingDirectory = new IsExistingDirectory(vfsStream::url('root/basic'));
-        assertTrue($isExistingDirectory('bar'));
+        assert(
+                isExistingDirectory(vfsStream::url('root/basic'))->test('bar'),
+                isTrue()
+        );
     }
 
     /**
@@ -90,8 +96,7 @@ class IsExistingDirectoryTest extends \PHPUnit_Framework_TestCase
      */
     public function evaluatesToTrueIfDirDoesExistGlobally()
     {
-        $isExistingDirectory = new IsExistingDirectory();
-        assertTrue($isExistingDirectory(__DIR__));
+        assert(isExistingDirectory()->test(__DIR__), isTrue());
     }
 
     /**
@@ -99,8 +104,10 @@ class IsExistingDirectoryTest extends \PHPUnit_Framework_TestCase
      */
     public function evaluatesToFalseIfIsRelativeFile()
     {
-        $isExistingDirectory = new IsExistingDirectory(vfsStream::url('root'));
-        assertFalse($isExistingDirectory('foo.txt'));
+        assert(
+                isExistingDirectory(vfsStream::url('root'))->test('foo.txt'),
+                isFalse()
+        );
     }
 
     /**
@@ -108,8 +115,10 @@ class IsExistingDirectoryTest extends \PHPUnit_Framework_TestCase
      */
     public function evaluatesToFalseIfIsGlobalFile()
     {
-        $isExistingDirectory = new IsExistingDirectory();
-        assertFalse($isExistingDirectory(__FILE__));
+        assert(
+                isExistingDirectory()->test(__FILE__),
+                isFalse()
+        );
     }
 
     /**
@@ -131,6 +140,6 @@ class IsExistingDirectoryTest extends \PHPUnit_Framework_TestCase
      */
     public function hasStringRepresentation(IsExistingDirectory $instance, $message)
     {
-        assertEquals($message, (string) $instance);
+        assert((string) $instance, equals($message));
     }
 }

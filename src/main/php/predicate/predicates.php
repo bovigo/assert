@@ -299,3 +299,47 @@ function doesNotMatch($pattern)
 {
     return not(matches($pattern));
 }
+
+/**
+ * returns predicate which tests whether a file exists
+ *
+ * @param   string  $basePath  optional  base path where file must reside in
+ * @return  \bovigo\assert\predicate\IsExistingFile
+ */
+function isExistingFile($basePath = null)
+{
+    return new IsExistingFile($basePath);
+}
+
+/**
+ * returns predicate which tests whether a file does not exist
+ *
+ * @param   string  $basePath  optional  base path where file must not reside in
+ * @return  \bovigo\assert\predicate\NegatePredicate
+ */
+function isNonExistingFile($basePath = null)
+{
+    return not(isExistingFile($basePath));
+}
+
+/**
+ * returns predicate which tests whether a directory exists
+ *
+ * @param   string  $basePath  optional  base path where directory must reside in
+ * @return  \bovigo\assert\predicate\IsExistingFile
+ */
+function isExistingDirectory($basePath = null)
+{
+    return new IsExistingDirectory($basePath);
+}
+
+/**
+ * returns predicate which tests whether a directory does not exist
+ *
+ * @param   string  $basePath  optional  base path where directory must not reside in
+ * @return  \bovigo\assert\predicate\NegatePredicate
+ */
+function isNonExistingDirectory($basePath = null)
+{
+    return not(isExistingDirectory($basePath));
+}

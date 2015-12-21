@@ -6,6 +6,7 @@
  * file that was distributed with this source code.
  */
 namespace bovigo\assert\predicate;
+use function bovigo\assert\assert;
 use org\bovigo\vfs\vfsStream;
 /**
  * Tests for bovigo\assert\predicate\IsExistingFile.
@@ -34,8 +35,7 @@ class IsExistingFileTest extends \PHPUnit_Framework_TestCase
      */
     public function evaluatesToFalseForNull()
     {
-        $isExistingFile = new IsExistingFile();
-        assertFalse($isExistingFile(null));
+        assert(isExistingFile()->test(null), isFalse());
     }
 
     /**
@@ -43,8 +43,7 @@ class IsExistingFileTest extends \PHPUnit_Framework_TestCase
      */
     public function evaluatesToFalseForEmptyString()
     {
-        $isExistingFile = new IsExistingFile();
-        assertFalse($isExistingFile(''));
+        assert(isExistingFile()->test(''), isFalse());
     }
 
     /**
@@ -52,8 +51,10 @@ class IsExistingFileTest extends \PHPUnit_Framework_TestCase
      */
     public function evaluatesToTrueIfRelativePathExists()
     {
-        $isExistingFile = new IsExistingFile(vfsStream::url('root/basic'));
-        assertTrue($isExistingFile('../foo.txt'));
+        assert(
+                isExistingFile(vfsStream::url('root/basic'))->test('../foo.txt'),
+                isTrue()
+        );
     }
 
     /**
@@ -61,8 +62,10 @@ class IsExistingFileTest extends \PHPUnit_Framework_TestCase
      */
     public function evaluatesToFalseIfFileDoesNotExistRelatively()
     {
-        $isExistingFile = new IsExistingFile(vfsStream::url('root/basic'));
-        assertFalse($isExistingFile('foo.txt'));
+        assert(
+                isExistingFile(vfsStream::url('root/basic'))->test('foo.txt'),
+                isFalse()
+        );
     }
 
     /**
@@ -70,8 +73,10 @@ class IsExistingFileTest extends \PHPUnit_Framework_TestCase
      */
     public function evaluatesToFalseIfFileDoesNotExistGlobally()
     {
-        $isExistingFile = new IsExistingFile();
-        assertFalse($isExistingFile(__DIR__ . '/doesNotExist.txt'));
+        assert(
+                isExistingFile()->test(__DIR__ . '/doesNotExist.txt'),
+                isFalse()
+        );
     }
 
     /**
@@ -79,8 +84,10 @@ class IsExistingFileTest extends \PHPUnit_Framework_TestCase
      */
     public function evaluatesToTrueIfFileDoesExistRelatively()
     {
-        $isExistingFile = new IsExistingFile(vfsStream::url('root/basic'));
-        assertTrue($isExistingFile('bar.txt'));
+        assert(
+                isExistingFile(vfsStream::url('root/basic'))->test('bar.txt'),
+                isTrue()
+        );
     }
 
     /**
@@ -88,8 +95,7 @@ class IsExistingFileTest extends \PHPUnit_Framework_TestCase
      */
     public function evaluatesToTrueIfFileDoesExistGlobally()
     {
-        $isExistingFile = new IsExistingFile();
-        assertTrue($isExistingFile(__FILE__));
+        assert(isExistingFile()->test(__FILE__), isTrue());
     }
 
     /**
@@ -97,8 +103,7 @@ class IsExistingFileTest extends \PHPUnit_Framework_TestCase
      */
     public function evaluatesToFalseIfIsRelativeDir()
     {
-        $isExistingFile = new IsExistingFile(vfsStream::url('root'));
-        assertFalse($isExistingFile('basic'));
+        assert(isExistingFile(vfsStream::url('root'))->test('basic'), isFalse());
     }
 
     /**
@@ -106,8 +111,7 @@ class IsExistingFileTest extends \PHPUnit_Framework_TestCase
      */
     public function evaluatesToFalseIfIsGlobalDir()
     {
-        $isExistingFile = new IsExistingFile();
-        assertFalse($isExistingFile(__DIR__));
+        assert(isExistingFile()->test(__DIR__), isFalse());
     }
 
     /**
@@ -129,6 +133,6 @@ class IsExistingFileTest extends \PHPUnit_Framework_TestCase
      */
     public function hasStringRepresentation(IsExistingFile $instance, $message)
     {
-        assertEquals($message, (string) $instance);
+        assert((string) $instance, equals($message));
     }
 }
