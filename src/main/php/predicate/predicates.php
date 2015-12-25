@@ -229,7 +229,7 @@ function isLessThan($expected)
  * @param   numeric  $expected
  * @return  \bovigo\assert\predicate\OrPredicate
  */
-function isLessThanOrEqual($expected)
+function isLessThanOrEqualTo($expected)
 {
     return isLessThan($expected)->orElse(equals($expected));
 }
