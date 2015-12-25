@@ -43,7 +43,7 @@ class IsLessThanTest extends \PHPUnit_Framework_TestCase
      */
     public function evaluatesToTrueWhenCombinedWithEqualsIfGivenValueIsSmaller()
     {
-        assert(isLessThanOrEqual(3)->test(2), isTrue());
+        assert(isLessThanOrEqualTo(3)->test(2), isTrue());
     }
 
     /**
@@ -51,7 +51,7 @@ class IsLessThanTest extends \PHPUnit_Framework_TestCase
      */
     public function evaluatesToFalseWhenCombinedWithEqualsIfGivenValueIsEqual()
     {
-        assert(isLessThanOrEqual(3)->test(3), isTrue());
+        assert(isLessThanOrEqualTo(3)->test(3), isTrue());
     }
 
     /**
@@ -59,6 +59,6 @@ class IsLessThanTest extends \PHPUnit_Framework_TestCase
      */
     public function evaluatesToFalseWhenCombinedWithEqualsIfGivenValueIsGreater()
     {
-        assert(isLessThanOrEqual(3)->test(4), isFalse());
+        assert(isLessThanOrEqualTo(3)->test(4), isFalse());
     }
 }
