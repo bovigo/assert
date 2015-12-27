@@ -13,16 +13,16 @@ use SebastianBergmann\Exporter\Exporter;
  * assert that a value fulfills a predicate
  *
  * @api
- * @param   mixed                                        $value      value to test
- * @param   \bovigo\assert\predicate\Predicate|callable  $predicate  predicate or callable to test given value
- * @param   string                                       $message    optional  additional description for failure message
+ * @param   mixed                                        $value        value to test
+ * @param   \bovigo\assert\predicate\Predicate|callable  $predicate    predicate or callable to test given value
+ * @param   string                                       $description  optional  additional description for failure message
  * @return  true
  * @throws  \bovigo\assert\AssertionFailure
  */
-function assert($value, $predicate, $message = null)
+function assert($value, $predicate, $description = null)
 {
     return (new Assertion($value, exporter()))
-            ->evaluate(counting(Predicate::castFrom($predicate)), $message);
+            ->evaluate(counting(Predicate::castFrom($predicate)), $description);
 }
 
 /**
