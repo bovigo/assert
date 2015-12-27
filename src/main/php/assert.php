@@ -81,9 +81,9 @@ function exporter()
 /**
  * blacklist our own classes from being displayed in PHPUnit error stacks
  */
-if (class_exists('PHPUnit_Util_Blacklist')) {
+if (class_exists(\PHPUnit_Util_Blacklist::class)) {
     \PHPUnit_Util_Blacklist::$blacklistedClassNames = array_merge(
             \PHPUnit_Util_Blacklist::$blacklistedClassNames,
-            ['bovigo\assert\Assertion' => 1]
+            [Assertion::class => 1]
     );
 }
