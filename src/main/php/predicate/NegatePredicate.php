@@ -6,6 +6,7 @@
  * file that was distributed with this source code.
  */
 namespace bovigo\assert\predicate;
+use SebastianBergmann\Exporter\Exporter;
 /**
  * Negates evaluation of wrapped predicate.
  */
@@ -102,5 +103,17 @@ class NegatePredicate extends Predicate
                 ],
                 $string
         );
+    }
+
+    /**
+     * returns a textual description of given value
+     *
+     * @param   \SebastianBergmann\Exporter\Exporter  $exporter
+     * @param   mixed                                 $value
+     * @return  string
+     */
+    public function describeValue(Exporter $exporter, $value)
+    {
+        return $this->predicate->describeValue($exporter, $value);
     }
 }
