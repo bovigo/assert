@@ -10,6 +10,7 @@ namespace bovigo\assert\predicate;
 /**
  * returns predicate which tests if value is null
  *
+ * @api
  * @return  \bovigo\assert\predicate\IsNull
  */
 function isNull()
@@ -20,6 +21,7 @@ function isNull()
 /**
  * returns predicate which tests that something is not null
  *
+ * @api
  * @return  \bovigo\assert\predicate\NegatePredicate
  */
 function isNotNull()
@@ -30,6 +32,7 @@ function isNotNull()
 /**
  * returns predicate which test that something is empty
  *
+ * @api
  * @return  \bovigo\assert\predicate\IsEmpty
  */
 function isEmpty()
@@ -40,6 +43,7 @@ function isEmpty()
 /**
  * returns a predicate which tests that something is not empty
  *
+ * @api
  * @return  \bovigo\assert\predicate\NegatePredicate
  */
 function isNotEmpty()
@@ -50,6 +54,7 @@ function isNotEmpty()
 /**
  * returns predicate which tests for truthiness
  *
+ * @api
  * @return  \bovigo\assert\predicate\IsFalse
  */
 function isTrue()
@@ -60,6 +65,7 @@ function isTrue()
 /**
  * returns predicate which tests for falsiness
  *
+ * @api
  * @return  \bovigo\assert\predicate\IsFalse
  */
 function isFalse()
@@ -70,6 +76,7 @@ function isFalse()
 /**
  * returns predicate which tests for equality
  *
+ * @api
  * @param   mixed   $expected  expected value
  * @param   float   $delta     optional  allowed numerical distance between two values to consider them equal
  * @return  \bovigo\assert\predicate\Equals
@@ -82,6 +89,7 @@ function equals($expected, $delta = 0.0)
 /**
  * returns predicate which tests for non-equality
  *
+ * @api
  * @param   mixed   $expected  expected value
  * @param   float   $delta     optional  allowed numerical distance between two values to consider them not equal
  * @return  \bovigo\assert\predicate\NegatePredicate
@@ -105,6 +113,7 @@ function not(Predicate $predicate)
 /**
  * returns predicate which tests for instance type
  *
+ * @api
  * @param   string  $expectedType  name of expected type
  * @return  \bovigo\assert\predicate\IsInstanceOf
  */
@@ -116,6 +125,7 @@ function isInstanceOf($expectedType)
 /**
  * returns predicate which tests that something is not of given instance type
  *
+ * @api
  * @param   string  $expectedType  name of expected type
  * @return  \bovigo\assert\predicate\NegatePredicate
  */
@@ -127,6 +137,7 @@ function isNotInstanceOf($expectedType)
 /**
  * returns predicate which tests for identity
  *
+ * @api
  * @param   mixed  $expected  expected value
  * @return  \bovigo\assert\predicate\IsIdentical
  */
@@ -138,6 +149,7 @@ function isSameAs($expected)
 /**
  * returns predicate which tests for non-identity
  *
+ * @api
  * @param   mixed  $expected  expected value
  * @return  \bovigo\assert\predicate\NegatePredicate
  */
@@ -149,6 +161,7 @@ function isNotSameAs($expected)
 /**
  * returns predicate which tests for size
  *
+ * @api
  * @param   int  $expectedSize  expected count size
  * @return  \bovigo\assert\predicate\IsOfSize
  */
@@ -160,6 +173,7 @@ function isOfSize($expectedSize)
 /**
  * returns predicate which tests something has not the size
  *
+ * @api
  * @param   int  $nonExpectedSize  count size which is not expected
  * @return  \bovigo\assert\predicate\NegatePredicate
  */
@@ -171,6 +185,7 @@ function isNotOfSize($nonExpectedSize)
 /**
  * returns predicate which tests something is a specific internal PHP type
  *
+ * @api
  * @param   string  $expectedType  name of type to test for
  * @return  \bovigo\assert\predicate\IsOfType
  */
@@ -182,6 +197,7 @@ function isOfType($expectedType)
 /**
  * returns predicate which tests something is not a specific internal PHP type
  *
+ * @api
  * @param   string  $unexpectedType  name of type to test for
  * @return  \bovigo\assert\predicate\NegatePredicate
  */
@@ -193,6 +209,7 @@ function isNotOfType($unexpectedType)
 /**
  * returns predicate which tests something is greather than the expected value
  *
+ * @api
  * @param   numeric  $expected
  * @return  \bovigo\assert\predicate\IsGreaterThan
  */
@@ -204,6 +221,7 @@ function isGreaterThan($expected)
 /**
  * returns predicate which tests something is greater than or equal to the expected value
  *
+ * @api
  * @param   numeric  $expected
  * @return  \bovigo\assert\predicate\OrPredicate
  */
@@ -215,6 +233,7 @@ function isGreaterThanOrEqualTo($expected)
 /**
  * returns predicate which tests something is smaller than the expected value
  *
+ * @api
  * @param   numeric  $expected
  * @return  \bovigo\assert\predicate\IsLessThan
  */
@@ -226,6 +245,7 @@ function isLessThan($expected)
 /**
  * returns predicate which tests something is smaller than or equal to the expected value
  *
+ * @api
  * @param   numeric  $expected
  * @return  \bovigo\assert\predicate\OrPredicate
  */
@@ -237,6 +257,7 @@ function isLessThanOrEqualTo($expected)
 /**
  * returns predicate which tests that $needle is contained in a value
  *
+ * @api
  * @param   mixed  $needle  value that must be contained
  * @return  \bovigo\assert\predicate\Contains
  */
@@ -248,6 +269,7 @@ function contains($needle)
 /**
  * returns predicate which tests that $needle is not contained in a value
  *
+ * @api
  * @param   mixed  $needle  value that must not be contained
  * @return  \bovigo\assert\predicate\NegatePredicate
  */
@@ -259,6 +281,7 @@ function doesNotContain($needle)
 /**
  * returns predicate which tests that $key is the key of an element
  *
+ * @api
  * @param   int|string  $key
  * @return  \bovigo\assert\predicate\HasKey
  */
@@ -270,6 +293,7 @@ function hasKey($key)
 /**
  * returns predicate which tests that $key is not the key of an element
  *
+ * @api
  * @param   int|string  $key
  * @return  \bovigo\assert\predicate\NegatePredicate
  */
@@ -281,6 +305,7 @@ function doesNotHaveKey($key)
 /**
  * returns predicate which tests against a regular expression
  *
+ * @api
  * @param   string  $pattern
  * @return  \bovigo\assert\predicate\Regex
  */
@@ -292,6 +317,7 @@ function matches($pattern)
 /**
  * returns predicate which tests against a regular expression
  *
+ * @api
  * @param   string  $pattern
  * @return  \bovigo\assert\predicate\NegatePredicate
  */
@@ -303,6 +329,7 @@ function doesNotMatch($pattern)
 /**
  * returns predicate which tests whether a file exists
  *
+ * @api
  * @param   string  $basePath  optional  base path where file must reside in
  * @return  \bovigo\assert\predicate\IsExistingFile
  */
@@ -314,6 +341,7 @@ function isExistingFile($basePath = null)
 /**
  * returns predicate which tests whether a file does not exist
  *
+ * @api
  * @param   string  $basePath  optional  base path where file must not reside in
  * @return  \bovigo\assert\predicate\NegatePredicate
  */
@@ -325,6 +353,7 @@ function isNonExistingFile($basePath = null)
 /**
  * returns predicate which tests whether a directory exists
  *
+ * @api
  * @param   string  $basePath  optional  base path where directory must reside in
  * @return  \bovigo\assert\predicate\IsExistingFile
  */
@@ -336,6 +365,7 @@ function isExistingDirectory($basePath = null)
 /**
  * returns predicate which tests whether a directory does not exist
  *
+ * @api
  * @param   string  $basePath  optional  base path where directory must not reside in
  * @return  \bovigo\assert\predicate\NegatePredicate
  */

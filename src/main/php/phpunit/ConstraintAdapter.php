@@ -11,6 +11,8 @@ use bovigo\assert\predicate\Predicate;
 use SebastianBergmann\Exporter\Exporter;
 /**
  * Predicate which allows to use constraints from PHPUnit as predicate.
+ *
+ * @internal
  */
 class ConstraintAdapter extends Predicate
 {

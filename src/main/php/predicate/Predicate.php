@@ -9,6 +9,8 @@ namespace bovigo\assert\predicate;
 use SebastianBergmann\Exporter\Exporter;
 /**
  * Evaluates if a given value fulfills a criteria.
+ *
+ * @api
  */
 abstract class Predicate implements \Countable
 {

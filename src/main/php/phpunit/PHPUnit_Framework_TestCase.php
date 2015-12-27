@@ -78,6 +78,8 @@ use function bovigo\assert\predicate\matches;
  *
  * Please note that it only overlays constraints supported by bovigo/assert. All
  * other constraints are PHPUnit's original constraints.
+ *
+ * @api
  */
 abstract class PHPUnit_Framework_TestCase extends Original
 {

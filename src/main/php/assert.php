@@ -12,6 +12,7 @@ use SebastianBergmann\Exporter\Exporter;
 /**
  * assert that a value fulfills a predicate
  *
+ * @api
  * @param   mixed                                        $value      value to test
  * @param   \bovigo\assert\predicate\Predicate|callable  $predicate  predicate or callable to test given value
  * @param   string                                       $message    optional  additional description for failure message
@@ -53,6 +54,7 @@ function counting(Predicate $predicate)
 /**
  * exports a value as a string
  *
+ * @api
  * @param   mixed   $value
  * @return  string
  */

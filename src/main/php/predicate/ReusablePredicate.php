@@ -8,6 +8,8 @@
 namespace bovigo\assert\predicate;
 /**
  * Trait for predicates which can be reused.
+ *
+ * @api
  */
 trait ReusablePredicate
 {
