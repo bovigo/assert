@@ -79,26 +79,22 @@ class NegatePredicate extends Predicate
         return str_replace(
                 [
                     'contains ',
-                    'exists',
                     'has ',
                     'is ',
                     'are ',
                     'matches ',
                     'starts with ',
                     'ends with ',
-                    'reference ',
                     'not not '
                 ],
                 [
                     'does not contain ',
-                    'does not exist',
                     'does not have ',
                     'is not ',
                     'are not ',
                     'does not match ',
                     'starts not with ',
                     'ends not with ',
-                    'don\'t reference ',
                     'not '
                 ],
                 $string
