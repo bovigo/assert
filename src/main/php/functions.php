@@ -43,7 +43,7 @@ use function bovigo\assert\predicate\matches;
  * @param   string              $message  optional  additional description for failure message
  * @return  bool
  */
-function assertArrayHasKey($key, $array, $message = null)
+function assertArrayHasKey($key, $array, $message = '')
 {
     return assert($array, hasKey($key), $message);
 }
@@ -56,7 +56,7 @@ function assertArrayHasKey($key, $array, $message = null)
  * @param   string              $message  optional  additional description for failure message
  * @return  bool
  */
-function assertArrayNotHasKey($key, $array, $message = null)
+function assertArrayNotHasKey($key, $array, $message = '')
 {
     return assert($array, doesNotHaveKey($key), $message);
 }
@@ -69,7 +69,7 @@ function assertArrayNotHasKey($key, $array, $message = null)
  * @param   string                     $message   optional  additional description for failure message
  * @return  bool
  */
-function assertContains($needle, $haystack, $message = null)
+function assertContains($needle, $haystack, $message = '')
 {
     return assert($haystack, contains($needle), $message);
 }
@@ -82,7 +82,7 @@ function assertContains($needle, $haystack, $message = null)
  * @param   string                     $message   optional  additional description for failure message
  * @return  bool
  */
-function assertNotContains($needle, $haystack, $message = null)
+function assertNotContains($needle, $haystack, $message = '')
 {
     return assert($haystack, doesNotContain($needle), $message);
 }
@@ -94,7 +94,7 @@ function assertNotContains($needle, $haystack, $message = null)
  * @param   string  $message   optional  additional description for failure message
  * @return  bool
  */
-function assertEmpty($actual, $message = null)
+function assertEmpty($actual, $message = '')
 {
     return assert($actual, isEmpty(), $message);
 }
@@ -106,7 +106,7 @@ function assertEmpty($actual, $message = null)
  * @param   string  $message   optional  additional description for failure message
  * @return  bool
  */
-function assertNotEmpty($actual, $message = null)
+function assertNotEmpty($actual, $message = '')
 {
     return assert($actual, isNotEmpty(), $message);
 }
@@ -121,7 +121,7 @@ function assertNotEmpty($actual, $message = null)
  * @param   string  $message   optional  additional description for failure message
  * @return  bool
  */
-function assertFileExists($filename, $message = null)
+function assertFileExists($filename, $message = '')
 {
     return assert($filename, isExistingFile(), $message);
 }
@@ -136,7 +136,7 @@ function assertFileExists($filename, $message = null)
  * @param   string  $message   optional  additional description for failure message
  * @return  bool
  */
-function assertFileNotExists($filename, $message = null)
+function assertFileNotExists($filename, $message = '')
 {
     return assert($filename, isNonExistingFile(), $message);
 }
@@ -149,7 +149,7 @@ function assertFileNotExists($filename, $message = null)
  * @param   string   $message   optional  additional description for failure message
  * @return  bool
  */
-function assertLessThan($expected, $actual, $message = null)
+function assertLessThan($expected, $actual, $message = '')
 {
     return assert($actual, isLessThan($expected), $message);
 }
@@ -162,7 +162,7 @@ function assertLessThan($expected, $actual, $message = null)
  * @param   string   $message   optional  additional description for failure message
  * @return  bool
  */
-function assertLessThanOrEqual($expected, $actual, $message = null)
+function assertLessThanOrEqual($expected, $actual, $message = '')
 {
     return assert($actual, isLessThanOrEqualTo($expected), $message);
 }
@@ -175,7 +175,7 @@ function assertLessThanOrEqual($expected, $actual, $message = null)
  * @param   string   $message   optional  additional description for failure message
  * @return  bool
  */
-function assertGreaterThan($expected, $actual, $message = null)
+function assertGreaterThan($expected, $actual, $message = '')
 {
     return assert($actual, isGreaterThan($expected), $message);
 }
@@ -188,7 +188,7 @@ function assertGreaterThan($expected, $actual, $message = null)
  * @param   string   $message   optional  additional description for failure message
  * @return  bool
  */
-function assertGreaterThanOrEqual($expected, $actual, $message = null)
+function assertGreaterThanOrEqual($expected, $actual, $message = '')
 {
     return assert($actual, isGreaterThanOrEqualTo($expected), $message);
 }
@@ -201,7 +201,7 @@ function assertGreaterThanOrEqual($expected, $actual, $message = null)
  * @param   string  $message       optional  additional description for failure message
  * @return  bool
  */
-function assertInternalType($expectedType, $actual, $message = null)
+function assertInternalType($expectedType, $actual, $message = '')
 {
     return assert($actual, isOfType($expectedType), $message);
 }
@@ -214,7 +214,7 @@ function assertInternalType($expectedType, $actual, $message = null)
  * @param   string  $message         optional  additional description for failure message
  * @return  bool
  */
-function assertNotInternalType($unexpectedType, $actual, $message = null)
+function assertNotInternalType($unexpectedType, $actual, $message = '')
 {
     return assert($actual, isNotOfType($unexpectedType), $message);
 }
@@ -227,7 +227,7 @@ function assertNotInternalType($unexpectedType, $actual, $message = null)
  * @param   string                                $message       optional  additional description for failure message
  * @return  bool
  */
-function assertCount($expectedSize, $countable, $message = null)
+function assertCount($expectedSize, $countable, $message = '')
 {
     return assert($countable, isOfSize($expectedSize), $message);
 }
@@ -240,7 +240,7 @@ function assertCount($expectedSize, $countable, $message = null)
  * @param   string                                $message       optional  additional description for failure message
  * @return  bool
  */
-function assertNotCount($expectedSize, $countable, $message = null)
+function assertNotCount($expectedSize, $countable, $message = '')
 {
     return assert($countable, isNotOfSize($expectedSize), $message);
 }
@@ -254,7 +254,7 @@ function assertNotCount($expectedSize, $countable, $message = null)
  * @param   float   $delta     optional  allowed numerical distance between two values to consider them equal
  * @return  bool
  */
-function assertEquals($expected, $actual, $message = null, $delta = 0.0)
+function assertEquals($expected, $actual, $message = '', $delta = 0.0)
 {
     return assert($actual, equals($expected, $delta), $message);
 }
@@ -268,7 +268,7 @@ function assertEquals($expected, $actual, $message = null, $delta = 0.0)
  * @param   float   $delta         optional  allowed numerical distance between two values to consider them equal
  * @return  bool
  */
-function assertNotEquals($expected, $actual, $message = null, $delta = 0.0)
+function assertNotEquals($expected, $actual, $message = '', $delta = 0.0)
 {
     return assert($actual, isNotEqualTo($expected, $delta), $message);
 }
@@ -280,7 +280,7 @@ function assertNotEquals($expected, $actual, $message = null, $delta = 0.0)
  * @param   string  $message  optional  additional description for failure message
  * @return  bool
  */
-function assertFalse($value, $message = null)
+function assertFalse($value, $message = '')
 {
     return assert($value, isFalse(), $message);
 }
@@ -293,7 +293,7 @@ function assertFalse($value, $message = null)
  * @param   string  $message       optional  additional description for failure message
  * @return  bool
  */
-function assertInstanceOf($expectedType, $actual, $message = null)
+function assertInstanceOf($expectedType, $actual, $message = '')
 {
     return assert($actual, isInstanceOf($expectedType), $message);
 }
@@ -306,7 +306,7 @@ function assertInstanceOf($expectedType, $actual, $message = null)
  * @param   string  $message       optional  additional description for failure message
  * @return  bool
  */
-function assertNotInstanceOf($expectedType, $actual, $message = null)
+function assertNotInstanceOf($expectedType, $actual, $message = '')
 {
     return assert($actual, isNotInstanceOf($expectedType), $message);
 }
@@ -318,7 +318,7 @@ function assertNotInstanceOf($expectedType, $actual, $message = null)
  * @param   string  $message  optional  additional description for failure message
  * @return  bool
  */
-function assertNull($value, $message = null)
+function assertNull($value, $message = '')
 {
     return assert($value, isNull(), $message);
 }
@@ -330,7 +330,7 @@ function assertNull($value, $message = null)
  * @param   string  $message  optional  additional description for failure message
  * @return  bool
  */
-function assertNotNull($value, $message = null)
+function assertNotNull($value, $message = '')
 {
     return assert($value, isNotNull(), $message);
 }
@@ -343,7 +343,7 @@ function assertNotNull($value, $message = null)
  * @param   string  $message   optional  additional description for failure message
  * @return  bool
  */
-function assertSame($expected, $actual, $message = null)
+function assertSame($expected, $actual, $message = '')
 {
     return assert($actual, isSameAs($expected), $message);
 }
@@ -356,7 +356,7 @@ function assertSame($expected, $actual, $message = null)
  * @param   string  $message   optional  additional description for failure message
  * @return  bool
  */
-function assertNotSame($expected, $actual, $message = null)
+function assertNotSame($expected, $actual, $message = '')
 {
     return assert($actual, isNotSameAs($expected), $message);
 }
@@ -369,7 +369,7 @@ function assertNotSame($expected, $actual, $message = null)
  * @param   string  $message   optional  additional description for failure message
  * @return  bool
  */
-function assertRegExp($pattern, $string, $message = null)
+function assertRegExp($pattern, $string, $message = '')
 {
     return assert($string, matches($pattern), $message);
 }
@@ -382,7 +382,7 @@ function assertRegExp($pattern, $string, $message = null)
  * @param   string  $message   optional  additional description for failure message
  * @return  bool
  */
-function assertNotRegExp($pattern, $string, $message = null)
+function assertNotRegExp($pattern, $string, $message = '')
 {
     return assert($string, doesNotMatch($pattern), $message);
 }
@@ -390,13 +390,13 @@ function assertNotRegExp($pattern, $string, $message = null)
 /**
  * asserts that given value is true
  *
- * @param   mixed   $value        value to test
- * @param   string  $description  optional  additional description for failure message
+ * @param   mixed   $value    value to test
+ * @param   string  $message  optional  additional description for failure message
  * @return  bool
  */
-function assertTrue($value, $description = null)
+function assertTrue($value, $message = '')
 {
-    return assert($value, isTrue(), $description);
+    return assert($value, isTrue(), $message);
 }
 
 /**
@@ -407,7 +407,7 @@ function assertTrue($value, $description = null)
  * @param    string                                       $message   optional  additional description for failure message
  * @return   bool
  */
-function assertThat($value, $expected, $message = null)
+function assertThat($value, $expected, $message = '')
 {
     return assert($value, $expected, $message);
 }
