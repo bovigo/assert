@@ -52,6 +52,7 @@ use function bovigo\assert\predicate\doesNotMatch;
 use function bovigo\assert\predicate\equals;
 use function bovigo\assert\predicate\hasKey;
 use function bovigo\assert\predicate\isEmpty;
+use function bovigo\assert\predicate\isExistingDirectory;
 use function bovigo\assert\predicate\isExistingFile;
 use function bovigo\assert\predicate\isFalse;
 use function bovigo\assert\predicate\isGreaterThan;
@@ -59,6 +60,7 @@ use function bovigo\assert\predicate\isGreaterThanOrEqualTo;
 use function bovigo\assert\predicate\isInstanceOf;
 use function bovigo\assert\predicate\isLessThan;
 use function bovigo\assert\predicate\isLessThanOrEqualTo;
+use function bovigo\assert\predicate\isNonExistingDirectory;
 use function bovigo\assert\predicate\isNonExistingFile;
 use function bovigo\assert\predicate\isNotEmpty;
 use function bovigo\assert\predicate\isNotEqualTo;
@@ -301,7 +303,7 @@ abstract class PHPUnit_Framework_TestCase extends Original
      */
     public static function assertFileExists($filename, $message = '')
     {
-        assert($filename, isExistingFile(), $message);
+        assert($filename, isExistingFile()->orElse(isExistingDirectory()), $message);
     }
 
     /**
@@ -312,7 +314,7 @@ abstract class PHPUnit_Framework_TestCase extends Original
      */
     public static function assertFileNotExists($filename, $message = '')
     {
-        assert($filename, isNonExistingFile(), $message);
+        assert($filename, isNonExistingFile()->asWellAs(isNonExistingDirectory()), $message);
     }
 
     /**
