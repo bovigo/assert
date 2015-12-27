@@ -71,3 +71,14 @@ use function bovigo\callmap\verify;
 _For PHP versions older than 5.6.0, you can do `use bovigo\callmap` and call them
 with `callmap\throws()`, `callmap\onConsecutiveCalls()`, and `callmap\verify()`._
 
+
+FAQ
+---
+
+How can I access a property of a class or object for the assertions?
+
+If the property is public you can pass it directly into the `assert()` function.
+In any other case bovigo/assert does not support accessing protected or private
+properties. There's a reason why they are protected or private, and a test
+should only be against the public API of a class, not against their inner
+workings.
