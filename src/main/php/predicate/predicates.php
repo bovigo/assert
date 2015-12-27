@@ -90,13 +90,13 @@ function equals($expected, $delta = 0.0)
  * returns predicate which tests for non-equality
  *
  * @api
- * @param   mixed   $expected  expected value
- * @param   float   $delta     optional  allowed numerical distance between two values to consider them not equal
+ * @param   mixed   $unexpected  expected value
+ * @param   float   $delta       optional  allowed numerical distance between two values to consider them not equal
  * @return  \bovigo\assert\predicate\NegatePredicate
  */
-function isNotEqualTo($expected, $delta = 0.0)
+function isNotEqualTo($unexpected, $delta = 0.0)
 {
-    return not(equals($expected, $delta));
+    return not(equals($unexpected, $delta));
 }
 
 /**
@@ -126,12 +126,12 @@ function isInstanceOf($expectedType)
  * returns predicate which tests that something is not of given instance type
  *
  * @api
- * @param   string  $expectedType  name of expected type
+ * @param   string  $unexpectedType  name of expected type
  * @return  \bovigo\assert\predicate\NegatePredicate
  */
-function isNotInstanceOf($expectedType)
+function isNotInstanceOf($unexpectedType)
 {
-    return not(isInstanceOf($expectedType));
+    return not(isInstanceOf($unexpectedType));
 }
 
 /**
@@ -150,12 +150,12 @@ function isSameAs($expected)
  * returns predicate which tests for non-identity
  *
  * @api
- * @param   mixed  $expected  expected value
+ * @param   mixed  $unexpected  expected value
  * @return  \bovigo\assert\predicate\NegatePredicate
  */
-function isNotSameAs($expected)
+function isNotSameAs($unexpected)
 {
-    return not(isSameAs($expected));
+    return not(isSameAs($unexpected));
 }
 
 /**
@@ -174,12 +174,12 @@ function isOfSize($expectedSize)
  * returns predicate which tests something has not the size
  *
  * @api
- * @param   int  $nonExpectedSize  count size which is not expected
+ * @param   int  $unexpectedSize  count size which is not expected
  * @return  \bovigo\assert\predicate\NegatePredicate
  */
-function isNotOfSize($nonExpectedSize)
+function isNotOfSize($unexpectedSize)
 {
-    return not(isOfSize($nonExpectedSize));
+    return not(isOfSize($unexpectedSize));
 }
 
 /**
