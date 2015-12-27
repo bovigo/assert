@@ -22,29 +22,34 @@ class OrPredicate extends Predicate
      */
     public function test($value)
     {
-        $exceptions = [];
-        foreach ([$this->leftPredicate, $this->rightPredicate] as $predicate) {
-            try {
-                if ($predicate->test($value)) {
-                    return true;
-                }
-            } catch (\Exception $ex) {
-                $exceptions[] = $ex;
+        $leftE = null;
+        try {
+            if ($this->leftPredicate->test($value)) {
+                return true;
             }
+        } catch (\Exception $ex) {
+            $leftE = $ex;
         }
-        
-        switch (count($exceptions)) {
-            case 0:
-                return false;
 
-            case 1:
-                throw $exceptions[0];
-
-            default:
+        try {
+            if ($this->rightPredicate->test($value)) {
+                return true;
+            }
+        } catch (\Exception $rightE) {
+            if (null !== $leftE) {
                 throw new \Exception(
-                        $exceptions[0]->getMessage() . "\n" . $exceptions[1]->getMessage()
+                        $leftE->getMessage() . "\n" . $rightE->getMessage()
                 );
+            }
+
+            throw $rightE;
         }
+
+        if (null !== $leftE) {
+            throw $leftE;
+        }
+
+        return false;
     }
 
     /**

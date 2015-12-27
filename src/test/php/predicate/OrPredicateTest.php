@@ -81,6 +81,23 @@ Given value of type "integer" can not be matched against a regular expression.')
     /**
      * @test
      */
+    public function doesNotSwallowExceptionFromSecondPredicateIfFirstFails()
+    {
+        try {
+            assert(303, isNull()->orElse(matches('/^([a-z]{3})$/')));
+            $this->fail('Expected ' . AssertionFailure::class . ', got none');
+        } catch (AssertionFailure $af) {
+            assert(
+                    $af->getMessage(),
+                    equals('Failed asserting that 303 is null or matches regular expression "/^([a-z]{3})$/".
+Given value of type "integer" can not be matched against a regular expression.')
+            );
+        }
+    }
+
+    /**
+     * @test
+     */
     public function doesNotSwallowBothExceptionsWhenBothPredicatesFail()
     {
         try {

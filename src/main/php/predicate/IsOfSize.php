@@ -72,9 +72,9 @@ class IsOfSize extends Predicate
             return strlen($value);
         } elseif (is_array($value) || $value instanceof \Countable) {
             return count($value);
-        } elseif ($value instanceof \Traversable) {
-            return iterator_count($this->cloneIterator($value));
         }
+
+        return iterator_count($this->cloneIterator($value));
     }
 
     /**

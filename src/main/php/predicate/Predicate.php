@@ -111,8 +111,6 @@ abstract class Predicate implements \Countable
     {
         if (is_array($value)) {
             return 'an array';
-        } elseif ($value instanceof \Traversable) {
-            return 'a traversable';
         }
 
         return $exporter->export($value);
