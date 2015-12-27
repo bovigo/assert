@@ -21,7 +21,7 @@
         ]
     },
     "autoload-dev": {
-        "files": ["src/main/php/functions.php"]
+        "files": ["src/main/php/phpunit/functions.php"]
     },
     "extra": {
         "branch-alias": {
