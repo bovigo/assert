@@ -21,7 +21,7 @@ use SebastianBergmann\Exporter\Exporter;
 function assert($value, $predicate, $message = null)
 {
     return (new Assertion($value, exporter()))
-            ->compliesTo(counting(Predicate::castFrom($predicate)), $message);
+            ->evaluate(counting(Predicate::castFrom($predicate)), $message);
 }
 
 /**

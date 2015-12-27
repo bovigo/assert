@@ -44,7 +44,7 @@ class Assertion
      * @return  bool
      * @throws  \bovigo\assert\AssertionFailure
      */
-    public function compliesTo(Predicate $predicate, $description = null)
+    public function evaluate(Predicate $predicate, $description = null)
     {
         try {
             if ($predicate->test($this->value)) {
