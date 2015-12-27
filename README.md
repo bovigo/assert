@@ -70,7 +70,9 @@ imported into the current namespace via
 use function bovigo\assert\assert;
 use function bovigo\assert\predicate\isTrue;
 use function bovigo\assert\predicate\equals;
+// ... and so on
 ```
+
 
 List of predicates
 ------------------
@@ -416,8 +418,9 @@ FAQ
 
 ### How can I access a property of a class or object for the assertions?
 
-If the property is public you can pass it directly into the `assert()` function.
-In any other case _bovigo/assert_ does not support accessing protected or
-private properties. There's a reason why they are protected or private, and a
-test should only be against the public API of a class, not against their inner
-workings.
+Unlike PHPUnit _bovigo/assert_  does not provide means to assert that a property
+of a class fullfills a certain constraint. If the property is public you can
+pass it directly into the `assert()` function. In any other case _bovigo/assert_
+does not support accessing protected or private properties. There's a reason why
+they are protected or private, and a test should only be against the public API
+of a class, not against their inner workings.
