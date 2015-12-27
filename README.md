@@ -420,7 +420,7 @@ FAQ
 
 Unlike PHPUnit _bovigo/assert_  does not provide means to assert that a property
 of a class fullfills a certain constraint. If the property is public you can
-pass it directly into the `assert()` function. In any other case _bovigo/assert_
-does not support accessing protected or private properties. There's a reason why
-they are protected or private, and a test should only be against the public API
-of a class, not against their inner workings.
+pass it directly into the `assert()` function as a value. In any other case
+_bovigo/assert_ does not support accessing protected or private properties.
+There's a reason why they are protected or private, and a test should only be
+against the public API of a class, not against their inner workings.
