@@ -43,9 +43,7 @@ class RegexTest extends \PHPUnit_Framework_TestCase
     {
         return [['/^([a-z]{3})$/', 'Bar'],
                 ['/^([a-z]{3})$/', 'baz0123'],
-                ['/^([a-z]{3})$/', null],
-                ['/^([a-z]{3})$/i', 'baz0123'],
-                ['/^([a-z]{3})$/i', null]
+                ['/^([a-z]{3})$/i', 'baz0123']
         ];
     }
 
@@ -58,6 +56,26 @@ class RegexTest extends \PHPUnit_Framework_TestCase
     public function invalidValueEvaluatesToFalse($pattern, $value)
     {
         assert(matches($pattern)->test($value), isFalse());
+    }
+
+    /**
+     * @test
+     * @expectedException  InvalidArgumentException
+     * @expectedExceptionMessage  Given value of type "integer" can not be matched against a regular expression
+     */
+    public function nonStringsThrowInvalidArgumentException()
+    {
+        matches('/^([a-z]{3})$/')->test(303);
+    }
+
+    /**
+     * @test
+     * @expectedException  InvalidArgumentException
+     * @expectedExceptionMessage  Given value of type "NULL" can not be matched against a regular expression
+     */
+    public function nullThrowInvalidArgumentException()
+    {
+        matches('/^([a-z]{3})$/')->test(null);
     }
 
     /**
@@ -80,5 +98,15 @@ class RegexTest extends \PHPUnit_Framework_TestCase
                 (string) new Regex('/^([a-z]{3})$/'),
                 equals('matches regular expression "/^([a-z]{3})$/"')
         );
+    }
+
+    /**
+     * @test
+     * @expectedException  bovigo\assert\AssertionFailure
+     * @expectedExceptionMessage  Failed asserting that 'f' matches regular expression "/^([a-z]{3})$/".
+     */
+    public function assertionFailureContainsMeaningfulInformation()
+    {
+        assert('f', matches('/^([a-z]{3})$/'));
     }
 }

@@ -6,9 +6,10 @@
  * file that was distributed with this source code.
  */
 namespace bovigo\assert\predicate;
-use bovigo\assert;
 use SebastianBergmann\Comparator\ComparisonFailure;
 use SebastianBergmann\Comparator\Factory;
+
+use function bovigo\assert\export;
 /**
  * Predicate to test that something is equal.
  */
@@ -76,22 +77,29 @@ class Equals extends Predicate
      */
     public function __toString()
     {
-        if (null !== $this->lastFailure) {
-            return $this->lastFailure->getMessage() . $this->lastFailure->getDiff();
-        }
-
+        $result = '';
         if (is_string($this->expected)) {
             if (strpos($this->expected, "\n") !== false) {
-                return 'is equal to <text>';
+                $result = 'is equal to <text>';
+            } else {
+                $result = sprintf('is equal to <string:%s>', $this->expected);
             }
+        } else {
 
-            return sprintf('is equal to <string:%s>', $this->expected);
+            $result = sprintf(
+                    'is equal to %s%s',
+                    export($this->expected),
+                    $this->delta != 0 ? sprintf(' with delta <%F>', $this->delta) : ''
+            );
         }
 
-        return sprintf(
-                'is equal to %s%s',
-                assert\exporter()->export($this->expected),
-                $this->delta != 0 ? sprintf(' with delta <%F>', $this->delta) : ''
-        );
+        if (null !== $this->lastFailure) {
+            $diff = $this->lastFailure->getDiff();
+            if (!empty($diff)) {
+                return $result . '.' . $diff;
+            }
+        }
+
+        return $result;
     }
 }

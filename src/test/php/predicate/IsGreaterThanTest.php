@@ -61,4 +61,24 @@ class IsGreaterThanTest extends \PHPUnit_Framework_TestCase
     {
         assert(isGreaterThanOrEqualTo(3)->test(2), isFalse());
     }
+
+    /**
+     * @test
+     * @expectedException  bovigo\assert\AssertionFailure
+     * @expectedExceptionMessage  Failed asserting that 1 is greater than 2.
+     */
+    public function assertionFailureContainsMeaningfulInformation()
+    {
+        assert(1, isGreaterThan(2));
+    }
+
+    /**
+     * @test
+     * @expectedException  bovigo\assert\AssertionFailure
+     * @expectedExceptionMessage  Failed asserting that 1 is equal to 2 or is greater than 2.
+     */
+    public function assertionFailureWhenCombinedWithEqualsContainsMeaningfulInformation()
+    {
+        assert(1, isGreaterThanOrEqualTo(2));
+    }
 }

@@ -45,4 +45,14 @@ class IsTrueTest extends \PHPUnit_Framework_TestCase
     {
         assert(isTrue()->test($false), isSameAs(false));
     }
+
+    /**
+     * @test
+     * @expectedException  bovigo\assert\AssertionFailure
+     * @expectedExceptionMessage  Failed asserting that an array is true.
+     */
+    public function assertionFailureContainsMeaningfulInformation()
+    {
+        assert([], isTrue());
+    }
 }

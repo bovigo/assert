@@ -73,4 +73,14 @@ class IsOfTypeTest extends \PHPUnit_Framework_TestCase
     {
         assert(isOfType('int')->test('foo'), isFalse());
     }
+
+    /**
+     * @test
+     * @expectedException  bovigo\assert\AssertionFailure
+     * @expectedExceptionMessage  Failed asserting that an array is of type "int".
+     */
+    public function assertionFailureContainsMeaningfulInformation()
+    {
+        assert([], isOfType('int'));
+    }
 }

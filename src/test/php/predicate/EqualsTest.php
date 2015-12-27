@@ -6,6 +6,7 @@
  * file that was distributed with this source code.
  */
 namespace bovigo\assert\predicate;
+use bovigo\assert\AssertionFailure;
 use function bovigo\assert\assert;
 /**
  * Tests for bovigo\assert\predicate\Equals.
@@ -67,5 +68,28 @@ class EqualsTest extends \PHPUnit_Framework_TestCase
     public function evaluatesToFalse($expected, $value)
     {
         assert(equals($expected)->test($value), isFalse());
+    }
+
+    /**
+     * @test
+     */
+    public function assertionFailureContainsMeaningfulInformation()
+    {
+        try {
+            assert('bar', equals('foo'), 'additional info');
+        } catch (AssertionFailure $af) {
+            assert(
+                    $af->getMessage(),
+                    equals("Failed asserting that 'bar' is equal to <string:foo>.
+--- Expected
++++ Actual
+@@ @@
+-'foo'
++'bar'
+
+additional info"
+                    )
+            );
+        }
     }
 }

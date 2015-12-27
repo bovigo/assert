@@ -6,6 +6,8 @@
  * file that was distributed with this source code.
  */
 namespace bovigo\assert\predicate;
+use bovigo\assert\AssertionFailure;
+
 use function bovigo\assert\assert;
 /**
  * Test for bovigo\assert\predicate\OrPredicate.
@@ -51,11 +53,55 @@ class OrPredicateTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
+    public function returnsTrueWhenFirstPredicateThrowsExceptionButOtherSucceeds()
+    {
+        assert(
+                assert(null, matches('/^([a-z]{3})$/')->orElse(isNull())),
+                isTrue()
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function doesNotSwallowExceptionFromFirstPredicateIfOtherFails()
+    {
+        try {
+            assert(303, matches('/^([a-z]{3})$/')->orElse(isNull()));
+        } catch (AssertionFailure $af) {
+            assert(
+                    $af->getMessage(),
+                    equals('Failed asserting that 303 matches regular expression "/^([a-z]{3})$/" or is null.
+Given value of type "integer" can not be matched against a regular expression.')
+            );
+        }
+    }
+
+    /**
+     * @test
+     */
+    public function doesNotSwallowBothExceptionsWhenBothPredicatesFail()
+    {
+        try {
+            assert(303, matches('/^([a-z]{3})$/')->orElse(contains('dummy')));
+        } catch (AssertionFailure $af) {
+            assert(
+                    $af->getMessage(),
+                    equals('Failed asserting that 303 matches regular expression "/^([a-z]{3})$/" or contains \'dummy\'.
+Given value of type "integer" can not be matched against a regular expression.
+Given value of type "integer" can not contain something.')
+            );
+        }
+    }
+
+    /**
+     * @test
+     */
     public function hasStringRepresentation()
     {
         assert(
                 $this->orPredicate,
-                equals('(callable<lambda> or callable<lambda>)')
+                equals('callable<lambda> or callable<lambda>')
         );
     }
 

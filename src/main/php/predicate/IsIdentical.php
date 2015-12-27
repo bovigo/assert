@@ -6,6 +6,8 @@
  * file that was distributed with this source code.
  */
 namespace bovigo\assert\predicate;
+use SebastianBergmann\Exporter\Exporter;
+
 use function bovigo\assert\export;
 /**
  * Predicate to test that something is identical.
@@ -20,7 +22,7 @@ class IsIdentical extends Predicate
      *
      * @type  mixed
      */
-    private $value;
+    private $expected;
 
     /**
      * constructor
@@ -29,7 +31,7 @@ class IsIdentical extends Predicate
      */
     public function __construct($value)
     {
-        $this->value = $value;
+        $this->expected = $value;
     }
 
     /**
@@ -40,13 +42,13 @@ class IsIdentical extends Predicate
      */
     public function test($value)
     {
-        if (is_double($this->value) && is_double($value) &&
-            !is_infinite($this->value) && !is_infinite($value) &&
-            !is_nan($this->value) && !is_nan($value)) {
-            return abs($this->value - $value) < self::EPSILON;
+        if (is_double($this->expected) && is_double($value) &&
+            !is_infinite($this->expected) && !is_infinite($value) &&
+            !is_nan($this->expected) && !is_nan($value)) {
+            return abs($this->expected - $value) < self::EPSILON;
         }
 
-        return $this->value === $value;
+        return $this->expected === $value;
     }
 
     /**
@@ -56,13 +58,27 @@ class IsIdentical extends Predicate
      */
     public function __toString()
     {
-        if (is_object($this->value)) {
-            return sprintf(
-                    'is identical to an object of class "%s"',
-                    get_class($this->value)
-            );
+        $result = 'is identical to ';
+        if (is_object($this->expected)) {
+            return $result . 'object of type "' . get_class($this->expected) . '"';
         }
 
-        return 'is identical to ' . export($this->value);
+        return $result . export($this->expected);
+    }
+
+    /**
+     * returns a textual description of given value
+     *
+     * @param   \SebastianBergmann\Exporter\Exporter  $exporter
+     * @param   mixed                                 $value
+     * @return  string
+     */
+    public function describeValue(Exporter $exporter, $value)
+    {
+        if (is_object($value)) {
+            return 'object of type "' . get_class($value) . '"';
+        }
+
+        return parent::describeValue($exporter, $value);
     }
 }

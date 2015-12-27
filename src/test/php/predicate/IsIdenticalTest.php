@@ -46,4 +46,34 @@ class IsIdenticalTest extends \PHPUnit_Framework_TestCase
     {
         assert(isSameAs(3.03)->test(3.02), isFalse());
     }
+
+    /**
+     * @test
+     * @expectedException  bovigo\assert\AssertionFailure
+     * @expectedExceptionMessage  Failed asserting that true is identical to false.
+     */
+    public function assertionFailureContainsMeaningfulInformation()
+    {
+        assert(true, isSameAs(false));
+    }
+
+    /**
+     * @test
+     * @expectedException  bovigo\assert\AssertionFailure
+     * @expectedExceptionMessage  Failed asserting that object of type "stdClass" is identical to object of type "stdClass".
+     */
+    public function assertionFailureWithObjectsContainsMeaningfulInformation()
+    {
+        assert(new \stdClass(), isSameAs(new \stdClass()));
+    }
+
+    /**
+     * @test
+     * @expectedException  bovigo\assert\AssertionFailure
+     * @expectedExceptionMessage  Failed asserting that object of type "stdClass" is identical to 'foo'.
+     */
+    public function assertionFailureWithObjectAndOtherContainsMeaningfulInformation()
+    {
+        assert(new \stdClass(), isSameAs('foo'));
+    }
 }

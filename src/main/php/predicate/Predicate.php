@@ -6,6 +6,7 @@
  * file that was distributed with this source code.
  */
 namespace bovigo\assert\predicate;
+use SebastianBergmann\Exporter\Exporter;
 /**
  * Evaluates if a given value fulfills a criteria.
  */
@@ -98,4 +99,22 @@ abstract class Predicate implements \Countable
      * @return  string
      */
     public abstract function __toString();
+
+    /**
+     * returns a textual description of given value
+     *
+     * @param   \SebastianBergmann\Exporter\Exporter  $exporter
+     * @param   mixed                                 $value
+     * @return  string
+     */
+    public function describeValue(Exporter $exporter, $value)
+    {
+        if (is_array($value)) {
+            return 'an array';
+        } elseif ($value instanceof \Traversable) {
+            return 'a traversable';
+        }
+
+        return $exporter->export($value);
+    }
 }

@@ -48,4 +48,14 @@ class IsNullTest extends \PHPUnit_Framework_TestCase
     {
         assert(isNull()->test($nonNullValue), isFalse());
     }
+
+    /**
+     * @test
+     * @expectedException  bovigo\assert\AssertionFailure
+     * @expectedExceptionMessage  Failed asserting that an array is null.
+     */
+    public function assertionFailureContainsMeaningfulInformation()
+    {
+        assert([], isNull());
+    }
 }

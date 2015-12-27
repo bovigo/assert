@@ -209,7 +209,7 @@ function isGreaterThan($expected)
  */
 function isGreaterThanOrEqualTo($expected)
 {
-    return isGreaterThan($expected)->orElse(equals($expected));
+    return equals($expected)->orElse(isGreaterThan($expected));
 }
 
 /**
@@ -231,7 +231,7 @@ function isLessThan($expected)
  */
 function isLessThanOrEqualTo($expected)
 {
-    return isLessThan($expected)->orElse(equals($expected));
+    return equals($expected)->orElse(isLessThan($expected));
 }
 
 /**

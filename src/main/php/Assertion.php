@@ -72,35 +72,18 @@ class Assertion
      */
     private function describeFailure(Predicate $predicate, $description)
     {
-        // Leaky abstraction from Equals predicate: leaks texts from
-        // SebastianBergmann\Comparator
         $predicateText = (string) $predicate;
-        if (substr($predicateText, 0, 6) !== 'Failed') {
-            $export = $this->exportForPredicate($predicate);
-            $failureDescription = sprintf(
-                    'Failed asserting that %s %s',
-                    $this->exporter->$export($this->value),
-                    $predicateText
-            );
-        } else {
-            $failureDescription = $predicateText;
-        }
+        $failureDescription = sprintf(
+                'Failed asserting that %s %s%s',
+                $predicate->describeValue($this->exporter, $this->value),
+                $predicateText,
+                strpos($predicateText, "\n") !== false ? '' : '.'
+        );
 
         if (!empty($description)) {
-            $failureDescription = $description . "\n" . $failureDescription;
+            $failureDescription .= "\n" . $description;
         }
 
         return $failureDescription;
-    }
-
-    private function exportForPredicate(Predicate $predicate)
-    {
-        switch (get_class($predicate)) {
-            case predicate\IsInstanceOf::class:
-                return 'shortenedExport';
-
-            default:
-                return 'export';
-        }
     }
 }

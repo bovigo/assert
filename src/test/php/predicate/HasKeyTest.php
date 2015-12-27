@@ -99,4 +99,25 @@ class HasKeyTest extends \PHPUnit_Framework_TestCase
     {
         hasKey('foo')->test(303);
     }
+
+    /**
+     * @test
+     * @expectedException  bovigo\assert\AssertionFailure
+     * @expectedExceptionMessage  Failed asserting that an array has the key 'bar'.
+     */
+    public function assertionFailureWithArrayContainsMeaningfulInformation()
+    {
+        assert([], hasKey('bar'));
+    }
+
+    /**
+     * @group  foo
+     * @test
+     * @expectedException  bovigo\assert\AssertionFailure
+     * @expectedExceptionMessage  Failed asserting that bovigo\assert\predicate\ArrayAccessExample implementing \ArrayAccess has the key 'bar'.
+     */
+    public function assertionFailureWithArrayAccessContainsMeaningfulInformation()
+    {
+        assert(new ArrayAccessExample(), hasKey('bar'));
+    }
 }

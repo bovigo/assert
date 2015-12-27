@@ -142,4 +142,14 @@ class IsExistingDirectoryTest extends \PHPUnit_Framework_TestCase
     {
         assert((string) $instance, equals($message));
     }
+
+    /**
+     * @test
+     * @expectedException  bovigo\assert\AssertionFailure
+     * @expectedExceptionMessage  Failed asserting that 'vfs://root/baz' is a existing directory.
+     */
+    public function assertionFailureContainsMeaningfulInformation()
+    {
+        assert(vfsStream::url('root/baz'), isExistingDirectory());
+    }
 }

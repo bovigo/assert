@@ -6,6 +6,7 @@
  * file that was distributed with this source code.
  */
 namespace bovigo\assert\predicate;
+use SebastianBergmann\Exporter\Exporter;
 /**
  * Predicate to test that an array has a key.
  */
@@ -36,5 +37,21 @@ class IsEmpty extends Predicate
     public function __toString()
     {
         return 'is empty';
+    }
+
+    /**
+     * returns a textual description of given value
+     *
+     * @param   \SebastianBergmann\Exporter\Exporter  $exporter
+     * @param   mixed                                 $value
+     * @return  string
+     */
+    public function describeValue(Exporter $exporter, $value)
+    {
+        if (is_object($value) && $value instanceof \Countable) {
+            return get_class($value) . ' implementing \Countable';
+        }
+
+        return parent::describeValue($exporter, $value);
     }
 }

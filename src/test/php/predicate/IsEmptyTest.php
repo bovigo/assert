@@ -83,4 +83,54 @@ class IsEmptyTest extends \PHPUnit_Framework_TestCase
     {
         assert((string) new IsEmpty(), equals('is empty'));
     }
+
+    /**
+     * @test
+     * @expectedException  bovigo\assert\AssertionFailure
+     * @expectedExceptionMessage  Failed asserting that 'foo' is empty.
+     */
+    public function assertionFailureWithStringContainsMeaningfulInformation()
+    {
+        assert('foo', isEmpty());
+    }
+
+    /**
+     * @test
+     * @expectedException  bovigo\assert\AssertionFailure
+     * @expectedExceptionMessage  Failed asserting that 1 is empty.
+     */
+    public function assertionFailureWithIntegerContainsMeaningfulInformation()
+    {
+        assert(1, isEmpty());
+    }
+
+    /**
+     * @test
+     * @expectedException  bovigo\assert\AssertionFailure
+     * @expectedExceptionMessage  Failed asserting that true is empty.
+     */
+    public function assertionFailureWithBooleanContainsMeaningfulInformation()
+    {
+        assert(true, isEmpty());
+    }
+
+    /**
+     * @test
+     * @expectedException  bovigo\assert\AssertionFailure
+     * @expectedExceptionMessage  Failed asserting that an array is empty.
+     */
+    public function assertionFailureWithArrayContainsMeaningfulInformation()
+    {
+        assert(['foo'], isEmpty());
+    }
+
+    /**
+     * @test
+     * @expectedException  bovigo\assert\AssertionFailure
+     * @expectedExceptionMessage  Failed asserting that bovigo\assert\predicate\EmptyCountableExample implementing \Countable is empty.
+     */
+    public function assertionFailureWithCountableContainsMeaningfulInformation()
+    {
+        assert(new EmptyCountableExample(1), isEmpty());
+    }
 }

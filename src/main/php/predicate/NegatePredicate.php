@@ -59,7 +59,7 @@ class NegatePredicate extends Predicate
             case 'bovigo\assert\predicate\CallablePredicate':
             case 'bovigo\assert\predicate\NegatePredicate':
             case 'bovigo\assert\predicate\OrPredicate':
-                return 'not (' . $this->predicate . ')';
+                return 'not ' . $this->predicate;
 
             default:
                 return $this->reverse((string) $this->predicate);

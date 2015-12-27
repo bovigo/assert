@@ -72,9 +72,20 @@ class ContainsTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      * @expectedException  InvalidArgumentException
+     * @expectedExceptionMessage  Given value of type "integer" can not contain something
      */
     public function throwsInvalidArgumentExceptionWhenValueCanNotContainAnything()
     {
         contains('foo')->test(303);
+    }
+
+    /**
+     * @test
+     * @expectedException  bovigo\assert\AssertionFailure
+     * @expectedExceptionMessage  Failed asserting that an array contains 'foo'.
+     */
+    public function assertionFailureContainsMeaningfulInformation()
+    {
+        assert([], contains('foo'));
     }
 }

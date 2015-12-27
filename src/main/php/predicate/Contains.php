@@ -57,8 +57,8 @@ class Contains extends Predicate
         }
 
         throw new \InvalidArgumentException(
-                'Given value of type ' . gettype($value)
-                . ' can not contain something'
+                'Given value of type "' . gettype($value)
+                . '" can not contain something.'
         );
     }
 
@@ -69,9 +69,6 @@ class Contains extends Predicate
      */
     public function __toString()
     {
-        return sprintf(
-            'contains "%s"',
-            export($this->needle)
-        );
+        return 'contains ' . export($this->needle);
     }
 }

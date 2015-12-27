@@ -61,4 +61,24 @@ class IsLessThanTest extends \PHPUnit_Framework_TestCase
     {
         assert(isLessThanOrEqualTo(3)->test(4), isFalse());
     }
+
+    /**
+     * @test
+     * @expectedException  bovigo\assert\AssertionFailure
+     * @expectedExceptionMessage  Failed asserting that 3 is less than 2.
+     */
+    public function assertionFailureContainsMeaningfulInformation()
+    {
+        assert(3, isLessThan(2));
+    }
+
+    /**
+     * @test
+     * @expectedException  bovigo\assert\AssertionFailure
+     * @expectedExceptionMessage  Failed asserting that 3 is equal to 2 or is less than 2.
+     */
+    public function assertionFailureWhenCombinedWithEqualsContainsMeaningfulInformation()
+    {
+        assert(3, isLessThanOrEqualTo(2));
+    }
 }

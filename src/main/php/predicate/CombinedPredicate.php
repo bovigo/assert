@@ -49,9 +49,9 @@ trait CombinedPredicate
      */
     public function __toString()
     {
-        return '(' . $this->leftPredicate
+        return $this->leftPredicate
                 . ' ' . $this->operator() . ' '
-                . $this->rightPredicate . ')';
+                . $this->rightPredicate;
     }
 
     /**

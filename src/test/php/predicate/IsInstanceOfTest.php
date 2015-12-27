@@ -22,7 +22,7 @@ class IsInstanceOfTest extends \PHPUnit_Framework_TestCase
     {
         isInstanceOf(303);
     }
-    
+
     /**
      * @test
      * @expectedException  InvalidArgumentException
@@ -46,5 +46,25 @@ class IsInstanceOfTest extends \PHPUnit_Framework_TestCase
     public function evaluatesToFalseIfGivenValueIsNotInstanceOfExpectedType()
     {
         assert(isInstanceOf('\stdClass')->test($this), isFalse());
+    }
+
+    /**
+     * @test
+     * @expectedException  bovigo\assert\AssertionFailure
+     * @expectedExceptionMessage  Failed asserting that an array is an instance of class "\stdClass".
+     */
+    public function assertionFailureContainsMeaningfulInformation()
+    {
+        assert([], isInstanceOf('\stdClass'));
+    }
+
+    /**
+     * @test
+     * @expectedException  bovigo\assert\AssertionFailure
+     * @expectedExceptionMessage  Failed asserting that bovigo\assert\predicate\IsInstanceOfTest Object (...) is an instance of class "\stdClass".
+     */
+    public function assertionFailureWithObjectsContainsMeaningfulInformation()
+    {
+        assert(new self(), isInstanceOf('\stdClass'));
     }
 }

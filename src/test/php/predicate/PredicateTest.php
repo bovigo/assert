@@ -30,7 +30,7 @@ class FooPredicate extends Predicate
      */
     public function __toString()
     {
-        return 'foo';
+        return 'is foo';
     }
 }
 /**
@@ -117,5 +117,25 @@ class PredicateTest extends \PHPUnit_Framework_TestCase
     public function defaultCountOfPredicateIs1()
     {
         assert(count(new FooPredicate()), equals(1));
+    }
+
+    /**
+     * @test
+     * @expectedException  bovigo\assert\AssertionFailure
+     * @expectedExceptionMessage  Failed asserting that an array is foo.
+     */
+    public function assertionFailureContainsMeaningfulInformation()
+    {
+        assert([], new FooPredicate());
+    }
+
+    /**
+     * @test
+     * @expectedException  bovigo\assert\AssertionFailure
+     * @expectedExceptionMessage  Failed asserting that 'foo' is not foo.
+     */
+    public function assertionFailureNegatedContainsMeaningfulInformation()
+    {
+        assert('foo', (new FooPredicate())->negate());
     }
 }

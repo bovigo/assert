@@ -18,10 +18,33 @@ class OrPredicate extends Predicate
      *
      * @param   mixed  $value
      * @return  bool
+     * @throws  \Exception  in case one of the combined predicates throws an exception
      */
     public function test($value)
     {
-        return $this->leftPredicate->test($value) || $this->rightPredicate->test($value);
+        $exceptions = [];
+        foreach ([$this->leftPredicate, $this->rightPredicate] as $predicate) {
+            try {
+                if ($predicate->test($value)) {
+                    return true;
+                }
+            } catch (\Exception $ex) {
+                $exceptions[] = $ex;
+            }
+        }
+        
+        switch (count($exceptions)) {
+            case 0:
+                return false;
+
+            case 1:
+                throw $exceptions[0];
+
+            default:
+                throw new \Exception(
+                        $exceptions[0]->getMessage() . "\n" . $exceptions[1]->getMessage()
+                );
+        }
     }
 
     /**

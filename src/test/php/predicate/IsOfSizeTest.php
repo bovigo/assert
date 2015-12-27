@@ -172,4 +172,54 @@ class IsOfSizeTest extends \PHPUnit_Framework_TestCase
     {
         isOfSize(3)->test(true);
     }
+
+    /**
+     * @test
+     * @expectedException  bovigo\assert\AssertionFailure
+     * @expectedExceptionMessage  Failed asserting that string with actual size 3 matches expected size 4.
+     */
+    public function assertionFailureWithStringContainsMeaningfulInformation()
+    {
+        assert('foo', isOfSize(4));
+    }
+
+    /**
+     * @test
+     * @expectedException  bovigo\assert\AssertionFailure
+     * @expectedExceptionMessage  Failed asserting that array with actual size 0 matches expected size 4.
+     */
+    public function assertionFailureWithArrayContainsMeaningfulInformation()
+    {
+        assert([], isOfSize(4));
+    }
+
+    /**
+     * @test
+     * @expectedException  bovigo\assert\AssertionFailure
+     * @expectedExceptionMessage  Failed asserting that instance of type bovigo\assert\predicate\CountableExample with actual size 3 matches expected size 4.
+     */
+    public function assertionFailureWithCountableContainsMeaningfulInformation()
+    {
+        assert(new CountableExample(), isOfSize(4));
+    }
+
+    /**
+     * @test
+     * @expectedException  bovigo\assert\AssertionFailure
+     * @expectedExceptionMessage  Failed asserting that instance of type bovigo\assert\predicate\TraversableExample with actual size 3 matches expected size 4.
+     */
+    public function assertionFailureWithTraversableContainsMeaningfulInformation()
+    {
+        assert(new TraversableExample(), isOfSize(4));
+    }
+
+    /**
+     * @test
+     * @expectedException  bovigo\assert\AssertionFailure
+     * @expectedExceptionMessage  Failed asserting that instance of type bovigo\assert\predicate\IteratorAggregateExample with actual size 3 matches expected size 4.
+     */
+    public function assertionFailureWithIteratorAggregateContainsMeaningfulInformation()
+    {
+        assert(new IteratorAggregateExample(), isOfSize(4));
+    }
 }

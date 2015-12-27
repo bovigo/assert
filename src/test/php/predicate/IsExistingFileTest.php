@@ -135,4 +135,14 @@ class IsExistingFileTest extends \PHPUnit_Framework_TestCase
     {
         assert((string) $instance, equals($message));
     }
+
+    /**
+     * @test
+     * @expectedException  bovigo\assert\AssertionFailure
+     * @expectedExceptionMessage  Failed asserting that 'vfs://root/doesNotExist.txt' is a existing file.
+     */
+    public function assertionFailureContainsMeaningfulInformation()
+    {
+        assert(vfsStream::url('root/doesNotExist.txt'), isExistingFile());
+    }
 }

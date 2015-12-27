@@ -50,12 +50,19 @@ class Regex extends Predicate
     /**
      * test that the given value complies with the regular expression
      *
-     * @param   mixed  $value
+     * @param   string  $value
      * @return  bool
+     * @throws  \InvalidArgumentException  in case given value is not a string
      * @throws  \RuntimeException  in case the used regular expresion is invalid
      */
     public function test($value)
     {
+        if (!is_string($value)) {
+            throw new \InvalidArgumentException(
+                    'Given value of type "' . gettype($value)
+                . '" can not be matched against a regular expression.'
+            );
+        }
         $check = @preg_match($this->pattern, $value);
         if (false === $check) {
             throw new \RuntimeException(sprintf(

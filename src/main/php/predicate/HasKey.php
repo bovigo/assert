@@ -6,6 +6,8 @@
  * file that was distributed with this source code.
  */
 namespace bovigo\assert\predicate;
+use SebastianBergmann\Exporter\Exporter;
+
 use function bovigo\assert\export;
 /**
  * Predicate to test that an array has a key.
@@ -65,9 +67,22 @@ class HasKey extends Predicate
      */
     public function __toString()
     {
-        return sprintf(
-            'has the key "%s"',
-            export($this->key)
-        );
+        return 'has the key ' . export($this->key);
+    }
+
+    /**
+     * returns a textual description of given value
+     *
+     * @param   \SebastianBergmann\Exporter\Exporter  $exporter
+     * @param   mixed                                 $value
+     * @return  string
+     */
+    public function describeValue(Exporter $exporter, $value)
+    {
+        if ($value instanceof \ArrayAccess) {
+            return get_class($value) . ' implementing \ArrayAccess';
+        }
+
+        return parent::describeValue($exporter, $value);
     }
 }

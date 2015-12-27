@@ -6,6 +6,7 @@
  * file that was distributed with this source code.
  */
 namespace bovigo\assert\predicate;
+use SebastianBergmann\Exporter\Exporter;
 /**
  * Predicate to test that something is an instance of the expected type.
  */
@@ -57,6 +58,22 @@ class IsInstanceOf extends Predicate
             interface_exists($this->expectedType) ? 'interface' : 'class',
             $this->expectedType
         );
+    }
+
+    /**
+     * returns a textual description of given value
+     *
+     * @param   \SebastianBergmann\Exporter\Exporter  $exporter
+     * @param   mixed                                 $value
+     * @return  string
+     */
+    public function describeValue(Exporter $exporter, $value)
+    {
+        if (is_array($value)) {
+            return 'an array';
+        }
+
+        return $exporter->shortenedExport($value);
     }
 }
 

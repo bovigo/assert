@@ -55,7 +55,7 @@ class AndPredicateTest extends \PHPUnit_Framework_TestCase
     {
         assert(
                 $this->andPredicate,
-                equals('(callable<lambda> and callable<lambda>)')
+                equals('callable<lambda> and callable<lambda>')
         );
     }
 

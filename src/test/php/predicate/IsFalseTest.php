@@ -45,4 +45,14 @@ class IsFalseTest extends \PHPUnit_Framework_TestCase
     {
         assert(isFalse()->test($true), isSameAs(false));
     }
+
+    /**
+     * @test
+     * @expectedException  bovigo\assert\AssertionFailure
+     * @expectedExceptionMessage  Failed asserting that 1 is false.
+     */
+    public function assertionFailureContainsMeaningfulInformation()
+    {
+        assert(1, isFalse());
+    }
 }
