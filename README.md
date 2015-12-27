@@ -1,7 +1,8 @@
 bovigo/assert
 ==============
 
-Provides assertions for unit tests. Compatible with any [unit test framework](http://en.wikipedia.org/wiki/List_of_unit_testing_frameworks#PHP).
+Provides assertions for unit tests.
+
 
 Package status
 --------------
@@ -24,61 +25,399 @@ To install it as a runtime dependency for your package use the following command
 
     composer require "bovigo/assert=^1.0"
 
+
 Requirements
 ------------
 
-_bovigo/assert_ requires at least PHP 5.4.
+_bovigo/assert_ requires at least PHP 5.6.
 
 
 Usage
 -----
 
-Explore the [tests](https://github.com/mikey179/bovigo-callmap/tree/master/src/test/php)
-to see how _bovigo/callmap_ can be used. For the very eager, here's a code
-example which features almost all of the possibilities:
+All assertions are written in the same way using functions:
 
 ```php
-// set up the instance to be used
-$yourClass = NewInstance::of('name\of\YourClass', ['some', 'arguments'])
-        ->mapCalls(
-                ['aMethod'     => 313,
-                 'otherMethod' => function() { return 'yeah'; },
-                 'play'        => onConsecutiveCalls(303, 808, 909, throws(new \Exception('error')),
-                 'ups'         => throws(new \Exception('error')),
-                 'hey'         => 'strtoupper'
-                ]
-        );
-
-// do some stuff, e.g. execute the logic to test
-...
-
-// verify method invocations and received arguments
-verify($yourClass, 'aMethod')->wasCalledOnce();
-verify($yourClass, 'hey')->received('foo');
+assert(303, equals(303));
+assert(someCondition(), isTrue(), 'condition should always be true');
 ```
 
-However, if you prefer text instead of code, read on.
+The first parameter is the value to test, and the second is the predicate that
+should be used to test the value. Additionally, an optional description can be
+supplied to enhance clarity in case the assertion fails.
 
-Note: for the sake of brevity below it is assumed the used classes and functions
-are imported into the current namespace via
+In case the predicate fails an `AssertionFailure` will be thrown with useful
+information of why the test failed. In case PHPUnit is used `AssertionFailure`
+is an instance of `\PHPUnit_Framework_ExpectationFailedException` so it
+integrates nicely into PHPUnit, yielding a similar test output as PHPUnit's
+constraints. Here is an example of the output in case of a test failure:
+
+```
+1) bovigo\assert\predicate\RegexTest::stringRepresentationContainsRegex
+Failed asserting that 'matches regular expression "/^([a-z]{3})$/"' is equal to <string:matches regular expession "/^([a-z]{3})$/">.
+--- Expected
++++ Actual
+@@ @@
+-'matches regular expession "/^([a-z]{3})$/"'
++'matches regular expression "/^([a-z]{3})$/"'
+
+bovigo-assert/src/test/php/predicate/RegexTest.php:99
+```
+
+Note: for the sake of brevity below it is assumed the used functions are
+imported into the current namespace via
 ```php
-use bovigo\callmap\NewInstance;
-use function bovigo\callmap\throws;
-use function bovigo\callmap\onConsecutiveCalls;
-use function bovigo\callmap\verify;
+use function bovigo\assert\assert;
+use function bovigo\assert\predicate\isTrue;
+use function bovigo\assert\predicate\equals;
 ```
 
-_For PHP versions older than 5.6.0, you can do `use bovigo\callmap` and call them
-with `callmap\throws()`, `callmap\onConsecutiveCalls()`, and `callmap\verify()`._
+List of predicates
+------------------
+
+This is the list of predicates that are included in _bovigo/assert_ by default.
+
+
+### `isNull()`
+
+Tests if value is `null`.
+
+```php
+assert($value, isNull());
+```
+
+
+### `isNotNull()`
+
+Tests that value is not `null`.
+
+```php
+assert($value, isNotNull());
+```
+
+
+### `isEmpty()`
+
+Tests that value is empty. Empty is defined as follows:
+
+* In case the value is an instance of `\Countable` it is empty when its count
+  is 0.
+* For all other values the rules for PHP's `empty()` apply.
+
+```php
+assert($value, isEmpty());
+```
+
+
+### `isNotEmpty()`
+
+Tests that value is not empty. See `isEmpty()` for definition of emptyness.
+
+```php
+assert($value, isNotEmpty());
+```
+
+
+### `isTrue()`
+
+Tests that a value is true. The value must be boolean true, no value conversion
+is applied.
+
+```php
+assert($value, isTrue());
+```
+
+
+### `isFalse()`
+
+Tests that a value is false. The value must be boolean false, no value
+conversion is applied.
+
+```php
+assert($value, isFalse());
+```
+
+
+### `equals($expected, $delta = 0.0)`
+
+Tests that a value equals the expected value. The optional parameter `$delta`
+can be used when equality of float values should be tested and allows for a
+certain range in which two floats are considered equal.
+
+```php
+assert($value, equals('Roland TB 303'));
+```
+
+
+### `isNotEqualTo($unexpected, $delta = 0.0)`
+
+Tests that a value is not equal to the unexpected value. The optional parameter
+`$delta` can be used when equality of float values should be tested and allows
+for a certain range in which two floats are considered equal.
+
+```php
+assert($value, isNotEqualTo('Roland TB 303'));
+```
+
+
+### `isInstanceOf($expectedType)`
+
+Tests that a value is an instance of the expected type.
+
+```php
+assert($value, isInstanceOf(\stdClass::class));
+```
+
+
+### `isNotInstanceOf($unexpectedType)`
+
+Tests that a value is not an instance of the unexpected type.
+
+```php
+assert($value, isNotInstanceOf(\stdClass::class));
+```
+
+
+### `isSameAs($expected)`
+
+Tests that a value is identical to the expected value. Both values are compared
+with `===`, the according rules apply.
+
+```php
+assert($value, isSameAs($anotherValue));
+```
+
+
+### `isNotSameAs($unexpected)`
+
+Tests that a value is not identical to the unexpected value. Both values are
+compared with `===`, the according rules apply.
+
+```php
+assert($value, isNotSameAs($anotherValue));
+```
+
+
+### `isOfSize($expectedSize)`
+
+Tests that a value has the expected size. The rules for the size are as follows:
+
+* For strings, their length in bytes is used.
+* For array and instances of `\Countable` the value of `count()` is used.
+* For instances of `\Traversable` the value of `iterator_count()` is used. To
+  prevent moving the pointer of the traversable, `iterator_count()` is applied
+  against a clone of the traversable.
+* All other value types will be rejected.
+
+```php
+assert($value, isOfSize(3));
+```
+
+
+### `isNotOfSize($unexpectedSize)`
+
+Tests that a value does not have the unexpected size. The rules are the same as
+for `isOfSize($expectedSize)`.
+
+```php
+assert($value, isNotOfSize(3));
+```
+
+
+### `isOfType($expectedType)`
+
+Tests that a value is of the expected internal PHP type.
+
+```php
+assert($value, isOfType('resource'));
+```
+
+
+### `isNotOfType($unexpectedType)`
+
+Tests that a value is not of the unexpected internal PHP type.
+
+```php
+assert($value, isNotOfType('resource'));
+```
+
+
+### `isGreaterThan($expected)`
+
+Tests that a value is greater than the expected value.
+
+```php
+assert($value, isGreaterThan(3));
+```
+
+
+### `isGreaterThanOrEqualTo($expected)`
+
+Tests that a value is greater than or equal to the expected value.
+
+```php
+assert($value, isGreaterThanOrEqualTo(3));
+```
+
+
+### `isLessThan($expected)`
+
+Tests that a value is less than the expected value.
+
+```php
+assert($value, isLessThan(3));
+```
+
+
+### `isLessThanOrEqualTo($expected)`
+
+Tests that a value is less than or equal to the expected value.
+
+```php
+assert($value, isLessThanOrEqualTo(3));
+```
+
+
+### `contains($needle)`
+
+Tests that `$needle` is contained in value. The following rules apply:
+
+* `null` is contained in `null`.
+* A string can be contained in another string. The comparison is case sensitive.
+* `$needle` can be a value of an array or a `\Traversable`. Value and `$needle`
+  are compared with `===`.
+* For all other cases, the value is rejected.
+
+```php
+assert($value, contains('Roland TB 303'));
+```
+
+
+### `doesNotContain($needle)`
+
+Tests that `$needle` is not contained in value. The rules of `contains($needle)`
+apply.
+
+```php
+assert($value, doesNotContain('Roland TB 303'));
+```
+
+
+### `hasKey($key)`
+
+Tests that an array or an instance of `\ArrayAccess` have a key with given name.
+The key must be either of type `integer` or `string`. Values that are neither an
+array nor an instance of `\ArrayAccess` are rejected.
+
+```php
+assert($value, hasKey('roland'));
+```
+
+
+### `doesNotHaveKey($key)`
+
+Tests that an array or an instance of `\ArrayAccess` does not have a key with
+given name. The key must be either of type `integer` or `string`. Values that
+are neither an array nor an instance of `\ArrayAccess` are rejected.
+
+```php
+assert($value, doesNotHaveKey('roland'));
+```
+
+
+### `matches($pattern)`
+
+Tests that a string matches the given pattern of a regular expression. If the
+value is not a string it is rejected. The test is successful if the pattern
+yields at least one match in the value.
+
+```php
+assert($value, matches('/^([a-z]{3})$/'));
+```
+
+
+### `doesNotMatch($pattern)`
+
+Tests that a string does not match the given pattern of a regular expression. If
+the value is not a string it is rejected. The test is successful if the pattern
+yields no match in the value.
+
+```php
+assert($value, doesNotMatch('/^([a-z]{3})$/'));
+```
+
+
+### `isExistingFile($basePath = null)`
+
+Tests that the value denotes an existing file. If no `$basepath` is supplied the
+value must either be an absolute path or a relative path to the current working
+directory. When `$basepath` is given the value must be a relative path to this
+basepath.
+
+```php
+assert($value, isExistingFile());
+assert($value, isExistingFile('/path/to/files'));
+```
+
+
+### `isNonExistingFile($basePath = null)`
+
+Tests that the value denotes a file which does not exist. If no `$basepath` is
+supplied the value must either be an absolute path or a relative path to the
+current working directory. When `$basepath` is given the value must be a
+relative path to this basepath.
+
+```php
+assert($value, isNonExistingFile());
+assert($value, isNonExistingFile('/path/to/files'));
+```
+
+
+### `isExistingDirectory($basePath = null)`
+
+Tests that the value denotes an existing directory. If no `$basepath` is
+supplied the value must either be an absolute path or a relative path to the
+current working directory. When `$basepath` is given the value must be a
+relative path to this basepath.
+
+```php
+assert($value, isExistingDirectory());
+assert($value, isExistingDirectory('/path/to/directories'));
+```
+
+
+### `isNonExistingDirectory($basePath = null)`
+
+Tests that the value denotes a non-existing directory. If no `$basepath` is
+supplied the value must either be an absolute path or a relative path to the
+current working directory. When `$basepath` is given the value must be a
+relative path to this basepath.
+
+```php
+assert($value, isNonExistingDirectory());
+assert($value, isNonExistingDirectory('/path/to/directories'));
+```
+
+
+PHPUnit compatibility layer
+---------------------------
+
+In case you want to check out how _bovigo/assert_ works with your tests there is
+a PHPUnit compatibility layer available. Instead of extending directly from
+`\PHPUnit_Framework_TestCase` let your tests extend
+`bovigo\assert\phpunit\PHPUnit_Framework_TestCase`. It overlays all constraints
+from PHPUnit with predicates from _bovigo/assert_  where they are available.
+For constraints which have no equivalent predicate in _bovigo/assert_ the
+default constraints from PHPUnit are used.
 
 
 FAQ
 ---
 
-How can I access a property of a class or object for the assertions?
+### How can I access a property of a class or object for the assertions?
 
 If the property is public you can pass it directly into the `assert()` function.
-In any other case bovigo/assert does not support accessing protected or private
-properties. There's a reason why they are protected or private, and a test
-should only be against the public API of a class, not against their inner
+In any other case _bovigo/assert_ does not support accessing protected or
+private properties. There's a reason why they are protected or private, and a
+test should only be against the public API of a class, not against their inner
 workings.
