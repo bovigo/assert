@@ -68,6 +68,7 @@ class OrPredicateTest extends \PHPUnit_Framework_TestCase
     {
         try {
             assert(303, matches('/^([a-z]{3})$/')->orElse(isNull()));
+            $this->fail('Expected ' . AssertionFailure::class . ', got none');
         } catch (AssertionFailure $af) {
             assert(
                     $af->getMessage(),
@@ -84,6 +85,7 @@ Given value of type "integer" can not be matched against a regular expression.')
     {
         try {
             assert(303, matches('/^([a-z]{3})$/')->orElse(contains('dummy')));
+            $this->fail('Expected ' . AssertionFailure::class . ', got none');
         } catch (AssertionFailure $af) {
             assert(
                     $af->getMessage(),

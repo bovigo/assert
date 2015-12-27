@@ -77,6 +77,7 @@ class EqualsTest extends \PHPUnit_Framework_TestCase
     {
         try {
             assert('bar', equals('foo'), 'additional info');
+            $this->fail('Expected ' . AssertionFailure::class . ', got none');
         } catch (AssertionFailure $af) {
             assert(
                     $af->getMessage(),

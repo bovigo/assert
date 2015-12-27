@@ -6,6 +6,8 @@
  * file that was distributed with this source code.
  */
 namespace bovigo\assert\predicate;
+use bovigo\assert\AssertionFailure;
+
 use function bovigo\assert\assert;
 /**
  * Helper class for the test.
@@ -31,6 +33,16 @@ class FooPredicate extends Predicate
     public function __toString()
     {
         return 'is foo';
+    }
+}
+/**
+ * Helper class for the test.
+ */
+class ThrowingPredicate extends FooPredicate
+{
+    public function test($value)
+    {
+        throw new \InvalidArgumentException('exception message');
     }
 }
 /**
@@ -137,5 +149,40 @@ class PredicateTest extends \PHPUnit_Framework_TestCase
     public function assertionFailureNegatedContainsMeaningfulInformation()
     {
         assert('foo', (new FooPredicate())->negate());
+    }
+
+    /**
+     * @test
+     */
+    public function assertionFailureNegatedContainsMeaningfulInformationWithDescription()
+    {
+        try {
+            assert([], new FooPredicate(), 'some useful description');
+            $this->fail('Expected ' . AssertionFailure::class . ', got none');
+        } catch (AssertionFailure $af) {
+            assert(
+                    $af->getMessage(),
+                    equals('Failed asserting that an array is foo.
+some useful description')
+            );
+        }
+    }
+
+    /**
+     * @test
+     */
+    public function assertionFailureNegatedContainsMeaningfulInformationWithDescriptionAndExceptionMessage()
+    {
+        try {
+            assert([], new ThrowingPredicate(), 'some useful description');
+            $this->fail('Expected ' . AssertionFailure::class . ', got none');
+        } catch (AssertionFailure $af) {
+            assert(
+                    $af->getMessage(),
+                    equals('Failed asserting that an array is foo.
+some useful description
+exception message')
+            );
+        }
     }
 }

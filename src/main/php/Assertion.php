@@ -54,7 +54,7 @@ class Assertion
             if (empty($description)) {
                 $description = $e->getMessage();
             } else {
-                $description .= "\ncaused by " . $e->getMessage();
+                $description .= "\n" . $e->getMessage();
             }
         }
 
