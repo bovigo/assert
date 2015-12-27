@@ -64,7 +64,6 @@ function assertArrayNotHasKey($key, $array, $message = '')
 /**
  * asserts that a haystack contains a needle
  *
- * @todo - add $ignoreCase = false, $checkForObjectIdentity = true, $checkForNonObjectIdentity = false?
  * @param   mixed                      $needle    what must be contained in haystack
  * @param   string|array|\Traversable  $haystack  where needle must be contained
  * @param   string                     $message   optional  additional description for failure message
@@ -76,16 +75,16 @@ function assertContains($needle, $haystack, $message = '')
 }
 
 /**
- * asserts the number of elements of an array, Countable or Traversable
+ * asserts that a haystack does not contain  needle
  *
- * @param   int                                   $expectedSize  expected count size
- * @param   string|array|\Countable|\Traversable  $countable     what to count
- * @param   string                                $message       optional  additional description for failure message
+ * @param   mixed                      $needle    what must not be contained in haystack
+ * @param   string|array|\Traversable  $haystack  where needle must not be contained
+ * @param   string                     $message   optional  additional description for failure message
  * @return  bool
  */
-function assertCount($expectedSize, $countable, $message = '')
+function assertNotContains($needle, $haystack, $message = '')
 {
-    return assert($countable, isOfSize($expectedSize), $message);
+    return assert($haystack, doesNotContain($needle), $message);
 }
 
 /**
@@ -101,29 +100,15 @@ function assertEmpty($actual, $message = '')
 }
 
 /**
- * asserts that two values are equal
+ * assers that a value is empty
  *
- * @param   mixed   $expected  expected value
- * @param   mixed   $actual    value to test
+ * @param   mixed   $actual    value that must be empty
  * @param   string  $message   optional  additional description for failure message
- * @param   float   $delta     optional  allowed numerical distance between two values to consider them equal
  * @return  bool
  */
-function assertEquals($expected, $actual, $message = '', $delta = 0.0)
+function assertNotEmpty($actual, $message = '')
 {
-    return assert($actual, equals($expected, $delta), $message);
-}
-
-/**
- * asserts that given value is false
- *
- * @param   mixed   $value    value to test
- * @param   string  $message  optional  additional description for failure message
- * @return  bool
- */
-function assertFalse($value, $message = '')
-{
-    return assert($value, isFalse(), $message);
+    return assert($actual, isNotEmpty(), $message);
 }
 
 /**
@@ -157,58 +142,6 @@ function assertFileNotExists($filename, $message = '')
 }
 
 /**
- * asserts that a value is greater than another value
- *
- * @param   numeric  $expected  expected value
- * @param   mixed    $actual    value to test
- * @param   string   $message   optional  additional description for failure message
- * @return  bool
- */
-function assertGreaterThan($expected, $actual, $message = '')
-{
-    return assert($actual, isGreaterThan($expected), $message);
-}
-
-/**
- * asserts that a value is greater than or equal to another value
- *
- * @param   numeric  $expected  expected value
- * @param   mixed    $actual    value to test
- * @param   string   $message   optional  additional description for failure message
- * @return  bool
- */
-function assertGreaterThanOrEqual($expected, $actual, $message = '')
-{
-    return assert($actual, isGreaterThanOrEqualTo($expected), $message);
-}
-
-/**
- * asserts that given value is an instance of the expected type
- *
- * @param   string  $expectedType  name of expected type
- * @param   mixed   $actual        value to test
- * @param   string  $message       optional  additional description for failure message
- * @return  bool
- */
-function assertInstanceOf($expectedType, $actual, $message = '')
-{
-    return assert($actual, isInstanceOf($expectedType), $message);
-}
-
-/**
- * asserts that a variable is of a given internal PHP type which is not a class
- *
- * @param   mixed   $expectedType  expected type
- * @param   mixed   $actual        value to test
- * @param   string  $message       optional  additional description for failure message
- * @return  bool
- */
-function assertInternalType($expectedType, $actual, $message = '')
-{
-    return assert($actual, isOfType($expectedType), $message);
-}
-
-/**
  * asserts that a value is smaller than another value
  *
  * @param   numeric  $expected  expected value
@@ -235,16 +168,68 @@ function assertLessThanOrEqual($expected, $actual, $message = '')
 }
 
 /**
- * asserts that a haystack does not contain  needle
+ * asserts that a value is greater than another value
  *
- * @param   mixed                      $needle    what must not be contained in haystack
- * @param   string|array|\Traversable  $haystack  where needle must not be contained
- * @param   string                     $message   optional  additional description for failure message
+ * @param   numeric  $expected  expected value
+ * @param   mixed    $actual    value to test
+ * @param   string   $message   optional  additional description for failure message
  * @return  bool
  */
-function assertNotContains($needle, $haystack, $message = '')
+function assertGreaterThan($expected, $actual, $message = '')
 {
-    return assert($haystack, doesNotContain($needle), $message);
+    return assert($actual, isGreaterThan($expected), $message);
+}
+
+/**
+ * asserts that a value is greater than or equal to another value
+ *
+ * @param   numeric  $expected  expected value
+ * @param   mixed    $actual    value to test
+ * @param   string   $message   optional  additional description for failure message
+ * @return  bool
+ */
+function assertGreaterThanOrEqual($expected, $actual, $message = '')
+{
+    return assert($actual, isGreaterThanOrEqualTo($expected), $message);
+}
+
+/**
+ * asserts that a variable is of a given internal PHP type which is not a class
+ *
+ * @param   mixed   $expectedType  expected type
+ * @param   mixed   $actual        value to test
+ * @param   string  $message       optional  additional description for failure message
+ * @return  bool
+ */
+function assertInternalType($expectedType, $actual, $message = '')
+{
+    return assert($actual, isOfType($expectedType), $message);
+}
+
+/**
+ * asserts that a variable is of a given internal PHP type which is not a class
+ *
+ * @param   mixed   $unexpectedType  type which is not expected
+ * @param   mixed   $actual          value to test
+ * @param   string  $message         optional  additional description for failure message
+ * @return  bool
+ */
+function assertNotInternalType($unexpectedType, $actual, $message = '')
+{
+    return assert($actual, isNotOfType($unexpectedType), $message);
+}
+
+/**
+ * asserts the number of elements of an array, Countable or Traversable
+ *
+ * @param   int                                   $expectedSize  expected count size
+ * @param   string|array|\Countable|\Traversable  $countable     what to count
+ * @param   string                                $message       optional  additional description for failure message
+ * @return  bool
+ */
+function assertCount($expectedSize, $countable, $message = '')
+{
+    return assert($countable, isOfSize($expectedSize), $message);
 }
 
 /**
@@ -261,15 +246,17 @@ function assertNotCount($expectedSize, $countable, $message = '')
 }
 
 /**
- * assers that a value is empty
+ * asserts that two values are equal
  *
- * @param   mixed   $actual    value that must be empty
+ * @param   mixed   $expected  expected value
+ * @param   mixed   $actual    value to test
  * @param   string  $message   optional  additional description for failure message
+ * @param   float   $delta     optional  allowed numerical distance between two values to consider them equal
  * @return  bool
  */
-function assertNotEmpty($actual, $message = '')
+function assertEquals($expected, $actual, $message = '', $delta = 0.0)
 {
-    return assert($actual, isNotEmpty(), $message);
+    return assert($actual, equals($expected, $delta), $message);
 }
 
 /**
@@ -287,6 +274,31 @@ function assertNotEquals($expected, $actual, $message = '', $delta = 0.0)
 }
 
 /**
+ * asserts that given value is false
+ *
+ * @param   mixed   $value    value to test
+ * @param   string  $message  optional  additional description for failure message
+ * @return  bool
+ */
+function assertFalse($value, $message = '')
+{
+    return assert($value, isFalse(), $message);
+}
+
+/**
+ * asserts that given value is an instance of the expected type
+ *
+ * @param   string  $expectedType  name of expected type
+ * @param   mixed   $actual        value to test
+ * @param   string  $message       optional  additional description for failure message
+ * @return  bool
+ */
+function assertInstanceOf($expectedType, $actual, $message = '')
+{
+    return assert($actual, isInstanceOf($expectedType), $message);
+}
+
+/**
  * asserts that given value is not an instance of the expected type
  *
  * @param   string  $expectedType  name of expected type
@@ -297,57 +309,6 @@ function assertNotEquals($expected, $actual, $message = '', $delta = 0.0)
 function assertNotInstanceOf($expectedType, $actual, $message = '')
 {
     return assert($actual, isNotInstanceOf($expectedType), $message);
-}
-
-/**
- * asserts that a variable is of a given internal PHP type which is not a class
- *
- * @param   mixed   $unexpectedType  type which is not expected
- * @param   mixed   $actual          value to test
- * @param   string  $message         optional  additional description for failure message
- * @return  bool
- */
-function assertNotInternalType($unexpectedType, $actual, $message = '')
-{
-    return assert($actual, isNotOfType($unexpectedType), $message);
-}
-
-/**
- * asserts that given value is not null
- *
- * @param   mixed   $value    value to test
- * @param   string  $message  optional  additional description for failure message
- * @return  bool
- */
-function assertNotNull($value, $message = '')
-{
-    return assert($value, isNotNull(), $message);
-}
-
-/**
- * asserts that a string does not match a regular expression
- *
- * @param   string  $pattern   regular expression to match string with
- * @param   string  $string    string to match
- * @param   string  $message   optional  additional description for failure message
- * @return  bool
- */
-function assertNotRegExp($pattern, $string, $message = '')
-{
-    return assert($string, doesNotMatch($pattern), $message);
-}
-
-/**
- * asserts that both expected and actual do not reference the same value
- *
- * @param   mixed   $expected  expected value
- * @param   mixed   $actual    value to test
- * @param   string  $message   optional  additional description for failure message
- * @return  bool
- */
-function assertNotSame($expected, $actual, $message = '')
-{
-    return assert($actual, isNotSameAs($expected), $message);
 }
 
 /**
@@ -363,16 +324,15 @@ function assertNull($value, $message = '')
 }
 
 /**
- * asserts that a string matches a regular expression
+ * asserts that given value is not null
  *
- * @param   string  $pattern   regular expression to match string with
- * @param   string  $string    string to match
- * @param   string  $message   optional  additional description for failure message
+ * @param   mixed   $value    value to test
+ * @param   string  $message  optional  additional description for failure message
  * @return  bool
  */
-function assertRegExp($pattern, $string, $message = '')
+function assertNotNull($value, $message = '')
 {
-    return assert($string, matches($pattern), $message);
+    return assert($value, isNotNull(), $message);
 }
 
 /**
@@ -389,16 +349,42 @@ function assertSame($expected, $actual, $message = '')
 }
 
 /**
- * evaluates predicate agains value
+ * asserts that both expected and actual do not reference the same value
  *
- * @param    mixed                                        $value     value to test
- * @param    \bovigo\assert\predicate\Predicate|callable  $expected  predicate or callable to test given value
- * @param    string                                       $message   optional  additional description for failure message
- * @return   bool
+ * @param   mixed   $expected  expected value
+ * @param   mixed   $actual    value to test
+ * @param   string  $message   optional  additional description for failure message
+ * @return  bool
  */
-function assertThat($value, $expected, $message = '')
+function assertNotSame($expected, $actual, $message = '')
 {
-    return assert($value, $expected, $message);
+    return assert($actual, isNotSameAs($expected), $message);
+}
+
+/**
+ * asserts that a string matches a regular expression
+ *
+ * @param   string  $pattern   regular expression to match string with
+ * @param   string  $string    string to match
+ * @param   string  $message   optional  additional description for failure message
+ * @return  bool
+ */
+function assertRegExp($pattern, $string, $message = '')
+{
+    return assert($string, matches($pattern), $message);
+}
+
+/**
+ * asserts that a string does not match a regular expression
+ *
+ * @param   string  $pattern   regular expression to match string with
+ * @param   string  $string    string to match
+ * @param   string  $message   optional  additional description for failure message
+ * @return  bool
+ */
+function assertNotRegExp($pattern, $string, $message = '')
+{
+    return assert($string, doesNotMatch($pattern), $message);
 }
 
 /**
@@ -411,4 +397,17 @@ function assertThat($value, $expected, $message = '')
 function assertTrue($value, $message = '')
 {
     return assert($value, isTrue(), $message);
+}
+
+/**
+ * evaluates predicate agains value
+ *
+ * @param    mixed                                        $value     value to test
+ * @param    \bovigo\assert\predicate\Predicate|callable  $expected  predicate or callable to test given value
+ * @param    string                                       $message   optional  additional description for failure message
+ * @return   bool
+ */
+function assertThat($value, $expected, $message = '')
+{
+    return assert($value, $expected, $message);
 }
