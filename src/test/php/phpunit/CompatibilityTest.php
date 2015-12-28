@@ -6,6 +6,10 @@
  * file that was distributed with this source code.
  */
 namespace bovigo\assert\phpunit;
+use bovigo\assert\AssertionFailure;
+
+use function bovigo\assert\assert;
+use function bovigo\assert\predicate\equals;
 /**
  * Test for bovigo\assert\assert\predicate\AndPredicate.
  *
@@ -67,6 +71,85 @@ class CompatibilityTest extends PHPUnit_Framework_TestCase
     public function testAssertNotContainsFailure()
     {
         $this->assertNotContains(303, ['foo' => 303]);
+    }
+
+    public function testAssertContainsOnlySuccessForNativeTypes()
+    {
+        $this->assertContainsOnly('int', [303, 313]);
+    }
+
+    public function testAssertContainsOnlySuccessForNonNativeTypes()
+    {
+        $this->assertContainsOnly(
+                'stdClass',
+                [new \stdClass(), new \stdClass()]
+        );
+    }
+
+    public function testAssertContainsOnlyFailure()
+    {
+        try {
+            $this->assertContainsOnly('int', [303, 'foo']);
+            $this->fail('Expected ' . AssertionFailure::class . ' but got none.');
+        } catch (AssertionFailure $af) {
+            assert(
+                    $af->getMessage(),
+                    equals('Failed asserting that in Array &0 (
+    0 => 303
+    1 => \'foo\'
+) each value is of type "int".')
+            );
+        }
+    }
+
+    public function testAssertContainsOnlyInstancesOfSuccess()
+    {
+        $this->assertContainsOnlyInstancesOf(
+                'stdClass',
+                [new \stdClass(), new \stdClass()]
+        );
+    }
+
+    public function testAssertContainsOnlyInstancesOfFailure()
+    {
+        try {
+            $this->assertContainsOnlyInstancesOf('stdClass', [303, 'foo']);
+            $this->fail('Expected ' . AssertionFailure::class . ' but got none.');
+        } catch (AssertionFailure $af) {
+            assert(
+                    $af->getMessage(),
+                    equals('Failed asserting that in Array &0 (
+    0 => 303
+    1 => \'foo\'
+) each value is an instance of class "stdClass".')
+            );
+        }
+    }
+
+    public function testAssertNotContainsOnlySuccessForNativeTypes()
+    {
+        $this->assertNotContainsOnly('int', ['foo', 'bar']);
+    }
+
+    public function testAssertNotContainsOnlySuccessForNonNativeTypes()
+    {
+        $this->assertNotContainsOnly('stdClass', ['foo', 'bar']);
+    }
+
+    public function testAssertNotContainsOnlyFailure()
+    {
+        try {
+            $this->assertNotContainsOnly('int', [303, 'foo']);
+            $this->fail('Expected ' . AssertionFailure::class . ' but got none.');
+        } catch (AssertionFailure $af) {
+            assert(
+                    $af->getMessage(),
+                    equals('Failed asserting that in Array &0 (
+    0 => 303
+    1 => \'foo\'
+) each value is not of type "int".')
+            );
+        }
     }
 
     public function testAssertCountSuccess()

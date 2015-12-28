@@ -401,6 +401,22 @@ assert($value, isNonExistingDirectory('/path/to/directories'));
 ```
 
 
+### `each(Predicate $predicate)`
+
+Applies a predicate to each value of an array or traversable.
+
+```php
+assert($value, each(isInstanceOf($expectedType));
+```
+
+Please note that an empty array or traversable will result in a successful test.
+If it must not be empty use `isNotEmpty()->asWellAs(each($predicate))`:
+
+```php
+assert($value, isNotEmpty()->asWellAs(each(isInstanceOf($expectedType))));
+```
+
+
 PHPUnit compatibility layer
 ---------------------------
 

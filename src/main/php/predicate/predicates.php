@@ -8,6 +8,22 @@
 namespace bovigo\assert\predicate;
 
 /**
+ * returns predicate which tests each value of something that is iterable
+ *
+ * Please note that an empty array or traversable will result in a successful
+ * test. If it must not be empty use isNotEmpty()->asWellAs(each($predicate)).
+ *
+ * @api
+ * @param   \bovigo\assert\predicate\Predicate  $predicate
+ * @return  \bovigo\assert\predicate\Each
+ * @since   1.1.0
+ */
+function each(Predicate $predicate)
+{
+    return new Each($predicate);
+}
+
+/**
  * returns predicate which tests if value is null
  *
  * @api

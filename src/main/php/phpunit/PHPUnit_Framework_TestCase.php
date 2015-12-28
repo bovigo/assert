@@ -49,6 +49,7 @@ use function bovigo\assert\predicate\contains;
 use function bovigo\assert\predicate\doesNotContain;
 use function bovigo\assert\predicate\doesNotHaveKey;
 use function bovigo\assert\predicate\doesNotMatch;
+use function bovigo\assert\predicate\each;
 use function bovigo\assert\predicate\equals;
 use function bovigo\assert\predicate\hasKey;
 use function bovigo\assert\predicate\isEmpty;
@@ -153,6 +154,63 @@ abstract class PHPUnit_Framework_TestCase extends Original
         } else {
             assert($haystack, doesNotContain($needle), $message);
         }
+    }
+
+    /**
+     * Asserts that a haystack contains only values of a given type.
+     *
+     * @param  string             $type
+     * @param  array|Traversable  $haystack
+     * @param  bool               $isNativeType
+     * @param  string             $message
+     * @since  1.1.0
+     */
+    public static function assertContainsOnly($type, $haystack, $isNativeType = null, $message = '')
+    {
+        if (null === $isNativeType) {
+            $isNativeType = \PHPUnit_Util_Type::isType($type);
+        }
+
+        if (false === $isNativeType) {
+            self::assertContainsOnlyInstancesOf($type, $haystack, $message);
+        } else {
+            assert($haystack, each(isOfType($type)), $message);
+        }
+    }
+
+    /**
+     * Asserts that a haystack contains only instances of a given classname
+     *
+     * @param  string            $classname
+     * @param  array|Traversable $haystack
+     * @param  string            $message
+     * @since  1.1.0
+     */
+    public static function assertContainsOnlyInstancesOf($classname, $haystack, $message = '')
+    {
+        assert($haystack, each(isInstanceOf($classname)), $message);
+    }
+
+    /**
+     * Asserts that a haystack does not contain only values of a given type.
+     *
+     * @param  string             $type
+     * @param  array|Traversable  $haystack
+     * @param  bool               $isNativeType
+     * @param  string             $message
+     * @since  1.1.0
+     */
+    public static function assertNotContainsOnly($type, $haystack, $isNativeType = null, $message = '')
+    {
+        if (null === $isNativeType) {
+            $isNativeType = \PHPUnit_Util_Type::isType($type);
+        }
+
+        assert(
+                $haystack,
+                each(false === $isNativeType ? isNotInstanceOf($type) : isNotOfType($type)),
+                $message
+        );
     }
 
     /**
