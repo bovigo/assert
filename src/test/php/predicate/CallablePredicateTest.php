@@ -53,41 +53,11 @@ class CallablePredicateTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
+     * @expectedException  bovigo\assert\AssertionFailure
+     * @expectedExceptionMessage  Failed asserting that 'bar' satisfies is_nan().
      */
     public function assertionFailureContainsMeaningfulInformationWithStringCallable()
     {
-        try {
-            assert('bar', isNan());
-        } catch (AssertionFailure $af) {
-            assert(
-                    $af->getMessage(),
-                    equals('Failed asserting that \'bar\' satisfies is_nan().
-is_nan() expects parameter 1 to be float, string given')
-            );
-        }
-    }
-
-    /**
-     * @test
-     */
-    public function isNanUsesCallable()
-    {
-        assert(isNan()->test(NAN), isTrue());
-    }
-
-    /**
-     * @test
-     */
-    public function isFiniteUsesCallable()
-    {
-        assert(isFinite()->test(1), isTrue());
-    }
-
-    /**
-     * @test
-     */
-    public function isInfiniteUsesCallable()
-    {
-        assert(isInfinite()->test(INF), isTrue());
+        assert('bar', 'is_nan');
     }
 }

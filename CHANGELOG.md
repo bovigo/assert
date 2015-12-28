@@ -13,11 +13,8 @@
   * added `bovigo\assert\phpunit\PHPUnit_Framework_TestCase::assertStringEndsWith()`
   * added `bovigo\assert\predicate\doesNotEndWith()`
   * added `bovigo\assert\phpunit\PHPUnit_Framework_TestCase::assertStringEndsNotWith()`
-  * added `bovigo\assert\predicate\isNan()`
   * added `bovigo\assert\phpunit\PHPUnit_Framework_TestCase::assertNan()`
-  * added `bovigo\assert\predicate\isFinite()`
   * added `bovigo\assert\phpunit\PHPUnit_Framework_TestCase::assertFinite()`
-  * added `bovigo\assert\predicate\isInfinite()`
   * added `bovigo\assert\phpunit\PHPUnit_Framework_TestCase::assertInfinite()`
 
 

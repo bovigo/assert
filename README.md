@@ -441,36 +441,6 @@ assert($value, doesNotEndWith('foo'));
 ```
 
 
-### `isNan()`
-_Available since release 1.1.0._
-
-Tests that the value is not a number.
-
-```php
-assert($value, isNan());
-```
-
-
-### `isFinite()`
-_Available since release 1.1.0._
-
-Tests that the value is finite.
-
-```php
-assert($value, isFinite());
-```
-
-
-### `isInfinite()`
-_Available since release 1.1.0._
-
-Tests that the value is infinite.
-
-```php
-assert($value, isInfinite());
-```
-
-
 ### `each(Predicate $predicate)`
 _Available since release 1.1.0._
 
@@ -486,6 +456,65 @@ If it must not be empty use `isNotEmpty()->asWellAs(each($predicate))`:
 ```php
 assert($value, isNotEmpty()->asWellAs(each(isInstanceOf($expectedType))));
 ```
+
+
+Self defined predicates
+-----------------------
+
+To define a predicate to be used in an assertion there are two possibilities:
+
+### Use a callable
+
+You can pass anything that is a `callable` to the `assert()` function:
+```php
+assert($value, 'is_nan');
+```
+This will create a predicate which uses PHP's builtin `is_nan()` function to
+test the value.
+
+The callable should accept a single value (the value to test, obviously) and
+must return `true` on success and `false` on failure. It is also allowed to
+throw any exception.
+
+Here is an example with a closure:
+```php
+assert(
+        $value,
+        function($value)
+        {
+            if (!is_string($value)) {
+                throw new \InvalidArgumentException(
+                        'Given value is not a string.'
+                );
+            }
+
+            return substr($value, 4, 3) === 'foo';
+        }
+);
+```
+
+
+### Extend `bovigo\assert\predicate\Predicate`
+
+The other possibility is to extend the `bovigo\assert\predicate\Predicate` class.
+You need to implement at least the following methods:
+
+#### `public function test($value)`
+
+This method receives the value to test and should return `true` on success and
+`false` on failure. It is also allowed to throw any exception.
+
+#### `public function __toString()`
+
+This method must return a proper description of the predicate which fits into
+the sentences shown when an asssertion fails. These sentences are composed as
+follows:
+
+_Failed asserting that [description of value] [description of predicate]._
+
+Additionally, the predicate can influence _[description of value]_ by overriding
+the `describeValue(Exporter $exporter, $value)` method.
+
 
 
 PHPUnit compatibility layer

@@ -435,7 +435,7 @@ abstract class PHPUnit_Framework_TestCase extends Original
      */
     public static function assertFinite($actual, $message = '')
     {
-        assert($actual, isFinite(), $message);
+        assert($actual, 'is_finite', $message);
     }
 
     /**
@@ -447,7 +447,7 @@ abstract class PHPUnit_Framework_TestCase extends Original
      */
     public static function assertInfinite($actual, $message = '')
     {
-        assert($actual, isInfinite(), $message);
+        assert($actual, 'is_infinite', $message);
     }
 
     /**
@@ -459,7 +459,7 @@ abstract class PHPUnit_Framework_TestCase extends Original
      */
     public static function assertNan($actual, $message = '')
     {
-        assert($actual, isNan(), $message);
+        assert($actual, 'is_nan', $message);
     }
 
     /**
