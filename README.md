@@ -19,11 +19,11 @@ _bovigo/assert_ is distributed as [Composer](https://getcomposer.org/) package.
 To install it as a development dependency of your package use the following
 command:
 
-    composer require --dev "bovigo/assert": "^1.0"
+    composer require --dev "bovigo/assert": "^1.1"
 
 To install it as a runtime dependency for your package use the following command:
 
-    composer require "bovigo/assert=^1.0"
+    composer require "bovigo/assert=^1.1"
 
 
 Requirements
