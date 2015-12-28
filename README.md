@@ -441,6 +441,36 @@ assert($value, doesNotEndWith('foo'));
 ```
 
 
+### `isNan()`
+_Available since release 1.1.0._
+
+Tests that the value is not a number.
+
+```php
+assert($value, isNan());
+```
+
+
+### `isFinite()`
+_Available since release 1.1.0._
+
+Tests that the value is finite.
+
+```php
+assert($value, isFinite());
+```
+
+
+### `isInfinite()`
+_Available since release 1.1.0._
+
+Tests that the value is infinite.
+
+```php
+assert($value, isInfinite());
+```
+
+
 ### `each(Predicate $predicate)`
 _Available since release 1.1.0._
 

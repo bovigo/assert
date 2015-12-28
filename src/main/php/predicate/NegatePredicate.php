@@ -57,7 +57,6 @@ class NegatePredicate extends Predicate
     {
         switch (get_class($this->predicate)) {
             case 'bovigo\assert\predicate\AndPredicate':
-            case 'bovigo\assert\predicate\CallablePredicate':
             case 'bovigo\assert\predicate\NegatePredicate':
             case 'bovigo\assert\predicate\OrPredicate':
                 return 'not ' . $this->predicate;
@@ -83,6 +82,7 @@ class NegatePredicate extends Predicate
                     'is ',
                     'are ',
                     'matches ',
+                    'satisfies ',
                     'starts with ',
                     'ends with ',
                     'not not '
@@ -93,6 +93,7 @@ class NegatePredicate extends Predicate
                     'is not ',
                     'are not ',
                     'does not match ',
+                    'does not satisfy ',
                     'does not start with ',
                     'does not end with ',
                     'not '

@@ -441,3 +441,39 @@ function doesNotEndWith($suffix)
 {
     return not(endsWith($suffix));
 }
+
+/**
+ * returns a predicate which tests a value is NAN
+ *
+ * @api
+ * @return  \bovigo\assert\predicate\CallablePredicate
+ * @since   1.1.0
+ */
+function isNan()
+{
+    return new CallablePredicate('is_nan');
+}
+
+/**
+ * returns a predicate which tests a value is finite
+ *
+ * @api
+ * @return  \bovigo\assert\predicate\CallablePredicate
+ * @since   1.1.0
+ */
+function isFinite()
+{
+    return new CallablePredicate('is_finite');
+}
+
+/**
+ * returns a predicate which tests a value is infinite
+ *
+ * @api
+ * @return  \bovigo\assert\predicate\CallablePredicate
+ * @since   1.1.0
+ */
+function isInfinite()
+{
+    return new CallablePredicate('is_infinite');
+}

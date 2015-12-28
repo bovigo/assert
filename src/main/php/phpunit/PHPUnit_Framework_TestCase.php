@@ -59,11 +59,14 @@ use function bovigo\assert\predicate\isEmpty;
 use function bovigo\assert\predicate\isExistingDirectory;
 use function bovigo\assert\predicate\isExistingFile;
 use function bovigo\assert\predicate\isFalse;
+use function bovigo\assert\predicate\isFinite;
 use function bovigo\assert\predicate\isGreaterThan;
 use function bovigo\assert\predicate\isGreaterThanOrEqualTo;
+use function bovigo\assert\predicate\isInfinite;
 use function bovigo\assert\predicate\isInstanceOf;
 use function bovigo\assert\predicate\isLessThan;
 use function bovigo\assert\predicate\isLessThanOrEqualTo;
+use function bovigo\assert\predicate\isNan;
 use function bovigo\assert\predicate\isNonExistingDirectory;
 use function bovigo\assert\predicate\isNonExistingFile;
 use function bovigo\assert\predicate\isNotEmpty;
@@ -421,6 +424,42 @@ abstract class PHPUnit_Framework_TestCase extends Original
     public static function assertNull($actual, $message = '')
     {
         assert($actual, isNull(), $message);
+    }
+
+    /**
+     * Asserts that a variable is finite.
+     *
+     * @param  mixed   $actual
+     * @param  string  $message
+     * @since  1.1.0
+     */
+    public static function assertFinite($actual, $message = '')
+    {
+        assert($actual, isFinite(), $message);
+    }
+
+    /**
+     * Asserts that a variable is infinite.
+     *
+     * @param  mixed   $actual
+     * @param  string  $message
+     * @since  1.1.0
+     */
+    public static function assertInfinite($actual, $message = '')
+    {
+        assert($actual, isInfinite(), $message);
+    }
+
+    /**
+     * Asserts that a variable is nan.
+     *
+     * @param  mixed   $actual
+     * @param  string  $message
+     * @since  1.1.0
+     */
+    public static function assertNan($actual, $message = '')
+    {
+        assert($actual, isNan(), $message);
     }
 
     /**

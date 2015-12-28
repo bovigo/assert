@@ -45,7 +45,7 @@ class CallablePredicate extends Predicate
      */
     public function __toString()
     {
-        return sprintf('callable<%s>', $this->predicateName());
+        return 'satisfies ' . $this->predicateName();
     }
 
     /**
@@ -65,6 +65,6 @@ class CallablePredicate extends Predicate
             return $this->predicate . '()';
         }
 
-        return 'lambda';
+        return 'a lambda function';
     }
 }

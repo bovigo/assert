@@ -120,7 +120,7 @@ Given value of type "integer" can not contain something.')
     {
         assert(
                 $this->orPredicate,
-                equals('callable<lambda> or callable<lambda>')
+                equals('satisfies a lambda function or satisfies a lambda function')
         );
     }
 

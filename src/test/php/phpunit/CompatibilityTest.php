@@ -400,6 +400,60 @@ class CompatibilityTest extends PHPUnit_Framework_TestCase
         $this->assertNull(303);
     }
 
+    /**
+     * @since  1.1.0
+     */
+    public function testAssertFiniteSuccess()
+    {
+        $this->assertFinite(1);
+    }
+
+    /**
+     * @since  1.1.0
+     * @expectedException  bovigo\assert\AssertionFailure
+     * @expectedExceptionMessage  Failed asserting that INF satisfies is_finite().
+     */
+    public function testAssertFiniteFailure()
+    {
+        $this->assertFinite(INF);
+    }
+
+    /**
+     * @since  1.1.0
+     */
+    public function testAssertInfiniteSuccess()
+    {
+        $this->assertInfinite(INF);
+    }
+
+    /**
+     * @since  1.1.0
+     * @expectedException  bovigo\assert\AssertionFailure
+     * @expectedExceptionMessage  Failed asserting that 1 satisfies is_infinite().
+     */
+    public function testAssertInfiniteFailure()
+    {
+        $this->assertInfinite(1);
+    }
+
+    /**
+     * @since  1.1.0
+     */
+    public function testAssertNanSuccess()
+    {
+        $this->assertNan(NAN);
+    }
+
+    /**
+     * @since  1.1.0
+     * @expectedException  bovigo\assert\AssertionFailure
+     * @expectedExceptionMessage  Failed asserting that 1 satisfies is_nan().
+     */
+    public function testAssertNanFailure()
+    {
+        $this->assertNan(1);
+    }
+
     public function testAssertSameSuccess()
     {
         $foo = new \stdClass();

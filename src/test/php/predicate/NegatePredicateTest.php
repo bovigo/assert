@@ -42,7 +42,7 @@ class NegatePredicateTest extends \PHPUnit_Framework_TestCase
      */
     public function hasStringRepresentation()
     {
-        assert($this->negatePredicate, equals('not callable<lambda>'));
+        assert((string) $this->negatePredicate, equals('does not satisfy a lambda function'));
     }
 
     /**
