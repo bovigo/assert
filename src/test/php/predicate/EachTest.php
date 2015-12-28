@@ -44,6 +44,14 @@ class EachTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
+    function canBeUsedWithCallable()
+    {
+        assert([303, 313], each('is_finite'));
+    }
+
+    /**
+     * @test
+     */
     public function evaluatesToTrueIfArrayIsEmpty()
     {
         assert(each(isNotNull())->test([]), isTrue());

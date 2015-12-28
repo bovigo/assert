@@ -25,7 +25,7 @@ class NegatePredicateTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->negatePredicate = new NegatePredicate(
+        $this->negatePredicate = not(
                 function($value) { return 'foo' === $value; }
         );
     }
@@ -51,9 +51,7 @@ class NegatePredicateTest extends \PHPUnit_Framework_TestCase
     public function countEqualsCountOfNegatedPredicate()
     {
         assert(
-                count(new NegatePredicate(
-                        new AndPredicate(function() {}, function() {})
-                )),
+                count(not(new AndPredicate(function() {}, function() {}))),
                 equals(2)
         );
     }

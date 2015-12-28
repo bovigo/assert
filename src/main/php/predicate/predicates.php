@@ -14,13 +14,25 @@ namespace bovigo\assert\predicate;
  * test. If it must not be empty use isNotEmpty()->asWellAs(each($predicate)).
  *
  * @api
- * @param   \bovigo\assert\predicate\Predicate  $predicate
+ * @param   callable|\bovigo\assert\predicate\Predicate  $predicate
  * @return  \bovigo\assert\predicate\Each
  * @since   1.1.0
  */
-function each(Predicate $predicate)
+function each($predicate)
 {
     return new Each($predicate);
+}
+
+/**
+ * negates the given predicate
+ *
+ * @api
+ * @param   callable|\bovigo\assert\predicate\Predicate  $predicate
+ * @return  \bovigo\assert\predicate\NegatePredicate
+ */
+function not($predicate)
+{
+    return new NegatePredicate($predicate);
 }
 
 /**
@@ -113,17 +125,6 @@ function equals($expected, $delta = 0.0)
 function isNotEqualTo($unexpected, $delta = 0.0)
 {
     return not(equals($unexpected, $delta));
-}
-
-/**
- * negates the given predicate
- *
- * @param   \bovigo\assert\predicate\Predicate  $predicate
- * @return  \bovigo\assert\predicate\NegatePredicate
- */
-function not(Predicate $predicate)
-{
-    return $predicate->negate();
 }
 
 /**

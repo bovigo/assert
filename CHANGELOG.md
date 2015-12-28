@@ -16,6 +16,7 @@
   * added `bovigo\assert\phpunit\PHPUnit_Framework_TestCase::assertNan()`
   * added `bovigo\assert\phpunit\PHPUnit_Framework_TestCase::assertFinite()`
   * added `bovigo\assert\phpunit\PHPUnit_Framework_TestCase::assertInfinite()`
+  * `bovigo\assert\predicate\not()` now also accepts callables
 
 
 1.0.0 (2015-12-27)

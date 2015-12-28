@@ -25,11 +25,11 @@ class Each extends Predicate
     /**
      * constructor
      *
-     * @param  \bovigo\assert\predicate\Predicate  $predicate
+     * @param  callable|\bovigo\assert\predicate\Predicate  $predicate
      */
-    public function __construct(Predicate $predicate)
+    public function __construct($predicate)
     {
-        $this->predicate = $predicate;
+        $this->predicate = Predicate::castFrom($predicate);
     }
 
     /**
