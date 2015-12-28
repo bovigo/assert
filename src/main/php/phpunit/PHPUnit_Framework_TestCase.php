@@ -47,9 +47,12 @@ use \PHPUnit_Framework_TestCase as Original;
 use function bovigo\assert\assert;
 use function bovigo\assert\predicate\contains;
 use function bovigo\assert\predicate\doesNotContain;
+use function bovigo\assert\predicate\doesNotEndWith;
 use function bovigo\assert\predicate\doesNotHaveKey;
 use function bovigo\assert\predicate\doesNotMatch;
+use function bovigo\assert\predicate\doesNotStartWith;
 use function bovigo\assert\predicate\each;
+use function bovigo\assert\predicate\endsWith;
 use function bovigo\assert\predicate\equals;
 use function bovigo\assert\predicate\hasKey;
 use function bovigo\assert\predicate\isEmpty;
@@ -76,6 +79,7 @@ use function bovigo\assert\predicate\isOfType;
 use function bovigo\assert\predicate\isTrue;
 use function bovigo\assert\predicate\isSameAs;
 use function bovigo\assert\predicate\matches;
+use function bovigo\assert\predicate\startsWith;
 /**
  * Compatibility layer to use bovigo/assert in $this->assert*() style.
  *
@@ -517,6 +521,58 @@ abstract class PHPUnit_Framework_TestCase extends Original
     public static function assertNotRegExp($pattern, $string, $message = '')
     {
         assert($string, doesNotMatch($pattern), $message);
+    }
+
+    /**
+     * Asserts that a string starts with a given prefix.
+     *
+     * @param  string  $prefix
+     * @param  string  $string
+     * @param  string  $message
+     * @since  1.1.0
+     */
+    public static function assertStringStartsWith($prefix, $string, $message = '')
+    {
+        assert($string, startsWith($prefix), $message);
+    }
+
+    /**
+     * Asserts that a string starts not with a given prefix.
+     *
+     * @param  string  $prefix
+     * @param  string  $string
+     * @param  string  $message
+     * @since  1.1.0
+     */
+    public static function assertStringStartsNotWith($prefix, $string, $message = '')
+    {
+        assert($string, doesNotStartWith($prefix), $message);
+    }
+
+    /**
+     * Asserts that a string ends with a given suffix.
+     *
+     * @param  string  $suffix
+     * @param  string  $string
+     * @param  string  $message
+     * @since  1.1.0
+     */
+    public static function assertStringEndsWith($suffix, $string, $message = '')
+    {
+        assert($string, endsWith($suffix), $message);
+    }
+
+    /**
+     * Asserts that a string ends not with a given suffix.
+     *
+     * @param  string  $suffix
+     * @param  string  $string
+     * @param  string  $message
+     * @since  1.1.0
+     */
+    public static function assertStringEndsNotWith($suffix, $string, $message = '')
+    {
+        assert($string, doesNotEndWith($suffix), $message);
     }
 
     /**

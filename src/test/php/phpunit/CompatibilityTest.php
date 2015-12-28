@@ -73,11 +73,17 @@ class CompatibilityTest extends PHPUnit_Framework_TestCase
         $this->assertNotContains(303, ['foo' => 303]);
     }
 
+    /**
+     * @since  1.1.0
+     */
     public function testAssertContainsOnlySuccessForNativeTypes()
     {
         $this->assertContainsOnly('int', [303, 313]);
     }
 
+    /**
+     * @since  1.1.0
+     */
     public function testAssertContainsOnlySuccessForNonNativeTypes()
     {
         $this->assertContainsOnly(
@@ -86,6 +92,9 @@ class CompatibilityTest extends PHPUnit_Framework_TestCase
         );
     }
 
+    /**
+     * @since  1.1.0
+     */
     public function testAssertContainsOnlyFailure()
     {
         try {
@@ -102,6 +111,9 @@ class CompatibilityTest extends PHPUnit_Framework_TestCase
         }
     }
 
+    /**
+     * @since  1.1.0
+     */
     public function testAssertContainsOnlyInstancesOfSuccess()
     {
         $this->assertContainsOnlyInstancesOf(
@@ -110,6 +122,9 @@ class CompatibilityTest extends PHPUnit_Framework_TestCase
         );
     }
 
+    /**
+     * @since  1.1.0
+     */
     public function testAssertContainsOnlyInstancesOfFailure()
     {
         try {
@@ -126,16 +141,25 @@ class CompatibilityTest extends PHPUnit_Framework_TestCase
         }
     }
 
+    /**
+     * @since  1.1.0
+     */
     public function testAssertNotContainsOnlySuccessForNativeTypes()
     {
         $this->assertNotContainsOnly('int', ['foo', 'bar']);
     }
 
+    /**
+     * @since  1.1.0
+     */
     public function testAssertNotContainsOnlySuccessForNonNativeTypes()
     {
         $this->assertNotContainsOnly('stdClass', ['foo', 'bar']);
     }
 
+    /**
+     * @since  1.1.0
+     */
     public function testAssertNotContainsOnlyFailure()
     {
         try {
@@ -486,8 +510,86 @@ class CompatibilityTest extends PHPUnit_Framework_TestCase
      * @expectedException  bovigo\assert\AssertionFailure
      * @expectedExceptionMessage  Failed asserting that 'foo' does not match regular expression "/^([a-z]{3})$/".
      */
-    public function testAssertNotRegExpFailure()
+    public function testAssertNotRegExNotpFailure()
     {
         $this->assertNotRegExp('/^([a-z]{3})$/', 'foo');
+    }
+
+    /**
+     * @since  1.1.0
+     */
+    public function testAssertStringStartsWithSuccess()
+    {
+        $this->assertStringStartsWith('foo', 'foobarbaz');
+    }
+
+    /**
+     * @since  1.1.0
+     * @expectedException  bovigo\assert\AssertionFailure
+     * @expectedExceptionMessage  Failed asserting that 'barbazfoo' starts with 'foo'.
+     */
+    public function testAssertStringStartsWithFailure()
+    {
+        $this->assertStringStartsWith('foo', 'barbazfoo');
+    }
+
+    /**
+     * @since  1.1.0
+     */
+    public function testAssertStringStartsNotWithSuccess()
+    {
+        $this->assertStringStartsNotWith('foo', 'barbazfoo');
+    }
+
+    /**
+     * @since  1.1.0
+     * @expectedException  bovigo\assert\AssertionFailure
+     * @expectedExceptionMessage  Failed asserting that 'foobarbaz' does not start with 'foo'.
+     */
+    public function testAssertStringStartsNotWithFailure()
+    {
+        $this->assertStringStartsNotWith('foo', 'foobarbaz');
+    }
+
+
+
+
+
+
+
+    /**
+     * @since  1.1.0
+     */
+    public function testAssertStringEndsWithSuccess()
+    {
+        $this->assertStringEndsWith('foo', 'barbazfoo');
+    }
+
+    /**
+     * @since  1.1.0
+     * @expectedException  bovigo\assert\AssertionFailure
+     * @expectedExceptionMessage  Failed asserting that 'foobarbaz' ends with 'foo'.
+     */
+    public function testAssertStringEndsWithFailure()
+    {
+        $this->assertStringEndsWith('foo', 'foobarbaz');
+    }
+
+    /**
+     * @since  1.1.0
+     */
+    public function testAssertStringEndsNotWithSuccess()
+    {
+        $this->assertStringEndsNotWith('foo', 'foobarbaz');
+    }
+
+    /**
+     * @since  1.1.0
+     * @expectedException  bovigo\assert\AssertionFailure
+     * @expectedExceptionMessage  Failed asserting that 'barbazfoo' does not end with 'foo'.
+     */
+    public function testAssertStringEndsNotWithFailure()
+    {
+        $this->assertStringEndsNotWith('foo', 'barbazfoo');
     }
 }

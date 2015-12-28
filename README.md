@@ -401,7 +401,48 @@ assert($value, isNonExistingDirectory('/path/to/directories'));
 ```
 
 
+### `startsWith($prefix)`
+_Available since release 1.1.0._
+
+Tests that the value which must be a string starts with given prefix.
+
+```php
+assert($value, startsWith('foo'));
+```
+
+
+### `doesNotStartWith($prefix)`
+_Available since release 1.1.0._
+
+Tests that the value which must be a string does not start with given prefix.
+
+```php
+assert($value, startsWith('foo'));
+```
+
+
+### `endsWith($suffix)`
+_Available since release 1.1.0._
+
+Tests that the value which must be a string ends with given suffix.
+
+```php
+assert($value, endsWith('foo'));
+```
+
+
+### `doesNotEndWith($suffix)`
+_Available since release 1.1.0._
+
+Tests that the value which must be a string does not end with given suffix.
+
+```php
+assert($value, doesNotEndWith('foo'));
+```
+
+
 ### `each(Predicate $predicate)`
+_Available since release 1.1.0._
 
 Applies a predicate to each value of an array or traversable.
 

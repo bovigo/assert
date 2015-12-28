@@ -389,3 +389,55 @@ function isNonExistingDirectory($basePath = null)
 {
     return not(isExistingDirectory($basePath));
 }
+
+/**
+ * returns predicate which tests that a string starts with given prefix
+ *
+ * @api
+ * @param   string  $prefix
+ * @return  \bovigo\assert\predicate\StringStartsWith
+ * @since   1.1.0
+ */
+function startsWith($prefix)
+{
+    return new StringStartsWith($prefix);
+}
+
+/**
+ * returns a predicate which tests that a string does not start with given prefix
+ *
+ * @api
+ * @param   string  $prefix
+ * @return  \bovigo\assert\predicate\NegatePredicate
+ * @since   1.1.0
+ */
+function doesNotStartWith($prefix)
+{
+    return not(startsWith($prefix));
+}
+
+/**
+ * returns predicate which tests that a string ends with given suffix
+ *
+ * @api
+ * @param   string  $suffix
+ * @return  \bovigo\assert\predicate\StringEndsWith
+ * @since   1.1.0
+ */
+function endsWith($suffix)
+{
+    return new StringEndsWith($suffix);
+}
+
+/**
+ * returns a predicate which tests that a string does not end  with given suffix
+ *
+ * @api
+ * @param   string  $suffix
+ * @return  \bovigo\assert\predicate\NegatePredicate
+ * @since   1.1.0
+ */
+function doesNotEndWith($suffix)
+{
+    return not(endsWith($suffix));
+}

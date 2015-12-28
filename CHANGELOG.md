@@ -5,6 +5,14 @@
   * added `bovigo\assert\phpunit\PHPUnit_Framework_TestCase::assertContainsOnly()`
   * added `bovigo\assert\phpunit\PHPUnit_Framework_TestCase::assertContainsOnlyInstancesOf()`
   * added `bovigo\assert\phpunit\PHPUnit_Framework_TestCase::assertNotContainsOnly()`
+  * added `bovigo\assert\predicate\startsWith()`
+  * added `bovigo\assert\phpunit\PHPUnit_Framework_TestCase::assertStringStartsWith()`
+  * added `bovigo\assert\predicate\doesNotStartWith()`
+  * added `bovigo\assert\phpunit\PHPUnit_Framework_TestCase::assertStringStartsNotWith()`
+  * added `bovigo\assert\predicate\endsWith()`
+  * added `bovigo\assert\phpunit\PHPUnit_Framework_TestCase::assertStringEndsWith()`
+  * added `bovigo\assert\predicate\doesNotEndWith()`
+  * added `bovigo\assert\phpunit\PHPUnit_Framework_TestCase::assertStringEndsNotWith()`
 
 
 1.0.0 (2015-12-27)

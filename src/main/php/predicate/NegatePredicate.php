@@ -93,8 +93,8 @@ class NegatePredicate extends Predicate
                     'is not ',
                     'are not ',
                     'does not match ',
-                    'starts not with ',
-                    'ends not with ',
+                    'does not start with ',
+                    'does not end with ',
                     'not '
                 ],
                 $string
