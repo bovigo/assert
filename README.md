@@ -32,6 +32,15 @@ Requirements
 _bovigo/assert_ requires at least PHP 5.6.
 
 
+Why?
+----
+
+The original idea was to explore how a more functional approach to using
+assertions in unit tests could look like, and if it would make for a better
+reading of test code. Personally, I found the results convincing enough that I
+wanted to use it in my own code, so I made a package of it.
+
+
 Usage
 -----
 
@@ -441,7 +450,7 @@ assert($value, doesNotEndWith('foo'));
 ```
 
 
-### `each(Predicate $predicate)`
+### `each($predicate)`
 _Available since release 1.1.0._
 
 Applies a predicate to each value of an array or traversable.
@@ -456,6 +465,29 @@ If it must not be empty use `isNotEmpty()->asWellAs(each($predicate))`:
 ```php
 assert($value, isNotEmpty()->asWellAs(each(isInstanceOf($expectedType))));
 ```
+
+It can also be used with any callable:
+
+```php
+assert($value, each('is_nan'));
+assert($value, each(function($value) { return substr($value, 4, 3) === 'foo'; }));
+```
+
+### `not($predicate)`
+
+Reverses the meaning of a predicate.
+
+```php
+assert($value, not(isTrue()));
+```
+
+It can also be used with any callable:
+
+```php
+assert($value, not('is_nan'));
+assert($value, not(function($value) { return substr($value, 4, 3) === 'foo'; }));
+```
+
 
 
 Self defined predicates
@@ -540,3 +572,11 @@ pass it directly into the `assert()` function as a value. In any other case
 _bovigo/assert_ does not support accessing protected or private properties.
 There's a reason why they are protected or private, and a test should only be
 against the public API of a class, not against their inner workings.
+
+### What about the functions defined in _src/main/php/functions.php_?
+
+These functions exist because my exploration of the more functional approach
+started by mimicking the existing assertions in PHPUnit. Other packages of mine
+depend on it, but over time they surely will be migrated to not use these
+functions any more. Most likely, this file will be removed some day in the
+future. So my advice is: don't rely on this file being present.
