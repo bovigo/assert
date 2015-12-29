@@ -421,12 +421,37 @@ function isNonExistingDirectory($basePath = null)
  *
  * @api
  * @param   string  $prefix
- * @return  \bovigo\assert\predicate\StringStartsWith
+ * @return  \bovigo\assert\predicate\CallablePredicate
+ * @throws  \InvalidArgumentException
  * @since   1.1.0
  */
 function startsWith($prefix)
 {
-    return new StringStartsWith($prefix);
+    if (!is_string($prefix)) {
+        throw new \InvalidArgumentException(
+                'Prefix must be a string, "' . gettype($prefix) . '" given.'
+        );
+    }
+
+    return new CallablePredicate(
+            function($value) use ($prefix)
+            {
+                if (!is_string($value)) {
+                    throw new \InvalidArgumentException(
+                            'Given value is not a string, but of type "'
+                            . gettype($value) . '"'
+                    );
+                }
+
+                return 0 === substr_compare(
+                        $value,
+                        $prefix,
+                        0,
+                        strlen($prefix)
+                );
+            },
+            'starts with \'' . $prefix . '\''
+    );
 }
 
 /**
@@ -447,12 +472,36 @@ function doesNotStartWith($prefix)
  *
  * @api
  * @param   string  $suffix
- * @return  \bovigo\assert\predicate\StringEndsWith
+ * @return  \bovigo\assert\predicate\CallablePredicate
+ * @throws  \InvalidArgumentException
  * @since   1.1.0
  */
 function endsWith($suffix)
 {
-    return new StringEndsWith($suffix);
+    if (!is_string($suffix)) {
+        throw new \InvalidArgumentException(
+                'Suffix must be a string, "' . gettype($suffix) . '" given.'
+        );
+    }
+
+    return new CallablePredicate(
+            function($value) use ($suffix)
+            {
+                if (!is_string($value)) {
+                    throw new \InvalidArgumentException(
+                            'Given value is not a string, but of type "'
+                            . gettype($value) . '"'
+                    );
+                }
+
+                return 0 === substr_compare(
+                        $value,
+                        $suffix,
+                        -strlen($suffix)
+                );
+            },
+            'ends with \'' . $suffix . '\''
+    );
 }
 
 /**
