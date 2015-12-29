@@ -45,6 +45,12 @@ namespace bovigo\assert\phpunit;
 use \PHPUnit_Framework_TestCase as Original;
 
 use function bovigo\assert\assert;
+use function bovigo\assert\assertEmpty;
+use function bovigo\assert\assertFalse;
+use function bovigo\assert\assertNotEmpty;
+use function bovigo\assert\assertNotNull;
+use function bovigo\assert\assertNull;
+use function bovigo\assert\assertTrue;
 use function bovigo\assert\predicate\contains;
 use function bovigo\assert\predicate\doesNotContain;
 use function bovigo\assert\predicate\doesNotEndWith;
@@ -55,10 +61,8 @@ use function bovigo\assert\predicate\each;
 use function bovigo\assert\predicate\endsWith;
 use function bovigo\assert\predicate\equals;
 use function bovigo\assert\predicate\hasKey;
-use function bovigo\assert\predicate\isEmpty;
 use function bovigo\assert\predicate\isExistingDirectory;
 use function bovigo\assert\predicate\isExistingFile;
-use function bovigo\assert\predicate\isFalse;
 use function bovigo\assert\predicate\isGreaterThan;
 use function bovigo\assert\predicate\isGreaterThanOrEqualTo;
 use function bovigo\assert\predicate\isInstanceOf;
@@ -66,17 +70,13 @@ use function bovigo\assert\predicate\isLessThan;
 use function bovigo\assert\predicate\isLessThanOrEqualTo;
 use function bovigo\assert\predicate\isNonExistingDirectory;
 use function bovigo\assert\predicate\isNonExistingFile;
-use function bovigo\assert\predicate\isNotEmpty;
 use function bovigo\assert\predicate\isNotEqualTo;
 use function bovigo\assert\predicate\isNotInstanceOf;
-use function bovigo\assert\predicate\isNotNull;
 use function bovigo\assert\predicate\isNotOfSize;
 use function bovigo\assert\predicate\isNotOfType;
 use function bovigo\assert\predicate\isNotSameAs;
-use function bovigo\assert\predicate\isNull;
 use function bovigo\assert\predicate\isOfSize;
 use function bovigo\assert\predicate\isOfType;
-use function bovigo\assert\predicate\isTrue;
 use function bovigo\assert\predicate\isSameAs;
 use function bovigo\assert\predicate\matches;
 use function bovigo\assert\predicate\startsWith;
@@ -295,7 +295,7 @@ abstract class PHPUnit_Framework_TestCase extends Original
      */
     public static function assertEmpty($actual, $message = '')
     {
-        assert($actual, isEmpty(), $message);
+        assertEmpty($actual, $message);
     }
 
     /**
@@ -306,7 +306,7 @@ abstract class PHPUnit_Framework_TestCase extends Original
      */
     public static function assertNotEmpty($actual, $message = '')
     {
-        assert($actual, isNotEmpty(), $message);
+        assertNotEmpty($actual, $message);
     }
 
     /**
@@ -387,7 +387,7 @@ abstract class PHPUnit_Framework_TestCase extends Original
      */
     public static function assertTrue($condition, $message = '')
     {
-        assert($condition, isTrue(), $message);
+        assertTrue($condition, $message);
     }
 
     /**
@@ -398,7 +398,7 @@ abstract class PHPUnit_Framework_TestCase extends Original
      */
     public static function assertFalse($condition, $message = '')
     {
-        assert($condition, isFalse(), $message);
+        assertFalse($condition, $message);
     }
 
     /**
@@ -409,7 +409,7 @@ abstract class PHPUnit_Framework_TestCase extends Original
      */
     public static function assertNotNull($actual, $message = '')
     {
-        assert($actual, isNotNull(), $message);
+        assertNotNull($actual, $message);
     }
 
     /**
@@ -420,7 +420,7 @@ abstract class PHPUnit_Framework_TestCase extends Original
      */
     public static function assertNull($actual, $message = '')
     {
-        assert($actual, isNull(), $message);
+        assertNull($actual, $message);
     }
 
     /**

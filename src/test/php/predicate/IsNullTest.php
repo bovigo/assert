@@ -6,7 +6,10 @@
  * file that was distributed with this source code.
  */
 namespace bovigo\assert\predicate;
-use function bovigo\assert\assert;
+use function bovigo\assert\assertFalse;
+use function bovigo\assert\assertNotNull;
+use function bovigo\assert\assertNull;
+use function bovigo\assert\assertTrue;
 /**
  * Tests for bovigo\assert\predicate\IsNull.
  *
@@ -19,7 +22,7 @@ class IsNullTest extends \PHPUnit_Framework_TestCase
      */
     public function evaluatesToTrueIfGivenValueIsNull()
     {
-        assert(isNull()->test(null), isTrue());
+        assertTrue(isNull()->test(null));
     }
 
     /**
@@ -46,7 +49,7 @@ class IsNullTest extends \PHPUnit_Framework_TestCase
      */
     public function evaluatesToFalseIfGivenValueIsNotNull($nonNullValue)
     {
-        assert(isNull()->test($nonNullValue), isFalse());
+        assertFalse(isNull()->test($nonNullValue));
     }
 
     /**
@@ -56,6 +59,15 @@ class IsNullTest extends \PHPUnit_Framework_TestCase
      */
     public function assertionFailureContainsMeaningfulInformation()
     {
-        assert([], isNull());
+        assertNull([]);
+    }
+
+    /**
+     * @test
+     * @since  1.3.0
+     */
+    public function aliasAssertNotNull()
+    {
+        assertTrue(assertNotNull(303));
     }
 }

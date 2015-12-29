@@ -9,6 +9,13 @@ namespace bovigo\assert;
 use bovigo\assert\predicate\Predicate;
 use SebastianBergmann\Exporter\Exporter;
 
+use function bovigo\assert\predicate\isFalse;
+use function bovigo\assert\predicate\isEmpty;
+use function bovigo\assert\predicate\isNotEmpty;
+use function bovigo\assert\predicate\isNotNull;
+use function bovigo\assert\predicate\isNull;
+use function bovigo\assert\predicate\isTrue;
+
 /**
  * assert that a value fulfills a predicate
  *
@@ -36,6 +43,90 @@ function assert($value, $predicate, $description = null)
 function fail($description)
 {
     throw new AssertionFailure($description);
+}
+
+/**
+ * alias for assert($value, isTrue()[, $description])
+ *
+ * @api
+ * @param   mixed   $value        value to test
+ * @param   string  $description  optional  additional description for failure message
+ * @return  bool
+ * @since   1.3.0
+ */
+function assertTrue($value, $description = null)
+{
+    return assert($value, isTrue(), $description);
+}
+
+/**
+ * alias for assert($value, isFalse()[, $description])
+ *
+ * @api
+ * @param   mixed   $value        value to test
+ * @param   string  $description  optional  additional description for failure message
+ * @return  bool
+ * @since   1.3.0
+ */
+function assertFalse($value, $description = null)
+{
+    return assert($value, isFalse(), $description);
+}
+
+/**
+ * alias for assert($value, isNull()[, $description])
+ *
+ * @api
+ * @param   mixed   $value        value to test
+ * @param   string  $description  optional  additional description for failure message
+ * @return  bool
+ * @since   1.3.0
+ */
+function assertNull($value, $description = null)
+{
+    return assert($value, isNull(), $description);
+}
+
+/**
+ * alias for assert($value, isNotNull()[, $description])
+ *
+ * @api
+ * @param   mixed   $value        value to test
+ * @param   string  $description  optional  additional description for failure message
+ * @return  bool
+ * @since   1.3.0
+ */
+function assertNotNull($value, $description = null)
+{
+    return assert($value, isNotNull(), $description);
+}
+
+/**
+ * alias for assert($value, isEmpty()[, $description])
+ *
+ * @api
+ * @param   mixed   $value        value to test
+ * @param   string  $description  optional  additional description for failure message
+ * @return  bool
+ * @since   1.3.0
+ */
+function assertEmpty($value, $description = null)
+{
+    return assert($value, isEmpty(), $description);
+}
+
+/**
+ * alias for assert($value, isNotEmpty()[, $description])
+ *
+ * @api
+ * @param   mixed   $value        value to test
+ * @param   string  $description  optional  additional description for failure message
+ * @return  bool
+ * @since   1.3.0
+ */
+function assertNotEmpty($value, $description = null)
+{
+    return assert($value, isNotEmpty(), $description);
 }
 
 /**

@@ -48,7 +48,7 @@ All assertions are written in the same way using functions:
 
 ```php
 assert(303, equals(303));
-assert(someCondition(), isTrue(), 'condition should always be true');
+assert($someArray, isOfSize(3), 'array always must have size 3');
 ```
 
 The first parameter is the value to test, and the second is the predicate that
@@ -77,7 +77,7 @@ Note: for the sake of brevity below it is assumed the used functions are
 imported into the current namespace via
 ```php
 use function bovigo\assert\assert;
-use function bovigo\assert\predicate\isTrue;
+use function bovigo\assert\predicate\isOfSize;
 use function bovigo\assert\predicate\equals;
 // ... and so on
 ```
@@ -97,6 +97,8 @@ Tests if value is `null`.
 assert($value, isNull());
 ```
 
+Alias: `bovigo\assert\assertNull($value, $description = null)`
+
 
 ### `isNotNull()`
 
@@ -105,6 +107,8 @@ Tests that value is not `null`.
 ```php
 assert($value, isNotNull());
 ```
+
+Alias: `bovigo\assert\assertNotNull($value, $description = null)`
 
 
 ### `isEmpty()`
@@ -119,6 +123,8 @@ Tests that value is empty. Empty is defined as follows:
 assert($value, isEmpty());
 ```
 
+Alias: `bovigo\assert\assertEmpty($value, $description = null)`
+
 
 ### `isNotEmpty()`
 
@@ -127,6 +133,8 @@ Tests that value is not empty. See `isEmpty()` for definition of emptyness.
 ```php
 assert($value, isNotEmpty());
 ```
+
+Alias: `bovigo\assert\assertNotEmpty($value, $description = null)`
 
 
 ### `isTrue()`
@@ -138,6 +146,8 @@ is applied.
 assert($value, isTrue());
 ```
 
+Alias: `bovigo\assert\assertTrue($value, $description = null)`
+
 
 ### `isFalse()`
 
@@ -147,6 +157,8 @@ conversion is applied.
 ```php
 assert($value, isFalse());
 ```
+
+Alias: `bovigo\assert\assertFalse($value, $description = null)`
 
 
 ### `equals($expected, $delta = 0.0)`

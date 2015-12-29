@@ -1,3 +1,14 @@
+1.3.0 (2015-12-29)
+------------------
+
+  * added alias `bovigo\assert\assertTrue()`
+  * added alias `bovigo\assert\assertFalse()`
+  * added alias `bovigo\assert\assertNull()`
+  * added alias `bovigo\assert\assertNotNull()`
+  * added alias `bovigo\assert\assertEmpty()`
+  * added alias `bovigo\assert\assertNotEmpty()`
+
+
 1.2.0 (2015-12-28)
 ------------------
 

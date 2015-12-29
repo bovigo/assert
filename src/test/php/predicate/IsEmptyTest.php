@@ -7,6 +7,10 @@
  */
 namespace bovigo\assert\predicate;
 use function bovigo\assert\assert;
+use function bovigo\assert\assertEmpty;
+use function bovigo\assert\assertFalse;
+use function bovigo\assert\assertNotEmpty;
+use function bovigo\assert\assertTrue;
 /**
  * Helper class for the test.
  */
@@ -50,7 +54,7 @@ class IsEmptyTest extends \PHPUnit_Framework_TestCase
      */
     public function evaluatesToTrueIfGivenValueIsEmpty($emptyValue)
     {
-        assert(isEmpty()->test($emptyValue), isTrue());
+        assertTrue(isEmpty()->test($emptyValue));
     }
 
     /**
@@ -73,7 +77,7 @@ class IsEmptyTest extends \PHPUnit_Framework_TestCase
      */
     public function evaluatesToFalseIfGivenValueIsNotEmpty($nonEmptyValue)
     {
-        assert(isEmpty()->test($nonEmptyValue), isFalse());
+        assertFalse(isEmpty()->test($nonEmptyValue));
     }
 
     /**
@@ -91,7 +95,7 @@ class IsEmptyTest extends \PHPUnit_Framework_TestCase
      */
     public function assertionFailureWithStringContainsMeaningfulInformation()
     {
-        assert('foo', isEmpty());
+        assertEmpty('foo');
     }
 
     /**
@@ -101,7 +105,7 @@ class IsEmptyTest extends \PHPUnit_Framework_TestCase
      */
     public function assertionFailureWithIntegerContainsMeaningfulInformation()
     {
-        assert(1, isEmpty());
+        assertEmpty(1);
     }
 
     /**
@@ -111,7 +115,7 @@ class IsEmptyTest extends \PHPUnit_Framework_TestCase
      */
     public function assertionFailureWithBooleanContainsMeaningfulInformation()
     {
-        assert(true, isEmpty());
+        assertEmpty(true);
     }
 
     /**
@@ -121,7 +125,7 @@ class IsEmptyTest extends \PHPUnit_Framework_TestCase
      */
     public function assertionFailureWithArrayContainsMeaningfulInformation()
     {
-        assert(['foo'], isEmpty());
+        assertEmpty(['foo']);
     }
 
     /**
@@ -131,6 +135,15 @@ class IsEmptyTest extends \PHPUnit_Framework_TestCase
      */
     public function assertionFailureWithCountableContainsMeaningfulInformation()
     {
-        assert(new EmptyCountableExample(1), isEmpty());
+        assertEmpty(new EmptyCountableExample(1));
+    }
+
+    /**
+     * @test
+     * @since  1.3.0
+     */
+    public function aliasAssertNotEmpty()
+    {
+        assertTrue(assertNotEmpty(303));
     }
 }
