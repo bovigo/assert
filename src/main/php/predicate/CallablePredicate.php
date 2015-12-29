@@ -15,15 +15,24 @@ class CallablePredicate extends Predicate
      * @type  callable
      */
     private $predicate;
+    /**
+     * @type  string
+     */
+    private $description = null;
 
     /**
      * constructor
      *
+     * The description will be used instead of the default description in the
+     * string representation of this predicate.
+     *
      * @param  callable  $predicate
+     * @param  string    $description  optional  description for predicate
      */
-    public function __construct(callable $predicate)
+    public function __construct(callable $predicate, $description = null)
     {
-        $this->predicate = $predicate;
+        $this->predicate   = $predicate;
+        $this->description = $description;
     }
 
     /**
@@ -45,7 +54,11 @@ class CallablePredicate extends Predicate
      */
     public function __toString()
     {
-        return 'satisfies ' . $this->predicateName();
+        if (empty($this->description)) {
+            return 'satisfies ' . $this->predicateName();
+        }
+
+        return $this->description;
     }
 
     /**

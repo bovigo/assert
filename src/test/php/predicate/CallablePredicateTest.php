@@ -6,8 +6,6 @@
  * file that was distributed with this source code.
  */
 namespace bovigo\assert\predicate;
-use bovigo\assert\AssertionFailure;
-
 use function bovigo\assert\assert;
 /**
  * Tests for bovigo\assert\predicate\CallablePredicate.
@@ -59,5 +57,22 @@ class CallablePredicateTest extends \PHPUnit_Framework_TestCase
     public function assertionFailureContainsMeaningfulInformationWithStringCallable()
     {
         assert('bar', 'is_nan');
+    }
+
+    /**
+     * @test
+     * @expectedException  bovigo\assert\AssertionFailure
+     * @expectedExceptionMessage  Failed asserting that 'bar' is good enough for us.
+     * @since  1.2.0
+     */
+    public function assertionFailureContainsNonDefaultDescriptionWhenPassed()
+    {
+        assert(
+                'bar',
+                new CallablePredicate(
+                        [$this, 'isGoodEnough'],
+                        'is good enough for us'
+                )
+        );
     }
 }
