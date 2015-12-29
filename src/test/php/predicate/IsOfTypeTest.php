@@ -20,7 +20,7 @@ class IsOfTypeTest extends \PHPUnit_Framework_TestCase
      */
     public function throwsInvalidArgumentExceptionWhenCreatedWithUnknownType()
     {
-        new IsOfType('nope');
+        isOfType('nope');
     }
 
     /**

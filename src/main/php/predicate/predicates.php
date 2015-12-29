@@ -204,11 +204,36 @@ function isNotOfSize($unexpectedSize)
  *
  * @api
  * @param   string  $expectedType  name of type to test for
- * @return  \bovigo\assert\predicate\IsOfType
+ * @return  \bovigo\assert\predicate\CallablePredicate
+ * @throws  \InvalidArgumentException  in case expected type is unknown
  */
 function isOfType($expectedType)
 {
-    return new IsOfType($expectedType);
+    static $types = [
+            'array'    => 'is_array',
+            'boolean'  => 'is_bool',
+            'bool'     => 'is_bool',
+            'double'   => 'is_float',
+            'float'    => 'is_float',
+            'integer'  => 'is_integer',
+            'int'      => 'is_integer',
+            'numeric'  => 'is_numeric',
+            'object'   => 'is_object',
+            'resource' => 'is_resource',
+            'string'   => 'is_string',
+            'scalar'   => 'is_scalar',
+            'callable' => 'is_callable'
+    ];
+    if (!isset($types[$expectedType])) {
+        throw new \InvalidArgumentException(
+                'Unknown internal type ' . $expectedType
+        );
+    }
+
+    return new CallablePredicate(
+            $types[$expectedType],
+            'is of type "' . $expectedType . '"'
+    );
 }
 
 /**
