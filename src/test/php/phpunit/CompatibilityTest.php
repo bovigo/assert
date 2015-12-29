@@ -9,6 +9,7 @@ namespace bovigo\assert\phpunit;
 use bovigo\assert\AssertionFailure;
 
 use function bovigo\assert\assert;
+use function bovigo\assert\fail;
 use function bovigo\assert\predicate\equals;
 /**
  * Test for bovigo\assert\assert\predicate\AndPredicate.
@@ -99,7 +100,6 @@ class CompatibilityTest extends PHPUnit_Framework_TestCase
     {
         try {
             $this->assertContainsOnly('int', [303, 'foo']);
-            $this->fail('Expected ' . AssertionFailure::class . ' but got none.');
         } catch (AssertionFailure $af) {
             assert(
                     $af->getMessage(),
@@ -108,7 +108,10 @@ class CompatibilityTest extends PHPUnit_Framework_TestCase
     1 => \'foo\'
 ) each value is of type "int".')
             );
+            return;
         }
+
+        fail('Expected ' . AssertionFailure::class . ', got none.');
     }
 
     /**
@@ -129,7 +132,6 @@ class CompatibilityTest extends PHPUnit_Framework_TestCase
     {
         try {
             $this->assertContainsOnlyInstancesOf('stdClass', [303, 'foo']);
-            $this->fail('Expected ' . AssertionFailure::class . ' but got none.');
         } catch (AssertionFailure $af) {
             assert(
                     $af->getMessage(),
@@ -138,7 +140,10 @@ class CompatibilityTest extends PHPUnit_Framework_TestCase
     1 => \'foo\'
 ) each value is an instance of class "stdClass".')
             );
+            return;
         }
+
+        fail('Expected ' . AssertionFailure::class . ', got none.');
     }
 
     /**
@@ -164,7 +169,6 @@ class CompatibilityTest extends PHPUnit_Framework_TestCase
     {
         try {
             $this->assertNotContainsOnly('int', [303, 'foo']);
-            $this->fail('Expected ' . AssertionFailure::class . ' but got none.');
         } catch (AssertionFailure $af) {
             assert(
                     $af->getMessage(),
@@ -173,7 +177,10 @@ class CompatibilityTest extends PHPUnit_Framework_TestCase
     1 => \'foo\'
 ) each value is not of type "int".')
             );
+            return;
         }
+
+        fail('Expected ' . AssertionFailure::class . ', got none.');
     }
 
     public function testAssertCountSuccess()

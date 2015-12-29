@@ -51,7 +51,17 @@ some more info')
             return;
         }
 
-        $this->fail('Expected ' . AssertionFailure::class . ', gone none');
+        fail('Expected ' . AssertionFailure::class . ', gone none');
+    }
+
+    /**
+     * @test
+     * @expectedException  bovigo\assert\AssertionFailure
+     * @expectedExceptionMessage  Fail test hard.
+     */
+    public function failThrowsAssertionFailure()
+    {
+        fail('Fail test hard.');
     }
 
     /**
@@ -99,6 +109,6 @@ some more info')
             return;
         }
 
-        $this->fail('Expected ' . AssertionFailure::class . ', gone none');
+        fail('Expected ' . AssertionFailure::class . ', gone none');
     }
 }

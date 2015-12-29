@@ -489,7 +489,6 @@ assert($value, not(function($value) { return substr($value, 4, 3) === 'foo'; }))
 ```
 
 
-
 Self defined predicates
 -----------------------
 
@@ -547,6 +546,22 @@ _Failed asserting that [description of value] [description of predicate]._
 Additionally, the predicate can influence _[description of value]_ by overriding
 the `describeValue(Exporter $exporter, $value)` method.
 
+
+Instant failure
+---------------
+
+In case assertions are not enough and the test needs to fail when it reaches a
+certain point, `bovigo\assert\fail($description)` can be used to trigger an
+instant assertion failure:
+
+```php
+try {
+    somethingThatThrowsFooException();
+    fail('Expected ' . FooException::class . ', gone none');
+} catch (FooException $fo) {
+    // some assertions on FooException
+}
+```
 
 
 PHPUnit compatibility layer

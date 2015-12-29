@@ -26,6 +26,18 @@ function assert($value, $predicate, $description = null)
 }
 
 /**
+ * fail a test with given message
+ *
+ * @api
+ * @param   string  $description
+ * @throws  \bovigo\assert\AssertionFailure
+ */
+function fail($description)
+{
+    throw new AssertionFailure($description);
+}
+
+/**
  * adds predicate count as constraint count to PHPUnit if present
  *
  * This is definitely a hack and might break with future PHPUnit releases.
@@ -37,9 +49,9 @@ function assert($value, $predicate, $description = null)
  */
 function counting(Predicate $predicate)
 {
-    static $property;
+    static $property = null;
     if (null === $property && class_exists('\PHPUnit_Framework_Assert')) {
-        $assertClass = new \ReflectionClass('\PHPUnit_Framework_Assert');
+        $assertClass = new \ReflectionClass(\PHPUnit_Framework_Assert::class);
         $property = $assertClass->getProperty('count');
         $property->setAccessible(true);
     }
@@ -83,7 +95,7 @@ function exporter()
 /**
  * blacklist our own classes from being displayed in PHPUnit error stacks
  */
-if (class_exists(\PHPUnit_Util_Blacklist::class)) {
+if (class_exists('\PHPUnit_Util_Blacklist')) {
     \PHPUnit_Util_Blacklist::$blacklistedClassNames = array_merge(
             \PHPUnit_Util_Blacklist::$blacklistedClassNames,
             [Assertion::class => 1]

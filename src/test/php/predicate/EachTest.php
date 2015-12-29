@@ -7,7 +7,9 @@
  */
 namespace bovigo\assert\predicate;
 use bovigo\assert\AssertionFailure;
+
 use function bovigo\assert\assert;
+use function bovigo\assert\fail;
 /**
  * Helper class for the test.
  */
@@ -151,7 +153,6 @@ class EachTest extends \PHPUnit_Framework_TestCase
     {
         try {
             assert(['foo'], each(isNull()));
-            $this->fail('Expected ' . AssertionFailure::class . ' but gone none');
         } catch (AssertionFailure $af) {
             assert(
                     $af->getMessage(),
@@ -159,7 +160,10 @@ class EachTest extends \PHPUnit_Framework_TestCase
     0 => \'foo\'
 ) each value is null.')
             );
+            return;
         }
+
+        fail('Expected ' . AssertionFailure::class . ', gone none');
     }
 
     /**

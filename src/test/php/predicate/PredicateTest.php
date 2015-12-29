@@ -158,14 +158,16 @@ class PredicateTest extends \PHPUnit_Framework_TestCase
     {
         try {
             assert([], new FooPredicate(), 'some useful description');
-            $this->fail('Expected ' . AssertionFailure::class . ', got none');
         } catch (AssertionFailure $af) {
             assert(
                     $af->getMessage(),
                     equals('Failed asserting that an array is foo.
 some useful description')
             );
+            return;
         }
+
+        fail('Expected ' . AssertionFailure::class . ', got none');
     }
 
     /**
@@ -175,7 +177,6 @@ some useful description')
     {
         try {
             assert([], new ThrowingPredicate(), 'some useful description');
-            $this->fail('Expected ' . AssertionFailure::class . ', got none');
         } catch (AssertionFailure $af) {
             assert(
                     $af->getMessage(),
@@ -183,6 +184,9 @@ some useful description')
 some useful description
 exception message')
             );
+            return;
         }
+
+        fail('Expected ' . AssertionFailure::class . ', got none');
     }
 }

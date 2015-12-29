@@ -68,14 +68,16 @@ class OrPredicateTest extends \PHPUnit_Framework_TestCase
     {
         try {
             assert(303, matches('/^([a-z]{3})$/')->orElse(isNull()));
-            $this->fail('Expected ' . AssertionFailure::class . ', got none');
         } catch (AssertionFailure $af) {
             assert(
                     $af->getMessage(),
                     equals('Failed asserting that 303 matches regular expression "/^([a-z]{3})$/" or is null.
 Given value of type "integer" can not be matched against a regular expression.')
             );
+            return;
         }
+
+        fail('Expected ' . AssertionFailure::class . ', got none');
     }
 
     /**
@@ -85,14 +87,16 @@ Given value of type "integer" can not be matched against a regular expression.')
     {
         try {
             assert(303, isNull()->orElse(matches('/^([a-z]{3})$/')));
-            $this->fail('Expected ' . AssertionFailure::class . ', got none');
         } catch (AssertionFailure $af) {
             assert(
                     $af->getMessage(),
                     equals('Failed asserting that 303 is null or matches regular expression "/^([a-z]{3})$/".
 Given value of type "integer" can not be matched against a regular expression.')
             );
+            return;
         }
+
+        fail('Expected ' . AssertionFailure::class . ', got none');
     }
 
     /**
@@ -102,7 +106,6 @@ Given value of type "integer" can not be matched against a regular expression.')
     {
         try {
             assert(303, matches('/^([a-z]{3})$/')->orElse(contains('dummy')));
-            $this->fail('Expected ' . AssertionFailure::class . ', got none');
         } catch (AssertionFailure $af) {
             assert(
                     $af->getMessage(),
@@ -110,7 +113,10 @@ Given value of type "integer" can not be matched against a regular expression.')
 Given value of type "integer" can not be matched against a regular expression.
 Given value of type "integer" can not contain something.')
             );
+            return;
         }
+
+        fail('Expected ' . AssertionFailure::class . ', got none');
     }
 
     /**
