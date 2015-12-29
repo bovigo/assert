@@ -31,6 +31,7 @@ function assert($value, $predicate, $description = null)
  * @api
  * @param   string  $description
  * @throws  \bovigo\assert\AssertionFailure
+ * @since   1.2.0
  */
 function fail($description)
 {

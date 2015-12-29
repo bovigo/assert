@@ -549,6 +549,7 @@ the `describeValue(Exporter $exporter, $value)` method.
 
 Instant failure
 ---------------
+_Available since release 1.2.0._
 
 In case assertions are not enough and the test needs to fail when it reaches a
 certain point, `bovigo\assert\fail($description)` can be used to trigger an
