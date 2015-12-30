@@ -485,6 +485,30 @@ assert($value, each('is_nan'));
 assert($value, each(function($value) { return substr($value, 4, 3) === 'foo'; }));
 ```
 
+### `eachKey($predicate)`
+_Available since release 1.3.0._
+
+Applies a predicate to each key of an array or traversable.
+
+```php
+assert($value, eachKey(isOfType('int'));
+```
+
+Please note that an empty array or traversable will result in a successful test.
+If it must not be empty use `isNotEmpty()->asWellAs(eachKey($predicate))`:
+
+```php
+assert($value, isNotEmpty()->asWellAs(eachKey(isOfType('int'))));
+```
+
+It can also be used with any callable:
+
+```php
+assert($value, eachKey('is_int'));
+assert($value, eachKey(function($value) { return substr($value, 4, 3) === 'foo'; }));
+```
+
+
 ### `not($predicate)`
 
 Reverses the meaning of a predicate.

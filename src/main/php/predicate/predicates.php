@@ -24,6 +24,22 @@ function each($predicate)
 }
 
 /**
+ * returns predicate which tests each key of something that is iterable
+ *
+ * Please note that an empty array or traversable will result in a successful
+ * test. If it must not be empty use isNotEmpty()->asWellAs(eachKey($predicate)).
+ *
+ * @api
+ * @param   callable|\bovigo\assert\predicate\Predicate  $predicate
+ * @return  \bovigo\assert\predicate\Each
+ * @since   1.3.0
+ */
+function eachKey($predicate)
+{
+    return new EachKey($predicate);
+}
+
+/**
  * negates the given predicate
  *
  * @api

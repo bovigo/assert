@@ -7,14 +7,14 @@
  */
 namespace bovigo\assert\predicate;
 /**
- * Applies a predicate to each value of an array or traversable.
+ * Applies a predicate to each key of an array or traversable.
  *
  * Please note that an empty array or traversable will result in a successful
  * test.
  *
- * @since  1.1.0
+ * @since  1.3.0
  */
-class Each extends IteratingPredicate
+class EachKey extends IteratingPredicate
 {
     /**
      * actually tests the value
@@ -24,8 +24,8 @@ class Each extends IteratingPredicate
      */
     protected function doTest($traversable)
     {
-        foreach ($traversable as $entry) {
-            if (!$this->predicate->test($entry)) {
+        foreach ($traversable as $key => $entry) {
+            if (!$this->predicate->test($key)) {
                 return false;
             }
         }
@@ -40,6 +40,6 @@ class Each extends IteratingPredicate
      */
     public function __toString()
     {
-        return 'each value ' . $this->predicate;
+        return 'each key ' . $this->predicate;
     }
 }

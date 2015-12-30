@@ -1,6 +1,7 @@
 1.3.0 (201?-??-??)
 ------------------
 
+  * added `bovigo\assert\predicate\eachKey()`
   * added alias `bovigo\assert\assertTrue()`
   * added alias `bovigo\assert\assertFalse()`
   * added alias `bovigo\assert\assertNull()`
