@@ -156,7 +156,7 @@ class IsOfSizeTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
-    public function iteratorPointerIsNotChangedByEvaluation()
+    public function iteratorPointerIsNotChangedByEvaluationForTraversable()
     {
         $example = new TraversableExample();
         $example->next();

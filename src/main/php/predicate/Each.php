@@ -35,7 +35,7 @@ class Each extends Predicate
     /**
      * evaluates predicate against given value
      *
-     * @param   mixed  $value
+     * @param   array|\Traversable  $value
      * @return  bool
      * @throws  \InvalidArgumentException
      */
@@ -48,36 +48,74 @@ class Each extends Predicate
             );
         }
 
-        foreach ($this->cloneIterable($value) as $entry) {
+        $traversable = $this->traversable($value);
+        $key         = $this->key($traversable);
+        $result      = true;
+        foreach ($traversable as $entry) {
             if (!$this->predicate->test($entry)) {
-                return false;
+                $result = false;
             }
         }
 
-        return true;
+        $this->rewind($traversable, $key);
+        return $result;
     }
 
     /**
-     * clones given traversable
-     *
-     * We need to use a clone because the test moves the pointer of the array or
-     * traversable, but we don't want to change the pointer position of a passed
-     * value as this would violate functional principles.
+     * retrieve actual iterator
      *
      * @param   array|\Traversable  $traversable
      * @return  array|\Traversable
      */
-    private function cloneIterable($traversable)
+    private function traversable($traversable)
+    {
+        if ($traversable instanceof \IteratorAggregate) {
+            return $traversable->getIterator();
+        }
+
+        return $traversable;
+    }
+
+    /**
+     * retrieves current key of traversable
+     *
+     * @param   array|\Traversable  $traversable
+     * @return  int|string
+     */
+    private function key($traversable)
     {
         if (is_array($traversable)) {
-            return $traversable;
+            return key($traversable);
         }
 
-        if ($traversable instanceof \IteratorAggregate) {
-            return clone $traversable->getIterator();
+        return $traversable->key();
+    }
+
+    /**
+     * rewinds traversable to given key to not change state of traversable
+     *
+     * @param  array|\Traversable  $traversable
+     * @param  int|string          $key
+     */
+    private function rewind($traversable, $key)
+    {
+        if ($key === null) {
+            return;
         }
 
-        return clone $traversable;
+        if (is_array($traversable)) {
+            foreach ($traversable as $currentKey => $value) {
+                if ($currentKey === $key) {
+                    break;
+                }
+            }
+        } else {
+            $traversable->rewind();
+            while ($traversable->valid() && $key !== $traversable->key()) {
+                $traversable->next();
+            }
+        }
+
     }
 
     /**

@@ -1,4 +1,4 @@
-1.3.0 (2015-12-29)
+1.3.0 (201?-??-??)
 ------------------
 
   * added alias `bovigo\assert\assertTrue()`
@@ -7,6 +7,7 @@
   * added alias `bovigo\assert\assertNotNull()`
   * added alias `bovigo\assert\assertEmpty()`
   * added alias `bovigo\assert\assertNotEmpty()`
+  * both `bovigo\assert\predicate\each()` and `bovigo\assert\predicate\isOfSize()` can now work with non-cloneable traversables
 
 
 1.2.0 (2015-12-28)

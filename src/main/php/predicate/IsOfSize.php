@@ -74,26 +74,32 @@ class IsOfSize extends Predicate
             return count($value);
         }
 
-        return iterator_count($this->cloneIterator($value));
+        $traversable = $this->traversable($value);
+        $key         = $traversable->key();
+        $count       = iterator_count($traversable);
+        // rewinds traversable to previous key to not change state of traversable
+        // because iterator_count() changes the pointer
+        $traversable->rewind();
+        while ($traversable->valid() && $key !== $traversable->key()) {
+            $traversable->next();
+        }
+
+        return $count;
     }
 
     /**
-     * clones given traversable
+     * retrieve actual iterator
      *
-     * We need to use a clone because iterator_count() moves the pointer of the
-     * iterator, but we don't want to change the pointer position of a passed
-     * iterator instance as this would violate functional principles.
-     *
-     * @param   \Traversable  $traversable
-     * @return  \Iterator
+     * @param   array|\Traversable  $traversable
+     * @return  array|\Traversable
      */
-    private function cloneIterator(\Traversable $traversable)
+    private function traversable($traversable)
     {
         if ($traversable instanceof \IteratorAggregate) {
-            return clone $traversable->getIterator();
+            return $traversable->getIterator();
         }
 
-        return clone $traversable;
+        return $traversable;
     }
 
     /**
