@@ -65,7 +65,7 @@ class Each extends Predicate
      * retrieve actual iterator
      *
      * @param   array|\Traversable  $traversable
-     * @return  array|\Traversable
+     * @return  array|\Iterator
      */
     private function traversable($traversable)
     {
@@ -79,7 +79,7 @@ class Each extends Predicate
     /**
      * retrieves current key of traversable
      *
-     * @param   array|\Traversable  $traversable
+     * @param   array|\Iterator  $traversable
      * @return  int|string
      */
     private function key($traversable)
@@ -94,7 +94,7 @@ class Each extends Predicate
     /**
      * rewinds traversable to given key to not change state of traversable
      *
-     * @param  array|\Traversable  $traversable
+     * @param  array|\Iterator  $traversable
      * @param  int|string          $key
      */
     private function rewind($traversable, $key)
