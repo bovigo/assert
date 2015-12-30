@@ -1,4 +1,4 @@
-1.3.0 (201?-??-??)
+1.3.0 (2015-12-30)
 ------------------
 
   * added `bovigo\assert\predicate\eachKey()`
