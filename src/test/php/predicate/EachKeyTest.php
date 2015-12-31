@@ -175,6 +175,6 @@ class EachKeyTest extends \PHPUnit_Framework_TestCase
      */
     public function assertionFailureContainsMeaningfulInformationWhenCombined()
     {
-        assert([], isNotEmpty()->asWellAs(eachKey(isNotOfType('int'))));
+        assert([], isNotEmpty()->and(eachKey(isNotOfType('int'))));
     }
 }

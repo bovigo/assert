@@ -1,3 +1,10 @@
+1.4.0 (2015-12-31)
+------------------
+
+  * added `bovigo\assert\predicate\Predicate::and()`
+  * added `bovigo\assert\predicate\Predicate::or()`
+
+
 1.3.0 (2015-12-30)
 ------------------
 

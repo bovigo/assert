@@ -56,7 +56,7 @@ class OrPredicateTest extends \PHPUnit_Framework_TestCase
     public function returnsTrueWhenFirstPredicateThrowsExceptionButOtherSucceeds()
     {
         assert(
-                assert(null, matches('/^([a-z]{3})$/')->orElse(isNull())),
+                assert(null, matches('/^([a-z]{3})$/')->or(isNull())),
                 isTrue()
         );
     }
@@ -67,7 +67,7 @@ class OrPredicateTest extends \PHPUnit_Framework_TestCase
     public function doesNotSwallowExceptionFromFirstPredicateIfOtherFails()
     {
         try {
-            assert(303, matches('/^([a-z]{3})$/')->orElse(isNull()));
+            assert(303, matches('/^([a-z]{3})$/')->or(isNull()));
         } catch (AssertionFailure $af) {
             assert(
                     $af->getMessage(),
@@ -86,7 +86,7 @@ Given value of type "integer" can not be matched against a regular expression.')
     public function doesNotSwallowExceptionFromSecondPredicateIfFirstFails()
     {
         try {
-            assert(303, isNull()->orElse(matches('/^([a-z]{3})$/')));
+            assert(303, isNull()->or(matches('/^([a-z]{3})$/')));
         } catch (AssertionFailure $af) {
             assert(
                     $af->getMessage(),
@@ -105,7 +105,7 @@ Given value of type "integer" can not be matched against a regular expression.')
     public function doesNotSwallowBothExceptionsWhenBothPredicatesFail()
     {
         try {
-            assert(303, matches('/^([a-z]{3})$/')->orElse(contains('dummy')));
+            assert(303, matches('/^([a-z]{3})$/')->or(contains('dummy')));
         } catch (AssertionFailure $af) {
             assert(
                     $af->getMessage(),

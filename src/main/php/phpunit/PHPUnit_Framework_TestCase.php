@@ -365,7 +365,7 @@ abstract class PHPUnit_Framework_TestCase extends Original
      */
     public static function assertFileExists($filename, $message = '')
     {
-        assert($filename, isExistingFile()->orElse(isExistingDirectory()), $message);
+        assert($filename, isExistingFile()->or(isExistingDirectory()), $message);
     }
 
     /**
@@ -376,7 +376,7 @@ abstract class PHPUnit_Framework_TestCase extends Original
      */
     public static function assertFileNotExists($filename, $message = '')
     {
-        assert($filename, isNonExistingFile()->asWellAs(isNonExistingDirectory()), $message);
+        assert($filename, isNonExistingFile()->and(isNonExistingDirectory()), $message);
     }
 
     /**

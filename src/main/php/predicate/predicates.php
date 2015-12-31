@@ -11,7 +11,7 @@ namespace bovigo\assert\predicate;
  * returns predicate which tests each value of something that is iterable
  *
  * Please note that an empty array or traversable will result in a successful
- * test. If it must not be empty use isNotEmpty()->asWellAs(each($predicate)).
+ * test. If it must not be empty use isNotEmpty()->and(each($predicate)).
  *
  * @api
  * @param   callable|\bovigo\assert\predicate\Predicate  $predicate
@@ -27,7 +27,7 @@ function each($predicate)
  * returns predicate which tests each key of something that is iterable
  *
  * Please note that an empty array or traversable will result in a successful
- * test. If it must not be empty use isNotEmpty()->asWellAs(eachKey($predicate)).
+ * test. If it must not be empty use isNotEmpty()->and(eachKey($predicate)).
  *
  * @api
  * @param   callable|\bovigo\assert\predicate\Predicate  $predicate
@@ -285,7 +285,7 @@ function isGreaterThan($expected)
  */
 function isGreaterThanOrEqualTo($expected)
 {
-    return equals($expected)->orElse(isGreaterThan($expected));
+    return equals($expected)->or(isGreaterThan($expected));
 }
 
 /**
@@ -309,7 +309,7 @@ function isLessThan($expected)
  */
 function isLessThanOrEqualTo($expected)
 {
-    return equals($expected)->orElse(isLessThan($expected));
+    return equals($expected)->or(isLessThan($expected));
 }
 
 /**

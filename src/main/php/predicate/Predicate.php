@@ -11,6 +11,8 @@ use SebastianBergmann\Exporter\Exporter;
  * Evaluates if a given value fulfills a criteria.
  *
  * @api
+ * @method  \bovigo\assert\predicate\Predicate  and(\bovigo\assert\predicate\Predicate|callable $predicate)
+ * @method  \bovigo\assert\predicate\Predicate  or(\bovigo\assert\predicate\Predicate|callable $predicate)
  */
 abstract class Predicate implements \Countable
 {
@@ -83,6 +85,32 @@ abstract class Predicate implements \Countable
     public function negate()
     {
         return new NegatePredicate($this);
+    }
+
+    /**
+     * provide utility methods "and" and "or" to combine predicates
+     *
+     * @param   string   $method
+     * @param   mixed[]  $arguments
+     * @return  \bovigo\assert\predicate\Predicate
+     * @throws  \BadMethodCallException
+     * @since   1.4.0
+     */
+    public function __call($method, $arguments)
+    {
+        switch ($method) {
+            case 'and':
+                return $this->asWellAs(...$arguments);
+
+            case 'or':
+                return $this->orElse(...$arguments);
+
+            default:
+                throw new \BadMethodCallException(
+                        'Call to undefined method '
+                        . get_class($this) . '->' . $method . '()'
+                );
+        }
     }
 
     /**

@@ -472,10 +472,10 @@ assert($value, each(isInstanceOf($expectedType));
 ```
 
 Please note that an empty array or traversable will result in a successful test.
-If it must not be empty use `isNotEmpty()->asWellAs(each($predicate))`:
+If it must not be empty use `isNotEmpty()->and(each($predicate))`:
 
 ```php
-assert($value, isNotEmpty()->asWellAs(each(isInstanceOf($expectedType))));
+assert($value, isNotEmpty()->and(each(isInstanceOf($expectedType))));
 ```
 
 It can also be used with any callable:
@@ -495,10 +495,10 @@ assert($value, eachKey(isOfType('int'));
 ```
 
 Please note that an empty array or traversable will result in a successful test.
-If it must not be empty use `isNotEmpty()->asWellAs(eachKey($predicate))`:
+If it must not be empty use `isNotEmpty()->and(eachKey($predicate))`:
 
 ```php
-assert($value, isNotEmpty()->asWellAs(eachKey(isOfType('int'))));
+assert($value, isNotEmpty()->and(eachKey(isOfType('int'))));
 ```
 
 It can also be used with any callable:
@@ -525,7 +525,47 @@ assert($value, not(function($value) { return substr($value, 4, 3) === 'foo'; }))
 ```
 
 
-Self defined predicates
+Combining predicates
+--------------------
+_Available since release 1.4.0. For previous releases use `asWellAs()` and `orElse()`._
+
+Each predicate provides both two methods to combine this predicate with another
+predicate into a new predicate.
+
+### `and($predicate)`
+
+Creates a predicate where both combined predicate must be `true` so that the
+combined predicate is `true` as well. If one of the predicates fails, the
+combined predicate will fail as well.
+
+```php
+assert($value, isNotEmpty()->and(eachKey(isOfType('int'))));
+```
+
+It can also be used with any callable:
+
+```php
+assert($value, isNotEmpty()->and('is_string'));
+```
+
+
+### `or($predicate)`
+
+Creates a predicate where one of the combined predicates must be `true`. Only if
+all predicates fail the combined predicate will fail as well.
+
+```php
+assert($value, equals(5)->or(isLessThan(5)));
+```
+
+It can also be used with any callable:
+
+```php
+assert($value, isNull()->or('is_finite'));
+```
+
+
+User defined predicates
 -----------------------
 
 To define a predicate to be used in an assertion there are two possibilities:

@@ -93,11 +93,11 @@ class PredicateTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
-    public function asWellAsReturnsAndPredicate()
+    public function andReturnsAndPredicate()
     {
         $predicate = new FooPredicate();
         assert(
-                $predicate->asWellAs(function($value) { return 'foo' === $value; }),
+                $predicate->and(function($value) { return 'foo' === $value; }),
                 isInstanceOf(AndPredicate::class)
         );
     }
@@ -105,11 +105,11 @@ class PredicateTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
-    public function orElseReturnsOrPredicate()
+    public function orReturnsOrPredicate()
     {
         $predicate = new FooPredicate();
         assert(
-                $predicate->orElse(function($value) { return 'foo' === $value; }),
+                $predicate->or(function($value) { return 'foo' === $value; }),
                 isInstanceOf(OrPredicate::class)
         );
     }
@@ -188,5 +188,15 @@ exception message')
         }
 
         fail('Expected ' . AssertionFailure::class . ', got none');
+    }
+
+    /**
+     * @test
+     * @expectedException  BadMethodCallException
+     * @since  1.4.0
+     */
+    public function callToUndefinedMethodThrowsBadMethodCallException()
+    {
+        (new FooPredicate())->noWay();
     }
 }

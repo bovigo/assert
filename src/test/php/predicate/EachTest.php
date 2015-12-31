@@ -173,6 +173,6 @@ class EachTest extends \PHPUnit_Framework_TestCase
      */
     public function assertionFailureContainsMeaningfulInformationWhenCombined()
     {
-        assert([], isNotEmpty()->asWellAs(each(isNotNull())));
+        assert([], isNotEmpty()->and(each(isNotNull())));
     }
 }
