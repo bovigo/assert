@@ -60,6 +60,7 @@ abstract class Predicate implements \Countable
      *
      * @param   \bovigo\assert\predicate\Predicate|callable  $other
      * @return  \bovigo\assert\predicate\Predicate
+     * @deprecated  since 1.4.0, use and($other) instead, will be removed with 2.0.0
      */
     public function asWellAs($other)
     {
@@ -71,6 +72,7 @@ abstract class Predicate implements \Countable
      *
      * @param   \bovigo\assert\predicate\Predicate|callable  $other
      * @return  \bovigo\assert\predicate\Predicate
+     * @deprecated  since 1.4.0, use or($other) instead, will be removed with 2.0.0
      */
     public function orElse($other)
     {
