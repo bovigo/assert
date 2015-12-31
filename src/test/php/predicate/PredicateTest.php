@@ -116,11 +116,22 @@ class PredicateTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
+     * @deprecated  since 1.4.0, will be removed with 2.0.0
      */
     public function negateReturnsNegatePredicate()
     {
         $predicate = new FooPredicate();
         assert($predicate->negate(), isInstanceOf(NegatePredicate::class));
+    }
+
+    /**
+     * @test
+     * @since  1.4.0
+     */
+    public function everyPredicateCanBeNegated()
+    {
+        $isNotFoo = not(new FooPredicate());
+        assert('bar', $isNotFoo);
     }
 
     /**
@@ -148,7 +159,7 @@ class PredicateTest extends \PHPUnit_Framework_TestCase
      */
     public function assertionFailureNegatedContainsMeaningfulInformation()
     {
-        assert('foo', (new FooPredicate())->negate());
+        assert('foo', not(new FooPredicate()));
     }
 
     /**

@@ -83,6 +83,7 @@ abstract class Predicate implements \Countable
      * returns a negated version of this predicate
      *
      * @return  \bovigo\assert\predicate\Predicate
+     * @deprecated  since 1.4.0, use not($predicate) instead, will be removed with 2.0.0
      */
     public function negate()
     {

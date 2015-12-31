@@ -3,8 +3,9 @@
 
 ### BC breaks
 
-  * deprecated `bovigo\assert\predicate\Predicate::asWellAs()` in favor of the new `bovigo\assert\predicate\Predicate::and()` method, will be removed with 2.0.0
-  * deprecated `bovigo\assert\predicate\Predicate::orElse()` in favor of the new `bovigo\assert\predicate\Predicate::or()` method, will be removed with 2.0.0
+  * deprecated `bovigo\assert\predicate\Predicate::asWellAs()` in favor of `bovigo\assert\predicate\Predicate::and()`, will be removed with 2.0.0
+  * deprecated `bovigo\assert\predicate\Predicate::orElse()` in favor of `bovigo\assert\predicate\Predicate::or()`, will be removed with 2.0.0
+  * deprecated `bovigo\assert\predicate\Predicate::negate()` in favor of `bovigo\assert\predicate\not()`, will be removed with 2.0.0
 
 
 ### Other changes
