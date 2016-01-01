@@ -123,7 +123,7 @@ function assertEmpty($value, $description = null)
  * @param   string  $description  optional  additional description for failure message
  * @return  1.5.0
  */
-function assertEmpyString($value, $description = null)
+function assertEmptyString($value, $description = null)
 {
     return assert($value, equals(''), $description);
 }
@@ -135,7 +135,7 @@ function assertEmpyString($value, $description = null)
  * @param   string  $description  optional  additional description for failure message
  * @return  1.5.0
  */
-function assertEmpyArray($value, $description = null)
+function assertEmptyArray($value, $description = null)
 {
     return assert($value, equals([]), $description);
 }

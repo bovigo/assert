@@ -116,9 +116,9 @@ some more info')
      * @test
      * @since  1.5.0
      */
-    public function assertEmpyStringIsTrueWhenValueIsEmptyString()
+    public function assertEmptyStringIsTrueWhenValueIsEmptyString()
     {
-        assertTrue(assertEmpyString(''));
+        assertTrue(assertEmptyString(''));
     }
 
     /**
@@ -126,28 +126,28 @@ some more info')
      * @expectedException  bovigo\assert\AssertionFailure
      * @expectedExceptionMessage  Failed asserting that 'foo' is an empty string.
      */
-    public function assertEmpyStringFailsWhenValueIsNotEmptyString()
+    public function assertEmptyStringFailsWhenValueIsNotEmptyString()
     {
-        assertEmpyString('foo');
+        assertEmptyString('foo');
     }
 
     /**
      * @test
      * @since  1.5.0
      */
-    public function assertEmpyArrayIsTrueWhenValueIsEmptyArray()
+    public function assertEmptyArrayIsTrueWhenValueIsEmptyArray()
     {
-        assertTrue(assertEmpyArray([]));
+        assertTrue(assertEmptyArray([]));
     }
 
     /**
      * @test
      * @since  1.5.0
      */
-    public function assertEmpyArrayFailsWhenValueIsNotEmptyArray()
+    public function assertEmptyArrayFailsWhenValueIsNotEmptyArray()
     {
         try {
-            assertEmpyArray(['foo']);
+            assertEmptyArray(['foo']);
         } catch (AssertionFailure $af) {
             assert(
                     $af->getMessage(),
