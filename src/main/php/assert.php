@@ -9,6 +9,7 @@ namespace bovigo\assert;
 use bovigo\assert\predicate\Predicate;
 use SebastianBergmann\Exporter\Exporter;
 
+use function bovigo\assert\predicate\equals;
 use function bovigo\assert\predicate\isFalse;
 use function bovigo\assert\predicate\isEmpty;
 use function bovigo\assert\predicate\isNotEmpty;
@@ -113,6 +114,30 @@ function assertNotNull($value, $description = null)
 function assertEmpty($value, $description = null)
 {
     return assert($value, isEmpty(), $description);
+}
+
+/**
+ * alias for assert($value, equals(''), $description)
+ * @api
+ * @param   mixed   $value        value to test
+ * @param   string  $description  optional  additional description for failure message
+ * @return  1.5.0
+ */
+function assertEmpyString($value, $description = null)
+{
+    return assert($value, equals(''), $description);
+}
+
+/**
+ * alias for assert($value, equals([]), $description)
+ * @api
+ * @param   mixed   $value        value to test
+ * @param   string  $description  optional  additional description for failure message
+ * @return  1.5.0
+ */
+function assertEmpyArray($value, $description = null)
+{
+    return assert($value, equals([]), $description);
 }
 
 /**

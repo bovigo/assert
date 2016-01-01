@@ -1,3 +1,10 @@
+1.5.0 (2016-01-01)
+-----------------
+
+  * added alias `bovigo\assert\assertEmpyString()`
+  * added alias `bovigo\assert\assertEmpyArray()`
+
+
 1.4.0 (2015-12-31)
 ------------------
 

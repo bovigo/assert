@@ -81,9 +81,13 @@ class Equals extends Predicate
         if (is_string($this->expected)) {
             if (strpos($this->expected, "\n") !== false) {
                 $result = 'is equal to <text>';
+            } elseif ('' === $this->expected) {
+                $result = 'is an empty string';
             } else {
                 $result = sprintf('is equal to <string:%s>', $this->expected);
             }
+        } elseif (is_array($this->expected) && [] === $this->expected) {
+            $result = 'is an empty array';
         } else {
 
             $result = sprintf(

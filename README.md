@@ -123,7 +123,10 @@ Tests that value is empty. Empty is defined as follows:
 assert($value, isEmpty());
 ```
 
-Alias: `bovigo\assert\assertEmpty($value, $description = null)`
+Aliases:
+* `bovigo\assert\assertEmpty($value, $description = null)`
+* `bovigo\assert\assertEmptyString($value, $description = null)`
+* `bovigo\assert\assertEmptyArray($value, $description = null)`
 
 
 ### `isNotEmpty()`

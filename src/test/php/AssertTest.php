@@ -111,4 +111,58 @@ some more info')
 
         fail('Expected ' . AssertionFailure::class . ', gone none');
     }
+
+    /**
+     * @test
+     * @since  1.5.0
+     */
+    public function assertEmpyStringIsTrueWhenValueIsEmptyString()
+    {
+        assertTrue(assertEmpyString(''));
+    }
+
+    /**
+     * @test
+     * @expectedException  bovigo\assert\AssertionFailure
+     * @expectedExceptionMessage  Failed asserting that 'foo' is an empty string.
+     */
+    public function assertEmpyStringFailsWhenValueIsNotEmptyString()
+    {
+        assertEmpyString('foo');
+    }
+
+    /**
+     * @test
+     * @since  1.5.0
+     */
+    public function assertEmpyArrayIsTrueWhenValueIsEmptyArray()
+    {
+        assertTrue(assertEmpyArray([]));
+    }
+
+    /**
+     * @test
+     * @since  1.5.0
+     */
+    public function assertEmpyArrayFailsWhenValueIsNotEmptyArray()
+    {
+        try {
+            assertEmpyArray(['foo']);
+        } catch (AssertionFailure $af) {
+            assert(
+                    $af->getMessage(),
+                    equals('Failed asserting that an array is an empty array.
+--- Expected
++++ Actual
+@@ @@
+ Array (
++    0 => \'foo\'
+ )
+')
+            );
+            return;
+        }
+
+        fail('Expected ' . AssertionFailure::class . ', gone none');
+    }
 }
