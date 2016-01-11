@@ -1,5 +1,5 @@
-1.5.0 (2016-01-01)
------------------
+1.5.0 (2016-01-11)
+------------------
 
   * added alias `bovigo\assert\assertEmptyString()`
   * added alias `bovigo\assert\assertEmptyArray()`
