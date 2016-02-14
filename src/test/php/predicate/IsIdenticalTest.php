@@ -6,6 +6,8 @@
  * file that was distributed with this source code.
  */
 namespace bovigo\assert\predicate;
+use bovigo\assert\AssertionFailure;
+
 use function bovigo\assert\assert;
 /**
  * Tests for bovigo\assert\predicate\IsIdentical.
@@ -49,31 +51,40 @@ class IsIdenticalTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @expectedException  bovigo\assert\AssertionFailure
-     * @expectedExceptionMessage  Failed asserting that true is identical to false.
      */
     public function assertionFailureContainsMeaningfulInformation()
     {
-        assert(true, isSameAs(false));
+        assert(
+                function() { assert(true, isSameAs(false)); },
+                throws(AssertionFailure::class)->withMessage(
+                        "Failed asserting that true is identical to false."
+                )
+        );
     }
 
     /**
      * @test
-     * @expectedException  bovigo\assert\AssertionFailure
-     * @expectedExceptionMessage  Failed asserting that object of type "stdClass" is identical to object of type "stdClass".
      */
     public function assertionFailureWithObjectsContainsMeaningfulInformation()
     {
-        assert(new \stdClass(), isSameAs(new \stdClass()));
+        assert(
+                function() { assert(new \stdClass(), isSameAs(new \stdClass())); },
+                throws(AssertionFailure::class)->withMessage(
+                        'Failed asserting that object of type "stdClass" is identical to object of type "stdClass".'
+                )
+        );
     }
 
     /**
      * @test
-     * @expectedException  bovigo\assert\AssertionFailure
-     * @expectedExceptionMessage  Failed asserting that object of type "stdClass" is identical to 'foo'.
      */
     public function assertionFailureWithObjectAndOtherContainsMeaningfulInformation()
     {
-        assert(new \stdClass(), isSameAs('foo'));
+        assert(
+                function() { assert(new \stdClass(), isSameAs('foo')); },
+                throws(AssertionFailure::class)->withMessage(
+                        'Failed asserting that object of type "stdClass" is identical to \'foo\'.'
+                )
+        );
     }
 }

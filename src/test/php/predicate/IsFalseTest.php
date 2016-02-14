@@ -6,6 +6,8 @@
  * file that was distributed with this source code.
  */
 namespace bovigo\assert\predicate;
+use bovigo\assert\AssertionFailure;
+
 use function bovigo\assert\assert;
 /**
  * Tests for bovigo\assert\predicate\IsFalse.
@@ -48,11 +50,14 @@ class IsFalseTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @expectedException  bovigo\assert\AssertionFailure
-     * @expectedExceptionMessage  Failed asserting that 1 is false.
      */
     public function assertionFailureContainsMeaningfulInformation()
     {
-        assert(1, isFalse());
+        assert(
+                function() { assert(1, isFalse()); },
+                throws(AssertionFailure::class)->withMessage(
+                        "Failed asserting that 1 is false."
+                )
+        );
     }
 }

@@ -6,6 +6,8 @@
  * file that was distributed with this source code.
  */
 namespace bovigo\assert\predicate;
+use bovigo\assert\AssertionFailure;
+
 use function bovigo\assert\assertFalse;
 use function bovigo\assert\assertNotNull;
 use function bovigo\assert\assertNull;
@@ -54,12 +56,15 @@ class IsNullTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @expectedException  bovigo\assert\AssertionFailure
-     * @expectedExceptionMessage  Failed asserting that an array is null.
      */
     public function assertionFailureContainsMeaningfulInformation()
     {
-        assertNull([]);
+        assert(
+                function() { assertNull([]); },
+                throws(AssertionFailure::class)->withMessage(
+                        "Failed asserting that an array is null."
+                )
+        );
     }
 
     /**

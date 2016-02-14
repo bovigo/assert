@@ -6,8 +6,10 @@
  * file that was distributed with this source code.
  */
 namespace bovigo\assert\predicate;
-use function bovigo\assert\assert;
+use bovigo\assert\AssertionFailure;
 use org\bovigo\vfs\vfsStream;
+
+use function bovigo\assert\assert;
 /**
  * Tests for bovigo\assert\predicate\IsExistingFile.
  *
@@ -138,11 +140,20 @@ class IsExistingFileTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @expectedException  bovigo\assert\AssertionFailure
-     * @expectedExceptionMessage  Failed asserting that 'vfs://root/doesNotExist.txt' is a existing file.
      */
     public function assertionFailureContainsMeaningfulInformation()
     {
-        assert(vfsStream::url('root/doesNotExist.txt'), isExistingFile());
+        assert(
+                function()
+                {
+                    assert(
+                            vfsStream::url('root/doesNotExist.txt'),
+                            isExistingFile()
+                    );
+                },
+                throws(AssertionFailure::class)->withMessage(
+                        "Failed asserting that 'vfs://root/doesNotExist.txt' is a existing file."
+                )
+        );
     }
 }

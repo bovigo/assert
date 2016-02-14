@@ -36,11 +36,14 @@ class EachTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @test
-     * @expectedException  InvalidArgumentException
      */
     public function testNonIterableValueThrowsInvalidArgumentException()
     {
-        each(isNull())->test(303);
+        assert(
+                function() { each(isNull())->test(303); },
+                throws(\InvalidArgumentException::class)
+        );
+
     }
 
     /**
@@ -151,28 +154,26 @@ class EachTest extends \PHPUnit_Framework_TestCase
      */
     public function assertionFailureContainsMeaningfulInformation()
     {
-        try {
-            assert(['foo'], each(isNull()));
-        } catch (AssertionFailure $af) {
-            assert(
-                    $af->getMessage(),
-                    equals('Failed asserting that in Array &0 (
+        assert(
+                function() { assert(['foo'], each(isNull())); },
+                throws(AssertionFailure::class)->withMessage(
+                        'Failed asserting that in Array &0 (
     0 => \'foo\'
-) each value is null.')
-            );
-            return;
-        }
-
-        fail('Expected ' . AssertionFailure::class . ', gone none');
+) each value is null.'
+                )
+        );
     }
 
     /**
      * @test
-     * @expectedException  bovigo\assert\AssertionFailure
-     * @expectedExceptionMessage  Failed asserting that an array is not empty and each value is not null.
      */
     public function assertionFailureContainsMeaningfulInformationWhenCombined()
     {
-        assert([], isNotEmpty()->and(each(isNotNull())));
+        assert(
+                function() { assert([], isNotEmpty()->and(each(isNotNull()))); },
+                throws(AssertionFailure::class)->withMessage(
+                        'Failed asserting that an array is not empty and each value is not null.'
+                )
+        );
     }
 }

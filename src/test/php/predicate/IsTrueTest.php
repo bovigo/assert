@@ -6,6 +6,8 @@
  * file that was distributed with this source code.
  */
 namespace bovigo\assert\predicate;
+use bovigo\assert\AssertionFailure;
+
 use function bovigo\assert\assert;
 /**
  * Tests for bovigo\assert\predicate\IsTrue.
@@ -48,11 +50,14 @@ class IsTrueTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @expectedException  bovigo\assert\AssertionFailure
-     * @expectedExceptionMessage  Failed asserting that an array is true.
      */
     public function assertionFailureContainsMeaningfulInformation()
     {
-        assert([], isTrue());
+        assert(
+                function() { assert([], isTrue()); },
+                throws(AssertionFailure::class)->withMessage(
+                        "Failed asserting that an array is true."
+                )
+        );
     }
 }

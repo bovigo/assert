@@ -6,6 +6,8 @@
  * file that was distributed with this source code.
  */
 namespace bovigo\assert\predicate;
+use bovigo\assert\AssertionFailure;
+
 use function bovigo\assert\assert;
 use function bovigo\assert\assertEmpty;
 use function bovigo\assert\assertFalse;
@@ -90,52 +92,68 @@ class IsEmptyTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @expectedException  bovigo\assert\AssertionFailure
-     * @expectedExceptionMessage  Failed asserting that 'foo' is empty.
      */
     public function assertionFailureWithStringContainsMeaningfulInformation()
     {
-        assertEmpty('foo');
+        assert(
+                function() { assertEmpty('foo'); },
+                throws(AssertionFailure::class)->withMessage(
+                        "Failed asserting that 'foo' is empty."
+                )
+        );
     }
 
     /**
      * @test
-     * @expectedException  bovigo\assert\AssertionFailure
-     * @expectedExceptionMessage  Failed asserting that 1 is empty.
      */
     public function assertionFailureWithIntegerContainsMeaningfulInformation()
     {
-        assertEmpty(1);
+        assert(
+                function() { assertEmpty(1); },
+                throws(AssertionFailure::class)->withMessage(
+                        "Failed asserting that 1 is empty."
+                )
+        );
     }
 
     /**
      * @test
-     * @expectedException  bovigo\assert\AssertionFailure
-     * @expectedExceptionMessage  Failed asserting that true is empty.
      */
     public function assertionFailureWithBooleanContainsMeaningfulInformation()
     {
-        assertEmpty(true);
+        assert(
+                function() { assertEmpty(true); },
+                throws(AssertionFailure::class)->withMessage(
+                        "Failed asserting that true is empty."
+                )
+        );
     }
 
     /**
      * @test
-     * @expectedException  bovigo\assert\AssertionFailure
-     * @expectedExceptionMessage  Failed asserting that an array is empty.
      */
     public function assertionFailureWithArrayContainsMeaningfulInformation()
     {
-        assertEmpty(['foo']);
+         assert(
+                function() { assertEmpty(['foo']); },
+                throws(AssertionFailure::class)->withMessage(
+                        "Failed asserting that an array is empty."
+                )
+        );
     }
 
     /**
      * @test
-     * @expectedException  bovigo\assert\AssertionFailure
-     * @expectedExceptionMessage  Failed asserting that bovigo\assert\predicate\EmptyCountableExample implementing \Countable is empty.
      */
     public function assertionFailureWithCountableContainsMeaningfulInformation()
     {
-        assertEmpty(new EmptyCountableExample(1));
+        assert(
+                function() { assertEmpty(new EmptyCountableExample(1)); },
+                throws(AssertionFailure::class)->withMessage(
+                        "Failed asserting that " . EmptyCountableExample::class
+                        . " implementing \Countable is empty."
+                )
+        );
     }
 
     /**

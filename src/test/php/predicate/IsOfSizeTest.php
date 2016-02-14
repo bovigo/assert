@@ -6,6 +6,8 @@
  * file that was distributed with this source code.
  */
 namespace bovigo\assert\predicate;
+use bovigo\assert\AssertionFailure;
+
 use function bovigo\assert\assert;
 /**
  * Helper class for the test.
@@ -166,60 +168,83 @@ class IsOfSizeTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @expectedException  InvalidArgumentException
      */
     public function throwsInvalidArgumentExceptionWhenValueIsNotTestableForSize()
     {
-        isOfSize(3)->test(true);
+        assert(
+                function() { isOfSize(3)->test(true); },
+                throws(\InvalidArgumentException::class)
+        );
     }
 
     /**
      * @test
-     * @expectedException  bovigo\assert\AssertionFailure
-     * @expectedExceptionMessage  Failed asserting that string with actual size 3 matches expected size 4.
      */
     public function assertionFailureWithStringContainsMeaningfulInformation()
     {
-        assert('foo', isOfSize(4));
+        assert(
+                function() { assert('foo', isOfSize(4)); },
+                throws(AssertionFailure::class)->withMessage(
+                        "Failed asserting that string with actual size 3 matches expected size 4."
+                )
+        );
     }
 
     /**
      * @test
-     * @expectedException  bovigo\assert\AssertionFailure
-     * @expectedExceptionMessage  Failed asserting that array with actual size 0 matches expected size 4.
      */
     public function assertionFailureWithArrayContainsMeaningfulInformation()
     {
-        assert([], isOfSize(4));
+        assert(
+                function() { assert([], isOfSize(4)); },
+                throws(AssertionFailure::class)->withMessage(
+                        "Failed asserting that array with actual size 0 matches expected size 4."
+                )
+        );
     }
 
     /**
      * @test
-     * @expectedException  bovigo\assert\AssertionFailure
-     * @expectedExceptionMessage  Failed asserting that instance of type bovigo\assert\predicate\CountableExample with actual size 3 matches expected size 4.
      */
     public function assertionFailureWithCountableContainsMeaningfulInformation()
     {
-        assert(new CountableExample(), isOfSize(4));
+        assert(
+                function() { assert(new CountableExample(), isOfSize(4)); },
+                throws(AssertionFailure::class)->withMessage(
+                        "Failed asserting that instance of type "
+                        . CountableExample::class
+                        . " with actual size 3 matches expected size 4."
+                )
+        );
     }
 
     /**
      * @test
-     * @expectedException  bovigo\assert\AssertionFailure
-     * @expectedExceptionMessage  Failed asserting that instance of type bovigo\assert\predicate\TraversableExample with actual size 3 matches expected size 4.
      */
     public function assertionFailureWithTraversableContainsMeaningfulInformation()
     {
-        assert(new TraversableExample(), isOfSize(4));
+        assert(
+                function() { assert(new TraversableExample(), isOfSize(4)); },
+                throws(AssertionFailure::class)->withMessage(
+                        "Failed asserting that instance of type "
+                        . TraversableExample::class
+                        . " with actual size 3 matches expected size 4."
+                )
+        );
     }
 
     /**
      * @test
-     * @expectedException  bovigo\assert\AssertionFailure
-     * @expectedExceptionMessage  Failed asserting that instance of type bovigo\assert\predicate\IteratorAggregateExample with actual size 3 matches expected size 4.
      */
     public function assertionFailureWithIteratorAggregateContainsMeaningfulInformation()
     {
-        assert(new IteratorAggregateExample(), isOfSize(4));
+        assert(
+                function() { assert(new IteratorAggregateExample(), isOfSize(4)); },
+                throws(AssertionFailure::class)->withMessage(
+                        "Failed asserting that instance of type "
+                        . IteratorAggregateExample::class
+                        . " with actual size 3 matches expected size 4."
+                )
+        );
     }
 }

@@ -6,6 +6,8 @@
  * file that was distributed with this source code.
  */
 namespace bovigo\assert\predicate;
+use bovigo\assert\AssertionFailure;
+
 use function bovigo\assert\assert;
 /**
  * Tests for bovigo\assert\predicate\Contains.
@@ -71,21 +73,27 @@ class ContainsTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @expectedException  InvalidArgumentException
-     * @expectedExceptionMessage  Given value of type "integer" can not contain something
      */
     public function throwsInvalidArgumentExceptionWhenValueCanNotContainAnything()
     {
-        contains('foo')->test(303);
+        assert(
+                function() { contains('foo')->test(303); },
+                throws(\InvalidArgumentException::class)->withMessage(
+                        'Given value of type "integer" can not contain something'
+                )
+        );
     }
 
     /**
      * @test
-     * @expectedException  bovigo\assert\AssertionFailure
-     * @expectedExceptionMessage  Failed asserting that an array contains 'foo'.
      */
     public function assertionFailureContainsMeaningfulInformation()
     {
-        assert([], contains('foo'));
+        assert(
+                function() { assert([], contains('foo')); },
+                throws(AssertionFailure::class)->withMessage(
+                        "Failed asserting that an array contains 'foo'."
+                )
+        );
     }
 }

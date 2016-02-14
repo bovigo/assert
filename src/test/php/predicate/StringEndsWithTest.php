@@ -6,6 +6,8 @@
  * file that was distributed with this source code.
  */
 namespace bovigo\assert\predicate;
+use bovigo\assert\AssertionFailure;
+
 use function bovigo\assert\assert;
 /**
  * Tests for bovigo\assert\predicate\StringEndsWith.
@@ -17,20 +19,24 @@ class StringEndsWithTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @test
-     * @expectedException  InvalidArgumentException
      */
     public function createWithNonStringThrowsInvalidArgumentException()
     {
-        endsWith(303);
+        assert(
+                function() { endsWith(303); },
+                throws(\InvalidArgumentException::class)
+        );
     }
 
     /**
      * @test
-     * @expectedException  InvalidArgumentException
      */
     public function nonStringValuesThrowInvalidArgumentException()
     {
-        endsWith('foo')->test(303);
+        assert(
+                function() { endsWith('foo')->test(303); },
+                throws(\InvalidArgumentException::class)
+        );
     }
 
     /**
@@ -77,11 +83,14 @@ class StringEndsWithTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @expectedException  bovigo\assert\AssertionFailure
-     * @expectedExceptionMessage  Failed asserting that 'bar' ends with 'foo'.
      */
     public function assertionFailureContainsMeaningfulInformation()
     {
-        assert('bar', endsWith('foo'));
+        assert(
+                function() { assert('bar', endsWith('foo')); },
+                throws(AssertionFailure::class)->withMessage(
+                        "Failed asserting that 'bar' ends with 'foo'."
+                )
+        );
     }
 }

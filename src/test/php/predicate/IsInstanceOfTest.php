@@ -6,6 +6,8 @@
  * file that was distributed with this source code.
  */
 namespace bovigo\assert\predicate;
+use bovigo\assert\AssertionFailure;
+
 use function bovigo\assert\assert;
 /**
  * Tests for bovigo\assert\predicate\IsInstanceOf.
@@ -16,20 +18,24 @@ class IsInstanceOfTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @test
-     * @expectedException  InvalidArgumentException
      */
     public function throwsInvalidArgumentExceptionWhenGivenExpectedTypeIsNoString()
     {
-        isInstanceOf(303);
+        assert(
+                function() { isInstanceOf(303); },
+                throws(\InvalidArgumentException::class)
+        );
     }
 
     /**
      * @test
-     * @expectedException  InvalidArgumentException
      */
     public function throwsInvalidArgumentExceptionWhenGivenExpectedTypeIsUnknown()
     {
-        isInstanceOf('DoesNotExist');
+        assert(
+                function() { isInstanceOf('DoesNotExist'); },
+                throws(\InvalidArgumentException::class)
+        );
     }
 
     /**
@@ -50,21 +56,29 @@ class IsInstanceOfTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @expectedException  bovigo\assert\AssertionFailure
-     * @expectedExceptionMessage  Failed asserting that an array is an instance of class "\stdClass".
      */
     public function assertionFailureContainsMeaningfulInformation()
     {
-        assert([], isInstanceOf('\stdClass'));
+
+        assert(
+                function() { assert([], isInstanceOf('\stdClass')); },
+                throws(AssertionFailure::class)->withMessage(
+                        'Failed asserting that an array is an instance of class "\stdClass".'
+                )
+        );
     }
 
     /**
      * @test
-     * @expectedException  bovigo\assert\AssertionFailure
-     * @expectedExceptionMessage  Failed asserting that bovigo\assert\predicate\IsInstanceOfTest Object (...) is an instance of class "\stdClass".
      */
     public function assertionFailureWithObjectsContainsMeaningfulInformation()
     {
-        assert(new self(), isInstanceOf('\stdClass'));
+        assert(
+                function() { assert(new self(), isInstanceOf('\stdClass')); },
+                throws(AssertionFailure::class)->withMessage(
+                        'Failed asserting that ' . IsInstanceOfTest::class
+                        . ' Object (...) is an instance of class "\stdClass".'
+                )
+        );
     }
 }

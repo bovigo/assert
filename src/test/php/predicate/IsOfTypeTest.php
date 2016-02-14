@@ -6,6 +6,8 @@
  * file that was distributed with this source code.
  */
 namespace bovigo\assert\predicate;
+use bovigo\assert\AssertionFailure;
+
 use function bovigo\assert\assert;
 /**
  * Tests for bovigo\assert\predicate\IsOfType.
@@ -16,11 +18,14 @@ class IsOfTypeTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @test
-     * @expectedException  InvalidArgumentException
      */
     public function throwsInvalidArgumentExceptionWhenCreatedWithUnknownType()
     {
-        isOfType('nope');
+
+        assert(
+                function() { isOfType('nope'); },
+                throws(\InvalidArgumentException::class)
+        );
     }
 
     /**
@@ -76,11 +81,14 @@ class IsOfTypeTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @expectedException  bovigo\assert\AssertionFailure
-     * @expectedExceptionMessage  Failed asserting that an array is of type "int".
      */
     public function assertionFailureContainsMeaningfulInformation()
     {
-        assert([], isOfType('int'));
+        assert(
+                function() { assert([], isOfType('int')); },
+                throws(AssertionFailure::class)->withMessage(
+                        'Failed asserting that an array is of type "int".'
+                )
+        );
     }
 }

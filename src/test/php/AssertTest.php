@@ -9,6 +9,7 @@ namespace bovigo\assert;
 use function bovigo\assert\predicate\equals;
 use function bovigo\assert\predicate\isSameAs;
 use function bovigo\assert\predicate\isTrue;
+use function bovigo\assert\predicate\throws;
 /**
  * Tests for bovigo\assert\*().
  *
@@ -27,12 +28,15 @@ class AssertTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @expectedException  bovigo\assert\AssertionFailure
-     * @expectedExceptionMessage  Failed asserting that 'some value' satisfies a lambda function.
      */
     public function assertFailsWhenPredicateReturnsFalse()
     {
-        assert('some value', function() { return false; });
+        assert(
+                function() { assert('some value', function() { return false; }); },
+                throws(AssertionFailure::class)->withMessage(
+                        'Failed asserting that \'some value\' satisfies a lambda function.'
+                )
+        );
     }
 
     /**
@@ -56,12 +60,13 @@ some more info')
 
     /**
      * @test
-     * @expectedException  bovigo\assert\AssertionFailure
-     * @expectedExceptionMessage  Fail test hard.
      */
     public function failThrowsAssertionFailure()
     {
-        fail('Fail test hard.');
+        assert(
+                function() { fail('Fail test hard.'); },
+                throws(AssertionFailure::class)->withMessage('Fail test hard.')
+        );
     }
 
     /**
@@ -123,12 +128,15 @@ some more info')
 
     /**
      * @test
-     * @expectedException  bovigo\assert\AssertionFailure
-     * @expectedExceptionMessage  Failed asserting that 'foo' is an empty string.
      */
     public function assertEmptyStringFailsWhenValueIsNotEmptyString()
     {
-        assertEmptyString('foo');
+        assert(
+                function() { assertEmptyString('foo'); },
+                throws(AssertionFailure::class)->withMessage(
+                        'Failed asserting that \'foo\' is an empty string.'
+                )
+        );
     }
 
     /**
@@ -146,23 +154,18 @@ some more info')
      */
     public function assertEmptyArrayFailsWhenValueIsNotEmptyArray()
     {
-        try {
-            assertEmptyArray(['foo']);
-        } catch (AssertionFailure $af) {
-            assert(
-                    $af->getMessage(),
-                    equals('Failed asserting that an array is an empty array.
+        assert(
+                function() { assertEmptyArray(['foo']); },
+                throws(AssertionFailure::class)->withMessage(
+                        'Failed asserting that an array is an empty array.
 --- Expected
 +++ Actual
 @@ @@
  Array (
 +    0 => \'foo\'
  )
-')
-            );
-            return;
-        }
-
-        fail('Expected ' . AssertionFailure::class . ', gone none');
+'
+                )
+        );
     }
 }

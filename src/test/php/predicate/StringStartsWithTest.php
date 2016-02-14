@@ -6,6 +6,8 @@
  * file that was distributed with this source code.
  */
 namespace bovigo\assert\predicate;
+use bovigo\assert\AssertionFailure;
+
 use function bovigo\assert\assert;
 /**
  * Tests for bovigo\assert\predicate\StringStartsWith.
@@ -17,20 +19,24 @@ class StringStartsWithTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @test
-     * @expectedException  InvalidArgumentException
      */
     public function createWithNonStringThrowsInvalidArgumentException()
     {
-        startsWith(303);
+        assert(
+                function() { startsWith(303); },
+                throws(\InvalidArgumentException::class)
+        );
     }
 
     /**
      * @test
-     * @expectedException  InvalidArgumentException
      */
     public function nonStringValuesThrowInvalidArgumentException()
     {
-        startsWith('foo')->test(303);
+        assert(
+                function() { startsWith('foo')->test(303); },
+                throws(\InvalidArgumentException::class)
+        );
     }
 
     /**
@@ -77,11 +83,14 @@ class StringStartsWithTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @expectedException  bovigo\assert\AssertionFailure
-     * @expectedExceptionMessage  Failed asserting that 'bar' starts with 'foo'.
      */
     public function assertionFailureContainsMeaningfulInformation()
     {
-        assert('bar', startsWith('foo'));
+        assert(
+                function() { assert('bar', startsWith('foo')); },
+                throws(AssertionFailure::class)->withMessage(
+                        "Failed asserting that 'bar' starts with 'foo'."
+                )
+        );
     }
 }

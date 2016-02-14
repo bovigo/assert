@@ -532,3 +532,16 @@ function doesNotEndWith($suffix)
 {
     return not(endsWith($suffix));
 }
+
+/**
+ * returns a predicate which tests that a specific piece of code throws an exception
+ *
+ * @api
+ * @param   string  $expectedClass  optional  type of exception to be thrown
+ * @return  \bovigo\assert\predicate\ExpectedException
+ * @since   1.6.0
+ */
+function throws($expectedClass = null)
+{
+    return new ExpectedException($expectedClass);
+}

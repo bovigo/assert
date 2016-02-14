@@ -75,12 +75,10 @@ class EqualsTest extends \PHPUnit_Framework_TestCase
      */
     public function assertionFailureContainsMeaningfulInformation()
     {
-        try {
-            assert('bar', equals('foo'), 'additional info');
-        } catch (AssertionFailure $af) {
-            assert(
-                    $af->getMessage(),
-                    equals("Failed asserting that 'bar' is equal to <string:foo>.
+        assert(
+                function() { assert('bar', equals('foo'), 'additional info'); },
+                throws(AssertionFailure::class)->withMessage(
+                        "Failed asserting that 'bar' is equal to <string:foo>.
 --- Expected
 +++ Actual
 @@ @@
@@ -88,11 +86,7 @@ class EqualsTest extends \PHPUnit_Framework_TestCase
 +'bar'
 
 additional info"
-                    )
-            );
-            return;
-        }
-
-        fail('Expected ' . AssertionFailure::class . ', got none');
+                )
+        );
     }
 }

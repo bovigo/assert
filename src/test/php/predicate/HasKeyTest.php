@@ -6,6 +6,8 @@
  * file that was distributed with this source code.
  */
 namespace bovigo\assert\predicate;
+use bovigo\assert\AssertionFailure;
+
 use function bovigo\assert\assert;
 /**
  * Helper class for the test.
@@ -33,12 +35,15 @@ class HasKeyTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @test
-     * @expectedException  InvalidArgumentException
      */
     public function createWithNonIntegetOrStringThrowsInvalidArgumentException()
     {
-        hasKey([]);
+        assert(
+                function() { hasKey([]); },
+                throws(\InvalidArgumentException::class)
+        );
     }
+
     /**
      * returns tuples which evaluate to true
      *
@@ -93,31 +98,39 @@ class HasKeyTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @expectedException  InvalidArgumentException
      */
     public function throwsInvalidArgumentExceptionWhenValueCanNotHaveKey()
     {
-        hasKey('foo')->test(303);
+        assert(
+                function() { hasKey('foo')->test(303); },
+                throws(\InvalidArgumentException::class)
+        );
     }
 
     /**
      * @test
-     * @expectedException  bovigo\assert\AssertionFailure
-     * @expectedExceptionMessage  Failed asserting that an array has the key 'bar'.
      */
     public function assertionFailureWithArrayContainsMeaningfulInformation()
     {
-        assert([], hasKey('bar'));
+        assert(
+                function() { assert([], hasKey('bar')); },
+                throws(AssertionFailure::class)->withMessage(
+                        "Failed asserting that an array has the key 'bar'."
+                )
+        );
     }
 
     /**
-     * @group  foo
      * @test
-     * @expectedException  bovigo\assert\AssertionFailure
-     * @expectedExceptionMessage  Failed asserting that bovigo\assert\predicate\ArrayAccessExample implementing \ArrayAccess has the key 'bar'.
      */
     public function assertionFailureWithArrayAccessContainsMeaningfulInformation()
     {
-        assert(new ArrayAccessExample(), hasKey('bar'));
+        assert(
+                function() { assert(new ArrayAccessExample(), hasKey('bar')); },
+                throws(AssertionFailure::class)->withMessage(
+                        "Failed asserting that " . ArrayAccessExample::class
+                        . " implementing \ArrayAccess has the key 'bar'."
+                )
+        );
     }
 }

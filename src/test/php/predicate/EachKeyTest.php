@@ -38,11 +38,13 @@ class EachKeyTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @test
-     * @expectedException  InvalidArgumentException
      */
     public function testNonIterableValueThrowsInvalidArgumentException()
     {
-        eachKey(isNotOfType('int'))->test(303);
+        assert(
+                function() { eachKey(isNotOfType('int'))->test(303); },
+                throws(\InvalidArgumentException::class)
+        );
     }
 
     /**
@@ -170,11 +172,14 @@ class EachKeyTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @expectedException  bovigo\assert\AssertionFailure
-     * @expectedExceptionMessage  Failed asserting that an array is not empty and each key is not of type "int".
      */
     public function assertionFailureContainsMeaningfulInformationWhenCombined()
     {
-        assert([], isNotEmpty()->and(eachKey(isNotOfType('int'))));
+        assert(
+                function() { assert([], isNotEmpty()->and(eachKey(isNotOfType('int')))); },
+                throws(AssertionFailure::class)->withMessage(
+                        'Failed asserting that an array is not empty and each key is not of type "int".'
+                )
+        );
     }
 }

@@ -6,6 +6,7 @@
  * file that was distributed with this source code.
  */
 namespace bovigo\assert\predicate;
+use bovigo\assert\AssertionFailure;
 use function bovigo\assert\assert;
 /**
  * Tests for bovigo\assert\predicate\CallablePredicate.
@@ -26,12 +27,15 @@ class CallablePredicateTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @expectedException  bovigo\assert\AssertionFailure
-     * @expectedExceptionMessage  Failed asserting that 'bar' satisfies bovigo\assert\predicate\CallablePredicateTest::isGood().
      */
     public function assertionFailureContainsMeaningfulInformationWithClassCallable()
     {
-        assert('bar', [__CLASS__, 'isGood']);
+        assert(
+                function() { assert('bar', [__CLASS__, 'isGood']); },
+                throws(AssertionFailure::class)->withMessage(
+                        "Failed asserting that 'bar' satisfies " . __CLASS__ . "::isGood()."
+                )
+        );
     }
 
     public function isGoodEnough()
@@ -41,37 +45,49 @@ class CallablePredicateTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @expectedException  bovigo\assert\AssertionFailure
-     * @expectedExceptionMessage  Failed asserting that 'bar' satisfies bovigo\assert\predicate\CallablePredicateTest->isGoodEnough().
      */
     public function assertionFailureContainsMeaningfulInformationWithObjectCallable()
     {
-        assert('bar', [$this, 'isGoodEnough']);
+        assert(
+                function() { assert('bar', [$this, 'isGoodEnough']); },
+                throws(AssertionFailure::class)->withMessage(
+                        "Failed asserting that 'bar' satisfies " . __CLASS__ . "->isGoodEnough()."
+                )
+        );
     }
 
     /**
      * @test
-     * @expectedException  bovigo\assert\AssertionFailure
-     * @expectedExceptionMessage  Failed asserting that 'bar' satisfies is_nan().
      */
     public function assertionFailureContainsMeaningfulInformationWithStringCallable()
     {
-        assert('bar', 'is_nan');
+        assert(
+                function() { assert('bar', 'is_nan'); },
+                throws(AssertionFailure::class)->withMessage(
+                        "Failed asserting that 'bar' satisfies is_nan()."
+                )
+        );
     }
 
     /**
      * @test
-     * @expectedException  bovigo\assert\AssertionFailure
-     * @expectedExceptionMessage  Failed asserting that 'bar' is good enough for us.
      * @since  1.2.0
      */
     public function assertionFailureContainsNonDefaultDescriptionWhenPassed()
     {
         assert(
-                'bar',
-                new CallablePredicate(
-                        [$this, 'isGoodEnough'],
-                        'is good enough for us'
+                function()
+                {
+                    assert(
+                            'bar',
+                            new CallablePredicate(
+                                    [$this, 'isGoodEnough'],
+                                    'is good enough for us'
+                            )
+                    );
+                },
+                throws(AssertionFailure::class)->withMessage(
+                        "Failed asserting that 'bar' is good enough for us."
                 )
         );
     }

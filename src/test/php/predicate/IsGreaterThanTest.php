@@ -6,6 +6,8 @@
  * file that was distributed with this source code.
  */
 namespace bovigo\assert\predicate;
+use bovigo\assert\AssertionFailure;
+
 use function bovigo\assert\assert;
 /**
  * Tests for bovigo\assert\predicate\IsGreaterThan.
@@ -64,21 +66,27 @@ class IsGreaterThanTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @expectedException  bovigo\assert\AssertionFailure
-     * @expectedExceptionMessage  Failed asserting that 1 is greater than 2.
      */
     public function assertionFailureContainsMeaningfulInformation()
     {
-        assert(1, isGreaterThan(2));
+        assert(
+                function() { assert(1, isGreaterThan(2)); },
+                throws(AssertionFailure::class)->withMessage(
+                        "Failed asserting that 1 is greater than 2."
+                )
+        );
     }
 
     /**
      * @test
-     * @expectedException  bovigo\assert\AssertionFailure
-     * @expectedExceptionMessage  Failed asserting that 1 is equal to 2 or is greater than 2.
      */
     public function assertionFailureWhenCombinedWithEqualsContainsMeaningfulInformation()
     {
-        assert(1, isGreaterThanOrEqualTo(2));
+        assert(
+                function() { assert(1, isGreaterThanOrEqualTo(2)); },
+                throws(AssertionFailure::class)->withMessage(
+                        "Failed asserting that 1 is equal to 2 or is greater than 2."
+                )
+        );
     }
 }
