@@ -693,7 +693,7 @@ The following checks on the exception are possible:
 
 ```php
 expect(function() {
-    // some piece of code which is expected to not throw SomeException
+    // some piece of code which is expected to throw SomeException
 })
 ->throws(SomeException::class)
 ->with(
