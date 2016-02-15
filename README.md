@@ -644,6 +644,110 @@ try {
 ```
 
 
+Expectations
+------------
+_Available since release 1.6.0_
+
+Expectations can be used to check that a specific piece of code does or does not
+throw an exception. It can also be used to check that after a specific piece of
+code ran assertions are still true, despite of whether the code in question
+succeeded or not.
+
+
+### Expectations on exceptions
+
+Check that a piece of code, e.g. a function or method, throws an exception:
+```php
+expect(function() {
+    // some piece of code which is expected to throw SomeException
+})->throws(SomeException::class);
+```
+
+It is also possible to expect any exception, not just a specific one, by leaving
+out the class name of the exception:
+```php
+expect(function() {
+    // some piece of code which is expected to throw any exception
+})->throws();
+```
+
+Additionally checks on the thrown exception can be performed:
+```php
+expect(function() {
+    // some piece of code which is expected to throw SomeException
+})
+->throws(SomeException::class)
+->withMessage('some failure occured');
+```
+
+The following checks on the exception are possible:
+  * `withMessage(string $$expectedMessage)`
+    Performs an assertion with `equals()` on the exception message.
+  * `message($predicate)`
+    Performs an assertion with the given predicate on the exception message.
+  * `withCode(int $expectedCode)`
+    Performs an assertion with `equals()` on the exception code.
+  * `with($predicate)`
+    Performs an assertion on the whole exception with given predicate. The
+    predicate will receive the exception as argument and can perform any check.
+    ```php
+    expect(function() {
+        // some piece of code which is expected to not throw SomeException
+    })
+    ->throws(SomeException::class)
+    ->with(
+            function(SomeException $e) { return null !== $e->getPrevious(); },
+            'exception does have a previous exception'
+    );
+    ```
+
+
+Of course you can also check that a specific exception did not occur:
+```php
+expect(function() {
+    // some piece of code which is expected to not throw SomeException
+})->doesNotThrow(SomeException::class);
+```
+
+By leaving out the exception name you ensure that the code doesn't throw any
+exception at all:
+```php
+expect(function() {
+    // some piece of code which is expected to not throw any exception
+})->doesNotThrow();
+```
+
+In case any of these expectations fail an `AssertionFailure` will be thrown.
+
+
+### Expectations on state after a piece of code was executed
+
+Sometimes it may be useful to assert that a certain state exists after some
+piece of code is executed, regardless of whether this execution succeeds.
+```php
+expect(function() {
+    // some piece of code here
+})
+->after(SomeClass::$value, equals(303));
+```
+
+It is possible to combine this with expectations on whether an exception is
+thrown or not:
+```php
+expect(function() {
+    // some piece of code here
+})
+->doesNotThrow()
+->after(SomeClass::$value, equals(303));
+
+expect(function() {
+    // some piece of code here
+})
+->throws(SomeException::class)
+->after(SomeClass::$value, equals(303));
+```
+
+
 PHPUnit compatibility layer
 ---------------------------
 
