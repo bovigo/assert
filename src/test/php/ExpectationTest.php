@@ -6,6 +6,8 @@
  * file that was distributed with this source code.
  */
 namespace bovigo\assert;
+use bovigo\assert\predicate\ExpectedException;
+
 use function bovigo\assert\predicate\isFalse;
 use function bovigo\assert\predicate\isInstanceOf;
 use function bovigo\assert\predicate\isSameAs;
@@ -298,5 +300,18 @@ class ExpectationTest extends \PHPUnit_Framework_TestCase
             $expectation->result(isTrue())->result(isTrue());
         })
         ->doesNotThrow();
+    }
+
+    /**
+     * @test
+     */
+    public function expectedExceptionThrowsInvalidArgumentExceptionWhenValueToTestIsNotAnException()
+    {
+        expect(function() {
+            $expectedException = new ExpectedException(\Exception::class);
+            $expectedException->test(404);
+        })
+        ->throws(\InvalidArgumentException::class)
+        ->withMessage('Given value is not an exception');
     }
 }

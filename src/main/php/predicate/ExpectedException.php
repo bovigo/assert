@@ -24,7 +24,7 @@ class ExpectedException extends Predicate
      *
      * @param  string  $expectedType
      */
-    public function __construct($expectedType = null)
+    public function __construct($expectedType)
     {
         $this->expectedType = $expectedType;
     }
