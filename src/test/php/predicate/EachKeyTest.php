@@ -155,19 +155,14 @@ class EachKeyTest extends \PHPUnit_Framework_TestCase
      */
     public function assertionFailureContainsMeaningfulInformation()
     {
-        try {
-            assert(['foo'], eachKey(isNotOfType('int')));
-        } catch (AssertionFailure $af) {
-            assert(
-                    $af->getMessage(),
-                    equals('Failed asserting that in Array &0 (
+        assert(
+                function() { assert(['foo'], eachKey(isNotOfType('int'))); },
+                throws(AssertionFailure::class)->withMessage(
+                        'Failed asserting that in Array &0 (
     0 => \'foo\'
-) each key is not of type "int".')
-            );
-            return;
-        }
-
-        fail('Expected ' . AssertionFailure::class . ', gone none');
+) each key is not of type "int".'
+                )
+        );
     }
 
     /**

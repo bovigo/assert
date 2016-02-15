@@ -44,18 +44,20 @@ class AssertTest extends \PHPUnit_Framework_TestCase
      */
     public function assertionFailureContainsAdditionalDescription()
     {
-        try {
-            assert('some value', function() { return false; }, 'some more info');
-        } catch (AssertionFailure $af) {
-            assert(
-                    $af->getMessage(),
-                    equals('Failed asserting that \'some value\' satisfies a lambda function.
-some more info')
-            );
-            return;
-        }
-
-        fail('Expected ' . AssertionFailure::class . ', gone none');
+        assert(
+                function()
+                {
+                    assert(
+                            'some value',
+                            function() { return false; },
+                            'some more info'
+                    );
+                },
+                throws(AssertionFailure::class)->withMessage(
+                        'Failed asserting that \'some value\' satisfies a lambda function.
+some more info'
+                )
+        );
     }
 
     /**
