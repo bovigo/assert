@@ -9,6 +9,7 @@ namespace bovigo\assert\predicate;
 use bovigo\assert\AssertionFailure;
 
 use function bovigo\assert\assert;
+use function bovigo\assert\expect;
 /**
  * Helper class for the test.
  */
@@ -77,10 +78,8 @@ class PredicateTest extends \PHPUnit_Framework_TestCase
      */
     public function castFromWithOtherValueThrowsIllegalArgumentException()
     {
-        assert(
-                function() { Predicate::castFrom(new \stdClass()); },
-                throws(\InvalidArgumentException::class)
-        );
+        expect(function() { Predicate::castFrom(new \stdClass()); })
+                ->throws(\InvalidArgumentException::class);
     }
 
     /**
@@ -149,12 +148,9 @@ class PredicateTest extends \PHPUnit_Framework_TestCase
      */
     public function assertionFailureContainsMeaningfulInformation()
     {
-        assert(
-                function() { assert([], new FooPredicate()); },
-                throws(AssertionFailure::class)->withMessage(
-                        "Failed asserting that an array is foo."
-                )
-        );
+        expect(function() { assert([], new FooPredicate()); })
+                ->throws(AssertionFailure::class)
+                ->withMessage("Failed asserting that an array is foo.");
     }
 
     /**
@@ -162,12 +158,9 @@ class PredicateTest extends \PHPUnit_Framework_TestCase
      */
     public function assertionFailureNegatedContainsMeaningfulInformation()
     {
-        assert(
-                function() { assert('foo', not(new FooPredicate())); },
-                throws(AssertionFailure::class)->withMessage(
-                        "Failed asserting that 'foo' is not foo."
-                )
-        );
+        expect(function() { assert('foo', not(new FooPredicate())); })
+                ->throws(AssertionFailure::class)
+                ->withMessage("Failed asserting that 'foo' is not foo.");
     }
 
     /**
@@ -175,15 +168,13 @@ class PredicateTest extends \PHPUnit_Framework_TestCase
      */
     public function assertionFailureNegatedContainsMeaningfulInformationWithDescription()
     {
-        assert(
-                function()
-                {
-                    assert([], new FooPredicate(), 'some useful description');
-                },
-                throws(AssertionFailure::class)->withMessage(
-                        'Failed asserting that an array is foo.
+        expect(function() {
+                assert([], new FooPredicate(), 'some useful description');
+        })
+        ->throws(AssertionFailure::class)
+        ->withMessage(
+                'Failed asserting that an array is foo.
 some useful description'
-                )
         );
     }
 
@@ -192,16 +183,14 @@ some useful description'
      */
     public function assertionFailureNegatedContainsMeaningfulInformationWithDescriptionAndExceptionMessage()
     {
-        assert(
-                function()
-                {
-                    assert([], new ThrowingPredicate(), 'some useful description');
-                },
-                throws(AssertionFailure::class)->withMessage(
-                        'Failed asserting that an array is foo.
+        expect(function() {
+                assert([], new ThrowingPredicate(), 'some useful description');
+        })
+        ->throws(AssertionFailure::class)
+        ->withMessage(
+                'Failed asserting that an array is foo.
 some useful description
 exception message'
-                )
         );
     }
 
@@ -211,10 +200,7 @@ exception message'
      */
     public function callToUndefinedMethodThrowsBadMethodCallException()
     {
-
-        assert(
-                [new FooPredicate(), 'noWay'],
-                throws(\BadMethodCallException::class)
-        );
+        expect([new FooPredicate(), 'noWay'])
+                ->throws(\BadMethodCallException::class);
     }
 }

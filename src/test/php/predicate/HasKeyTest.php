@@ -9,6 +9,7 @@ namespace bovigo\assert\predicate;
 use bovigo\assert\AssertionFailure;
 
 use function bovigo\assert\assert;
+use function bovigo\assert\expect;
 /**
  * Helper class for the test.
  */
@@ -38,10 +39,8 @@ class HasKeyTest extends \PHPUnit_Framework_TestCase
      */
     public function createWithNonIntegetOrStringThrowsInvalidArgumentException()
     {
-        assert(
-                function() { hasKey([]); },
-                throws(\InvalidArgumentException::class)
-        );
+        expect(function() { hasKey([]); })
+                ->throws(\InvalidArgumentException::class);
     }
 
     /**
@@ -101,10 +100,8 @@ class HasKeyTest extends \PHPUnit_Framework_TestCase
      */
     public function throwsInvalidArgumentExceptionWhenValueCanNotHaveKey()
     {
-        assert(
-                function() { hasKey('foo')->test(303); },
-                throws(\InvalidArgumentException::class)
-        );
+        expect(function() { hasKey('foo')->test(303); })
+                ->throws(\InvalidArgumentException::class);
     }
 
     /**
@@ -112,12 +109,9 @@ class HasKeyTest extends \PHPUnit_Framework_TestCase
      */
     public function assertionFailureWithArrayContainsMeaningfulInformation()
     {
-        assert(
-                function() { assert([], hasKey('bar')); },
-                throws(AssertionFailure::class)->withMessage(
-                        "Failed asserting that an array has the key 'bar'."
-                )
-        );
+        expect(function() { assert([], hasKey('bar')); })
+                ->throws(AssertionFailure::class)
+                ->withMessage("Failed asserting that an array has the key 'bar'.");
     }
 
     /**
@@ -125,12 +119,11 @@ class HasKeyTest extends \PHPUnit_Framework_TestCase
      */
     public function assertionFailureWithArrayAccessContainsMeaningfulInformation()
     {
-        assert(
-                function() { assert(new ArrayAccessExample(), hasKey('bar')); },
-                throws(AssertionFailure::class)->withMessage(
+        expect(function() { assert(new ArrayAccessExample(), hasKey('bar')); })
+                ->throws(AssertionFailure::class)
+                ->withMessage(
                         "Failed asserting that " . ArrayAccessExample::class
                         . " implementing \ArrayAccess has the key 'bar'."
-                )
         );
     }
 }

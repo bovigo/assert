@@ -8,41 +8,43 @@
 namespace bovigo\assert\predicate;
 use SebastianBergmann\Exporter\Exporter;
 /**
- * Predicate to check that a piece of code throws an exception.
+ * Allows to wrap another predicate to decorate its messages.
  *
+ * @internal
  * @since  1.6.0
  */
-class ExpectedException extends Predicate
+class Wrap extends Predicate
 {
+    /**
+     * @type  \bovigo\assert\predicate\Predicate
+     */
+    private $predicate;
     /**
      * @type  string
      */
-    private $expectedType;
+    private $wrappedDesciption;
 
     /**
      * constructor
      *
-     * @param  string  $expectedType
+     * @param  \bovigo\assert\predicate\Predicate  $predicate
+     * @param  string                              $wrappedDesciption
      */
-    public function __construct($expectedType = null)
+    public function __construct(Predicate $predicate, $wrappedDesciption)
     {
-        $this->expectedType = $expectedType;
+        $this->predicate         = $predicate;
+        $this->wrappedDesciption = $wrappedDesciption;
     }
 
     /**
-     * tests that the given value contains expected key
+     * evaluates predicate against given value
      *
      * @param   mixed  $value
      * @return  bool
-     * @throws  \InvalidArgumentException  in case given value can't have a key
      */
     public function test($value)
     {
-        if (! $value instanceof \Exception) {
-            throw new \InvalidArgumentException('Given value is not an exception');
-        }
-
-        return $value instanceof $this->expectedType;
+        return $this->predicate->test($value);
     }
 
     /**
@@ -52,7 +54,7 @@ class ExpectedException extends Predicate
      */
     public function __toString()
     {
-        return 'matches expected exception "' . $this->expectedType . '"';
+        return (string) $this->predicate;
     }
 
     /**
@@ -61,14 +63,12 @@ class ExpectedException extends Predicate
      * @param   \SebastianBergmann\Exporter\Exporter  $exporter
      * @param   mixed                                 $value
      * @return  string
-     * @throws  \InvalidArgumentException  in case given value can't have a key
      */
     public function describeValue(Exporter $exporter, $value)
     {
-        if (! $value instanceof \Exception) {
-            return parent::describeValue($exporter, $value);
-        }
-
-        return 'exception of type ' . get_class($value);
+        return sprintf(
+                $this->wrappedDesciption,
+                $this->predicate->describeValue($exporter, $value)
+        );
     }
 }

@@ -10,6 +10,7 @@ use bovigo\assert\AssertionFailure;
 use org\bovigo\vfs\vfsStream;
 
 use function bovigo\assert\assert;
+use function bovigo\assert\expect;
 /**
  * Tests for bovigo\assert\predicate\IsExistingFile.
  *
@@ -143,17 +144,12 @@ class IsExistingFileTest extends \PHPUnit_Framework_TestCase
      */
     public function assertionFailureContainsMeaningfulInformation()
     {
-        assert(
-                function()
-                {
-                    assert(
-                            vfsStream::url('root/doesNotExist.txt'),
-                            isExistingFile()
-                    );
-                },
-                throws(AssertionFailure::class)->withMessage(
-                        "Failed asserting that 'vfs://root/doesNotExist.txt' is a existing file."
-                )
+        expect(function() {
+            assert(vfsStream::url('root/doesNotExist.txt'), isExistingFile());
+        })
+        ->throws(AssertionFailure::class)
+        ->withMessage(
+                "Failed asserting that 'vfs://root/doesNotExist.txt' is a existing file."
         );
     }
 }

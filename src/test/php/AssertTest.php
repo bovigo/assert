@@ -9,7 +9,6 @@ namespace bovigo\assert;
 use function bovigo\assert\predicate\equals;
 use function bovigo\assert\predicate\isSameAs;
 use function bovigo\assert\predicate\isTrue;
-use function bovigo\assert\predicate\throws;
 /**
  * Tests for bovigo\assert\*().
  *
@@ -31,11 +30,12 @@ class AssertTest extends \PHPUnit_Framework_TestCase
      */
     public function assertFailsWhenPredicateReturnsFalse()
     {
-        assert(
-                function() { assert('some value', function() { return false; }); },
-                throws(AssertionFailure::class)->withMessage(
-                        'Failed asserting that \'some value\' satisfies a lambda function.'
-                )
+        expect(function() {
+            assert('some value', function() { return false; });
+        })
+        ->throws(AssertionFailure::class)
+        ->withMessage(
+                "Failed asserting that 'some value' satisfies a lambda function."
         );
     }
 
@@ -44,19 +44,17 @@ class AssertTest extends \PHPUnit_Framework_TestCase
      */
     public function assertionFailureContainsAdditionalDescription()
     {
-        assert(
-                function()
-                {
-                    assert(
-                            'some value',
-                            function() { return false; },
-                            'some more info'
-                    );
-                },
-                throws(AssertionFailure::class)->withMessage(
-                        'Failed asserting that \'some value\' satisfies a lambda function.
+        expect(function() {
+                assert(
+                        'some value',
+                        function() { return false; },
+                        'some more info'
+                );
+        })
+        ->throws(AssertionFailure::class)
+        ->withMessage(
+                    'Failed asserting that \'some value\' satisfies a lambda function.
 some more info'
-                )
         );
     }
 
@@ -65,10 +63,11 @@ some more info'
      */
     public function failThrowsAssertionFailure()
     {
-        assert(
-                function() { fail('Fail test hard.'); },
-                throws(AssertionFailure::class)->withMessage('Fail test hard.')
-        );
+        expect(function() {
+            fail('Fail test hard.');
+        })
+        ->throws(AssertionFailure::class)
+        ->withMessage('Fail test hard.');
     }
 
     /**
@@ -106,17 +105,14 @@ some more info'
         }
 
         $countBeforeAssertion = \PHPUnit_Framework_Assert::getCount();
-        try {
+        expect(function() {
             assert('some value', function() { return false; }, 'some more info');
-        } catch (AssertionFailure $af) {
-            assert(
-                    \PHPUnit_Framework_Assert::getCount(),
-                    equals($countBeforeAssertion + 1)
-            );
-            return;
-        }
-
-        fail('Expected ' . AssertionFailure::class . ', gone none');
+        })
+        ->throws(AssertionFailure::class)
+        ->after(
+                \PHPUnit_Framework_Assert::getCount(),
+                equals($countBeforeAssertion + 2) // one for assert(), one for throws()
+        );
     }
 
     /**
@@ -133,12 +129,17 @@ some more info'
      */
     public function assertEmptyStringFailsWhenValueIsNotEmptyString()
     {
-        assert(
-                function() { assertEmptyString('foo'); },
-                throws(AssertionFailure::class)->withMessage(
-                        'Failed asserting that \'foo\' is an empty string.'
-                )
-        );
+        expect(function() { assertEmptyString('foo'); })
+                ->throws(AssertionFailure::class)
+                ->withMessage(
+                        "Failed asserting that 'foo' is an empty string.
+--- Expected
++++ Actual
+@@ @@
+-''
++'foo'
+"
+                );
     }
 
     /**
@@ -156,9 +157,9 @@ some more info'
      */
     public function assertEmptyArrayFailsWhenValueIsNotEmptyArray()
     {
-        assert(
-                function() { assertEmptyArray(['foo']); },
-                throws(AssertionFailure::class)->withMessage(
+        expect(function() { assertEmptyArray(['foo']); })
+                ->throws(AssertionFailure::class)
+                ->withMessage(
                         'Failed asserting that an array is an empty array.
 --- Expected
 +++ Actual
@@ -167,7 +168,6 @@ some more info'
 +    0 => \'foo\'
  )
 '
-                )
         );
     }
 }

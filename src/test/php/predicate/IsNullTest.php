@@ -12,6 +12,7 @@ use function bovigo\assert\assertFalse;
 use function bovigo\assert\assertNotNull;
 use function bovigo\assert\assertNull;
 use function bovigo\assert\assertTrue;
+use function bovigo\assert\expect;
 /**
  * Tests for bovigo\assert\predicate\IsNull.
  *
@@ -59,12 +60,9 @@ class IsNullTest extends \PHPUnit_Framework_TestCase
      */
     public function assertionFailureContainsMeaningfulInformation()
     {
-        assert(
-                function() { assertNull([]); },
-                throws(AssertionFailure::class)->withMessage(
-                        "Failed asserting that an array is null."
-                )
-        );
+        expect(function() { assertNull([]); })
+                ->throws(AssertionFailure::class)
+                ->withMessage("Failed asserting that an array is null.");
     }
 
     /**

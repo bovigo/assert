@@ -9,6 +9,7 @@ namespace bovigo\assert\predicate;
 use bovigo\assert\AssertionFailure;
 
 use function bovigo\assert\assert;
+use function bovigo\assert\expect;
 /**
  * Test for bovigo\assert\predicate\OrPredicate.
  *
@@ -66,15 +67,13 @@ class OrPredicateTest extends \PHPUnit_Framework_TestCase
      */
     public function doesNotSwallowExceptionFromFirstPredicateIfOtherFails()
     {
-        assert(
-                function()
-                {
-                    assert(303, matches('/^([a-z]{3})$/')->or(isNull()));
-                },
-                throws(AssertionFailure::class)->withMessage(
-                        'Failed asserting that 303 matches regular expression "/^([a-z]{3})$/" or is null.
+        expect(function() {
+                assert(303, matches('/^([a-z]{3})$/')->or(isNull()));
+        })
+        ->throws(AssertionFailure::class)
+        ->withMessage(
+                'Failed asserting that 303 matches regular expression "/^([a-z]{3})$/" or is null.
 Given value of type "integer" can not be matched against a regular expression.'
-                )
         );
     }
 
@@ -83,15 +82,13 @@ Given value of type "integer" can not be matched against a regular expression.'
      */
     public function doesNotSwallowExceptionFromSecondPredicateIfFirstFails()
     {
-        assert(
-                function()
-                {
-                    assert(303, isNull()->or(matches('/^([a-z]{3})$/')));
-                },
-                throws(AssertionFailure::class)->withMessage(
-                        'Failed asserting that 303 is null or matches regular expression "/^([a-z]{3})$/".
+        expect(function() {
+                assert(303, isNull()->or(matches('/^([a-z]{3})$/')));
+        })
+        ->throws(AssertionFailure::class)
+        ->withMessage(
+                'Failed asserting that 303 is null or matches regular expression "/^([a-z]{3})$/".
 Given value of type "integer" can not be matched against a regular expression.'
-                )
         );
     }
 
@@ -100,16 +97,14 @@ Given value of type "integer" can not be matched against a regular expression.'
      */
     public function doesNotSwallowBothExceptionsWhenBothPredicatesFail()
     {
-        assert(
-                function()
-                {
-                    assert(303, matches('/^([a-z]{3})$/')->or(contains('dummy')));
-                },
-                throws(AssertionFailure::class)->withMessage(
-                        'Failed asserting that 303 matches regular expression "/^([a-z]{3})$/" or contains \'dummy\'.
+        expect(function() {
+                assert(303, matches('/^([a-z]{3})$/')->or(contains('dummy')));
+        })
+        ->throws(AssertionFailure::class)
+        ->withMessage(
+                'Failed asserting that 303 matches regular expression "/^([a-z]{3})$/" or contains \'dummy\'.
 Given value of type "integer" can not be matched against a regular expression.
 Given value of type "integer" can not contain something.'
-                )
         );
     }
 

@@ -8,6 +8,7 @@
 namespace bovigo\assert\predicate;
 use bovigo\assert\AssertionFailure;
 use function bovigo\assert\assert;
+use function bovigo\assert\expect;
 /**
  * Tests for bovigo\assert\predicate\CallablePredicate.
  *
@@ -30,11 +31,11 @@ class CallablePredicateTest extends \PHPUnit_Framework_TestCase
      */
     public function assertionFailureContainsMeaningfulInformationWithClassCallable()
     {
-        assert(
-                function() { assert('bar', [__CLASS__, 'isGood']); },
-                throws(AssertionFailure::class)->withMessage(
-                        "Failed asserting that 'bar' satisfies " . __CLASS__ . "::isGood()."
-                )
+        expect(function() { assert('bar', [__CLASS__, 'isGood']); })
+                ->throws(AssertionFailure::class)
+                ->withMessage(
+                        "Failed asserting that 'bar' satisfies "
+                        . __CLASS__ . "::isGood()."
         );
     }
 
@@ -48,11 +49,11 @@ class CallablePredicateTest extends \PHPUnit_Framework_TestCase
      */
     public function assertionFailureContainsMeaningfulInformationWithObjectCallable()
     {
-        assert(
-                function() { assert('bar', [$this, 'isGoodEnough']); },
-                throws(AssertionFailure::class)->withMessage(
-                        "Failed asserting that 'bar' satisfies " . __CLASS__ . "->isGoodEnough()."
-                )
+        expect(function() { assert('bar', [$this, 'isGoodEnough']); })
+                ->throws(AssertionFailure::class)
+                ->withMessage(
+                        "Failed asserting that 'bar' satisfies "
+                        . __CLASS__ . "->isGoodEnough()."
         );
     }
 
@@ -61,12 +62,9 @@ class CallablePredicateTest extends \PHPUnit_Framework_TestCase
      */
     public function assertionFailureContainsMeaningfulInformationWithStringCallable()
     {
-        assert(
-                function() { assert('bar', 'is_nan'); },
-                throws(AssertionFailure::class)->withMessage(
-                        "Failed asserting that 'bar' satisfies is_nan()."
-                )
-        );
+        expect(function() { assert('bar', 'is_int'); })
+                ->throws(AssertionFailure::class)
+                ->withMessage("Failed asserting that 'bar' satisfies is_int().");
     }
 
     /**
@@ -75,20 +73,16 @@ class CallablePredicateTest extends \PHPUnit_Framework_TestCase
      */
     public function assertionFailureContainsNonDefaultDescriptionWhenPassed()
     {
-        assert(
-                function()
-                {
-                    assert(
-                            'bar',
-                            new CallablePredicate(
-                                    [$this, 'isGoodEnough'],
-                                    'is good enough for us'
-                            )
-                    );
-                },
-                throws(AssertionFailure::class)->withMessage(
-                        "Failed asserting that 'bar' is good enough for us."
-                )
-        );
+        expect(function() {
+            assert(
+                    'bar',
+                    new CallablePredicate(
+                            [$this, 'isGoodEnough'],
+                            'is good enough for us'
+                    )
+            );
+        })
+        ->throws(AssertionFailure::class)
+        ->withMessage("Failed asserting that 'bar' is good enough for us.");
     }
 }

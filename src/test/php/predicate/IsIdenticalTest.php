@@ -9,6 +9,7 @@ namespace bovigo\assert\predicate;
 use bovigo\assert\AssertionFailure;
 
 use function bovigo\assert\assert;
+use function bovigo\assert\expect;
 /**
  * Tests for bovigo\assert\predicate\IsIdentical.
  *
@@ -54,12 +55,9 @@ class IsIdenticalTest extends \PHPUnit_Framework_TestCase
      */
     public function assertionFailureContainsMeaningfulInformation()
     {
-        assert(
-                function() { assert(true, isSameAs(false)); },
-                throws(AssertionFailure::class)->withMessage(
-                        "Failed asserting that true is identical to false."
-                )
-        );
+        expect(function() { assert(true, isSameAs(false)); })
+                ->throws(AssertionFailure::class)
+                ->withMessage("Failed asserting that true is identical to false.");
     }
 
     /**
@@ -67,11 +65,12 @@ class IsIdenticalTest extends \PHPUnit_Framework_TestCase
      */
     public function assertionFailureWithObjectsContainsMeaningfulInformation()
     {
-        assert(
-                function() { assert(new \stdClass(), isSameAs(new \stdClass())); },
-                throws(AssertionFailure::class)->withMessage(
-                        'Failed asserting that object of type "stdClass" is identical to object of type "stdClass".'
-                )
+        expect(function() {
+            assert(new \stdClass(), isSameAs(new \stdClass()));
+        })
+        ->throws(AssertionFailure::class)
+        ->withMessage(
+                'Failed asserting that object of type "stdClass" is identical to object of type "stdClass".'
         );
     }
 
@@ -80,11 +79,10 @@ class IsIdenticalTest extends \PHPUnit_Framework_TestCase
      */
     public function assertionFailureWithObjectAndOtherContainsMeaningfulInformation()
     {
-        assert(
-                function() { assert(new \stdClass(), isSameAs('foo')); },
-                throws(AssertionFailure::class)->withMessage(
+        expect(function() { assert(new \stdClass(), isSameAs('foo')); })
+                ->throws(AssertionFailure::class)
+                ->withMessage(
                         'Failed asserting that object of type "stdClass" is identical to \'foo\'.'
-                )
         );
     }
 }

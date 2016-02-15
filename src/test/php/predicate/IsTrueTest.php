@@ -9,6 +9,7 @@ namespace bovigo\assert\predicate;
 use bovigo\assert\AssertionFailure;
 
 use function bovigo\assert\assert;
+use function bovigo\assert\expect;
 /**
  * Tests for bovigo\assert\predicate\IsTrue.
  *
@@ -53,11 +54,8 @@ class IsTrueTest extends \PHPUnit_Framework_TestCase
      */
     public function assertionFailureContainsMeaningfulInformation()
     {
-        assert(
-                function() { assert([], isTrue()); },
-                throws(AssertionFailure::class)->withMessage(
-                        "Failed asserting that an array is true."
-                )
-        );
+        expect(function() { assert([], isTrue()); })
+                ->throws(AssertionFailure::class)
+                ->withMessage("Failed asserting that an array is true.");
     }
 }

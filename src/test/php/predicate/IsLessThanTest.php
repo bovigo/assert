@@ -9,6 +9,7 @@ namespace bovigo\assert\predicate;
 use bovigo\assert\AssertionFailure;
 
 use function bovigo\assert\assert;
+use function bovigo\assert\expect;
 /**
  * Tests for bovigo\assert\predicate\IsLessThan.
  *
@@ -69,12 +70,9 @@ class IsLessThanTest extends \PHPUnit_Framework_TestCase
      */
     public function assertionFailureContainsMeaningfulInformation()
     {
-        assert(
-                function() { assert(3, isLessThan(2)); },
-                throws(AssertionFailure::class)->withMessage(
-                        "Failed asserting that 3 is less than 2."
-                )
-        );
+        expect(function() { assert(3, isLessThan(2)); })
+                ->throws(AssertionFailure::class)
+                ->withMessage("Failed asserting that 3 is less than 2.");
     }
 
     /**
@@ -82,11 +80,10 @@ class IsLessThanTest extends \PHPUnit_Framework_TestCase
      */
     public function assertionFailureWhenCombinedWithEqualsContainsMeaningfulInformation()
     {
-        assert(
-                function() { assert(3, isLessThanOrEqualTo(2)); },
-                throws(AssertionFailure::class)->withMessage(
+        expect(function() { assert(3, isLessThanOrEqualTo(2)); })
+                ->throws(AssertionFailure::class)
+                ->withMessage(
                         "Failed asserting that 3 is equal to 2 or is less than 2."
-                )
         );
     }
 }

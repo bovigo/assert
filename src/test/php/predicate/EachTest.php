@@ -9,7 +9,7 @@ namespace bovigo\assert\predicate;
 use bovigo\assert\AssertionFailure;
 
 use function bovigo\assert\assert;
-use function bovigo\assert\fail;
+use function bovigo\assert\expect;
 /**
  * Helper class for the test.
  */
@@ -39,10 +39,8 @@ class EachTest extends \PHPUnit_Framework_TestCase
      */
     public function testNonIterableValueThrowsInvalidArgumentException()
     {
-        assert(
-                function() { each(isNull())->test(303); },
-                throws(\InvalidArgumentException::class)
-        );
+        expect(function() { each(isNull())->test(303); })
+                ->throws(\InvalidArgumentException::class);
 
     }
 
@@ -154,13 +152,12 @@ class EachTest extends \PHPUnit_Framework_TestCase
      */
     public function assertionFailureContainsMeaningfulInformation()
     {
-        assert(
-                function() { assert(['foo'], each(isNull())); },
-                throws(AssertionFailure::class)->withMessage(
+        expect(function() { assert(['foo'], each(isNull())); })
+                ->throws(AssertionFailure::class)
+                ->withMessage(
                         'Failed asserting that in Array &0 (
     0 => \'foo\'
 ) each value is null.'
-                )
         );
     }
 
@@ -169,11 +166,12 @@ class EachTest extends \PHPUnit_Framework_TestCase
      */
     public function assertionFailureContainsMeaningfulInformationWhenCombined()
     {
-        assert(
-                function() { assert([], isNotEmpty()->and(each(isNotNull()))); },
-                throws(AssertionFailure::class)->withMessage(
-                        'Failed asserting that an array is not empty and each value is not null.'
-                )
+        expect(function() {
+            assert([], isNotEmpty()->and(each(isNotNull())));
+        })
+        ->throws(AssertionFailure::class)
+        ->withMessage(
+                'Failed asserting that an array is not empty and each value is not null.'
         );
     }
 }

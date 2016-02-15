@@ -9,6 +9,7 @@ namespace bovigo\assert\predicate;
 use bovigo\assert\AssertionFailure;
 
 use function bovigo\assert\assert;
+use function bovigo\assert\expect;
 /**
  * Tests for bovigo\assert\predicate\Regex.
  *
@@ -65,11 +66,10 @@ class RegexTest extends \PHPUnit_Framework_TestCase
      */
     public function nonStringsThrowInvalidArgumentException()
     {
-        assert(
-                function() { matches('/^([a-z]{3})$/')->test(303); },
-                throws(\InvalidArgumentException::class)->withMessage(
+        expect(function() { matches('/^([a-z]{3})$/')->test(303); })
+                ->throws(\InvalidArgumentException::class)
+                ->withMessage(
                         'Given value of type "integer" can not be matched against a regular expression.'
-                )
         );
     }
 
@@ -78,11 +78,10 @@ class RegexTest extends \PHPUnit_Framework_TestCase
      */
     public function nullThrowInvalidArgumentException()
     {
-        assert(
-                function() { matches('/^([a-z]{3})$/')->test(null); },
-                throws(\InvalidArgumentException::class)->withMessage(
+        expect(function() { matches('/^([a-z]{3})$/')->test(null); })
+                ->throws(\InvalidArgumentException::class)
+                ->withMessage(
                         'Given value of type "NULL" can not be matched against a regular expression.'
-                )
         );
     }
 
@@ -91,16 +90,13 @@ class RegexTest extends \PHPUnit_Framework_TestCase
      */
     public function invalidRegexThrowsRuntimeExceptionOnEvaluation()
     {
-
-        assert(
-                function()
-                {
-                    $regex = new Regex('^([a-z]{3})$');
-                    $regex('foo');
-                },
-                throws(\RuntimeException::class)->withMessage(
-                        'Failure while matching "^([a-z]{3})$", reason: invalid regular expression.'
-                )
+        expect(function() {
+            $regex = new Regex('^([a-z]{3})$');
+            $regex('foo');
+        })
+        ->throws(\RuntimeException::class)
+        ->withMessage(
+                'Failure while matching "^([a-z]{3})$", reason: invalid regular expression.'
         );
     }
 
@@ -120,11 +116,10 @@ class RegexTest extends \PHPUnit_Framework_TestCase
      */
     public function assertionFailureContainsMeaningfulInformation()
     {
-        assert(
-                function() { assert('f', matches('/^([a-z]{3})$/')); },
-                throws(AssertionFailure::class)->withMessage(
+        expect(function() { assert('f', matches('/^([a-z]{3})$/')); })
+                ->throws(AssertionFailure::class)
+                ->withMessage(
                         "Failed asserting that 'f' matches regular expression \"/^([a-z]{3})$/\"."
-                )
         );
     }
 }

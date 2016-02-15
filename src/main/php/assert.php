@@ -47,6 +47,18 @@ function fail($description)
 }
 
 /**
+ * sets up an expectation for given code
+ *
+ * @param   \bovigo\assert\callable  $code
+ * @return  \bovigo\assert\Expectation
+ * @since   1.6.0
+ */
+function expect(callable $code)
+{
+    return new Expectation($code);
+}
+
+/**
  * alias for assert($value, isTrue()[, $description])
  *
  * @api

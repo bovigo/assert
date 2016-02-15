@@ -7,7 +7,9 @@
  */
 namespace bovigo\assert\predicate;
 use bovigo\assert\AssertionFailure;
+
 use function bovigo\assert\assert;
+use function bovigo\assert\expect;
 /**
  * Tests for bovigo\assert\predicate\Equals.
  *
@@ -75,9 +77,9 @@ class EqualsTest extends \PHPUnit_Framework_TestCase
      */
     public function assertionFailureContainsMeaningfulInformation()
     {
-        assert(
-                function() { assert('bar', equals('foo'), 'additional info'); },
-                throws(AssertionFailure::class)->withMessage(
+        expect(function() { assert('bar', equals('foo'), 'additional info'); })
+                ->throws(AssertionFailure::class)
+                ->withMessage(
                         "Failed asserting that 'bar' is equal to <string:foo>.
 --- Expected
 +++ Actual
@@ -86,7 +88,6 @@ class EqualsTest extends \PHPUnit_Framework_TestCase
 +'bar'
 
 additional info"
-                )
         );
     }
 }

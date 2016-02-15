@@ -9,6 +9,7 @@ namespace bovigo\assert\predicate;
 use bovigo\assert\AssertionFailure;
 
 use function bovigo\assert\assert;
+use function bovigo\assert\expect;
 /**
  * Helper class for the test.
  */
@@ -171,10 +172,8 @@ class IsOfSizeTest extends \PHPUnit_Framework_TestCase
      */
     public function throwsInvalidArgumentExceptionWhenValueIsNotTestableForSize()
     {
-        assert(
-                function() { isOfSize(3)->test(true); },
-                throws(\InvalidArgumentException::class)
-        );
+        expect(function() { isOfSize(3)->test(true); })
+                ->throws(\InvalidArgumentException::class);
     }
 
     /**
@@ -182,11 +181,10 @@ class IsOfSizeTest extends \PHPUnit_Framework_TestCase
      */
     public function assertionFailureWithStringContainsMeaningfulInformation()
     {
-        assert(
-                function() { assert('foo', isOfSize(4)); },
-                throws(AssertionFailure::class)->withMessage(
+        expect(function() { assert('foo', isOfSize(4)); })
+                ->throws(AssertionFailure::class)
+                ->withMessage(
                         "Failed asserting that string with actual size 3 matches expected size 4."
-                )
         );
     }
 
@@ -195,11 +193,10 @@ class IsOfSizeTest extends \PHPUnit_Framework_TestCase
      */
     public function assertionFailureWithArrayContainsMeaningfulInformation()
     {
-        assert(
-                function() { assert([], isOfSize(4)); },
-                throws(AssertionFailure::class)->withMessage(
+        expect(function() { assert([], isOfSize(4)); })
+                ->throws(AssertionFailure::class)
+                ->withMessage(
                         "Failed asserting that array with actual size 0 matches expected size 4."
-                )
         );
     }
 
@@ -208,13 +205,12 @@ class IsOfSizeTest extends \PHPUnit_Framework_TestCase
      */
     public function assertionFailureWithCountableContainsMeaningfulInformation()
     {
-        assert(
-                function() { assert(new CountableExample(), isOfSize(4)); },
-                throws(AssertionFailure::class)->withMessage(
+        expect(function() { assert(new CountableExample(), isOfSize(4)); })
+                ->throws(AssertionFailure::class)
+                ->withMessage(
                         "Failed asserting that instance of type "
                         . CountableExample::class
                         . " with actual size 3 matches expected size 4."
-                )
         );
     }
 
@@ -223,13 +219,12 @@ class IsOfSizeTest extends \PHPUnit_Framework_TestCase
      */
     public function assertionFailureWithTraversableContainsMeaningfulInformation()
     {
-        assert(
-                function() { assert(new TraversableExample(), isOfSize(4)); },
-                throws(AssertionFailure::class)->withMessage(
+        expect(function() { assert(new TraversableExample(), isOfSize(4)); })
+                ->throws(AssertionFailure::class)
+                ->withMessage(
                         "Failed asserting that instance of type "
                         . TraversableExample::class
                         . " with actual size 3 matches expected size 4."
-                )
         );
     }
 
@@ -238,13 +233,14 @@ class IsOfSizeTest extends \PHPUnit_Framework_TestCase
      */
     public function assertionFailureWithIteratorAggregateContainsMeaningfulInformation()
     {
-        assert(
-                function() { assert(new IteratorAggregateExample(), isOfSize(4)); },
-                throws(AssertionFailure::class)->withMessage(
-                        "Failed asserting that instance of type "
-                        . IteratorAggregateExample::class
-                        . " with actual size 3 matches expected size 4."
-                )
+        expect(function() {
+            assert(new IteratorAggregateExample(), isOfSize(4));
+        })
+        ->throws(AssertionFailure::class)
+        ->withMessage(
+                "Failed asserting that instance of type "
+                . IteratorAggregateExample::class
+                . " with actual size 3 matches expected size 4."
         );
     }
 }

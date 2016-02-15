@@ -9,7 +9,8 @@ namespace bovigo\assert\phpunit;
 use bovigo\assert\AssertionFailure;
 
 use function bovigo\assert\assert;
-use function bovigo\assert\predicate\throws;
+use function bovigo\assert\expect;
+use function bovigo\assert\predicate\contains;
 /**
  * Test for bovigo\assert\assert\predicate\AndPredicate.
  *
@@ -24,12 +25,9 @@ class CompatibilityTest extends PHPUnit_Framework_TestCase
 
     public function testAssertArrayHasKeyFailure()
     {
-        assert(
-                function() { $this->assertArrayHasKey('bar', ['foo' => 303]); },
-                throws(AssertionFailure::class)->withMessage(
-                        "Failed asserting that an array has the key 'bar'."
-                )
-        );
+        expect(function() { $this->assertArrayHasKey('bar', ['foo' => 303]); })
+                ->throws(AssertionFailure::class)
+                ->withMessage("Failed asserting that an array has the key 'bar'.");
     }
 
     public function testAssertArrayNotHasKeySuccess()
@@ -39,12 +37,11 @@ class CompatibilityTest extends PHPUnit_Framework_TestCase
 
     public function testAssertArrayNotHasKeyFailure()
     {
-        assert(
-                function() { $this->assertArrayNotHasKey('foo', ['foo' => 303]); },
-                throws(AssertionFailure::class)->withMessage(
-                        "Failed asserting that an array does not have the key 'foo'."
-                )
-        );
+        expect(function() {
+            $this->assertArrayNotHasKey('foo', ['foo' => 303]);
+        })
+        ->throws(AssertionFailure::class)
+        ->withMessage("Failed asserting that an array does not have the key 'foo'.");
     }
 
     public function testAssertContainsSuccess()
@@ -54,12 +51,9 @@ class CompatibilityTest extends PHPUnit_Framework_TestCase
 
     public function testAssertContainsFailure()
     {
-        assert(
-                function() { $this->assertContains(313, ['foo' => 303]); },
-                throws(AssertionFailure::class)->withMessage(
-                        "Failed asserting that an array contains 313."
-                )
-        );
+        expect(function() { $this->assertContains(313, ['foo' => 303]); })
+                ->throws(AssertionFailure::class)
+                ->withMessage("Failed asserting that an array contains 313.");
     }
 
     public function testAssertNotContainsSuccess()
@@ -69,12 +63,9 @@ class CompatibilityTest extends PHPUnit_Framework_TestCase
 
     public function testAssertNotContainsFailure()
     {
-        assert(
-                function() { $this->assertNotContains(303, ['foo' => 303]); },
-                throws(AssertionFailure::class)->withMessage(
-                        "Failed asserting that an array does not contain 303."
-                )
-        );
+        expect(function() { $this->assertNotContains(303, ['foo' => 303]); })
+                ->throws(AssertionFailure::class)
+                ->withMessage("Failed asserting that an array does not contain 303.");
     }
 
     /**
@@ -101,14 +92,13 @@ class CompatibilityTest extends PHPUnit_Framework_TestCase
      */
     public function testAssertContainsOnlyFailure()
     {
-        assert(
-                function() { $this->assertContainsOnly('int', [303, 'foo']); },
-                throws(AssertionFailure::class)->withMessage(
+        expect(function() { $this->assertContainsOnly('int', [303, 'foo']); })
+                ->throws(AssertionFailure::class)
+                ->withMessage(
                         'Failed asserting that in Array &0 (
     0 => 303
     1 => \'foo\'
 ) each value is of type "int".'
-                )
         );
     }
 
@@ -128,17 +118,15 @@ class CompatibilityTest extends PHPUnit_Framework_TestCase
      */
     public function testAssertContainsOnlyInstancesOfFailure()
     {
-        assert(
-                function()
-                {
-                    $this->assertContainsOnlyInstancesOf('stdClass', [303, 'foo']);
-                },
-                throws(AssertionFailure::class)->withMessage(
-                        'Failed asserting that in Array &0 (
+        expect(function() {
+                $this->assertContainsOnlyInstancesOf('stdClass', [303, 'foo']);
+        })
+        ->throws(AssertionFailure::class)
+        ->withMessage(
+                'Failed asserting that in Array &0 (
     0 => 303
     1 => \'foo\'
 ) each value is an instance of class "stdClass".'
-                )
         );
     }
 
@@ -163,17 +151,15 @@ class CompatibilityTest extends PHPUnit_Framework_TestCase
      */
     public function testAssertNotContainsOnlyFailure()
     {
-        assert(
-                function()
-                {
-                    $this->assertNotContainsOnly('int', [303, 'foo']);
-                },
-                throws(AssertionFailure::class)->withMessage(
-                        'Failed asserting that in Array &0 (
+        expect(function() {
+                $this->assertNotContainsOnly('int', [303, 'foo']);
+        })
+        ->throws(AssertionFailure::class)
+        ->withMessage(
+                'Failed asserting that in Array &0 (
     0 => 303
     1 => \'foo\'
 ) each value is not of type "int".'
-                )
         );
     }
 
@@ -184,11 +170,10 @@ class CompatibilityTest extends PHPUnit_Framework_TestCase
 
     public function testAssertCountFailure()
     {
-        assert(
-                function() { $this->assertCount(2, ['foo' => 303]); },
-                throws(AssertionFailure::class)->withMessage(
+        expect(function() { $this->assertCount(2, ['foo' => 303]); })
+                ->throws(AssertionFailure::class)
+                ->withMessage(
                         'Failed asserting that array with actual size 1 matches expected size 2.'
-                )
         );
     }
 
@@ -199,11 +184,10 @@ class CompatibilityTest extends PHPUnit_Framework_TestCase
 
     public function testAssertNotCountFailure()
     {
-        assert(
-                function() { $this->assertNotCount(1, ['foo' => 303]); },
-                throws(AssertionFailure::class)->withMessage(
+        expect(function() { $this->assertNotCount(1, ['foo' => 303]); })
+                ->throws(AssertionFailure::class)
+                ->withMessage(
                         'Failed asserting that array with actual size 1 does not match expected size 1.'
-                )
         );
     }
 
@@ -214,12 +198,9 @@ class CompatibilityTest extends PHPUnit_Framework_TestCase
 
     public function testAssertEqualsFailure()
     {
-        assert(
-                function() { $this->assertEquals(313, 303); },
-                throws(AssertionFailure::class)->withMessage(
-                        'Failed asserting that 303 is equal to 313.'
-                )
-        );
+        expect(function() { $this->assertEquals(313, 303); })
+                ->throws(AssertionFailure::class)
+                ->withMessage('Failed asserting that 303 is equal to 313.');
     }
 
     public function testAssertNotEqualsSuccess()
@@ -229,12 +210,9 @@ class CompatibilityTest extends PHPUnit_Framework_TestCase
 
     public function testAssertNotEqualsFailure()
     {
-        assert(
-                function() { $this->assertNotEquals(303, 303); },
-                throws(AssertionFailure::class)->withMessage(
-                        'Failed asserting that 303 is not equal to 303.'
-                )
-        );
+        expect(function() { $this->assertNotEquals(303, 303); })
+                ->throws(AssertionFailure::class)
+                ->withMessage('Failed asserting that 303 is not equal to 303.');
     }
 
     public function testAssertEmptySuccess()
@@ -244,12 +222,9 @@ class CompatibilityTest extends PHPUnit_Framework_TestCase
 
     public function testAssertEmptyFailure()
     {
-        assert(
-                function() { $this->assertEmpty('not empty'); },
-                throws(AssertionFailure::class)->withMessage(
-                        "Failed asserting that 'not empty' is empty."
-                )
-        );
+        expect(function() { $this->assertEmpty('not empty'); })
+                ->throws(AssertionFailure::class)
+                ->withMessage("Failed asserting that 'not empty' is empty.");
     }
 
     public function testAssertNotEmptySuccess()
@@ -259,12 +234,9 @@ class CompatibilityTest extends PHPUnit_Framework_TestCase
 
     public function testAssertNotEmptyFailure()
     {
-        assert(
-                function() { $this->assertNotEmpty(''); },
-                throws(AssertionFailure::class)->withMessage(
-                        "Failed asserting that '' is not empty."
-                )
-        );
+        expect(function() { $this->assertNotEmpty(''); })
+                ->throws(AssertionFailure::class)
+                ->withMessage("Failed asserting that '' is not empty.");
     }
 
     public function testAssertGreaterThanSuccess()
@@ -274,12 +246,9 @@ class CompatibilityTest extends PHPUnit_Framework_TestCase
 
     public function testAssertGreaterThanFailure()
     {
-        assert(
-                function() { $this->assertGreaterThan(3, 2); },
-                throws(AssertionFailure::class)->withMessage(
-                        "Failed asserting that 2 is greater than 3."
-                )
-        );
+        expect(function() { $this->assertGreaterThan(3, 2); })
+                ->throws(AssertionFailure::class)
+                ->withMessage("Failed asserting that 2 is greater than 3.");
     }
 
     public function testAssertGreaterThanOrEqualSuccess()
@@ -289,11 +258,10 @@ class CompatibilityTest extends PHPUnit_Framework_TestCase
 
     public function testAssertGreaterThanOrEqualFailure()
     {
-        assert(
-                function() { $this->assertGreaterThanOrEqual(3, 2); },
-                throws(AssertionFailure::class)->withMessage(
+        expect(function() { $this->assertGreaterThanOrEqual(3, 2); })
+                ->throws(AssertionFailure::class)
+                ->withMessage(
                         "Failed asserting that 2 is equal to 3 or is greater than 3."
-                )
         );
     }
 
@@ -304,12 +272,9 @@ class CompatibilityTest extends PHPUnit_Framework_TestCase
 
     public function testAssertLessThanFailure()
     {
-        assert(
-                function() { $this->assertLessThan(2, 3); },
-                throws(AssertionFailure::class)->withMessage(
-                        "Failed asserting that 3 is less than 2."
-                )
-        );
+        expect(function() { $this->assertLessThan(2, 3); })
+                ->throws(AssertionFailure::class)
+                ->withMessage("Failed asserting that 3 is less than 2.");
     }
 
     public function testAssertLessThanOrEqualSuccess()
@@ -319,11 +284,10 @@ class CompatibilityTest extends PHPUnit_Framework_TestCase
 
     public function testAssertLessThanOrEqualFailure()
     {
-        assert(
-                function() { $this->assertLessThanOrEqual(2, 3); },
-                throws(AssertionFailure::class)->withMessage(
+        expect(function() { $this->assertLessThanOrEqual(2, 3); })
+                ->throws(AssertionFailure::class)
+                ->withMessage(
                         "Failed asserting that 3 is equal to 2 or is less than 2."
-                )
         );
     }
 
@@ -334,12 +298,9 @@ class CompatibilityTest extends PHPUnit_Framework_TestCase
 
     public function testAssertFileExistsFailure()
     {
-        assert(
-                function() { $this->assertFileExists(__FILE__ . '.bak'); },
-                throws(AssertionFailure::class)->withMessage(
-                        "is a existing file"
-                )
-        );
+        expect(function() { $this->assertFileExists(__FILE__ . '.bak'); })
+                ->throws(AssertionFailure::class)
+                ->message(contains("is a existing file"));
     }
 
     public function testAssertFileNotExistsSuccess()
@@ -349,12 +310,9 @@ class CompatibilityTest extends PHPUnit_Framework_TestCase
 
     public function testAssertFileNotExistsFailure()
     {
-        assert(
-                function() { $this->assertFileNotExists(__FILE__); },
-                throws(AssertionFailure::class)->withMessage(
-                        "is not a existing file"
-                )
-        );
+        expect(function() { $this->assertFileNotExists(__FILE__); })
+                ->throws(AssertionFailure::class)
+                ->Message(contains("is not a existing file"));
     }
 
     public function testAssertTrueSuccess()
@@ -364,12 +322,9 @@ class CompatibilityTest extends PHPUnit_Framework_TestCase
 
     public function testAssertTrueFailure()
     {
-        assert(
-                function() { $this->assertTrue(false); },
-                throws(AssertionFailure::class)->withMessage(
-                        "Failed asserting that false is true."
-                )
-        );
+        expect(function() { $this->assertTrue(false); })
+                ->throws(AssertionFailure::class)
+                ->withMessage("Failed asserting that false is true.");
     }
 
     public function testAssertFalseSuccess()
@@ -379,12 +334,9 @@ class CompatibilityTest extends PHPUnit_Framework_TestCase
 
     public function testAssertFalseFailure()
     {
-        assert(
-                function() { $this->assertFalse(true); },
-                throws(AssertionFailure::class)->withMessage(
-                        "Failed asserting that true is false."
-                )
-        );
+        expect(function() { $this->assertFalse(true); })
+                ->throws(AssertionFailure::class)
+                ->withMessage("Failed asserting that true is false.");
     }
 
     public function testAssertNotNullSuccess()
@@ -394,12 +346,9 @@ class CompatibilityTest extends PHPUnit_Framework_TestCase
 
     public function testAssertNotNullFailure()
     {
-        assert(
-                function() { $this->assertNotNull(null); },
-                throws(AssertionFailure::class)->withMessage(
-                        "Failed asserting that null is not null."
-                )
-        );
+        expect(function() { $this->assertNotNull(null); })
+                ->throws(AssertionFailure::class)
+                ->withMessage("Failed asserting that null is not null.");
     }
 
     public function testAssertNullSuccess()
@@ -409,12 +358,9 @@ class CompatibilityTest extends PHPUnit_Framework_TestCase
 
     public function testAssertNullFailure()
     {
-        assert(
-                function() { $this->assertNull(303); },
-                throws(AssertionFailure::class)->withMessage(
-                        "Failed asserting that 303 is null."
-                )
-        );
+        expect(function() { $this->assertNull(303); })
+                ->throws(AssertionFailure::class)
+                ->withMessage("Failed asserting that 303 is null.");
     }
 
     /**
@@ -430,12 +376,9 @@ class CompatibilityTest extends PHPUnit_Framework_TestCase
      */
     public function testAssertFiniteFailure()
     {
-        assert(
-                function() { $this->assertFinite(INF); },
-                throws(AssertionFailure::class)->withMessage(
-                        "satisfies is_finite()."
-                )
-        );
+        expect(function() { $this->assertFinite(INF); })
+                ->throws(AssertionFailure::class)
+                ->message(contains("satisfies is_finite()."));
     }
 
     /**
@@ -451,12 +394,9 @@ class CompatibilityTest extends PHPUnit_Framework_TestCase
      */
     public function testAssertInfiniteFailure()
     {
-        assert(
-                function() { $this->assertInfinite(1); },
-                throws(AssertionFailure::class)->withMessage(
-                        "Failed asserting that 1 satisfies is_infinite()."
-                )
-        );
+        expect(function() { $this->assertInfinite(1); })
+                ->throws(AssertionFailure::class)
+                ->withMessage("Failed asserting that 1 satisfies is_infinite().");
     }
 
     /**
@@ -472,12 +412,9 @@ class CompatibilityTest extends PHPUnit_Framework_TestCase
      */
     public function testAssertNanFailure()
     {
-        assert(
-                function() { $this->assertNan(1); },
-                throws(AssertionFailure::class)->withMessage(
-                        "Failed asserting that 1 satisfies is_nan()."
-                )
-        );
+        expect(function() { $this->assertNan(1); })
+                ->throws(AssertionFailure::class)
+                ->withMessage("Failed asserting that 1 satisfies is_nan().");
     }
 
     public function testAssertSameSuccess()
@@ -488,11 +425,12 @@ class CompatibilityTest extends PHPUnit_Framework_TestCase
 
     public function testAssertSameFailure()
     {
-        assert(
-                function() { $this->assertSame(new \stdClass(), new \stdClass()); },
-                throws(AssertionFailure::class)->withMessage(
-                        'Failed asserting that object of type "stdClass" is identical to object of type "stdClass".'
-                )
+        expect(function() {
+            $this->assertSame(new \stdClass(), new \stdClass());
+        })
+        ->throws(AssertionFailure::class)
+        ->withMessage(
+                'Failed asserting that object of type "stdClass" is identical to object of type "stdClass".'
         );
     }
 
@@ -503,15 +441,13 @@ class CompatibilityTest extends PHPUnit_Framework_TestCase
 
     public function testAssertNotSameFailure()
     {
-        assert(
-                function()
-                {
-                    $foo = new \stdClass();
-                    $this->assertNotSame($foo, $foo);
-                },
-                throws(AssertionFailure::class)->withMessage(
-                        'Failed asserting that object of type "stdClass" is not identical to object of type "stdClass".'
-                )
+        expect(function() {
+                $foo = new \stdClass();
+                $this->assertNotSame($foo, $foo);
+        })
+        ->throws(AssertionFailure::class)
+        ->withMessage(
+                'Failed asserting that object of type "stdClass" is not identical to object of type "stdClass".'
         );
     }
 
@@ -522,11 +458,12 @@ class CompatibilityTest extends PHPUnit_Framework_TestCase
 
     public function testAsserInstanceOfFailure()
     {
-        assert(
-                function() { $this->assertInstanceOf(__CLASS__, new \stdClass()); },
-                throws(AssertionFailure::class)->withMessage(
-                        'Failed asserting that stdClass Object () is an instance of class "' . __CLASS__ . '".'
-                )
+        expect(function() {
+            $this->assertInstanceOf(__CLASS__, new \stdClass());
+        })
+        ->throws(AssertionFailure::class)
+        ->withMessage(
+                'Failed asserting that stdClass Object () is an instance of class "' . __CLASS__ . '".'
         );
     }
 
@@ -538,11 +475,12 @@ class CompatibilityTest extends PHPUnit_Framework_TestCase
 
     public function testAssertNotInstanceOfFailure()
     {
-        assert(
-                function() { $this->assertNotInstanceOf(\stdClass::class, new \stdClass()); },
-                throws(AssertionFailure::class)->withMessage(
-                        'Failed asserting that stdClass Object () is not an instance of class "stdClass".'
-                )
+        expect(function() {
+            $this->assertNotInstanceOf(\stdClass::class, new \stdClass());
+        })
+        ->throws(AssertionFailure::class)
+        ->withMessage(
+                'Failed asserting that stdClass Object () is not an instance of class "stdClass".'
         );
     }
 
@@ -553,12 +491,9 @@ class CompatibilityTest extends PHPUnit_Framework_TestCase
 
     public function testAssertInternalTypeFailure()
     {
-        assert(
-                function() { $this->assertInternalType('string', 303); },
-                throws(AssertionFailure::class)->withMessage(
-                        'Failed asserting that 303 is of type "string".'
-                )
-        );
+        expect(function() { $this->assertInternalType('string', 303); })
+                ->throws(AssertionFailure::class)
+                ->withMessage('Failed asserting that 303 is of type "string".');
     }
 
     public function testAssertNotInternalTypeSuccess()
@@ -568,11 +503,10 @@ class CompatibilityTest extends PHPUnit_Framework_TestCase
 
     public function testAssertNotInternalTypeFailure()
     {
-        assert(
-                function() { $this->assertNotInternalType('string', 'foo'); },
-                throws(AssertionFailure::class)->withMessage(
+        expect(function() { $this->assertNotInternalType('string', 'foo'); })
+                ->throws(AssertionFailure::class)
+                ->withMessage(
                         'Failed asserting that \'foo\' is not of type "string".'
-                )
         );
     }
 
@@ -583,11 +517,10 @@ class CompatibilityTest extends PHPUnit_Framework_TestCase
 
     public function testAssertRegExpFailure()
     {
-        assert(
-                function() { $this->assertRegExp('/^([a-z]{3})$/', 'dummy'); },
-                throws(AssertionFailure::class)->withMessage(
+        expect(function() { $this->assertRegExp('/^([a-z]{3})$/', 'dummy'); })
+                ->throws(AssertionFailure::class)
+                ->withMessage(
                         'Failed asserting that \'dummy\' matches regular expression "/^([a-z]{3})$/".'
-                )
         );
     }
 
@@ -598,11 +531,10 @@ class CompatibilityTest extends PHPUnit_Framework_TestCase
 
     public function testAssertNotRegExNotpFailure()
     {
-        assert(
-                function() { $this->assertNotRegExp('/^([a-z]{3})$/', 'foo'); },
-                throws(AssertionFailure::class)->withMessage(
+        expect(function() { $this->assertNotRegExp('/^([a-z]{3})$/', 'foo'); })
+                ->throws(AssertionFailure::class)
+                ->withMessage(
                         'Failed asserting that \'foo\' does not match regular expression "/^([a-z]{3})$/".'
-                )
         );
     }
 
@@ -619,11 +551,10 @@ class CompatibilityTest extends PHPUnit_Framework_TestCase
      */
     public function testAssertStringStartsWithFailure()
     {
-        assert(
-                function() { $this->assertStringStartsWith('foo', 'barbazfoo'); },
-                throws(AssertionFailure::class)->withMessage(
+        expect(function() { $this->assertStringStartsWith('foo', 'barbazfoo');})
+                ->throws(AssertionFailure::class)
+                ->withMessage(
                         "Failed asserting that 'barbazfoo' starts with 'foo'."
-                )
         );
     }
 
@@ -640,11 +571,12 @@ class CompatibilityTest extends PHPUnit_Framework_TestCase
      */
     public function testAssertStringStartsNotWithFailure()
     {
-        assert(
-                function() { $this->assertStringStartsNotWith('foo', 'foobarbaz'); },
-                throws(AssertionFailure::class)->withMessage(
-                        "Failed asserting that 'foobarbaz' does not start with 'foo'."
-                )
+        expect(function() {
+            $this->assertStringStartsNotWith('foo', 'foobarbaz');
+        })
+        ->throws(AssertionFailure::class)
+        ->withMessage(
+                "Failed asserting that 'foobarbaz' does not start with 'foo'."
         );
     }
 
@@ -661,12 +593,9 @@ class CompatibilityTest extends PHPUnit_Framework_TestCase
      */
     public function testAssertStringEndsWithFailure()
     {
-        assert(
-                function() { $this->assertStringEndsWith('foo', 'foobarbaz'); },
-                throws(AssertionFailure::class)->withMessage(
-                        "Failed asserting that 'foobarbaz' ends with 'foo'."
-                )
-        );
+        expect(function() { $this->assertStringEndsWith('foo', 'foobarbaz'); })
+                ->throws(AssertionFailure::class)
+                ->withMessage("Failed asserting that 'foobarbaz' ends with 'foo'.");
     }
 
     /**
@@ -682,11 +611,10 @@ class CompatibilityTest extends PHPUnit_Framework_TestCase
      */
     public function testAssertStringEndsNotWithFailure()
     {
-        assert(
-                function() { $this->assertStringEndsNotWith('foo', 'barbazfoo'); },
-                throws(AssertionFailure::class)->withMessage(
+        expect(function() { $this->assertStringEndsNotWith('foo', 'barbazfoo'); })
+                ->throws(AssertionFailure::class)
+                ->withMessage(
                         "Failed asserting that 'barbazfoo' does not end with 'foo'."
-                )
         );
     }
 }

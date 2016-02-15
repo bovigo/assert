@@ -9,6 +9,7 @@ namespace bovigo\assert\predicate;
 use bovigo\assert\AssertionFailure;
 
 use function bovigo\assert\assert;
+use function bovigo\assert\expect;
 /**
  * Tests for bovigo\assert\predicate\IsFalse.
  *
@@ -53,11 +54,8 @@ class IsFalseTest extends \PHPUnit_Framework_TestCase
      */
     public function assertionFailureContainsMeaningfulInformation()
     {
-        assert(
-                function() { assert(1, isFalse()); },
-                throws(AssertionFailure::class)->withMessage(
-                        "Failed asserting that 1 is false."
-                )
-        );
+        expect(function() { assert(1, isFalse()); })
+                ->throws(AssertionFailure::class)
+                ->withMessage("Failed asserting that 1 is false.");
     }
 }

@@ -13,6 +13,7 @@ use function bovigo\assert\assertEmpty;
 use function bovigo\assert\assertFalse;
 use function bovigo\assert\assertNotEmpty;
 use function bovigo\assert\assertTrue;
+use function bovigo\assert\expect;
 /**
  * Helper class for the test.
  */
@@ -95,12 +96,9 @@ class IsEmptyTest extends \PHPUnit_Framework_TestCase
      */
     public function assertionFailureWithStringContainsMeaningfulInformation()
     {
-        assert(
-                function() { assertEmpty('foo'); },
-                throws(AssertionFailure::class)->withMessage(
-                        "Failed asserting that 'foo' is empty."
-                )
-        );
+        expect(function() { assertEmpty('foo'); })
+                ->throws(AssertionFailure::class)
+                ->withMessage("Failed asserting that 'foo' is empty.");
     }
 
     /**
@@ -108,12 +106,9 @@ class IsEmptyTest extends \PHPUnit_Framework_TestCase
      */
     public function assertionFailureWithIntegerContainsMeaningfulInformation()
     {
-        assert(
-                function() { assertEmpty(1); },
-                throws(AssertionFailure::class)->withMessage(
-                        "Failed asserting that 1 is empty."
-                )
-        );
+        expect(function() { assertEmpty(1); })
+                ->throws(AssertionFailure::class)
+                ->withMessage("Failed asserting that 1 is empty.");
     }
 
     /**
@@ -121,12 +116,9 @@ class IsEmptyTest extends \PHPUnit_Framework_TestCase
      */
     public function assertionFailureWithBooleanContainsMeaningfulInformation()
     {
-        assert(
-                function() { assertEmpty(true); },
-                throws(AssertionFailure::class)->withMessage(
-                        "Failed asserting that true is empty."
-                )
-        );
+       expect(function() { assertEmpty(true); })
+                ->throws(AssertionFailure::class)
+               ->withMessage("Failed asserting that true is empty.");
     }
 
     /**
@@ -134,12 +126,9 @@ class IsEmptyTest extends \PHPUnit_Framework_TestCase
      */
     public function assertionFailureWithArrayContainsMeaningfulInformation()
     {
-         assert(
-                function() { assertEmpty(['foo']); },
-                throws(AssertionFailure::class)->withMessage(
-                        "Failed asserting that an array is empty."
-                )
-        );
+         expect(function() { assertEmpty(['foo']); })
+                ->throws(AssertionFailure::class)
+                 ->withMessage("Failed asserting that an array is empty.");
     }
 
     /**
@@ -147,12 +136,11 @@ class IsEmptyTest extends \PHPUnit_Framework_TestCase
      */
     public function assertionFailureWithCountableContainsMeaningfulInformation()
     {
-        assert(
-                function() { assertEmpty(new EmptyCountableExample(1)); },
-                throws(AssertionFailure::class)->withMessage(
+        expect(function() { assertEmpty(new EmptyCountableExample(1)); })
+                ->throws(AssertionFailure::class)
+                ->withMessage(
                         "Failed asserting that " . EmptyCountableExample::class
                         . " implementing \Countable is empty."
-                )
         );
     }
 

@@ -9,6 +9,7 @@ namespace bovigo\assert\predicate;
 use bovigo\assert\AssertionFailure;
 
 use function bovigo\assert\assert;
+use function bovigo\assert\expect;
 /**
  * Tests for bovigo\assert\predicate\StringEndsWith.
  *
@@ -22,10 +23,8 @@ class StringEndsWithTest extends \PHPUnit_Framework_TestCase
      */
     public function createWithNonStringThrowsInvalidArgumentException()
     {
-        assert(
-                function() { endsWith(303); },
-                throws(\InvalidArgumentException::class)
-        );
+        expect(function() { endsWith(303); })
+                ->throws(\InvalidArgumentException::class);
     }
 
     /**
@@ -33,10 +32,8 @@ class StringEndsWithTest extends \PHPUnit_Framework_TestCase
      */
     public function nonStringValuesThrowInvalidArgumentException()
     {
-        assert(
-                function() { endsWith('foo')->test(303); },
-                throws(\InvalidArgumentException::class)
-        );
+        expect(function() { endsWith('foo')->test(303); })
+                ->throws(\InvalidArgumentException::class);
     }
 
     /**
@@ -86,11 +83,8 @@ class StringEndsWithTest extends \PHPUnit_Framework_TestCase
      */
     public function assertionFailureContainsMeaningfulInformation()
     {
-        assert(
-                function() { assert('bar', endsWith('foo')); },
-                throws(AssertionFailure::class)->withMessage(
-                        "Failed asserting that 'bar' ends with 'foo'."
-                )
-        );
+        expect(function() { assert('bar', endsWith('foo')); })
+                ->throws(AssertionFailure::class)
+                ->withMessage("Failed asserting that 'bar' ends with 'foo'.");
     }
 }

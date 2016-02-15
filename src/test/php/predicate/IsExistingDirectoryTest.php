@@ -10,6 +10,7 @@ use bovigo\assert\AssertionFailure;
 use org\bovigo\vfs\vfsStream;
 
 use function bovigo\assert\assert;
+use function bovigo\assert\expect;
 /**
  * Tests for bovigo\assert\predicate\IsExistingDirectory.
  *
@@ -150,17 +151,12 @@ class IsExistingDirectoryTest extends \PHPUnit_Framework_TestCase
      */
     public function assertionFailureContainsMeaningfulInformation()
     {
-        assert(
-                function()
-                {
-                    assert(
-                            vfsStream::url('root/baz'),
-                            isExistingDirectory()
-                    );
-                },
-                throws(AssertionFailure::class)->withMessage(
-                        "Failed asserting that 'vfs://root/baz' is a existing directory."
-                )
+        expect(function() {
+            assert(vfsStream::url('root/baz'), isExistingDirectory());
+        })
+        ->throws(AssertionFailure::class)
+        ->withMessage(
+                "Failed asserting that 'vfs://root/baz' is a existing directory."
         );
     }
 }

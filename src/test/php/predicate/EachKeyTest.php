@@ -11,7 +11,7 @@ use bovigo\assert\AssertionFailure;
 use function bovigo\assert\assert;
 use function bovigo\assert\assertFalse;
 use function bovigo\assert\assertTrue;
-use function bovigo\assert\fail;
+use function bovigo\assert\expect;
 /**
  * Helper class for the test.
  */
@@ -41,10 +41,8 @@ class EachKeyTest extends \PHPUnit_Framework_TestCase
      */
     public function testNonIterableValueThrowsInvalidArgumentException()
     {
-        assert(
-                function() { eachKey(isNotOfType('int'))->test(303); },
-                throws(\InvalidArgumentException::class)
-        );
+        expect(function() { eachKey(isNotOfType('int'))->test(303); })
+                ->throws(\InvalidArgumentException::class);
     }
 
     /**
@@ -155,13 +153,12 @@ class EachKeyTest extends \PHPUnit_Framework_TestCase
      */
     public function assertionFailureContainsMeaningfulInformation()
     {
-        assert(
-                function() { assert(['foo'], eachKey(isNotOfType('int'))); },
-                throws(AssertionFailure::class)->withMessage(
+        expect(function() { assert(['foo'], eachKey(isNotOfType('int'))); })
+                ->throws(AssertionFailure::class)
+                ->withMessage(
                         'Failed asserting that in Array &0 (
     0 => \'foo\'
 ) each key is not of type "int".'
-                )
         );
     }
 
@@ -170,11 +167,12 @@ class EachKeyTest extends \PHPUnit_Framework_TestCase
      */
     public function assertionFailureContainsMeaningfulInformationWhenCombined()
     {
-        assert(
-                function() { assert([], isNotEmpty()->and(eachKey(isNotOfType('int')))); },
-                throws(AssertionFailure::class)->withMessage(
-                        'Failed asserting that an array is not empty and each key is not of type "int".'
-                )
+        expect(function() {
+            assert([], isNotEmpty()->and(eachKey(isNotOfType('int'))));
+        })
+        ->throws(AssertionFailure::class)
+        ->withMessage(
+                'Failed asserting that an array is not empty and each key is not of type "int".'
         );
     }
 }
