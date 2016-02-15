@@ -690,16 +690,17 @@ The following checks on the exception are possible:
   * `with($predicate)`
     Performs an assertion on the whole exception with given predicate. The
     predicate will receive the exception as argument and can perform any check.
-    ```php
-    expect(function() {
-        // some piece of code which is expected to not throw SomeException
-    })
-    ->throws(SomeException::class)
-    ->with(
-            function(SomeException $e) { return null !== $e->getPrevious(); },
-            'exception does have a previous exception'
-    );
-    ```
+
+```php
+expect(function() {
+    // some piece of code which is expected to not throw SomeException
+})
+->throws(SomeException::class)
+->with(
+        function(SomeException $e) { return null !== $e->getPrevious(); },
+        'exception does have a previous exception'
+);
+```
 
 
 Of course you can also check that a specific exception did not occur:
