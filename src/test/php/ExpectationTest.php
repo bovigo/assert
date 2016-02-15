@@ -279,4 +279,24 @@ class ExpectationTest extends \PHPUnit_Framework_TestCase
         });
         assert($expectation->after(true, isTrue()), isSameAs($expectation));
     }
+
+    /**
+     * @test
+     */
+    public function codeIsOnlyExecutedOnce()
+    {
+        $expectation = expect(function(){
+                static $count = 0;
+                $count++;
+                if (1 !== $count) {
+                    throw new \BadFunctionCallException('Called more than once');
+                }
+
+                return true;
+        });
+        expect(function() use ($expectation) {
+            $expectation->result(isTrue())->result(isTrue());
+        })
+        ->doesNotThrow();
+    }
 }
