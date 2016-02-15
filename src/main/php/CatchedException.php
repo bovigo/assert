@@ -80,11 +80,12 @@ class CatchedException
      *
      * @api
      * @param   \bovigo\assert\predicate\Predicate|callable  $predicate
+     * @param   string                                       $description  optional  additional description for failure message
      * @return  \bovigo\assert\CatchedException
      */
-    public function with($predicate)
+    public function with($predicate, $description = null)
     {
-        assert($this->actualException, $predicate);
+        assert($this->actualException, $predicate, $description);
         return $this;
     }
 

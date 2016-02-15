@@ -9,6 +9,7 @@ namespace bovigo\assert;
 use function bovigo\assert\predicate\contains;
 use function bovigo\assert\predicate\isInstanceOf;
 use function bovigo\assert\predicate\isSameAs;
+use function bovigo\assert\predicate\isNotSameAs;
 /**
  * Tests for bovigo\assert\CatchedException.
  *
@@ -120,12 +121,7 @@ class CatchedExceptionTest extends \PHPUnit_Framework_TestCase
      */
     public function withAppliesPredicateToException()
     {
-        $this->catchedException->with(
-                function(\Exception $e)
-                {
-                    return assert($e, isSameAs($this->exception));
-                }
-        );
+        $this->catchedException->with(isSameAs($this->exception));
     }
 
     /**
@@ -136,6 +132,24 @@ class CatchedExceptionTest extends \PHPUnit_Framework_TestCase
         assert(
                 $this->catchedException->with(function() { return true; }),
                 isSameAs($this->catchedException)
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function withThrowsAssertionFailureWhenPredicateFails()
+    {
+        expect(function() {
+                $this->catchedException->with(
+                        isNotSameAs($this->exception),
+                        'additional info'
+                );
+        })
+        ->throws(AssertionFailure::class)
+        ->withMessage(
+                'Failed asserting that object of type "BadFunctionCallException" is not identical to object of type "BadFunctionCallException".
+additional info'
         );
     }
 
