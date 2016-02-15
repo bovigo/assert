@@ -34,6 +34,7 @@ class CatchedException
     /**
      * asserts actual exception equals expected message
      *
+     * @api
      * @param   string  $expectedMessage
      * @return  \bovigo\assert\CatchedException
      */
@@ -45,6 +46,7 @@ class CatchedException
     /**
      * asserts actual exception fulfills given predicate
      *
+     * @api
      * @param   \bovigo\assert\predicate\Predicate|callable  $predicate
      * @return  \bovigo\assert\CatchedException
      */
@@ -60,6 +62,7 @@ class CatchedException
     /**
      * asserts actual exception code equals expected code
      *
+     * @api
      * @param   int  $expectedCode
      * @return  \bovigo\assert\CatchedException
      */
@@ -75,6 +78,7 @@ class CatchedException
     /**
      * asserts actual exception fulfills predicate
      *
+     * @api
      * @param   \bovigo\assert\predicate\Predicate|callable  $predicate
      * @return  \bovigo\assert\CatchedException
      */
@@ -87,6 +91,7 @@ class CatchedException
     /**
      * asserts anything after the exception was catched
      *
+     * @api
      * @param   mixed                                        $value        value to test
      * @param   \bovigo\assert\predicate\Predicate|callable  $predicate    predicate or callable to test given value
      * @param   string                                       $description  optional  additional description for failure message

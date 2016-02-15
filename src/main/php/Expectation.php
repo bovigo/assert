@@ -72,6 +72,7 @@ class Expectation
      *
      * If no expected type is given any thrown exception will be sufficient.
      *
+     * @api
      * @param   string  $expectedType  optional  type of exception
      * @return  \bovigo\assert\CatchedException
      * @throws  \bovigo\assert\AssertionFailure
@@ -101,6 +102,7 @@ class Expectation
      * If no expected type is given the code is not allowed to throw any
      * exception.
      *
+     * @api
      * @param   string  $unexpectedType  optional  type of exception which should not be thrown
      * @return  \bovigo\assert\Expectation
      * @throws  \bovigo\assert\AssertionFailure
@@ -152,6 +154,7 @@ class Expectation
     /**
      * asserts anything after the code was executed, even if it threw an exception
      *
+     * @api
      * @param   mixed                                        $value        value to test
      * @param   \bovigo\assert\predicate\Predicate|callable  $predicate    predicate or callable to test given value
      * @param   string                                       $description  optional  additional description for failure message
