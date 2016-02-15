@@ -8,7 +8,6 @@
 namespace bovigo\assert\phpunit;
 use bovigo\assert\AssertionFailure;
 
-use function bovigo\assert\assert;
 use function bovigo\assert\expect;
 use function bovigo\assert\predicate\contains;
 /**
