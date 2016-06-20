@@ -69,6 +69,8 @@ class ExpectedException extends Predicate
             return parent::describeValue($exporter, $value);
         }
 
-        return 'exception of type ' . get_class($value);
+        return 'exception of type "' . get_class($value)
+        . '" with message "' . $value->getMessage() . '" thrown in '
+        . $value->getFile() . ' on line ' . $value->getLine();
     }
 }

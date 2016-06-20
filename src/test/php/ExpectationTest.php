@@ -314,4 +314,25 @@ class ExpectationTest extends \PHPUnit_Framework_TestCase
         ->throws(\InvalidArgumentException::class)
         ->withMessage('Given value is not an exception');
     }
+
+    /**
+     * @test
+     * @group  issue_1
+     * @since  1.6.1
+     */
+    public function outputOfUnexpectedExceptionIsHelpful()
+    {
+        expect(function() {
+                expect(function() { throw new \LogicException('error'); })
+                        ->throws(\BadMethodCallException::class);
+        })
+        ->throws(AssertionFailure::class)
+        ->withMessage(
+                'Failed asserting that exception of type "'
+                . \LogicException::class
+                . '" with message "error" thrown in ' . __FILE__
+                . ' on line 326 matches expected exception "'
+                . \BadMethodCallException::class . '".'
+        );
+    }
 }

@@ -1,3 +1,9 @@
+1.6.1 (2016-06-20)
+------------------
+
+  * implemented #1: improve error message when catched exception does not matched expected exception
+
+
 1.6.0 (2016-02-21)
 ------------------
 
