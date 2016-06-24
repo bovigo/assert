@@ -1,3 +1,10 @@
+1.7.0 (2016-06-24)
+------------------
+
+  * added `bovigo\assert\predicate\Equals::hasDiffForLastFailure()`
+  * added `bovigo\assert\predicate\Equals::diffForLastFailure()`
+
+
 1.6.1 (2016-06-20)
 ------------------
 

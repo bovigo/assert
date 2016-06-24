@@ -26,9 +26,9 @@ class Equals extends Predicate
      */
     private $delta;
     /**
-     * @type  \SebastianBergmann\Comparator\ComparisonFailure
+     * @type  string
      */
-    private $lastFailure;
+    private $lastFailureDiff;
 
     /**
      * constructor
@@ -65,7 +65,7 @@ class Equals extends Predicate
         } catch (ComparisonFailure $cf) {
             // This is a hack, but the only way to contain the usage of
             // SebastianBergmann\Comparator inside this class.
-            $this->lastFailure = $cf;
+            $this->lastFailureDiff = $cf->getDiff();
             return false;
         }
     }
@@ -97,13 +97,32 @@ class Equals extends Predicate
             );
         }
 
-        if (null !== $this->lastFailure) {
-            $diff = $this->lastFailure->getDiff();
-            if (!empty($diff)) {
-                return $result . '.' . $diff;
-            }
+        if ($this->hasDiffForLastFailure()) {
+            return $result . '.' . $this->diffForLastFailure();
         }
 
         return $result;
+    }
+
+    /**
+     * checks if a diff is available for the last failure
+     *
+     * @return  bool
+     * @since   1.7.0
+     */
+    public function hasDiffForLastFailure()
+    {
+        return !empty($this->lastFailureDiff);
+    }
+
+    /**
+     * returns diff for last failure
+     *
+     * @return  string
+     * @since   1.7.0
+     */
+    public function diffForLastFailure()
+    {
+        return $this->lastFailureDiff;
     }
 }
