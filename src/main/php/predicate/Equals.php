@@ -86,7 +86,7 @@ class Equals extends Predicate
             } else {
                 $result = sprintf('is equal to <string:%s>', $this->expected);
             }
-        } elseif (is_array($this->expected) && [] === $this->expected) {
+        } elseif (is_array($this->expected) && empty($this->expected)) {
             $result = 'is an empty array';
         } else {
 
