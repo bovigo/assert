@@ -6,7 +6,6 @@
  * file that was distributed with this source code.
  */
 namespace bovigo\assert\predicate;
-use SebastianBergmann\Exporter\Exporter;
 /**
  * Applies a predicate to each value of an array or traversable.
  *
@@ -127,17 +126,5 @@ abstract class IteratingPredicate extends Predicate
     public function count()
     {
         return count($this->predicate);
-    }
-
-    /**
-     * returns a textual description of given value
-     *
-     * @param   \SebastianBergmann\Exporter\Exporter  $exporter
-     * @param   mixed                                 $value
-     * @return  string
-     */
-    public function describeValue(Exporter $exporter, $value)
-    {
-        return 'in ' . $exporter->export($value);
     }
 }

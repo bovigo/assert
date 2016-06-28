@@ -6,6 +6,7 @@
  * file that was distributed with this source code.
  */
 namespace bovigo\assert\predicate;
+use SebastianBergmann\Exporter\Exporter;
 /**
  * Applies a predicate to each value of an array or traversable.
  *
@@ -17,6 +18,15 @@ namespace bovigo\assert\predicate;
 class Each extends IteratingPredicate
 {
     /**
+     * @type  int|string
+     */
+    private $violatingKey;
+    /**
+     * @type  mixed
+     */
+    private $violatingValue;
+
+    /**
      * actually tests the value
      *
      * @param   array|\Traversable  $traversable
@@ -24,8 +34,10 @@ class Each extends IteratingPredicate
      */
     protected function doTest($traversable)
     {
-        foreach ($traversable as $entry) {
+        foreach ($traversable as $key => $entry) {
             if (!$this->predicate->test($entry)) {
+                $this->violatingKey = $key;
+                $this->violatingValue = $entry;
                 return false;
             }
         }
@@ -40,6 +52,25 @@ class Each extends IteratingPredicate
      */
     public function __toString()
     {
-        return 'each value ' . $this->predicate;
+        return (null === $this->violatingKey ? 'each value ' : '') . $this->predicate;
+    }
+
+    /**
+     * returns a textual description of given value
+     *
+     * @param   \SebastianBergmann\Exporter\Exporter  $exporter
+     * @param   mixed                                 $value
+     * @return  string
+     */
+    public function describeValue(Exporter $exporter, $value)
+    {
+        $valueDescription = '';
+        if (null !== $this->violatingKey) {
+            $valueDescription .= 'element '
+             . $exporter->export($this->violatingValue)
+             . ' at key ' . $this->violatingKey . ' ';
+        }
+
+        return $valueDescription .  'in ' . $exporter->export($value);
     }
 }

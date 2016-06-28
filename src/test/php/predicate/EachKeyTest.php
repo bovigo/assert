@@ -156,9 +156,9 @@ class EachKeyTest extends \PHPUnit_Framework_TestCase
         expect(function() { assert(['foo'], eachKey(isNotOfType('int'))); })
                 ->throws(AssertionFailure::class)
                 ->withMessage(
-                        'Failed asserting that in Array &0 (
+                        'Failed asserting that key 0 in Array &0 (
     0 => \'foo\'
-) each key is not of type "int".'
+) is not of type "int".'
         );
     }
 

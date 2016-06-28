@@ -6,6 +6,7 @@
  * file that was distributed with this source code.
  */
 namespace bovigo\assert\predicate;
+use SebastianBergmann\Exporter\Exporter;
 /**
  * Applies a predicate to each key of an array or traversable.
  *
@@ -17,6 +18,11 @@ namespace bovigo\assert\predicate;
 class EachKey extends IteratingPredicate
 {
     /**
+     * @type  int|string
+     */
+    private $violatingKey;
+
+    /**
      * actually tests the value
      *
      * @param   array|\Traversable  $traversable
@@ -26,6 +32,7 @@ class EachKey extends IteratingPredicate
     {
         foreach ($traversable as $key => $entry) {
             if (!$this->predicate->test($key)) {
+                $this->violatingKey = $key;
                 return false;
             }
         }
@@ -40,6 +47,19 @@ class EachKey extends IteratingPredicate
      */
     public function __toString()
     {
-        return 'each key ' . $this->predicate;
+        return (null === $this->violatingKey ? 'each key ' : '') . $this->predicate;
+    }
+
+    /**
+     * returns a textual description of given value
+     *
+     * @param   \SebastianBergmann\Exporter\Exporter  $exporter
+     * @param   mixed                                 $value
+     * @return  string
+     */
+    public function describeValue(Exporter $exporter, $value)
+    {
+        return (null !== $this->violatingKey ? 'key ' . $this->violatingKey . ' ' : '')
+         . 'in ' . $exporter->export($value);
     }
 }

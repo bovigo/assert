@@ -155,9 +155,9 @@ class EachTest extends \PHPUnit_Framework_TestCase
         expect(function() { assert(['foo'], each(isNull())); })
                 ->throws(AssertionFailure::class)
                 ->withMessage(
-                        'Failed asserting that in Array &0 (
+                        'Failed asserting that element \'foo\' at key 0 in Array &0 (
     0 => \'foo\'
-) each value is null.'
+) is null.'
         );
     }
 
@@ -172,6 +172,23 @@ class EachTest extends \PHPUnit_Framework_TestCase
         ->throws(AssertionFailure::class)
         ->withMessage(
                 'Failed asserting that an array is not empty and each value is not null.'
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function assertionFailureContainsMeaningfulInformationOnWhichElementFailed()
+    {
+        expect(function() { assert(['foo', 'bar', null, 'baz'], each(isNotNull())); })
+                ->throws(AssertionFailure::class)
+                ->withMessage(
+                        'Failed asserting that element null at key 2 in Array &0 (
+    0 => \'foo\'
+    1 => \'bar\'
+    2 => null
+    3 => \'baz\'
+) is not null.'
         );
     }
 }

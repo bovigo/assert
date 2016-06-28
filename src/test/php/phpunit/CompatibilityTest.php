@@ -94,10 +94,10 @@ class CompatibilityTest extends PHPUnit_Framework_TestCase
         expect(function() { $this->assertContainsOnly('int', [303, 'foo']); })
                 ->throws(AssertionFailure::class)
                 ->withMessage(
-                        'Failed asserting that in Array &0 (
+                        'Failed asserting that element \'foo\' at key 1 in Array &0 (
     0 => 303
     1 => \'foo\'
-) each value is of type "int".'
+) is of type "int".'
         );
     }
 
@@ -122,10 +122,10 @@ class CompatibilityTest extends PHPUnit_Framework_TestCase
         })
         ->throws(AssertionFailure::class)
         ->withMessage(
-                'Failed asserting that in Array &0 (
+                'Failed asserting that element 303 at key 0 in Array &0 (
     0 => 303
     1 => \'foo\'
-) each value is an instance of class "stdClass".'
+) is an instance of class "stdClass".'
         );
     }
 
@@ -155,10 +155,10 @@ class CompatibilityTest extends PHPUnit_Framework_TestCase
         })
         ->throws(AssertionFailure::class)
         ->withMessage(
-                'Failed asserting that in Array &0 (
+                'Failed asserting that element 303 at key 0 in Array &0 (
     0 => 303
     1 => \'foo\'
-) each value is not of type "int".'
+) is not of type "int".'
         );
     }
 

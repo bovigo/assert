@@ -1,3 +1,9 @@
+1.7.1 (2016-06-28)
+------------------
+
+  * implemented #2: each() should specify which exact value fails
+
+
 1.7.0 (2016-06-24)
 ------------------
 
