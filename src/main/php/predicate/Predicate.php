@@ -52,41 +52,6 @@ abstract class Predicate implements \Countable
     }
 
     /**
-     * combines this with another predicate to a predicate which requires both to be true
-     *
-     * @param   \bovigo\assert\predicate\Predicate|callable  $other
-     * @return  \bovigo\assert\predicate\Predicate
-     * @deprecated  since 1.4.0, use and($other) instead, will be removed with 2.0.0
-     */
-    public function asWellAs(callable $other): self
-    {
-        return new AndPredicate($this, self::castFrom($other));
-    }
-
-    /**
-     * combines this with another predicate to a predicate which requires on of them to be true
-     *
-     * @param   \bovigo\assert\predicate\Predicate|callable  $other
-     * @return  \bovigo\assert\predicate\Predicate
-     * @deprecated  since 1.4.0, use or($other) instead, will be removed with 2.0.0
-     */
-    public function orElse(callable $other): self
-    {
-        return new OrPredicate($this, self::castFrom($other));
-    }
-
-    /**
-     * returns a negated version of this predicate
-     *
-     * @return  \bovigo\assert\predicate\Predicate
-     * @deprecated  since 1.4.0, use not($predicate) instead, will be removed with 2.0.0
-     */
-    public function negate(): self
-    {
-        return new NegatePredicate($this);
-    }
-
-    /**
      * provide utility methods "and" and "or" to combine predicates
      *
      * @param   string   $method
@@ -99,10 +64,10 @@ abstract class Predicate implements \Countable
     {
         switch ($method) {
             case 'and':
-                return $this->asWellAs(...$arguments);
+                return new AndPredicate($this, ...$arguments);
 
             case 'or':
-                return $this->orElse(...$arguments);
+                return new OrPredicate($this, ...$arguments);
 
             default:
                 throw new \BadMethodCallException(

@@ -5,6 +5,9 @@
 
   * raised minimum required PHP version to 7.0.0
   * introduced scalar type hints and strict type checking
+  * removed `bovigo\assert\predicate\Predicate::asWellAs()`, use `bovigo\assert\predicate\Predicate::and()` instead, deprecated since 1.4.0
+  * removed `bovigo\assert\predicate\Predicate::orElse()`, use `bovigo\assert\predicate\Predicate::or()` instead, deprecated since 1.4.0
+  * removed `bovigo\assert\predicate\Predicate::negate()`, use `bovigo\assert\predicate\not()` instead, deprecated since 1.4.0
 
 
 1.7.1 (2016-06-28)
