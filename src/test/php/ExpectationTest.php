@@ -9,10 +9,12 @@ declare(strict_types=1);
 namespace bovigo\assert;
 use bovigo\assert\predicate\ExpectedException;
 
-use function bovigo\assert\predicate\isFalse;
-use function bovigo\assert\predicate\isInstanceOf;
-use function bovigo\assert\predicate\isSameAs;
-use function bovigo\assert\predicate\isTrue;
+use function bovigo\assert\predicate\{
+    isFalse,
+    isInstanceOf,
+    isSameAs,
+    isTrue
+};
 /**
  * Tests for bovigo\assert\expect().
  *
@@ -323,8 +325,9 @@ class ExpectationTest extends \PHPUnit_Framework_TestCase
      */
     public function outputOfUnexpectedExceptionIsHelpful()
     {
-        expect(function() {
-                expect(function() { throw new \LogicException('error'); })
+        $exception = new \LogicException('error');
+        expect(function() use ($exception) {
+                expect(function() use ($exception) { throw $exception; })
                         ->throws(\BadMethodCallException::class);
         })
         ->throws(AssertionFailure::class)
@@ -332,7 +335,7 @@ class ExpectationTest extends \PHPUnit_Framework_TestCase
                 'Failed asserting that exception of type "'
                 . \LogicException::class
                 . '" with message "error" thrown in ' . __FILE__
-                . ' on line 327 matches expected exception "'
+                . ' on line ' . $exception->getLine() . ' matches expected exception "'
                 . \BadMethodCallException::class . '".'
         );
     }

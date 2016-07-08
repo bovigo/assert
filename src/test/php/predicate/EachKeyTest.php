@@ -9,10 +9,12 @@ declare(strict_types=1);
 namespace bovigo\assert\predicate;
 use bovigo\assert\AssertionFailure;
 
-use function bovigo\assert\assert;
-use function bovigo\assert\assertFalse;
-use function bovigo\assert\assertTrue;
-use function bovigo\assert\expect;
+use function bovigo\assert\{
+    assert,
+    assertFalse,
+    assertTrue,
+    expect
+};
 /**
  * Helper class for the test.
  */

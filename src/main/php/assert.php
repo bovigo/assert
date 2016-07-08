@@ -10,13 +10,15 @@ namespace bovigo\assert;
 use bovigo\assert\predicate\Predicate;
 use SebastianBergmann\Exporter\Exporter;
 
-use function bovigo\assert\predicate\equals;
-use function bovigo\assert\predicate\isFalse;
-use function bovigo\assert\predicate\isEmpty;
-use function bovigo\assert\predicate\isNotEmpty;
-use function bovigo\assert\predicate\isNotNull;
-use function bovigo\assert\predicate\isNull;
-use function bovigo\assert\predicate\isTrue;
+use function bovigo\assert\predicate\{
+    equals,
+    isFalse,
+    isEmpty,
+    isNotEmpty,
+    isNotNull,
+    isNull,
+    isTrue
+};
 
 /**
  * assert that a value fulfills a predicate

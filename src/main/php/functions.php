@@ -5,35 +5,37 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-use function bovigo\assert\assert;
-use function bovigo\assert\predicate\contains;
-use function bovigo\assert\predicate\doesNotContain;
-use function bovigo\assert\predicate\doesNotHaveKey;
-use function bovigo\assert\predicate\doesNotMatch;
-use function bovigo\assert\predicate\equals;
-use function bovigo\assert\predicate\hasKey;
-use function bovigo\assert\predicate\isEmpty;
-use function bovigo\assert\predicate\isExistingFile;
-use function bovigo\assert\predicate\isFalse;
-use function bovigo\assert\predicate\isGreaterThan;
-use function bovigo\assert\predicate\isGreaterThanOrEqualTo;
-use function bovigo\assert\predicate\isInstanceOf;
-use function bovigo\assert\predicate\isLessThan;
-use function bovigo\assert\predicate\isLessThanOrEqualTo;
-use function bovigo\assert\predicate\isNonExistingFile;
-use function bovigo\assert\predicate\isNotEmpty;
-use function bovigo\assert\predicate\isNotEqualTo;
-use function bovigo\assert\predicate\isNotInstanceOf;
-use function bovigo\assert\predicate\isNotNull;
-use function bovigo\assert\predicate\isNotOfSize;
-use function bovigo\assert\predicate\isNotOfType;
-use function bovigo\assert\predicate\isNotSameAs;
-use function bovigo\assert\predicate\isNull;
-use function bovigo\assert\predicate\isOfSize;
-use function bovigo\assert\predicate\isOfType;
-use function bovigo\assert\predicate\isTrue;
-use function bovigo\assert\predicate\isSameAs;
-use function bovigo\assert\predicate\matches;
+use function bovigo\assert\assert,
+  {
+    contains,
+    doesNotContain,
+    doesNotHaveKey,
+    doesNotMatch,
+    equals,
+    hasKey,
+    isEmpty,
+    isExistingFile,
+    isFalse,
+    isGreaterThan,
+    isGreaterThanOrEqualTo,
+    isInstanceOf,
+    isLessThan,
+    isLessThanOrEqualTo,
+    isNonExistingFile,
+    isNotEmpty,
+    isNotEqualTo,
+    isNotInstanceOf,
+    isNotNull,
+    isNotOfSize,
+    isNotOfType,
+    isNotSameAs,
+    isNull,
+    isOfSize,
+    isOfType,
+    isTrue,
+    isSameAs,
+    matches
+}
 
 /**
  * asserts that an array has a key

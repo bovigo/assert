@@ -7,10 +7,12 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 namespace bovigo\assert;
-use function bovigo\assert\predicate\contains;
-use function bovigo\assert\predicate\isInstanceOf;
-use function bovigo\assert\predicate\isSameAs;
-use function bovigo\assert\predicate\isNotSameAs;
+use function bovigo\assert\predicate\{
+    contains,
+    isInstanceOf,
+    isSameAs,
+    isNotSameAs
+};
 /**
  * Tests for bovigo\assert\CatchedException.
  *

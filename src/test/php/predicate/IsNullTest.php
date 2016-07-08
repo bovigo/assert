@@ -9,11 +9,13 @@ declare(strict_types=1);
 namespace bovigo\assert\predicate;
 use bovigo\assert\AssertionFailure;
 
-use function bovigo\assert\assertFalse;
-use function bovigo\assert\assertNotNull;
-use function bovigo\assert\assertNull;
-use function bovigo\assert\assertTrue;
-use function bovigo\assert\expect;
+use function bovigo\assert\{
+    assertFalse,
+    assertNotNull,
+    assertNull,
+    assertTrue,
+    expect
+};
 /**
  * Tests for bovigo\assert\predicate\IsNull.
  *
