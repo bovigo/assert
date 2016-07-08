@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of bovigo\assert.
  *
@@ -40,7 +41,7 @@ class IsIdentical extends Predicate
      * @param   scalar|null  $value
      * @return  bool         true if value is equal to expected value, else false
      */
-    public function test($value)
+    public function test($value): bool
     {
         if (is_double($this->expected) && is_double($value) &&
             !is_infinite($this->expected) && !is_infinite($value) &&
@@ -56,7 +57,7 @@ class IsIdentical extends Predicate
      *
      * @return  string
      */
-    public function __toString()
+    public function __toString(): string
     {
         $result = 'is identical to ';
         if (is_object($this->expected)) {
@@ -73,7 +74,7 @@ class IsIdentical extends Predicate
      * @param   mixed                                 $value
      * @return  string
      */
-    public function describeValue(Exporter $exporter, $value)
+    public function describeValue(Exporter $exporter, $value): string
     {
         if (is_object($value)) {
             return 'object of type "' . get_class($value) . '"';

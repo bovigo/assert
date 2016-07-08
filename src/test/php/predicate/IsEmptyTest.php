@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of bovigo\assert.
  *
@@ -20,11 +21,11 @@ use function bovigo\assert\expect;
 class EmptyCountableExample implements \Countable
 {
     private $count;
-    public function __construct($count)
+    public function __construct(int $count)
     {
         $this->count = $count;
     }
-    public function count()
+    public function count(): int
     {
         return $this->count;
     }
@@ -39,7 +40,7 @@ class IsEmptyTest extends \PHPUnit_Framework_TestCase
     /**
      * @return  array
      */
-    public function emptyValues()
+    public function emptyValues(): array
     {
         return [
             'null'                  => [null],
@@ -63,7 +64,7 @@ class IsEmptyTest extends \PHPUnit_Framework_TestCase
     /**
      * @return  array
      */
-    public function nonEmptyValues()
+    public function nonEmptyValues(): array
     {
         return [
             'boolean true'            => [true],

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of bovigo\assert.
  *
@@ -36,7 +37,7 @@ class ExpectedException extends Predicate
      * @return  bool
      * @throws  \InvalidArgumentException  in case given value can't have a key
      */
-    public function test($value)
+    public function test($value): bool
     {
         if (! $value instanceof \Exception) {
             throw new \InvalidArgumentException('Given value is not an exception');
@@ -50,7 +51,7 @@ class ExpectedException extends Predicate
      *
      * @return  string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return 'matches expected exception "' . $this->expectedType . '"';
     }
@@ -63,7 +64,7 @@ class ExpectedException extends Predicate
      * @return  string
      * @throws  \InvalidArgumentException  in case given value can't have a key
      */
-    public function describeValue(Exporter $exporter, $value)
+    public function describeValue(Exporter $exporter, $value): string
     {
         if (! $value instanceof \Exception) {
             return parent::describeValue($exporter, $value);

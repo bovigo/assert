@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of bovigo\assert.
  *
@@ -20,7 +21,7 @@ class IsEmpty extends Predicate
      * @param   mixed  $value
      * @return  bool
      */
-    public function test($value)
+    public function test($value): bool
     {
         if ($value instanceof \Countable) {
             return count($value) === 0;
@@ -34,7 +35,7 @@ class IsEmpty extends Predicate
      *
      * @return  string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return 'is empty';
     }
@@ -46,7 +47,7 @@ class IsEmpty extends Predicate
      * @param   mixed                                 $value
      * @return  string
      */
-    public function describeValue(Exporter $exporter, $value)
+    public function describeValue(Exporter $exporter, $value): string
     {
         if (is_object($value) && $value instanceof \Countable) {
             return get_class($value) . ' implementing \Countable';

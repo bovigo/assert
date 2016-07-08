@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of bovigo\assert.
  *
@@ -29,7 +30,7 @@ class CallablePredicate extends Predicate
      * @param  callable  $predicate
      * @param  string    $description  optional  description for predicate
      */
-    public function __construct(callable $predicate, $description = null)
+    public function __construct(callable $predicate, string $description = null)
     {
         $this->predicate   = $predicate;
         $this->description = $description;
@@ -41,7 +42,7 @@ class CallablePredicate extends Predicate
      * @param   mixed  $value
      * @return  bool
      */
-    public function test($value)
+    public function test($value): bool
     {
         $predicate = $this->predicate;
         return $predicate($value);
@@ -52,7 +53,7 @@ class CallablePredicate extends Predicate
      *
      * @return  string
      */
-    public function __toString()
+    public function __toString(): string
     {
         if (empty($this->description)) {
             return 'satisfies ' . $this->predicateName();
@@ -66,7 +67,7 @@ class CallablePredicate extends Predicate
      *
      * @return  string
      */
-    private function predicateName()
+    private function predicateName(): string
     {
         if (is_array($this->predicate)) {
             if (is_string($this->predicate[0])) {

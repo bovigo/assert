@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of bovigo\assert.
  *
@@ -21,19 +22,14 @@ abstract class Predicate implements \Countable
      *
      * @param   \bovigo\assert\predicate\Predicate|callable  $predicate
      * @return  \bovigo\assert\predicate\Predicate
-     * @throws  \InvalidArgumentException
      */
-    public static function castFrom($predicate)
+    public static function castFrom(callable $predicate): self
     {
         if ($predicate instanceof self) {
             return $predicate;
-        } elseif (is_callable($predicate)) {
-            return new CallablePredicate($predicate);
         }
 
-        throw new \InvalidArgumentException(
-                'Given predicate is neither a callable nor an instance of ' . __CLASS__
-        );
+        return new CallablePredicate($predicate);
     }
 
     /**
@@ -42,7 +38,7 @@ abstract class Predicate implements \Countable
      * @param   mixed  $value
      * @return  bool
      */
-    public abstract function test($value);
+    public abstract function test($value): bool;
 
     /**
      * evaluates predicate against given value
@@ -50,7 +46,7 @@ abstract class Predicate implements \Countable
      * @param   mixed  $value
      * @return  bool
      */
-    public function __invoke($value)
+    public function __invoke($value): bool
     {
         return $this->test($value);
     }
@@ -62,7 +58,7 @@ abstract class Predicate implements \Countable
      * @return  \bovigo\assert\predicate\Predicate
      * @deprecated  since 1.4.0, use and($other) instead, will be removed with 2.0.0
      */
-    public function asWellAs($other)
+    public function asWellAs(callable $other): self
     {
         return new AndPredicate($this, self::castFrom($other));
     }
@@ -74,7 +70,7 @@ abstract class Predicate implements \Countable
      * @return  \bovigo\assert\predicate\Predicate
      * @deprecated  since 1.4.0, use or($other) instead, will be removed with 2.0.0
      */
-    public function orElse($other)
+    public function orElse(callable $other): self
     {
         return new OrPredicate($this, self::castFrom($other));
     }
@@ -85,7 +81,7 @@ abstract class Predicate implements \Countable
      * @return  \bovigo\assert\predicate\Predicate
      * @deprecated  since 1.4.0, use not($predicate) instead, will be removed with 2.0.0
      */
-    public function negate()
+    public function negate(): self
     {
         return new NegatePredicate($this);
     }
@@ -99,7 +95,7 @@ abstract class Predicate implements \Countable
      * @throws  \BadMethodCallException
      * @since   1.4.0
      */
-    public function __call($method, $arguments)
+    public function __call(string $method, $arguments): self
     {
         switch ($method) {
             case 'and':
@@ -121,7 +117,7 @@ abstract class Predicate implements \Countable
      *
      * @return  int
      */
-    public function count()
+    public function count(): int
     {
         return 1;
     }
@@ -131,7 +127,7 @@ abstract class Predicate implements \Countable
      *
      * @return  string
      */
-    public abstract function __toString();
+    public abstract function __toString(): string;
 
     /**
      * returns a textual description of given value
@@ -140,7 +136,7 @@ abstract class Predicate implements \Countable
      * @param   mixed                                 $value
      * @return  string
      */
-    public function describeValue(Exporter $exporter, $value)
+    public function describeValue(Exporter $exporter, $value): string
     {
         if (is_array($value)) {
             return 'an array';

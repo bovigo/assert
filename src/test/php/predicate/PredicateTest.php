@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of bovigo\assert.
  *
@@ -21,7 +22,7 @@ class FooPredicate extends Predicate
      * @param   mixed  $value
      * @return  bool
      */
-    public function test($value)
+    public function test($value): bool
     {
         return 'foo' === $value;
     }
@@ -31,7 +32,7 @@ class FooPredicate extends Predicate
      *
      * @return  string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return 'is foo';
     }
@@ -41,7 +42,7 @@ class FooPredicate extends Predicate
  */
 class ThrowingPredicate extends FooPredicate
 {
-    public function test($value)
+    public function test($value): bool
     {
         throw new \InvalidArgumentException('exception message');
     }
@@ -71,15 +72,6 @@ class PredicateTest extends \PHPUnit_Framework_TestCase
                 Predicate::castFrom(function($value) { return 'foo' === $value; }),
                 isInstanceOf(CallablePredicate::class)
         );
-    }
-
-    /**
-     * @test
-     */
-    public function castFromWithOtherValueThrowsIllegalArgumentException()
-    {
-        expect(function() { Predicate::castFrom(new \stdClass()); })
-                ->throws(\InvalidArgumentException::class);
     }
 
     /**

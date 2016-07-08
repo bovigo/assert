@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of bovigo\assert.
  *
@@ -18,7 +19,7 @@ namespace bovigo\assert\predicate;
  * @return  \bovigo\assert\predicate\Each
  * @since   1.1.0
  */
-function each($predicate)
+function each(callable $predicate): Each
 {
     return new Each($predicate);
 }
@@ -34,7 +35,7 @@ function each($predicate)
  * @return  \bovigo\assert\predicate\Each
  * @since   1.3.0
  */
-function eachKey($predicate)
+function eachKey(callable $predicate): EachKey
 {
     return new EachKey($predicate);
 }
@@ -46,7 +47,7 @@ function eachKey($predicate)
  * @param   callable|\bovigo\assert\predicate\Predicate  $predicate
  * @return  \bovigo\assert\predicate\NegatePredicate
  */
-function not($predicate)
+function not(callable $predicate): Predicate
 {
     return new NegatePredicate($predicate);
 }
@@ -57,7 +58,7 @@ function not($predicate)
  * @api
  * @return  \bovigo\assert\predicate\IsNull
  */
-function isNull()
+function isNull(): IsNull
 {
     return IsNull::instance();
 }
@@ -68,7 +69,7 @@ function isNull()
  * @api
  * @return  \bovigo\assert\predicate\NegatePredicate
  */
-function isNotNull()
+function isNotNull(): Predicate
 {
     return not(isNull());
 }
@@ -79,7 +80,7 @@ function isNotNull()
  * @api
  * @return  \bovigo\assert\predicate\IsEmpty
  */
-function isEmpty()
+function isEmpty(): IsEmpty
 {
     return IsEmpty::instance();
 }
@@ -90,7 +91,7 @@ function isEmpty()
  * @api
  * @return  \bovigo\assert\predicate\NegatePredicate
  */
-function isNotEmpty()
+function isNotEmpty(): Predicate
 {
     return not(isEmpty());
 }
@@ -99,9 +100,9 @@ function isNotEmpty()
  * returns predicate which tests for truthiness
  *
  * @api
- * @return  \bovigo\assert\predicate\IsFalse
+ * @return  \bovigo\assert\predicate\IsTrue
  */
-function isTrue()
+function isTrue(): IsTrue
 {
     return IsTrue::instance();
 }
@@ -112,7 +113,7 @@ function isTrue()
  * @api
  * @return  \bovigo\assert\predicate\IsFalse
  */
-function isFalse()
+function isFalse(): IsFalse
 {
     return IsFalse::instance();
 }
@@ -121,11 +122,11 @@ function isFalse()
  * returns predicate which tests for equality
  *
  * @api
- * @param   mixed   $expected  expected value
- * @param   float   $delta     optional  allowed numerical distance between two values to consider them equal
+ * @param   mixed  $expected  expected value
+ * @param   float  $delta     optional  allowed numerical distance between two values to consider them equal
  * @return  \bovigo\assert\predicate\Equals
  */
-function equals($expected, $delta = 0.0)
+function equals($expected, float $delta = 0.0): Equals
 {
     return new Equals($expected, $delta);
 }
@@ -134,11 +135,11 @@ function equals($expected, $delta = 0.0)
  * returns predicate which tests for non-equality
  *
  * @api
- * @param   mixed   $unexpected  expected value
- * @param   float   $delta       optional  allowed numerical distance between two values to consider them not equal
+ * @param   mixed  $unexpected  expected value
+ * @param   float  $delta       optional  allowed numerical distance between two values to consider them not equal
  * @return  \bovigo\assert\predicate\NegatePredicate
  */
-function isNotEqualTo($unexpected, $delta = 0.0)
+function isNotEqualTo($unexpected, float $delta = 0.0): Predicate
 {
     return not(equals($unexpected, $delta));
 }
@@ -150,7 +151,7 @@ function isNotEqualTo($unexpected, $delta = 0.0)
  * @param   string  $expectedType  name of expected type
  * @return  \bovigo\assert\predicate\IsInstanceOf
  */
-function isInstanceOf($expectedType)
+function isInstanceOf(string $expectedType): IsInstanceOf
 {
     return new IsInstanceOf($expectedType);
 }
@@ -162,7 +163,7 @@ function isInstanceOf($expectedType)
  * @param   string  $unexpectedType  name of expected type
  * @return  \bovigo\assert\predicate\NegatePredicate
  */
-function isNotInstanceOf($unexpectedType)
+function isNotInstanceOf(string $unexpectedType): Predicate
 {
     return not(isInstanceOf($unexpectedType));
 }
@@ -174,7 +175,7 @@ function isNotInstanceOf($unexpectedType)
  * @param   mixed  $expected  expected value
  * @return  \bovigo\assert\predicate\IsIdentical
  */
-function isSameAs($expected)
+function isSameAs($expected): IsIdentical
 {
     return new IsIdentical($expected);
 }
@@ -186,7 +187,7 @@ function isSameAs($expected)
  * @param   mixed  $unexpected  expected value
  * @return  \bovigo\assert\predicate\NegatePredicate
  */
-function isNotSameAs($unexpected)
+function isNotSameAs($unexpected): Predicate
 {
     return not(isSameAs($unexpected));
 }
@@ -198,7 +199,7 @@ function isNotSameAs($unexpected)
  * @param   int  $expectedSize  expected count size
  * @return  \bovigo\assert\predicate\IsOfSize
  */
-function isOfSize($expectedSize)
+function isOfSize(int $expectedSize): IsOfSize
 {
     return new IsOfSize($expectedSize);
 }
@@ -210,7 +211,7 @@ function isOfSize($expectedSize)
  * @param   int  $unexpectedSize  count size which is not expected
  * @return  \bovigo\assert\predicate\NegatePredicate
  */
-function isNotOfSize($unexpectedSize)
+function isNotOfSize(int $unexpectedSize): Predicate
 {
     return not(isOfSize($unexpectedSize));
 }
@@ -223,7 +224,7 @@ function isNotOfSize($unexpectedSize)
  * @return  \bovigo\assert\predicate\CallablePredicate
  * @throws  \InvalidArgumentException  in case expected type is unknown
  */
-function isOfType($expectedType)
+function isOfType(string $expectedType): Predicate
 {
     static $types = [
             'array'    => 'is_array',
@@ -259,7 +260,7 @@ function isOfType($expectedType)
  * @param   string  $unexpectedType  name of type to test for
  * @return  \bovigo\assert\predicate\NegatePredicate
  */
-function isNotOfType($unexpectedType)
+function isNotOfType(string $unexpectedType): Predicate
 {
     return not(isOfType($unexpectedType));
 }
@@ -271,7 +272,7 @@ function isNotOfType($unexpectedType)
  * @param   numeric  $expected
  * @return  \bovigo\assert\predicate\IsGreaterThan
  */
-function isGreaterThan($expected)
+function isGreaterThan($expected): IsGreaterThan
 {
     return new IsGreaterThan($expected);
 }
@@ -283,7 +284,7 @@ function isGreaterThan($expected)
  * @param   numeric  $expected
  * @return  \bovigo\assert\predicate\OrPredicate
  */
-function isGreaterThanOrEqualTo($expected)
+function isGreaterThanOrEqualTo($expected): Predicate
 {
     return equals($expected)->or(isGreaterThan($expected));
 }
@@ -295,7 +296,7 @@ function isGreaterThanOrEqualTo($expected)
  * @param   numeric  $expected
  * @return  \bovigo\assert\predicate\IsLessThan
  */
-function isLessThan($expected)
+function isLessThan($expected): IsLessThan
 {
     return new IsLessThan($expected);
 }
@@ -307,7 +308,7 @@ function isLessThan($expected)
  * @param   numeric  $expected
  * @return  \bovigo\assert\predicate\OrPredicate
  */
-function isLessThanOrEqualTo($expected)
+function isLessThanOrEqualTo($expected): Predicate
 {
     return equals($expected)->or(isLessThan($expected));
 }
@@ -319,7 +320,7 @@ function isLessThanOrEqualTo($expected)
  * @param   mixed  $needle  value that must be contained
  * @return  \bovigo\assert\predicate\Contains
  */
-function contains($needle)
+function contains($needle): Contains
 {
     return new Contains($needle);
 }
@@ -331,7 +332,7 @@ function contains($needle)
  * @param   mixed  $needle  value that must not be contained
  * @return  \bovigo\assert\predicate\NegatePredicate
  */
-function doesNotContain($needle)
+function doesNotContain($needle): Predicate
 {
     return not(contains($needle));
 }
@@ -343,7 +344,7 @@ function doesNotContain($needle)
  * @param   int|string  $key
  * @return  \bovigo\assert\predicate\HasKey
  */
-function hasKey($key)
+function hasKey($key): HasKey
 {
     return new HasKey($key);
 }
@@ -355,7 +356,7 @@ function hasKey($key)
  * @param   int|string  $key
  * @return  \bovigo\assert\predicate\NegatePredicate
  */
-function doesNotHaveKey($key)
+function doesNotHaveKey($key): Predicate
 {
     return not(hasKey($key));
 }
@@ -367,7 +368,7 @@ function doesNotHaveKey($key)
  * @param   string  $pattern
  * @return  \bovigo\assert\predicate\Regex
  */
-function matches($pattern)
+function matches(string $pattern): Regex
 {
     return new Regex($pattern);
 }
@@ -379,7 +380,7 @@ function matches($pattern)
  * @param   string  $pattern
  * @return  \bovigo\assert\predicate\NegatePredicate
  */
-function doesNotMatch($pattern)
+function doesNotMatch(string $pattern): Predicate
 {
     return not(matches($pattern));
 }
@@ -391,7 +392,7 @@ function doesNotMatch($pattern)
  * @param   string  $basePath  optional  base path where file must reside in
  * @return  \bovigo\assert\predicate\IsExistingFile
  */
-function isExistingFile($basePath = null)
+function isExistingFile(string $basePath = null): IsExistingFile
 {
     return new IsExistingFile($basePath);
 }
@@ -403,7 +404,7 @@ function isExistingFile($basePath = null)
  * @param   string  $basePath  optional  base path where file must not reside in
  * @return  \bovigo\assert\predicate\NegatePredicate
  */
-function isNonExistingFile($basePath = null)
+function isNonExistingFile(string $basePath = null): Predicate
 {
     return not(isExistingFile($basePath));
 }
@@ -413,9 +414,9 @@ function isNonExistingFile($basePath = null)
  *
  * @api
  * @param   string  $basePath  optional  base path where directory must reside in
- * @return  \bovigo\assert\predicate\IsExistingFile
+ * @return  \bovigo\assert\predicate\IsExistingDirectory
  */
-function isExistingDirectory($basePath = null)
+function isExistingDirectory(string $basePath = null): IsExistingDirectory
 {
     return new IsExistingDirectory($basePath);
 }
@@ -427,7 +428,7 @@ function isExistingDirectory($basePath = null)
  * @param   string  $basePath  optional  base path where directory must not reside in
  * @return  \bovigo\assert\predicate\NegatePredicate
  */
-function isNonExistingDirectory($basePath = null)
+function isNonExistingDirectory(string $basePath = null): Predicate
 {
     return not(isExistingDirectory($basePath));
 }
@@ -438,17 +439,10 @@ function isNonExistingDirectory($basePath = null)
  * @api
  * @param   string  $prefix
  * @return  \bovigo\assert\predicate\CallablePredicate
- * @throws  \InvalidArgumentException
  * @since   1.1.0
  */
-function startsWith($prefix)
+function startsWith(string $prefix): Predicate
 {
-    if (!is_string($prefix)) {
-        throw new \InvalidArgumentException(
-                'Prefix must be a string, "' . gettype($prefix) . '" given.'
-        );
-    }
-
     return new CallablePredicate(
             function($value) use ($prefix)
             {
@@ -478,7 +472,7 @@ function startsWith($prefix)
  * @return  \bovigo\assert\predicate\NegatePredicate
  * @since   1.1.0
  */
-function doesNotStartWith($prefix)
+function doesNotStartWith(string $prefix): Predicate
 {
     return not(startsWith($prefix));
 }
@@ -489,17 +483,10 @@ function doesNotStartWith($prefix)
  * @api
  * @param   string  $suffix
  * @return  \bovigo\assert\predicate\CallablePredicate
- * @throws  \InvalidArgumentException
  * @since   1.1.0
  */
-function endsWith($suffix)
+function endsWith(string $suffix): Predicate
 {
-    if (!is_string($suffix)) {
-        throw new \InvalidArgumentException(
-                'Suffix must be a string, "' . gettype($suffix) . '" given.'
-        );
-    }
-
     return new CallablePredicate(
             function($value) use ($suffix)
             {
@@ -528,7 +515,7 @@ function endsWith($suffix)
  * @return  \bovigo\assert\predicate\NegatePredicate
  * @since   1.1.0
  */
-function doesNotEndWith($suffix)
+function doesNotEndWith(string $suffix): Predicate
 {
     return not(endsWith($suffix));
 }

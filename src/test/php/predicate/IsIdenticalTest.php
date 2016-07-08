@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of bovigo\assert.
  *
@@ -20,7 +21,7 @@ class IsIdenticalTest extends \PHPUnit_Framework_TestCase
     /**
      * @return  array
      */
-    public function identicalValues()
+    public function identicalValues(): array
     {
         return [
             'boolean true'  => [true],

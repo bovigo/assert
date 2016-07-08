@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of bovigo\assert.
  *
@@ -48,7 +49,7 @@ class Regex extends Predicate
      *
      * @param  string  $pattern  regular expression to use for validation
      */
-    public function __construct($pattern)
+    public function __construct(string $pattern)
     {
         $this->pattern = $pattern;
     }
@@ -61,7 +62,7 @@ class Regex extends Predicate
      * @throws  \InvalidArgumentException  in case given value is not a string
      * @throws  \RuntimeException  in case the used regular expresion is invalid
      */
-    public function test($value)
+    public function test($value): bool
     {
         if (!is_string($value)) {
             throw new \InvalidArgumentException(
@@ -87,7 +88,7 @@ class Regex extends Predicate
      * @param   int  $errorCode
      * @return  string
      */
-    private function messageFor($errorCode)
+    private function messageFor(int $errorCode): string
     {
         if (isset(self::$errors[$errorCode])) {
             return self::$errors[$errorCode];
@@ -101,7 +102,7 @@ class Regex extends Predicate
      *
      * @return  string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return 'matches regular expression "' . $this->pattern . '"';
     }

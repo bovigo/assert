@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of bovigo\assert.
  *
@@ -33,7 +34,7 @@ class NegatePredicate extends Predicate
      * @param   mixed  $value
      * @return  bool
      */
-    public function test($value)
+    public function test($value): bool
     {
         return !$this->predicate->test($value);
     }
@@ -43,7 +44,7 @@ class NegatePredicate extends Predicate
      *
      * @return  int
      */
-    public function count()
+    public function count(): int
     {
         return count($this->predicate);
     }
@@ -53,7 +54,7 @@ class NegatePredicate extends Predicate
      *
      * @return  string
      */
-    public function __toString()
+    public function __toString(): string
     {
         switch (get_class($this->predicate)) {
             case 'bovigo\assert\predicate\AndPredicate':
@@ -73,7 +74,7 @@ class NegatePredicate extends Predicate
      * @param   string  $string
      * @return  string
      */
-    private function reverse($string)
+    private function reverse(string $string): string
     {
         return str_replace(
                 [
@@ -109,7 +110,7 @@ class NegatePredicate extends Predicate
      * @param   mixed                                 $value
      * @return  string
      */
-    public function describeValue(Exporter $exporter, $value)
+    public function describeValue(Exporter $exporter, $value): string
     {
         return $this->predicate->describeValue($exporter, $value);
     }

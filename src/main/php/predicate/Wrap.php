@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of bovigo\assert.
  *
@@ -30,7 +31,7 @@ class Wrap extends Predicate
      * @param  \bovigo\assert\predicate\Predicate  $predicate
      * @param  string                              $wrappedDesciption
      */
-    public function __construct(Predicate $predicate, $wrappedDesciption)
+    public function __construct(Predicate $predicate, string $wrappedDesciption)
     {
         $this->predicate         = $predicate;
         $this->wrappedDesciption = $wrappedDesciption;
@@ -42,7 +43,7 @@ class Wrap extends Predicate
      * @param   mixed  $value
      * @return  bool
      */
-    public function test($value)
+    public function test($value): bool
     {
         return $this->predicate->test($value);
     }
@@ -52,7 +53,7 @@ class Wrap extends Predicate
      *
      * @return  string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return (string) $this->predicate;
     }
@@ -64,7 +65,7 @@ class Wrap extends Predicate
      * @param   mixed                                 $value
      * @return  string
      */
-    public function describeValue(Exporter $exporter, $value)
+    public function describeValue(Exporter $exporter, $value): string
     {
         return sprintf(
                 $this->wrappedDesciption,

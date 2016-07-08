@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of bovigo\assert.
  *
@@ -36,7 +37,7 @@ class Contains extends Predicate
      * @return  bool
      * @throws  \InvalidArgumentException  in case given value can't contain another value
      */
-    public function test($value)
+    public function test($value): bool
     {
         if (null === $value) {
             return is_null($this->needle);
@@ -67,7 +68,7 @@ class Contains extends Predicate
      *
      * @return  string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return 'contains ' . export($this->needle);
     }

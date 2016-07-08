@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of bovigo\assert.
  *
@@ -15,7 +16,7 @@ use function bovigo\assert\expect;
  */
 class CountableExample implements \Countable
 {
-    public function count()
+    public function count(): int
     {
         return 3;
     }
@@ -58,7 +59,7 @@ class TraversableExample implements \Iterator
  */
 class IteratorAggregateExample implements \IteratorAggregate
 {
-    public function getIterator()
+    public function getIterator(): \Traversable
     {
         return new \ArrayIterator([1, 2, 3]);
     }

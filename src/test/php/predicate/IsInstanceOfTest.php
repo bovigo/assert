@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of bovigo\assert.
  *
@@ -17,15 +18,6 @@ use function bovigo\assert\expect;
  */
 class IsInstanceOfTest extends \PHPUnit_Framework_TestCase
 {
-    /**
-     * @test
-     */
-    public function throwsInvalidArgumentExceptionWhenGivenExpectedTypeIsNoString()
-    {
-        expect(function() { isInstanceOf(303); })
-                ->throws(\InvalidArgumentException::class);
-    }
-
     /**
      * @test
      */

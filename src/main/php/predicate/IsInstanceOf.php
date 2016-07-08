@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of bovigo\assert.
  *
@@ -23,9 +24,9 @@ class IsInstanceOf extends Predicate
      * @param   string  $expectedType  name of expected type
      * @throws  \InvalidArgumentException  in case given type name is not an existing class or interface
      */
-    public function __construct($expectedType)
+    public function __construct(string $expectedType)
     {
-        if (!(is_string($expectedType) && (class_exists($expectedType) || interface_exists($expectedType)))) {
+        if (!class_exists($expectedType) && !interface_exists($expectedType)) {
             throw new \InvalidArgumentException(
                     'Given expected type must be a string representing an'
                     . ' existing class or interface'
@@ -41,7 +42,7 @@ class IsInstanceOf extends Predicate
      * @param   scalar  $value
      * @return  bool    true if value is true, else false
      */
-    public function test($value)
+    public function test($value): bool
     {
         return $value instanceof $this->expectedType;
     }
@@ -51,7 +52,7 @@ class IsInstanceOf extends Predicate
      *
      * @return  string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return sprintf(
             'is an instance of %s "%s"',
@@ -67,7 +68,7 @@ class IsInstanceOf extends Predicate
      * @param   mixed                                 $value
      * @return  string
      */
-    public function describeValue(Exporter $exporter, $value)
+    public function describeValue(Exporter $exporter, $value): string
     {
         if (is_array($value)) {
             return 'an array';
@@ -76,4 +77,3 @@ class IsInstanceOf extends Predicate
         return $exporter->shortenedExport($value);
     }
 }
-

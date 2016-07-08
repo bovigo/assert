@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of bovigo\assert.
  *
@@ -21,15 +22,6 @@ class StringStartsWithTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
-    public function createWithNonStringThrowsInvalidArgumentException()
-    {
-        expect(function() { startsWith(303); })
-                ->throws(\InvalidArgumentException::class);
-    }
-
-    /**
-     * @test
-     */
     public function nonStringValuesThrowInvalidArgumentException()
     {
         expect(function() { startsWith('foo')->test(303); })
@@ -39,7 +31,7 @@ class StringStartsWithTest extends \PHPUnit_Framework_TestCase
     /**
      * @return  array
      */
-    public function trueValues()
+    public function trueValues(): array
     {
         return [
           'string which starts with and contains foo' => ['foobarfoobaz'],
@@ -60,7 +52,7 @@ class StringStartsWithTest extends \PHPUnit_Framework_TestCase
     /**
      * @return  array
      */
-    public function falseValues()
+    public function falseValues(): array
     {
         return [
           'string which contains foo'  => ['barfoobaz'],

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of bovigo\assert.
  *
@@ -28,7 +29,7 @@ class IsTrueTest extends \PHPUnit_Framework_TestCase
     /**
      * @return  array
      */
-    public function falseValues()
+    public function falseValues(): array
     {
         return [
           'boolean false'    => [false],

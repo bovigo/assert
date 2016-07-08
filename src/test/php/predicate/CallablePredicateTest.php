@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of bovigo\assert.
  *
@@ -21,7 +22,7 @@ class CallablePredicateTest extends \PHPUnit_Framework_TestCase
      *
      * @return  bool
      */
-    public static function isGood()
+    public static function isGood(): bool
     {
         return false;
     }
@@ -39,7 +40,7 @@ class CallablePredicateTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function isGoodEnough()
+    public function isGoodEnough(): bool
     {
         return false;
     }

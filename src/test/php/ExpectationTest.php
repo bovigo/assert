@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of bovigo\assert.
  *
@@ -331,7 +332,7 @@ class ExpectationTest extends \PHPUnit_Framework_TestCase
                 'Failed asserting that exception of type "'
                 . \LogicException::class
                 . '" with message "error" thrown in ' . __FILE__
-                . ' on line 326 matches expected exception "'
+                . ' on line 327 matches expected exception "'
                 . \BadMethodCallException::class . '".'
         );
     }

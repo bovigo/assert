@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of bovigo\callmap.
  *
@@ -77,7 +78,7 @@ class Expectation
      * @return  \bovigo\assert\CatchedException
      * @throws  \bovigo\assert\AssertionFailure
      */
-    public function throws($expectedType = null)
+    public function throws(string $expectedType = null): CatchedException
     {
         $this->runCode();
         if (null === $this->exception) {
@@ -107,7 +108,7 @@ class Expectation
      * @return  \bovigo\assert\Expectation
      * @throws  \bovigo\assert\AssertionFailure
      */
-    public function doesNotThrow($unexpectedType = null)
+    public function doesNotThrow(string $unexpectedType = null): self
     {
         $this->runCode();
         if (null !== $this->exception
@@ -133,7 +134,7 @@ class Expectation
      * @param   string                                       $description  optional  additional description for failure message
      * @return  \bovigo\assert\Expectation
      */
-    public function result($predicate, $description = null)
+    public function result(callable $predicate, string $description = null): self
     {
         $this->runCode();
         if (null !== $this->exception) {
@@ -160,7 +161,7 @@ class Expectation
      * @param   string                                       $description  optional  additional description for failure message
      * @return  \bovigo\assert\Expectation
      */
-    public function after($value, $predicate, $description = null)
+    public function after($value, callable $predicate, string $description = null): self
     {
         $this->runCode();
         assert($value, $predicate, $description);

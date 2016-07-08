@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of bovigo\assert.
  *
@@ -33,10 +34,10 @@ class Equals extends Predicate
     /**
      * constructor
      *
-     * @param  mixed   $expected  value to which test values must be equal
-     * @param  double  $delta     allowed numerical distance between two values to consider them equal
+     * @param  mixed  $expected  value to which test values must be equal
+     * @param  float  $delta     allowed numerical distance between two values to consider them equal
      */
-    public function __construct($expected, $delta = 0.0)
+    public function __construct($expected, float $delta = 0.0)
     {
         $this->expected = $expected;
         $this->delta    = $delta;
@@ -48,7 +49,7 @@ class Equals extends Predicate
      * @param   mixed  $value
      * @return  bool   true if value is equal to expected value, else false
      */
-    public function test($value)
+    public function test($value): bool
     {
         $this->lastFailure = null; // reset in case predicate is used more than once
         if ($this->expected === $value) {
@@ -75,7 +76,7 @@ class Equals extends Predicate
      *
      * @return  string
      */
-    public function __toString()
+    public function __toString(): string
     {
         $result = '';
         if (is_string($this->expected)) {
@@ -110,7 +111,7 @@ class Equals extends Predicate
      * @return  bool
      * @since   1.7.0
      */
-    public function hasDiffForLastFailure()
+    public function hasDiffForLastFailure(): bool
     {
         return !empty($this->lastFailureDiff);
     }
@@ -121,7 +122,7 @@ class Equals extends Predicate
      * @return  string
      * @since   1.7.0
      */
-    public function diffForLastFailure()
+    public function diffForLastFailure(): string
     {
         return $this->lastFailureDiff;
     }

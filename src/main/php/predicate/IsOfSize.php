@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of bovigo\assert.
  *
@@ -24,7 +25,7 @@ class IsOfSize extends Predicate
      *
      * @param  int   $expectedSize  value to which test size must be equal
      */
-    public function __construct($expectedSize)
+    public function __construct(int $expectedSize)
     {
         $this->expectedSize = $expectedSize;
     }
@@ -36,7 +37,7 @@ class IsOfSize extends Predicate
      * @return  bool   true if size of value is equal to expected size, else false
      * @throws  \InvalidArgumentException
      */
-    public function test($value)
+    public function test($value): bool
     {
         if (!$this->isCountable($value)) {
             throw new \InvalidArgumentException(
@@ -55,7 +56,7 @@ class IsOfSize extends Predicate
      * @param   mixed  $value
      * @return  bool
      */
-    private function isCountable($value)
+    private function isCountable($value): bool
     {
         return is_string($value) || is_array($value) || $value instanceof \Countable || $value instanceof \Traversable;
     }
@@ -66,7 +67,7 @@ class IsOfSize extends Predicate
      * @param   string|array|\Countable|\Traversable  $value
      * @return  int
      */
-    private function sizeOf($value)
+    private function sizeOf($value): int
     {
         if (is_string($value)) {
             return strlen($value);
@@ -107,7 +108,7 @@ class IsOfSize extends Predicate
      *
      * @return  string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return sprintf('matches expected size %d', $this->expectedSize);
     }
@@ -119,7 +120,7 @@ class IsOfSize extends Predicate
      * @param   mixed                                 $value
      * @return  string
      */
-    public function describeValue(Exporter $exporter, $value)
+    public function describeValue(Exporter $exporter, $value): string
     {
         if ($this->isCountable($value)) {
             if (is_string($value)) {

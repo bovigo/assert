@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of bovigo\assert.
  *
@@ -35,7 +36,7 @@ class IsGreaterThan extends Predicate
      * @param   mixed  $value
      * @return  bool
      */
-    public function test($value)
+    public function test($value): bool
     {
         return $value > $this->expected;
     }
@@ -45,7 +46,7 @@ class IsGreaterThan extends Predicate
      *
      * @return  string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return 'is greater than ' . export($this->expected);
     }

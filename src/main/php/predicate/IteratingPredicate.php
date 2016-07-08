@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of bovigo\assert.
  *
@@ -38,7 +39,7 @@ abstract class IteratingPredicate extends Predicate
      * @return  bool
      * @throws  \InvalidArgumentException
      */
-    public function test($value)
+    public function test($value): bool
     {
         if (!is_array($value) && !($value instanceof \Traversable)) {
             throw new \InvalidArgumentException(
@@ -60,7 +61,7 @@ abstract class IteratingPredicate extends Predicate
      * @param   array|\Traversable  $traversable
      * @return  bool
      */
-    protected abstract function doTest($traversable);
+    protected abstract function doTest($traversable): bool;
 
     /**
      * retrieve actual iterator
@@ -123,7 +124,7 @@ abstract class IteratingPredicate extends Predicate
      *
      * @return  int
      */
-    public function count()
+    public function count(): int
     {
         return count($this->predicate);
     }

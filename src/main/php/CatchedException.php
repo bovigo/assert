@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of bovigo\callmap.
  *
@@ -38,7 +39,7 @@ class CatchedException
      * @param   string  $expectedMessage
      * @return  \bovigo\assert\CatchedException
      */
-    public function withMessage($expectedMessage)
+    public function withMessage(string $expectedMessage): self
     {
         return $this->message(equals($expectedMessage));
     }
@@ -50,7 +51,7 @@ class CatchedException
      * @param   \bovigo\assert\predicate\Predicate|callable  $predicate
      * @return  \bovigo\assert\CatchedException
      */
-    public function message($predicate)
+    public function message(callable $predicate): self
     {
         assert(
                 $this->actualException->getMessage(),
@@ -66,7 +67,7 @@ class CatchedException
      * @param   int  $expectedCode
      * @return  \bovigo\assert\CatchedException
      */
-    public function withCode($expectedCode)
+    public function withCode(int $expectedCode): self
     {
         assert(
                 $this->actualException->getCode(),
@@ -83,7 +84,7 @@ class CatchedException
      * @param   string                                       $description  optional  additional description for failure message
      * @return  \bovigo\assert\CatchedException
      */
-    public function with($predicate, $description = null)
+    public function with(callable $predicate, string $description = null): self
     {
         assert($this->actualException, $predicate, $description);
         return $this;
@@ -98,7 +99,7 @@ class CatchedException
      * @param   string                                       $description  optional  additional description for failure message
      * @return  \bovigo\assert\Expectation
      */
-    public function after($value, $predicate, $description = null)
+    public function after($value, callable $predicate, string $description = null): self
     {
         assert($value, $predicate, $description);
         return $this;

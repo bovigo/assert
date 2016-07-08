@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of bovigo\assert.
  *
@@ -17,7 +18,7 @@ class IsExistingDirectory extends FilesystemPredicate
      * @param   string  $path
      * @return  bool
      */
-    protected function fileExists($path)
+    protected function fileExists(string $path): bool
     {
         return file_exists($path . '/.') && filetype($path) === 'dir';
     }
@@ -27,7 +28,7 @@ class IsExistingDirectory extends FilesystemPredicate
      *
      * @return  string
      */
-    protected function type()
+    protected function type(): string
     {
         return 'directory';
     }

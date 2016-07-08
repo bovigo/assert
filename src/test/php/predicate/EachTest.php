@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of bovigo\assert.
  *
@@ -21,7 +22,7 @@ class IteratorAggregateEachExample implements \IteratorAggregate
     {
         $this->iterator = new \ArrayIterator([303, 313, 'foo']);
     }
-    public function getIterator()
+    public function getIterator(): \Traversable
     {
         return $this->iterator;
     }

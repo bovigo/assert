@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of bovigo\assert.
  *
@@ -25,7 +26,7 @@ trait ReusablePredicate
      *
      * @return  \bovigo\assert\predicate\Predicate
      */
-    public static function instance()
+    public static function instance(): Predicate
     {
         if (null === self::$instance) {
             self::$instance = new self();

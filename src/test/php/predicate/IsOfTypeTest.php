@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of bovigo\assert.
  *
@@ -30,7 +31,7 @@ class IsOfTypeTest extends \PHPUnit_Framework_TestCase
     /**
      * @return  array
      */
-    public function validValuesAndTypes()
+    public function validValuesAndTypes(): array
     {
         return [
             'array'                  => ['array', []],

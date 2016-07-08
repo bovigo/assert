@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of bovigo\assert.
  *
@@ -32,7 +33,7 @@ class Each extends IteratingPredicate
      * @param   array|\Traversable  $traversable
      * @return  bool
      */
-    protected function doTest($traversable)
+    protected function doTest($traversable): bool
     {
         foreach ($traversable as $key => $entry) {
             if (!$this->predicate->test($entry)) {
@@ -50,7 +51,7 @@ class Each extends IteratingPredicate
      *
      * @return  string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return (null === $this->violatingKey ? 'each value ' : '') . $this->predicate;
     }
@@ -62,7 +63,7 @@ class Each extends IteratingPredicate
      * @param   mixed                                 $value
      * @return  string
      */
-    public function describeValue(Exporter $exporter, $value)
+    public function describeValue(Exporter $exporter, $value): string
     {
         $valueDescription = '';
         if (null !== $this->violatingKey) {

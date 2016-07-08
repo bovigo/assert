@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of bovigo\assert.
  *
@@ -19,7 +20,7 @@ class AndPredicate extends Predicate
      * @param   mixed  $value
      * @return  bool
      */
-    public function test($value)
+    public function test($value): bool
     {
         return $this->leftPredicate->test($value) && $this->rightPredicate->test($value);
     }
@@ -29,7 +30,7 @@ class AndPredicate extends Predicate
      *
      * @return  string
      */
-    protected function operator()
+    protected function operator(): string
     {
         return 'and';
     }

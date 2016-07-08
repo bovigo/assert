@@ -1,3 +1,12 @@
+2.0.0 (2016-??-??)
+------------------
+
+### BC breaks
+
+  * raised minimum required PHP version to 7.0.0
+  * introduced scalar type hints and strict type checking
+
+
 1.7.1 (2016-06-28)
 ------------------
 

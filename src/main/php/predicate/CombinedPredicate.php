@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of bovigo\assert.
  *
@@ -26,7 +27,7 @@ trait CombinedPredicate
      * @param  \bovigo\assert\predicate\Predicate|callable  $predicate1
      * @param  \bovigo\assert\predicate\Predicate|callable  $predicate2
      */
-    public function __construct($predicate1, $predicate2)
+    public function __construct(callable $predicate1, callable $predicate2)
     {
         $this->leftPredicate  = Predicate::castFrom($predicate1);
         $this->rightPredicate = Predicate::castFrom($predicate2);
@@ -37,7 +38,7 @@ trait CombinedPredicate
      *
      * @return  int
      */
-    public function count()
+    public function count(): int
     {
         return count($this->leftPredicate) + count($this->rightPredicate);
     }
@@ -47,7 +48,7 @@ trait CombinedPredicate
      *
      * @return  string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->leftPredicate
                 . ' ' . $this->operator() . ' '
@@ -59,5 +60,5 @@ trait CombinedPredicate
      *
      * @return  string
      */
-    protected abstract function operator();
+    protected abstract function operator(): string;
 }

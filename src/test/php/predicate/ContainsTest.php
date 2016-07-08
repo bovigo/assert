@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of bovigo\assert.
  *
@@ -22,7 +23,7 @@ class ContainsTest extends \PHPUnit_Framework_TestCase
      *
      * @return  array
      */
-    public function tuplesEvaluatingToTrue()
+    public function tuplesEvaluatingToTrue(): array
     {
         return [
                 [null, null],
@@ -51,7 +52,7 @@ class ContainsTest extends \PHPUnit_Framework_TestCase
      *
      * @return  array
      */
-    public function tuplesEvaluatingToFalse()
+    public function tuplesEvaluatingToFalse(): array
     {
         return [
                 [5, 'foo'],

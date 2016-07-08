@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of bovigo\callmap.
  *
@@ -44,7 +45,7 @@ class Assertion
      * @return  bool
      * @throws  \bovigo\assert\AssertionFailure
      */
-    public function evaluate(Predicate $predicate, $description = null)
+    public function evaluate(Predicate $predicate, string $description = null): bool
     {
         try {
             if ($predicate->test($this->value)) {
@@ -70,7 +71,7 @@ class Assertion
      * @param   string                              $description  additional description for failure message
      * @return  string
      */
-    private function describeFailure(Predicate $predicate, $description)
+    private function describeFailure(Predicate $predicate, string $description = null): string
     {
         $predicateText = (string) $predicate;
         $failureDescription = sprintf(

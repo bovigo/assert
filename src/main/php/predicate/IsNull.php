@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of bovigo\assert.
  *
@@ -19,7 +20,7 @@ class IsNull extends Predicate
      * @param   scalar  $value
      * @return  bool    true if value is true, else false
      */
-    public function test($value)
+    public function test($value): bool
     {
         return null === $value;
     }
@@ -29,9 +30,8 @@ class IsNull extends Predicate
      *
      * @return  string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return 'is null';
     }
 }
-

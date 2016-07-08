@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of bovigo\assert.
  *
@@ -20,7 +21,7 @@ class OrPredicate extends Predicate
      * @return  bool
      * @throws  \Exception  in case one of the combined predicates throws an exception
      */
-    public function test($value)
+    public function test($value): bool
     {
         $leftE = null;
         try {
@@ -57,7 +58,7 @@ class OrPredicate extends Predicate
      *
      * @return  string
      */
-    protected function operator()
+    protected function operator(): string
     {
         return 'or';
     }

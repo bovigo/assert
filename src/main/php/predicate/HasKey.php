@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of bovigo\assert.
  *
@@ -46,7 +47,7 @@ class HasKey extends Predicate
      * @return  bool
      * @throws  \InvalidArgumentException  in case given value can't have a key
      */
-    public function test($value)
+    public function test($value): bool
     {
         if (is_array($value)) {
             return array_key_exists($this->key, $value);
@@ -65,7 +66,7 @@ class HasKey extends Predicate
      *
      * @return  string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return 'has the key ' . export($this->key);
     }
@@ -77,7 +78,7 @@ class HasKey extends Predicate
      * @param   mixed                                 $value
      * @return  string
      */
-    public function describeValue(Exporter $exporter, $value)
+    public function describeValue(Exporter $exporter, $value): string
     {
         if ($value instanceof \ArrayAccess) {
             return get_class($value) . ' implementing \ArrayAccess';

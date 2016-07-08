@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of bovigo\assert.
  *
@@ -20,7 +21,7 @@ class RegexTest extends \PHPUnit_Framework_TestCase
     /**
      * @return  array
      */
-    public function validValues()
+    public function validValues(): array
     {
         return [['/^([a-z]{3})$/', 'foo'],
                 ['/^([a-z]{3})$/i', 'foo'],
@@ -42,7 +43,7 @@ class RegexTest extends \PHPUnit_Framework_TestCase
     /**
      * @return  array
      */
-    public function invalidValues()
+    public function invalidValues(): array
     {
         return [['/^([a-z]{3})$/', 'Bar'],
                 ['/^([a-z]{3})$/', 'baz0123'],

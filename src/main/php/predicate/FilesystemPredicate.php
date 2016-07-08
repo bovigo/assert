@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of bovigo\assert.
  *
@@ -26,7 +27,7 @@ abstract class FilesystemPredicate extends Predicate
      *
      * @param  string  $basePath
      */
-    public function __construct($basePath = null)
+    public function __construct(string $basePath = null)
     {
         $this->basePath = $basePath;
     }
@@ -37,7 +38,7 @@ abstract class FilesystemPredicate extends Predicate
      * @param   string|null  $value
      * @return  bool
      */
-    public function test($value)
+    public function test($value): bool
     {
         if (empty($value)) {
             return false;
@@ -56,14 +57,14 @@ abstract class FilesystemPredicate extends Predicate
      * @param   string  $path
      * @return  bool
      */
-    protected abstract function fileExists($path);
+    protected abstract function fileExists(string $path): bool;
 
     /**
      * returns string representation of predicate
      *
      * @return  string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return sprintf(
                 'is a existing %s%s',
@@ -77,5 +78,5 @@ abstract class FilesystemPredicate extends Predicate
      *
      * @return  string
      */
-    protected abstract function type();
+    protected abstract function type(): string;
 }
