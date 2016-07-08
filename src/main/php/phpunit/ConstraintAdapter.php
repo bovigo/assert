@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of bovigo\assert.
  *
@@ -37,7 +38,7 @@ class ConstraintAdapter extends Predicate
      * @param   mixed  $value
      * @return  bool
      */
-    public function test($value)
+    public function test($value): bool
     {
         return $this->constraint->evaluate($value, '', true);
     }
@@ -47,7 +48,7 @@ class ConstraintAdapter extends Predicate
      *
      * @return  int
      */
-    public function count()
+    public function count(): int
     {
         return count($this->constraint);
     }
@@ -57,7 +58,7 @@ class ConstraintAdapter extends Predicate
      *
      * @return  string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return '';
     }
@@ -69,7 +70,7 @@ class ConstraintAdapter extends Predicate
      * @param   mixed                                 $value
      * @return  string
      */
-    public function describeValue(Exporter $exporter, $value)
+    public function describeValue(Exporter $exporter, $value): string
     {
         $refMethod = new \ReflectionMethod(get_class($this->constraint), 'failureDescription');
         $refMethod->setAccessible(true);

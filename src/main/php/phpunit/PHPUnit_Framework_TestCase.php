@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of bovigo\assert.
  *
@@ -44,42 +45,46 @@
 namespace bovigo\assert\phpunit;
 use \PHPUnit_Framework_TestCase as Original;
 
-use function bovigo\assert\assert;
-use function bovigo\assert\assertEmpty;
-use function bovigo\assert\assertFalse;
-use function bovigo\assert\assertNotEmpty;
-use function bovigo\assert\assertNotNull;
-use function bovigo\assert\assertNull;
-use function bovigo\assert\assertTrue;
-use function bovigo\assert\predicate\contains;
-use function bovigo\assert\predicate\doesNotContain;
-use function bovigo\assert\predicate\doesNotEndWith;
-use function bovigo\assert\predicate\doesNotHaveKey;
-use function bovigo\assert\predicate\doesNotMatch;
-use function bovigo\assert\predicate\doesNotStartWith;
-use function bovigo\assert\predicate\each;
-use function bovigo\assert\predicate\endsWith;
-use function bovigo\assert\predicate\equals;
-use function bovigo\assert\predicate\hasKey;
-use function bovigo\assert\predicate\isExistingDirectory;
-use function bovigo\assert\predicate\isExistingFile;
-use function bovigo\assert\predicate\isGreaterThan;
-use function bovigo\assert\predicate\isGreaterThanOrEqualTo;
-use function bovigo\assert\predicate\isInstanceOf;
-use function bovigo\assert\predicate\isLessThan;
-use function bovigo\assert\predicate\isLessThanOrEqualTo;
-use function bovigo\assert\predicate\isNonExistingDirectory;
-use function bovigo\assert\predicate\isNonExistingFile;
-use function bovigo\assert\predicate\isNotEqualTo;
-use function bovigo\assert\predicate\isNotInstanceOf;
-use function bovigo\assert\predicate\isNotOfSize;
-use function bovigo\assert\predicate\isNotOfType;
-use function bovigo\assert\predicate\isNotSameAs;
-use function bovigo\assert\predicate\isOfSize;
-use function bovigo\assert\predicate\isOfType;
-use function bovigo\assert\predicate\isSameAs;
-use function bovigo\assert\predicate\matches;
-use function bovigo\assert\predicate\startsWith;
+use function bovigo\assert\{
+    assert,
+    assertEmpty,
+    assertFalse,
+    assertNotEmpty,
+    assertNotNull,
+    assertNull,
+    assertTrue
+};
+use function bovigo\assert\predicate\{
+    contains,
+    doesNotContain,
+    doesNotEndWith,
+    doesNotHaveKey,
+    doesNotMatch,
+    doesNotStartWith,
+    each,
+    endsWith,
+    equals,
+    hasKey,
+    isExistingDirectory,
+    isExistingFile,
+    isGreaterThan,
+    isGreaterThanOrEqualTo,
+    isInstanceOf,
+    isLessThan,
+    isLessThanOrEqualTo,
+    isNonExistingDirectory,
+    isNonExistingFile,
+    isNotEqualTo,
+    isNotInstanceOf,
+    isNotOfSize,
+    isNotOfType,
+    isNotSameAs,
+    isOfSize,
+    isOfType,
+    isSameAs,
+    matches,
+    startsWith
+};
 /**
  * Compatibility layer to use bovigo/assert in $this->assert*() style.
  *
