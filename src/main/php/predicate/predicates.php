@@ -247,10 +247,14 @@ function isOfType(string $expectedType): Predicate
         );
     }
 
-    return new CallablePredicate(
-            $types[$expectedType],
-            'is of type "' . $expectedType . '"'
-    );
+    if (is_string($types[$expectedType])) {
+        $types[$expectedType] = new CallablePredicate(
+                $types[$expectedType],
+                'is of type "' . $expectedType . '"'
+        );
+    }
+
+    return $types[$expectedType];
 }
 
 /**
