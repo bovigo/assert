@@ -84,11 +84,7 @@ class Regex extends Predicate
      */
     private function messageFor(int $errorCode): string
     {
-        if (isset(self::$errors[$errorCode])) {
-            return self::$errors[$errorCode];
-        }
-
-        return 'Unknown error with error code ' . $errorCode;
+        return self::$errors[$errorCode] ?? 'Unknown error with error code ' . $errorCode;
     }
 
     /**
