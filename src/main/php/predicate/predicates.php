@@ -438,30 +438,42 @@ function isNonExistingDirectory(string $basePath = null): Predicate
  *
  * @api
  * @param   string  $prefix
- * @return  \bovigo\assert\predicate\CallablePredicate
+ * @return  \bovigo\assert\predicate\Predicate
  * @since   1.1.0
  */
 function startsWith(string $prefix): Predicate
 {
-    return new CallablePredicate(
-            function($value) use ($prefix)
-            {
-                if (!is_string($value)) {
-                    throw new \InvalidArgumentException(
-                            'Given value is not a string, but of type "'
-                            . gettype($value) . '"'
-                    );
-                }
+    return new class($prefix) extends Predicate
+    {
+        private $prefix;
 
-                return 0 === substr_compare(
-                        $value,
-                        $prefix,
-                        0,
-                        strlen($prefix)
+        public function __construct(string $prefix)
+        {
+            $this->prefix = $prefix;
+        }
+
+        public function test($value): bool
+        {
+            if (!is_string($value)) {
+                throw new \InvalidArgumentException(
+                        'Given value is not a string, but of type "'
+                        . gettype($value) . '"'
                 );
-            },
-            'starts with \'' . $prefix . '\''
-    );
+            }
+
+            return 0 === substr_compare(
+                    $value,
+                    $this->prefix,
+                    0,
+                    strlen($this->prefix)
+            );
+        }
+
+        public function __toString(): string
+        {
+            return 'starts with \'' . $this->prefix . '\'';
+        }
+    };
 }
 
 /**
@@ -482,29 +494,41 @@ function doesNotStartWith(string $prefix): Predicate
  *
  * @api
  * @param   string  $suffix
- * @return  \bovigo\assert\predicate\CallablePredicate
+ * @return  \bovigo\assert\predicate\Predicate
  * @since   1.1.0
  */
 function endsWith(string $suffix): Predicate
 {
-    return new CallablePredicate(
-            function($value) use ($suffix)
-            {
-                if (!is_string($value)) {
-                    throw new \InvalidArgumentException(
-                            'Given value is not a string, but of type "'
-                            . gettype($value) . '"'
-                    );
-                }
+    return new class($suffix) extends Predicate
+    {
+        private $suffix;
 
-                return 0 === substr_compare(
-                        $value,
-                        $suffix,
-                        -strlen($suffix)
+        public function __construct(string $suffix)
+        {
+            $this->suffix = $suffix;
+        }
+
+        public function test($value): bool
+        {
+            if (!is_string($value)) {
+                throw new \InvalidArgumentException(
+                        'Given value is not a string, but of type "'
+                        . gettype($value) . '"'
                 );
-            },
-            'ends with \'' . $suffix . '\''
-    );
+            }
+
+            return 0 === substr_compare(
+                    $value,
+                    $this->suffix,
+                    -strlen($this->suffix)
+            );
+        }
+
+        public function __toString(): string
+        {
+            return 'ends with \'' . $this->suffix . '\'';
+        }
+    };
 }
 
 /**
