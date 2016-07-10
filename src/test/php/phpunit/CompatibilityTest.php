@@ -617,4 +617,22 @@ class CompatibilityTest extends PHPUnit_Framework_TestCase
                         "Failed asserting that 'barbazfoo' does not end with 'foo'."
         );
     }
+
+    /**
+     * @since 2.0.0
+     */
+    public function testAssertThat()
+    {
+        $this->assertThat('foo', new \PHPUnit_Framework_Constraint_IsEqual('foo'));
+    }
+
+    /**
+     * @since 2.0.0
+     */
+    public function testAssertThatWithFailure()
+    {
+        expect(function() {
+                $this->assertThat('foo', new \PHPUnit_Framework_Constraint_IsEqual('bar'));
+        })->throws(AssertionFailure::class);
+    }
 }
