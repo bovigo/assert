@@ -91,4 +91,24 @@ class EqualsTest extends \PHPUnit_Framework_TestCase
 additional info"
         );
     }
+
+    /**
+     * @test
+     */
+    public function assertionFailureDoesNotReferenceStringWithLinebreaksInMessage()
+    {
+        expect(function() { assert('bar', equals("foo\n"), 'additional info'); })
+                ->throws(AssertionFailure::class)
+                ->withMessage(
+                        "Failed asserting that 'bar' is equal to <text>.
+--- Expected
++++ Actual
+@@ @@
+-'foo
+-'
++'bar'
+
+additional info"
+        );
+    }
 }
