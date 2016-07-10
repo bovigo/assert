@@ -57,10 +57,10 @@ class NegatePredicate extends Predicate
     public function __toString(): string
     {
         switch (get_class($this->predicate)) {
-            case 'bovigo\assert\predicate\AndPredicate':
-            case 'bovigo\assert\predicate\NegatePredicate':
-            case 'bovigo\assert\predicate\OrPredicate':
-                return 'not ' . $this->predicate;
+            case AndPredicate::class:
+            case NegatePredicate::class:
+            case OrPredicate::class:
+                return 'not (' . $this->predicate . ')';
 
             default:
                 return $this->reverse((string) $this->predicate);

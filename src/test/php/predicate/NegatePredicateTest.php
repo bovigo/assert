@@ -38,12 +38,23 @@ class NegatePredicateTest extends \PHPUnit_Framework_TestCase
         assert($this->negatePredicate->test('bar'), isTrue());
     }
 
+    public function predicates(): array
+    {
+        return [
+            [not(function($value) { return 'foo' === $value; }), 'does not satisfy a lambda function'],
+            [not(equals(5)->or(isLessThan(5))), 'not (is equal to 5 or is less than 5)'],
+            [not(equals(5)->and(isLessThan(5))), 'not (is equal to 5 and is less than 5)'],
+            [not(not(equals(5))), 'not (is not equal to 5)']
+        ];
+    }
+
     /**
      * @test
+     * @dataProvider  predicates
      */
-    public function hasStringRepresentation()
+    public function hasStringRepresentation(NegatePredicate $negatePredicate, $expected)
     {
-        assert((string) $this->negatePredicate, equals('does not satisfy a lambda function'));
+        assert((string) $negatePredicate, equals($expected));
     }
 
     /**
