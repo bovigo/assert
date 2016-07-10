@@ -51,7 +51,9 @@ class HasKey extends Predicate
     {
         if (is_array($value)) {
             return array_key_exists($this->key, $value);
-        } elseif ($value instanceof \ArrayAccess) {
+        }
+
+        if ($value instanceof \ArrayAccess) {
             return $value->offsetExists($this->key);
         }
 
