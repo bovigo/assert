@@ -50,7 +50,7 @@ class EachTest extends \PHPUnit_Framework_TestCase
      */
     function canBeUsedWithCallable()
     {
-        assert([303, 313], each('is_finite'));
+        assert([3.03, 3.13], each('is_finite'));
     }
 
     /**

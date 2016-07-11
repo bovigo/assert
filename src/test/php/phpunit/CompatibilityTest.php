@@ -368,7 +368,7 @@ class CompatibilityTest extends PHPUnit_Framework_TestCase
      */
     public function testAssertFiniteSuccess()
     {
-        $this->assertFinite(1);
+        $this->assertFinite(1.0);
     }
 
     /**
@@ -394,9 +394,9 @@ class CompatibilityTest extends PHPUnit_Framework_TestCase
      */
     public function testAssertInfiniteFailure()
     {
-        expect(function() { $this->assertInfinite(1); })
+        expect(function() { $this->assertInfinite(1.0); })
                 ->throws(AssertionFailure::class)
-                ->withMessage("Failed asserting that 1 satisfies is_infinite().");
+                ->withMessage("Failed asserting that 1.0 satisfies is_infinite().");
     }
 
     /**
@@ -412,9 +412,9 @@ class CompatibilityTest extends PHPUnit_Framework_TestCase
      */
     public function testAssertNanFailure()
     {
-        expect(function() { $this->assertNan(1); })
+        expect(function() { $this->assertNan(1.0); })
                 ->throws(AssertionFailure::class)
-                ->withMessage("Failed asserting that 1 satisfies is_nan().");
+                ->withMessage("Failed asserting that 1.0 satisfies is_nan().");
     }
 
     public function testAssertSameSuccess()
