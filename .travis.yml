@@ -5,8 +5,14 @@ php:
   - nightly
 
 matrix:
+  fast_finish: true
+  include:
+    - php: hhvm
+      env:
+        RT_SCRIPT="hhvm  -d hhvm.php7.scalar_types=true"
   allow_failures:
     - php: nightly
+    - php: hhvm
 
 before_install:
   - "mkdir -p ~/.composer"
@@ -17,7 +23,7 @@ install:
   - composer install
 
 script:
-  - vendor/bin/phpunit --coverage-text
+  - $RT_SCRIPT vendor/bin/phpunit --coverage-text
 
 after_success:
   - composer require satooshi/php-coveralls
