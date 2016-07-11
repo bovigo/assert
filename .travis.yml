@@ -6,24 +6,18 @@ php:
 
 matrix:
   fast_finish: true
-  include:
-    - php: hhvm
-      env:
-        RT_SCRIPT="hhvm  -d hhvm.php7.scalar_types=true"
   allow_failures:
     - php: nightly
-    - php: hhvm
 
 before_install:
   - "mkdir -p ~/.composer"
   - openssl aes-256-cbc -K $encrypted_e12f2402c021_key -iv $encrypted_e12f2402c021_iv -in .travis.composer.config.json.enc -out ~/.composer/config.json -d
-  - composer self-update
 
 install:
   - composer install
 
 script:
-  - $RT_SCRIPT vendor/bin/phpunit --coverage-text
+  - vendor/bin/phpunit --coverage-text
 
 after_success:
   - composer require satooshi/php-coveralls
