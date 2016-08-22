@@ -649,14 +649,14 @@ Expectations
 _Available since release 1.6.0_
 
 Expectations can be used to check that a specific piece of code does or does not
-throw an exception. It can also be used to check that after a specific piece of
-code ran assertions are still true, despite of whether the code in question
-succeeded or not.
+throw an exception or trigger an error. It can also be used to check that after
+a specific piece of code ran assertions are still true, despite of whether the
+code in question succeeded or not.
 
 
 ### Expectations on exceptions
 
-Note: since release 2.1.0 it is also possible to use expectations with `Error`.
+Note: since release 2.1.0 it is also possible to use expectations with `\Error`.
 
 Check that a piece of code, e.g. a function or method, throws an exception:
 ```php
@@ -683,7 +683,7 @@ expect(function() {
 ```
 
 The following checks on the exception are possible:
-  * `withMessage(string $$expectedMessage)`
+  * `withMessage(string $expectedMessage)`
     Performs an assertion with `equals()` on the exception message.
   * `message($predicate)`
     Performs an assertion with the given predicate on the exception message.
@@ -719,6 +719,43 @@ expect(function() {
     // some piece of code which is expected to not throw any exception
 })->doesNotThrow();
 ```
+
+In case any of these expectations fail an `AssertionFailure` will be thrown.
+
+
+### Expectations on errors
+
+_Available since release 2.1.0_
+
+Check that a piece of code, e.g. a function or method, triggers an error:
+```php
+expect(function() {
+    // some piece of code which is expected to trigger an error
+})->triggers(E_USER_ERROR);
+```
+
+It is also possible to expect any error, not just a specific one, by leaving
+out the error level:
+```php
+expect(function() {
+    // some piece of code which is expected to trigger an error
+})->triggers();
+```
+
+Additionally checks on the triggered error can be performed:
+```php
+expect(function() {
+    // some piece of code which is expected to trigger an error
+})
+->triggers(E_USER_WARNING)
+->withMessage('some error occured');
+```
+
+The following checks on the exception are possible:
+  * `withMessage(string $expectedMessage)`
+    Performs an assertion with `equals()` on the error message.
+  * `message($predicate)`
+    Performs an assertion with the given predicate on the error message.
 
 In case any of these expectations fail an `AssertionFailure` will be thrown.
 

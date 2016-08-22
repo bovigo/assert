@@ -2,6 +2,7 @@
 ------------------
 
   * implemented #4 `bovigo\assert\expect()` should work with `\Error`
+  * implemented #5 `bovigo\assert\expect()` should provide possibility to test `trigger_error()`
 
 
 2.0.0 (2016-07-10)

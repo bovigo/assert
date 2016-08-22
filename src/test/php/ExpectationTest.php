@@ -7,6 +7,7 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 namespace bovigo\assert;
+use bovigo\assert\predicate\ExpectedError;
 use bovigo\assert\predicate\ExpectedException;
 
 use function bovigo\assert\predicate\{
@@ -38,9 +39,36 @@ class ExpectationTest extends \PHPUnit_Framework_TestCase
     public function expectationReturnsCatchedExceptionWhenThrowsSucceeds(\Throwable $throwable)
     {
         assert(
-            expect(function() use($throwable) { throw $throwable; })->throws(),
-            isInstanceOf(CatchedException::class)
+                expect(function() use($throwable) { throw $throwable; })->throws(),
+                isInstanceOf(CatchedException::class)
         );
+    }
+
+    /**
+     * @test
+     * @group  issue_5
+     * @since  2.1.0
+     */
+    public function expectationReturnsCatchedErrorWhenTriggersSucceeds()
+    {
+        assert(
+                expect(function() { trigger_error('error'); })->triggers(),
+                isInstanceOf(CatchedError::class)
+        );
+    }
+
+    /**
+     * @test
+     * @group  issue_5
+     * @since  2.1.0
+     */
+    public function expectationThrowsInvalidArgumentExceptionWhenExpectingUnknownErrorLevel()
+    {
+        expect(function() {
+                expect(function() { /* doesn't matter */ })->triggers(303);
+        })
+        ->throws(\InvalidArgumentException::class)
+        ->withMessage('Unknown error level 303');
     }
 
     /**
@@ -66,13 +94,27 @@ class ExpectationTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
+     * @group  issue_5
+     * @since  2.1.0
+     */
+    public function expectationThrowsAssertionFailureWhenCodeDoesNotTriggerAnyExpectedError()
+    {
+        expect(function() {
+                expect(function() { /* intentionally empty */ })->triggers();
+        })
+        ->throws(AssertionFailure::class)
+        ->withMessage('Failed asserting that an error is triggered.');
+    }
+
+    /**
+     * @test
      * @dataProvider  throwables
      */
     public function expectationThrowsAssertionFailureWhenCodeDoesNotThrowExpectedExceptionType(\Throwable $throwable)
     {
         expect(function() use($throwable) {
-            expect(function() { /* intentionally empty */ })
-                    ->throws(get_class($throwable));
+                expect(function() { /* intentionally empty */ })
+                        ->throws(get_class($throwable));
         })
         ->throws(AssertionFailure::class)
         ->withMessage(
@@ -83,13 +125,30 @@ class ExpectationTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
+     * @group  issue_5
+     * @since  2.1.0
+     */
+    public function expectationThrowsAssertionFailureWhenCodeDoesNotTriggerExpectedErrorLevel()
+    {
+        expect(function() {
+                expect(function() { /* intentionally empty */ })
+                        ->triggers(E_USER_WARNING);
+        })
+        ->throws(AssertionFailure::class)
+        ->withMessage(
+                'Failed asserting that error of type "E_USER_WARNING" is triggered.'
+        );
+    }
+
+    /**
+     * @test
      * @dataProvider  throwables
      */
     public function expectationDoesNotThrowAssertionFailureWhenCodeThrowsAnyExpectedException(\Throwable $throwable)
     {
         expect(function() use($throwable) {
-            expect(function() use($throwable) { throw $throwable; })
-                    ->throws();
+                expect(function() use($throwable) { throw $throwable; })
+                        ->throws();
         })
         ->doesNotThrow();
     }
@@ -101,8 +160,35 @@ class ExpectationTest extends \PHPUnit_Framework_TestCase
     public function expectationDoesNotThrowAssertionFailureWhenCodeThrowsExpectedExceptionType(\Throwable $throwable)
     {
         expect(function() use($throwable) {
-            expect(function() use($throwable) { throw $throwable; })
-                    ->throws(get_class($throwable));
+                expect(function() use($throwable) { throw $throwable; })
+                        ->throws(get_class($throwable));
+        })
+        ->doesNotThrow();
+    }
+
+    /**
+     * @test
+     * @group  issue_5
+     * @since  2.1.0
+     */
+    public function expectationDoesNotThrowAssertionFailureWhenCodeTriggersAnyExpectedError()
+    {
+        expect(function() {
+                expect(function() { trigger_error('error'); })->triggers();
+        })
+        ->doesNotThrow();
+    }
+
+    /**
+     * @test
+     * @group  issue_5
+     * @since  2.1.0
+     */
+    public function expectationDoesNotThrowAssertionFailureWhenCodeTriggersExpectedErrorLevel()
+    {
+        expect(function() {
+                expect(function() { trigger_error('error', E_USER_WARNING); })
+                        ->triggers(E_USER_WARNING);
         })
         ->doesNotThrow();
     }
@@ -113,7 +199,7 @@ class ExpectationTest extends \PHPUnit_Framework_TestCase
     public function expectationDoesNotThrowAssertionFailureIfCodeDoesNotThrowAnyException()
     {
         expect(function() {
-            expect(function() { /* intentionally empty */ })->doesNotThrow();
+                expect(function() { /* intentionally empty */ })->doesNotThrow();
         })
         ->doesNotThrow();
     }
@@ -296,11 +382,26 @@ class ExpectationTest extends \PHPUnit_Framework_TestCase
     public function expectedExceptionThrowsInvalidArgumentExceptionWhenValueToTestIsNotAnException()
     {
         expect(function() {
-            $expectedException = new ExpectedException(\Exception::class);
-            $expectedException->test(404);
+                $expectedException = new ExpectedException(\Exception::class);
+                $expectedException->test(404);
         })
         ->throws(\InvalidArgumentException::class)
         ->withMessage('Given value is not an exception');
+    }
+
+    /**
+     * @test
+     * @group  issue_5
+     * @since  2.1.0
+     */
+    public function expectedErrorThrowsInvalidArgumentExceptionWhenValueToTestIsNotCatchedError()
+    {
+        expect(function() {
+                $expectedException = new ExpectedError(E_NOTICE);
+                $expectedException->test(404);
+        })
+        ->throws(\InvalidArgumentException::class)
+        ->withMessage('Given value is not an error');
     }
 
     /**
@@ -322,6 +423,28 @@ class ExpectationTest extends \PHPUnit_Framework_TestCase
                 . '" with message "not catched" thrown in ' . __FILE__
                 . ' on line ' . $throwable->getLine() . ' matches expected exception "'
                 . $other . '".'
+        );
+    }
+
+    /**
+     * @test
+     * @group  issue_5
+     * @since  2.1.0
+     */
+    public function outputOfUnexpectedErrorIsHelpful()
+    {
+        $line = null;
+        expect(function() use(&$line) {
+                expect(function() use(&$line) {
+                        $line = __LINE__; trigger_error('error', E_USER_WARNING);
+                })
+                ->triggers(E_USER_NOTICE);
+        })
+        ->throws(AssertionFailure::class)
+        ->withMessage(
+                'Failed asserting that error of level "E_USER_WARNING" with '
+                . 'message "error" triggered in ' . __FILE__
+                . ' on line ' . $line . ' matches expected error "E_USER_NOTICE".'
         );
     }
 }

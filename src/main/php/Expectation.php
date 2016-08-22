@@ -8,6 +8,7 @@ declare(strict_types=1);
  */
 namespace bovigo\assert;
 use bovigo\assert\predicate\Predicate;
+use bovigo\assert\predicate\ExpectedError;
 use bovigo\assert\predicate\ExpectedException;
 /**
  * An expectation executes some code after which assertions can be made.
@@ -31,9 +32,13 @@ class Expectation
      */
     private $result;
     /**
-     * @type  \Exception
+     * @type  \Throwable
      */
     private $exception;
+    /**
+     * @type  CatchedError
+     */
+    private $error;
 
     /**
      * constructor
@@ -125,6 +130,49 @@ class Expectation
         }
 
         return $this;
+    }
+
+    /**
+     * asserts the code triggers an error when executed
+     *
+     * If no expected error level is given any triggered error will be sufficient.
+     *
+     * @api
+     * @param   int  $expectedError  optional  error level to expect
+     * @return  \bovigo\assert\CatchedError
+     * @throws  \InvalidArgumentException        in case the given expected error is unknown
+     * @throws  \bovigo\assert\AssertionFailure
+     * @since   2.1.0
+     */
+    public function triggers(int $expectedError = null): CatchedError
+    {
+        if (null !== $expectedError && !isset(CatchedError::LEVEL[$expectedError])) {
+            throw new \InvalidArgumentException('Unknown error level ' . $expectedError);
+        }
+
+        set_error_handler(
+                function(int $errno , string $errstr, string $errfile, int $errline, array $errcontext): bool
+                {
+                    $this->error = new CatchedError($errno, $errstr, $errfile, $errline, $errcontext);
+                    return true;
+                }
+        );
+        $this->runCode();
+        restore_error_handler();
+        if (null === $this->error) {
+            throw new AssertionFailure(
+                    'Failed asserting that '
+                    . (null !== $expectedError
+                        ? 'error of type "' . CatchedError::nameOf($expectedError) . '"'
+                        : 'an error'
+                    )
+                    . ' is triggered.'
+            );
+        } elseif (null !== $expectedError) {
+            assert($this->error, new ExpectedError($expectedError));
+        }
+
+        return $this->error;
     }
 
     /**
