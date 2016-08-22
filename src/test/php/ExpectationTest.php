@@ -28,10 +28,7 @@ class ExpectationTest extends \PHPUnit_Framework_TestCase
     public function expectationReturnsCatchedExceptionWhenThrowsSucceeds()
     {
         assert(
-            expect(function(){
-                throw new \Exception();
-            })
-            ->throws(),
+            expect(function() { throw new \Exception();})->throws(),
             isInstanceOf(CatchedException::class)
         );
     }
@@ -41,7 +38,7 @@ class ExpectationTest extends \PHPUnit_Framework_TestCase
      */
     public function expectationReturnsItselfWhenDoesNotThrowSucceeds()
     {
-        $expectation = expect(function(){ /* intentionally empty */});
+        $expectation = expect(function() { /* intentionally empty */});
         assert($expectation->doesNotThrow(), isSameAs($expectation));
     }
 
@@ -50,11 +47,8 @@ class ExpectationTest extends \PHPUnit_Framework_TestCase
      */
     public function expectationThrowsAssertionFailureWhenCodeDoesNotThrowAnyExpectedException()
     {
-        expect(function(){
-            expect(function(){
-                // intentionally empty
-            })
-            ->throws();
+        expect(function() {
+                expect(function() { /* intentionally empty */ })->throws();
         })
         ->throws(AssertionFailure::class)
         ->withMessage('Failed asserting that an exception is thrown.');
@@ -65,11 +59,9 @@ class ExpectationTest extends \PHPUnit_Framework_TestCase
      */
     public function expectationThrowsAssertionFailureWhenCodeDoesNotThrowExpectedExceptionType()
     {
-        expect(function(){
-            expect(function(){
-                // intentionally empty
-            })
-            ->throws(\BadFunctionCallException::class);
+        expect(function() {
+            expect(function() { /* intentionally empty */ })
+                    ->throws(\BadFunctionCallException::class);
         })
         ->throws(AssertionFailure::class)
         ->withMessage(
@@ -84,8 +76,8 @@ class ExpectationTest extends \PHPUnit_Framework_TestCase
      */
     public function expectationDoesNotThrowAssertionFailureWhenCodeThrowsAnyExpectedException()
     {
-        expect(function(){
-            expect(function(){
+        expect(function() {
+            expect(function() {
                 throw new \BadFunctionCallException('error');
             })
             ->throws();
@@ -98,8 +90,8 @@ class ExpectationTest extends \PHPUnit_Framework_TestCase
      */
     public function expectationDoesNotThrowAssertionFailureWhenCodeThrowsExpectedExceptionType()
     {
-        expect(function(){
-            expect(function(){
+        expect(function() {
+            expect(function() {
                 throw new \BadFunctionCallException('error');
             })
             ->throws(\BadFunctionCallException::class);
@@ -112,11 +104,8 @@ class ExpectationTest extends \PHPUnit_Framework_TestCase
      */
     public function expectationDoesNotThrowAssertionFailureIfCodeDoesNotThrowAnyException()
     {
-        expect(function(){
-            expect(function(){
-                // intentionally empty
-            })
-            ->doesNotThrow();
+        expect(function() {
+            expect(function() { /* intentionally empty */ })->doesNotThrow();
         })
         ->doesNotThrow();
     }
@@ -126,11 +115,9 @@ class ExpectationTest extends \PHPUnit_Framework_TestCase
      */
     public function expectationDoesNotThrowAssertionFailureIfCodeDoesNotThrowExpectedExceptionType()
     {
-        expect(function(){
-            expect(function(){
-                // intentionally empty
-            })
-            ->doesNotThrow(\BadFunctionCallException::class);
+        expect(function() {
+            expect(function() { /* intentionally empty */ })
+                    ->doesNotThrow(\BadFunctionCallException::class);
         })
         ->doesNotThrow();
     }
@@ -140,8 +127,8 @@ class ExpectationTest extends \PHPUnit_Framework_TestCase
      */
     public function expectationDoesThrowAssertionFailureWhenCodeThrowsUnexpectedException()
     {
-        expect(function(){
-            expect(function(){
+        expect(function() {
+            expect(function() {
                 throw new \BadFunctionCallException('error');
             })
             ->doesNotThrow();
@@ -159,8 +146,8 @@ class ExpectationTest extends \PHPUnit_Framework_TestCase
      */
     public function expectationDoesThrowAssertionFailureWhenCodeThrowsUnexpectedExceptionType()
     {
-        expect(function(){
-            expect(function(){
+        expect(function() {
+            expect(function() {
                 throw new \BadFunctionCallException('error');
             })
             ->doesNotThrow(\BadFunctionCallException::class);
@@ -180,8 +167,8 @@ class ExpectationTest extends \PHPUnit_Framework_TestCase
      */
     public function expectationDoesNotThrowAssertionFailureWhenCodeThrowsOtherExceptionType()
     {
-        expect(function(){
-            expect(function(){
+        expect(function() {
+            expect(function() {
                 throw new \BadFunctionCallException('error');
             })
             ->doesNotThrow(\BadMethodCallException::class);
@@ -194,7 +181,7 @@ class ExpectationTest extends \PHPUnit_Framework_TestCase
      */
     public function expectationReturnsItselfWhenResultCheckSucceeds()
     {
-        $expectation = expect(function(){ return true; });
+        $expectation = expect(function() { return true; });
         assert($expectation->result(isTrue()), isSameAs($expectation));
     }
 
@@ -203,11 +190,8 @@ class ExpectationTest extends \PHPUnit_Framework_TestCase
      */
     public function expectationDoesNotThrowAssertionFailureWhenResultFulfillsPredicate()
     {
-        expect(function(){
-            expect(function(){
-                return true;
-            })
-            ->result(isTrue());
+        expect(function() {
+            expect(function() { return true; })->result(isTrue());
         })
         ->doesNotThrow();
     }
@@ -217,11 +201,8 @@ class ExpectationTest extends \PHPUnit_Framework_TestCase
      */
     public function expectationThrowsAssertionFailureWhenResultDoesNotFulfillPredicate()
     {
-        expect(function(){
-            expect(function(){
-                return true;
-            })
-            ->result(isFalse());
+        expect(function() {
+            expect(function() { return true; })->result(isFalse());
         })
         ->throws(AssertionFailure::class)
         ->withMessage('Failed asserting that true is false.');
@@ -232,8 +213,8 @@ class ExpectationTest extends \PHPUnit_Framework_TestCase
      */
     public function expectationThrowsAssertionFailureWhenResultNotAvailableBecauseCodeThrowsException()
     {
-        expect(function(){
-            expect(function(){
+        expect(function() {
+            expect(function() {
                 throw new \BadFunctionCallException('error');
             })
             ->result(isTrue());
@@ -251,8 +232,8 @@ class ExpectationTest extends \PHPUnit_Framework_TestCase
      */
     public function expectationThrowsAssertionFailureWhenResultNotAvailableBecauseCodeThrowsExceptionWithCallable()
     {
-        expect(function(){
-            expect(function(){
+        expect(function() {
+            expect(function() {
                 throw new \BadFunctionCallException('error');
             })
             ->result('is_int');
@@ -270,7 +251,7 @@ class ExpectationTest extends \PHPUnit_Framework_TestCase
      */
     public function expectationCanAssertAfterCodeExecution()
     {
-        $expectation = expect(function(){ return false; });
+        $expectation = expect(function() { return false; });
         assert($expectation->after(true, isTrue()), isSameAs($expectation));
     }
 
@@ -279,7 +260,7 @@ class ExpectationTest extends \PHPUnit_Framework_TestCase
      */
     public function expectationCanAssertAfterCodeExecutionEvenIfExceptionThrown()
     {
-        $expectation = expect(function(){
+        $expectation = expect(function() {
                 throw new \BadFunctionCallException('error');
         });
         assert($expectation->after(true, isTrue()), isSameAs($expectation));
@@ -290,7 +271,7 @@ class ExpectationTest extends \PHPUnit_Framework_TestCase
      */
     public function codeIsOnlyExecutedOnce()
     {
-        $expectation = expect(function(){
+        $expectation = expect(function() {
                 static $count = 0;
                 $count++;
                 if (1 !== $count) {
