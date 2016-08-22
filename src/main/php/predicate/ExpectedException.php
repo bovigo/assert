@@ -39,7 +39,7 @@ class ExpectedException extends Predicate
      */
     public function test($value): bool
     {
-        if (! $value instanceof \Exception) {
+        if (! $value instanceof \Throwable) {
             throw new \InvalidArgumentException('Given value is not an exception');
         }
 
@@ -66,7 +66,7 @@ class ExpectedException extends Predicate
      */
     public function describeValue(Exporter $exporter, $value): string
     {
-        if (! $value instanceof \Exception) {
+        if (! $value instanceof \Throwable) {
             return parent::describeValue($exporter, $value);
         }
 

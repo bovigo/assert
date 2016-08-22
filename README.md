@@ -656,6 +656,8 @@ succeeded or not.
 
 ### Expectations on exceptions
 
+Note: since release 2.1.0 it is also possible to use expectations with `Error`.
+
 Check that a piece of code, e.g. a function or method, throws an exception:
 ```php
 expect(function() {

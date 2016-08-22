@@ -22,13 +22,23 @@ use function bovigo\assert\predicate\{
  */
 class ExpectationTest extends \PHPUnit_Framework_TestCase
 {
+    public static function throwables(): array
+    {
+        return ['exception against exception' => [new \Exception('not catched', 2), \BadFunctionCallException::class],
+                'exception against error'     => [new \Exception('not catched', 2), \TypeError::class],
+                'error against error'         => [new \Error('not catched', 2), \TypeError::class],
+                'error against exception'     => [new \Error('not catched', 2), \BadFunctionCallException::class]
+        ];
+    }
+
     /**
      * @test
+     * @dataProvider  throwables
      */
-    public function expectationReturnsCatchedExceptionWhenThrowsSucceeds()
+    public function expectationReturnsCatchedExceptionWhenThrowsSucceeds(\Throwable $throwable)
     {
         assert(
-            expect(function() { throw new \Exception();})->throws(),
+            expect(function() use($throwable) { throw $throwable; })->throws(),
             isInstanceOf(CatchedException::class)
         );
     }
@@ -56,45 +66,43 @@ class ExpectationTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
+     * @dataProvider  throwables
      */
-    public function expectationThrowsAssertionFailureWhenCodeDoesNotThrowExpectedExceptionType()
+    public function expectationThrowsAssertionFailureWhenCodeDoesNotThrowExpectedExceptionType(\Throwable $throwable)
     {
-        expect(function() {
+        expect(function() use($throwable) {
             expect(function() { /* intentionally empty */ })
-                    ->throws(\BadFunctionCallException::class);
+                    ->throws(get_class($throwable));
         })
         ->throws(AssertionFailure::class)
         ->withMessage(
                 'Failed asserting that exception of type "'
-                . \BadFunctionCallException::class
-                . '" is thrown.'
+                . get_class($throwable) . '" is thrown.'
         );
     }
 
     /**
      * @test
+     * @dataProvider  throwables
      */
-    public function expectationDoesNotThrowAssertionFailureWhenCodeThrowsAnyExpectedException()
+    public function expectationDoesNotThrowAssertionFailureWhenCodeThrowsAnyExpectedException(\Throwable $throwable)
     {
-        expect(function() {
-            expect(function() {
-                throw new \BadFunctionCallException('error');
-            })
-            ->throws();
+        expect(function() use($throwable) {
+            expect(function() use($throwable) { throw $throwable; })
+                    ->throws();
         })
         ->doesNotThrow();
     }
 
     /**
      * @test
+     * @dataProvider  throwables
      */
-    public function expectationDoesNotThrowAssertionFailureWhenCodeThrowsExpectedExceptionType()
+    public function expectationDoesNotThrowAssertionFailureWhenCodeThrowsExpectedExceptionType(\Throwable $throwable)
     {
-        expect(function() {
-            expect(function() {
-                throw new \BadFunctionCallException('error');
-            })
-            ->throws(\BadFunctionCallException::class);
+        expect(function() use($throwable) {
+            expect(function() use($throwable) { throw $throwable; })
+                    ->throws(get_class($throwable));
         })
         ->doesNotThrow();
     }
@@ -112,66 +120,63 @@ class ExpectationTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
+     * @dataProvider  throwables
      */
-    public function expectationDoesNotThrowAssertionFailureIfCodeDoesNotThrowExpectedExceptionType()
+    public function expectationDoesNotThrowAssertionFailureIfCodeDoesNotThrowExpectedExceptionType(\Throwable $throwable)
     {
-        expect(function() {
+        expect(function() use($throwable) {
             expect(function() { /* intentionally empty */ })
-                    ->doesNotThrow(\BadFunctionCallException::class);
+                    ->doesNotThrow(get_class($throwable));
         })
         ->doesNotThrow();
     }
 
     /**
      * @test
+     * @dataProvider  throwables
      */
-    public function expectationDoesThrowAssertionFailureWhenCodeThrowsUnexpectedException()
+    public function expectationDoesThrowAssertionFailureWhenCodeThrowsUnexpectedException(\Throwable $throwable)
     {
-        expect(function() {
-            expect(function() {
-                throw new \BadFunctionCallException('error');
-            })
-            ->doesNotThrow();
+        expect(function() use($throwable) {
+            expect(function() use($throwable) { throw $throwable; })
+                    ->doesNotThrow();
         })
         ->throws(AssertionFailure::class)
         ->withMessage(
                 'Failed asserting that no exception is thrown, got '
-                . \BadFunctionCallException::class
-                . ' with message "error".'
+                . get_class($throwable) . ' with message "not catched".'
         );
     }
 
     /**
      * @test
+     * @dataProvider  throwables
      */
-    public function expectationDoesThrowAssertionFailureWhenCodeThrowsUnexpectedExceptionType()
+    public function expectationDoesThrowAssertionFailureWhenCodeThrowsUnexpectedExceptionType(\Throwable $throwable)
     {
-        expect(function() {
-            expect(function() {
-                throw new \BadFunctionCallException('error');
-            })
-            ->doesNotThrow(\BadFunctionCallException::class);
+        expect(function() use($throwable) {
+            expect(function() use($throwable) { throw $throwable; })
+                    ->doesNotThrow(get_class($throwable));
         })
         ->throws(AssertionFailure::class)
         ->withMessage(
                 'Failed asserting that no exception of type "'
-                . \BadFunctionCallException::class
+                . get_class($throwable)
                 . '" is thrown, got '
-                . \BadFunctionCallException::class
-                . ' with message "error".'
+                . get_class($throwable)
+                . ' with message "not catched".'
         );
     }
 
     /**
      * @test
+     * @dataProvider  throwables
      */
-    public function expectationDoesNotThrowAssertionFailureWhenCodeThrowsOtherExceptionType()
+    public function expectationDoesNotThrowAssertionFailureWhenCodeThrowsOtherExceptionType(\Throwable $throwable, string $other)
     {
-        expect(function() {
-            expect(function() {
-                throw new \BadFunctionCallException('error');
-            })
-            ->doesNotThrow(\BadMethodCallException::class);
+        expect(function() use($throwable, $other) {
+            expect(function()  use($throwable) { throw $throwable; })
+                    ->doesNotThrow($other);
         })
         ->doesNotThrow();
     }
@@ -210,39 +215,36 @@ class ExpectationTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
+     * @dataProvider  throwables
      */
-    public function expectationThrowsAssertionFailureWhenResultNotAvailableBecauseCodeThrowsException()
+    public function expectationThrowsAssertionFailureWhenResultNotAvailableBecauseCodeThrowsException(\Throwable $throwable)
     {
-        expect(function() {
-            expect(function() {
-                throw new \BadFunctionCallException('error');
-            })
-            ->result(isTrue());
+        expect(function() use($throwable) {
+            expect(function() use($throwable) { throw $throwable; })
+                    ->result(isTrue());
         })
         ->throws(AssertionFailure::class)
         ->withMessage(
                 'Failed asserting that result is true because exception of type '
-                . \BadFunctionCallException::class
-                . ' with message "error" was thrown.'
+                . get_class($throwable)
+                . ' with message "not catched" was thrown.'
         );
     }
 
     /**
      * @test
+     * @dataProvider  throwables
      */
-    public function expectationThrowsAssertionFailureWhenResultNotAvailableBecauseCodeThrowsExceptionWithCallable()
+    public function expectationThrowsAssertionFailureWhenResultNotAvailableBecauseCodeThrowsExceptionWithCallable(\Throwable $throwable)
     {
-        expect(function() {
-            expect(function() {
-                throw new \BadFunctionCallException('error');
-            })
-            ->result('is_int');
+        expect(function() use($throwable) {
+            expect(function() use($throwable) { throw $throwable;})
+                    ->result('is_int');
         })
         ->throws(AssertionFailure::class)
         ->withMessage(
                 'Failed asserting that result satisfies is_int() because exception of type '
-                . \BadFunctionCallException::class
-                . ' with message "error" was thrown.'
+                . get_class($throwable) . ' with message "not catched" was thrown.'
         );
     }
 
@@ -257,25 +259,27 @@ class ExpectationTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
+     * @dataProvider  throwables
      */
-    public function expectationCanAssertAfterCodeExecutionEvenIfExceptionThrown()
+    public function expectationCanAssertAfterCodeExecutionEvenIfExceptionThrown(\Throwable $throwable)
     {
-        $expectation = expect(function() {
-                throw new \BadFunctionCallException('error');
+        $expectation = expect(function() use($throwable) {
+                throw $throwable;
         });
         assert($expectation->after(true, isTrue()), isSameAs($expectation));
     }
 
     /**
      * @test
+     * @dataProvider  throwables
      */
-    public function codeIsOnlyExecutedOnce()
+    public function codeIsOnlyExecutedOnce(\Throwable $throwable)
     {
-        $expectation = expect(function() {
+        $expectation = expect(function() use($throwable) {
                 static $count = 0;
                 $count++;
                 if (1 !== $count) {
-                    throw new \BadFunctionCallException('Called more than once');
+                    throw $throwable;
                 }
 
                 return true;
@@ -301,23 +305,23 @@ class ExpectationTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
+     * @dataProvider  throwables
      * @group  issue_1
      * @since  1.6.1
      */
-    public function outputOfUnexpectedExceptionIsHelpful()
+    public function outputOfUnexpectedExceptionIsHelpful(\Throwable $throwable, string $other)
     {
-        $exception = new \LogicException('error');
-        expect(function() use ($exception) {
-                expect(function() use ($exception) { throw $exception; })
-                        ->throws(\BadMethodCallException::class);
+        expect(function() use ($throwable, $other) {
+                expect(function() use ($throwable) { throw $throwable; })
+                        ->throws($other);
         })
         ->throws(AssertionFailure::class)
         ->withMessage(
                 'Failed asserting that exception of type "'
-                . \LogicException::class
-                . '" with message "error" thrown in ' . __FILE__
-                . ' on line ' . $exception->getLine() . ' matches expected exception "'
-                . \BadMethodCallException::class . '".'
+                . get_class($throwable)
+                . '" with message "not catched" thrown in ' . __FILE__
+                . ' on line ' . $throwable->getLine() . ' matches expected exception "'
+                . $other . '".'
         );
     }
 }

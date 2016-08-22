@@ -20,42 +20,38 @@ use function bovigo\assert\predicate\{
  */
 class CatchedExceptionTest extends \PHPUnit_Framework_TestCase
 {
-    /**
-     * @type  \bovigo\assert\CatchedException
-     */
-    private $catchedException;
-    /**
-     * @type  \Exception
-     */
-    private $exception;
-
-    /**
-     * set up test environment
-     */
-    public function setUp()
+    public static function throwables(): array
     {
-        $this->exception        = new \BadFunctionCallException('failure', 2);
-        $this->catchedException = new CatchedException($this->exception);
+        return ['exception' => [new \Exception('failure', 2)],
+                'error'     => [new \Error('failure', 2)]
+        ];
+    }
+
+    private function catchedException(\Throwable $throwable): CatchedException
+    {
+        return new CatchedException($throwable);
     }
 
     /**
      * @test
+     * @dataProvider  throwables
      */
-    public function withMessageComparesUsingEquals()
+    public function withMessageComparesUsingEquals(\Throwable $throwable)
     {
         assert(
-                $this->catchedException->withMessage('failure'),
+                $this->catchedException($throwable)->withMessage('failure'),
                 isInstanceOf(CatchedException::class)
         );
     }
 
     /**
      * @test
+     * @dataProvider  throwables
      */
-    public function withMessageFailsThrowsAssertionFailure()
+    public function withMessageFailsThrowsAssertionFailure(\Throwable $throwable)
     {
-        expect(function() {
-                $this->catchedException->withMessage('error');
+        expect(function() use($throwable) {
+                $this->catchedException($throwable)->withMessage('error');
         })
         ->throws(AssertionFailure::class)
         ->withMessage(
@@ -71,22 +67,24 @@ class CatchedExceptionTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
+     * @dataProvider  throwables
      */
-    public function messageAssertsWithGivenPredicate()
+    public function messageAssertsWithGivenPredicate(\Throwable $throwable)
     {
         assert(
-                $this->catchedException->message(contains('fail')),
+                $this->catchedException($throwable)->message(contains('fail')),
                 isInstanceOf(CatchedException::class)
         );
     }
 
     /**
      * @test
+     * @dataProvider  throwables
      */
-    public function messageAssertsWithGivenPredicateThrowsAssertionFailureWhenPredicateFails()
+    public function messageAssertsWithGivenPredicateThrowsAssertionFailureWhenPredicateFails(\Throwable $throwable)
     {
-        expect(function() {
-                $this->catchedException->message(contains('error'));
+        expect(function() use($throwable) {
+                $this->catchedException($throwable)->message(contains('error'));
         })
         ->throws(AssertionFailure::class)
         ->withMessage(
@@ -96,22 +94,24 @@ class CatchedExceptionTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
+     * @dataProvider  throwables
      */
-    public function withCodeComparesUsingEquals()
+    public function withCodeComparesUsingEquals(\Throwable $throwable)
     {
         assert(
-                $this->catchedException->withCode(2),
+                $this->catchedException($throwable)->withCode(2),
                 isInstanceOf(CatchedException::class)
         );
     }
 
     /**
      * @test
+     * @dataProvider  throwables
      */
-    public function withCodeFailsThrowsAssertionFailure()
+    public function withCodeFailsThrowsAssertionFailure(\Throwable $throwable)
     {
-        expect(function() {
-                $this->catchedException->withCode(3);
+        expect(function() use($throwable) {
+                $this->catchedException($throwable)->withCode(3);
         })
         ->throws(AssertionFailure::class)
         ->withMessage(
@@ -121,49 +121,57 @@ class CatchedExceptionTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
+     * @dataProvider  throwables
      */
-    public function withAppliesPredicateToException()
+    public function withAppliesPredicateToException(\Throwable $throwable)
     {
-        $this->catchedException->with(isSameAs($this->exception));
+        $this->catchedException($throwable)->with(isSameAs($throwable));
     }
 
     /**
      * @test
+     * @dataProvider  throwables
      */
-    public function withReturnsSelfOnSuccess()
+    public function withReturnsSelfOnSuccess(\Throwable $throwable)
     {
+        $catchedException = $this->catchedException($throwable);
         assert(
-                $this->catchedException->with(function() { return true; }),
-                isSameAs($this->catchedException)
+                $catchedException->with(function() { return true; }),
+                isSameAs($catchedException)
         );
     }
 
     /**
      * @test
+     * @dataProvider  throwables
      */
-    public function withThrowsAssertionFailureWhenPredicateFails()
+    public function withThrowsAssertionFailureWhenPredicateFails(\Throwable $throwable)
     {
-        expect(function() {
-                $this->catchedException->with(
-                        isNotSameAs($this->exception),
+        expect(function() use($throwable) {
+                $this->catchedException($throwable)->with(
+                        isNotSameAs($throwable),
                         'additional info'
                 );
         })
         ->throws(AssertionFailure::class)
         ->withMessage(
-                'Failed asserting that object of type "BadFunctionCallException" is not identical to object of type "BadFunctionCallException".
+                'Failed asserting that object of type "' . get_class($throwable)
+                . '" is not identical to object of type "' . get_class($throwable)
+                . '".
 additional info'
         );
     }
 
     /**
      * @test
+     * @dataProvider  throwables
      */
-    public function afterExecutesGivenPredicateWithGivenValue()
+    public function afterExecutesGivenPredicateWithGivenValue(\Throwable $throwable)
     {
-        $this->catchedException->after(
-                $this->catchedException,
-                isSameAs($this->catchedException)
+        $catchedException = $this->catchedException($throwable);
+        $catchedException->after(
+                $catchedException,
+                isSameAs($catchedException)
         );
     }
 }

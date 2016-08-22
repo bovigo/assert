@@ -1,3 +1,9 @@
+2.1.0 (2016-08-22)
+------------------
+
+  * implemented #4 `bovigo\assert\expect()` should work with `\Error`
+
+
 2.0.0 (2016-07-10)
 ------------------
 

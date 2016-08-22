@@ -25,9 +25,9 @@ class CatchedException
     /**
      * constructor
      *
-     * @param  \Exception  $actualException
+     * @param  \Throwable  $actualException
      */
-    public function __construct(\Exception $actualException)
+    public function __construct(\Throwable $actualException)
     {
         $this->actualException = $actualException;
     }

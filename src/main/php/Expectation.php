@@ -59,7 +59,7 @@ class Expectation
         $code = $this->code;
         try {
             $this->result = $code();
-        } catch (\Exception $ex) {
+        } catch (\Throwable $ex) {
             $this->exception = $ex;
         } finally {
             $this->executed = true;
