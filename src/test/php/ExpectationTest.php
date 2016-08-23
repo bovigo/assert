@@ -46,6 +46,23 @@ class ExpectationTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
+     * @dataProvider  throwables
+     * @since  2.1.0
+     */
+    public function expectationThrowsInvalidArgumentExceptionWhenThrowsArgumentIsInvalid(\Throwable $throwable)
+    {
+        expect(function() use($throwable) {
+                expect(function() use($throwable) { throw $throwable; })->throws(303);
+        })
+        ->throws(\InvalidArgumentException::class)
+        ->withMessage(
+                'Given expected is neither a class name nor an instance'
+                . ' of \Throwable, but of type integer'
+        );
+    }
+
+    /**
+     * @test
      * @group  issue_5
      * @since  2.1.0
      */
@@ -115,6 +132,23 @@ class ExpectationTest extends \PHPUnit_Framework_TestCase
         expect(function() use($throwable) {
                 expect(function() { /* intentionally empty */ })
                         ->throws(get_class($throwable));
+        })
+        ->throws(AssertionFailure::class)
+        ->withMessage(
+                'Failed asserting that exception of type "'
+                . get_class($throwable) . '" is thrown.'
+        );
+    }
+
+    /**
+     * @test
+     * @dataProvider  throwables
+     */
+    public function expectationThrowsAssertionFailureWhenCodeDoesNotThrowExpectedException(\Throwable $throwable)
+    {
+        expect(function() use($throwable) {
+                expect(function() { /* intentionally empty */ })
+                        ->throws($throwable);
         })
         ->throws(AssertionFailure::class)
         ->withMessage(
@@ -410,7 +444,7 @@ class ExpectationTest extends \PHPUnit_Framework_TestCase
      * @group  issue_1
      * @since  1.6.1
      */
-    public function outputOfUnexpectedExceptionIsHelpful(\Throwable $throwable, string $other)
+    public function outputOfUnexpectedExceptionTypeIsHelpful(\Throwable $throwable, string $other)
     {
         expect(function() use ($throwable, $other) {
                 expect(function() use ($throwable) { throw $throwable; })
@@ -422,6 +456,26 @@ class ExpectationTest extends \PHPUnit_Framework_TestCase
                 . get_class($throwable)
                 . '" with message "not catched" thrown in ' . __FILE__
                 . ' on line ' . $throwable->getLine() . ' matches expected exception "'
+                . $other . '".'
+        );
+    }
+
+    /**
+     * @test
+     * @dataProvider  throwables
+     * @since  2.1.0
+     */
+    public function outputOfUnexpectedExceptionIsHelpful(\Throwable $throwable, string $other)
+    {
+        expect(function() use ($throwable, $other) {
+                expect(function() use ($throwable) { throw $throwable; })
+                        ->throws(new $other());
+        })
+        ->throws(AssertionFailure::class)
+        ->withMessage(
+                'Failed asserting that object of type "'
+                . get_class($throwable)
+                . '" is identical to object of type "'
                 . $other . '".'
         );
     }

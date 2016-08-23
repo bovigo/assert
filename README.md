@@ -673,6 +673,17 @@ expect(function() {
 })->throws();
 ```
 
+Since release 2.1.0 it is possible to verify that exactly a given exception was
+thrown:
+```php
+$exception = new \Exception('failure');
+expect(function() use ($exception) {
+    throw $exception;
+})->throws($exception);
+```
+This will perform an assertion with `isSameAs($exception)` for the thrown
+exception.
+
 Additionally checks on the thrown exception can be performed:
 ```php
 expect(function() {

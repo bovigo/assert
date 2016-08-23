@@ -10,6 +10,8 @@ namespace bovigo\assert;
 use bovigo\assert\predicate\Predicate;
 use bovigo\assert\predicate\ExpectedError;
 use bovigo\assert\predicate\ExpectedException;
+
+use function bovigo\assert\predicate\isSameAs;
 /**
  * An expectation executes some code after which assertions can be made.
  *
@@ -76,27 +78,39 @@ class Expectation
     /**
      * asserts the code throws an exception when executed
      *
-     * If no expected type is given any thrown exception will be sufficient.
+     * If no expected is given any thrown exception will be sufficient.
      *
      * @api
-     * @param   string  $expectedType  optional  type of exception
+     * @param   string|\Throwable  $expected  optional  type of exception or the exact exception
      * @return  \bovigo\assert\CatchedException
      * @throws  \bovigo\assert\AssertionFailure
+     * @throws  \InvalidArgumentException
      */
-    public function throws(string $expectedType = null): CatchedException
+    public function throws($expected = null): CatchedException
     {
         $this->runCode();
         if (null === $this->exception) {
             throw new AssertionFailure(
                     'Failed asserting that '
-                    . (null !== $expectedType
-                        ? 'exception of type "' . $expectedType . '"'
+                    . (null !== $expected
+                        ? 'exception of type "' . (is_string($expected) ? $expected : get_class($expected)) . '"'
                         : 'an exception'
                     )
                     . ' is thrown.'
             );
-        } elseif (null !== $expectedType) {
-            assert($this->exception, new ExpectedException($expectedType));
+        } elseif (null !== $expected) {
+            if (is_string($expected)) {
+                $isExpected = new ExpectedException($expected);
+            } elseif ($expected instanceof \Throwable) {
+                $isExpected = isSameAs($expected);
+            } else {
+                throw new \InvalidArgumentException(
+                        'Given expected is neither a class name nor an instance'
+                        . ' of \Throwable, but of type ' . gettype($expected)
+                );
+            }
+
+            assert($this->exception, $isExpected);
         }
 
         return new CatchedException($this->exception);
