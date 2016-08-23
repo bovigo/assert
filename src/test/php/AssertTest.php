@@ -171,4 +171,46 @@ some more info'
 '
         );
     }
+
+    /**
+     * @test
+     * @group  issue_3
+     * @since  2.1.0
+     */
+    public function outputOfReturnsTrueOnSuccess()
+    {
+        assertTrue(
+                outputOf(
+                        function() { echo 'Hello world!'; },
+                        equals('Hello world!')
+                )
+        );
+    }
+
+    /**
+     * @test
+     * @group  issue_3
+     * @since  2.1.0
+     */
+    public function outputOfThrowsAssertionFailureWhenOutputDoesSatisfyPredicate()
+    {
+        expect(function() {
+                outputOf(
+                        function() { echo 'Hello you!'; },
+                        equals('Hello world!'),
+                        'So be it'
+                );
+        })
+        ->throws(AssertionFailure::class)
+        ->withMessage(
+                "Failed asserting that 'Hello you!' is equal to <string:Hello world!>.
+--- Expected
++++ Actual
+@@ @@
+-'Hello world!'
++'Hello you!'
+
+So be it"
+        );
+    }
 }

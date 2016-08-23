@@ -799,6 +799,25 @@ expect(function() {
 ```
 
 
+Verify output of a function or method
+-------------------------------------
+_Available since release 2.1.0_
+
+When a function or method utilizes `echo` it can be cumbersome to check if it
+prints the correct output. For this, the `outputOf()` function was introduced:
+
+```php
+outputOf(
+        function() { echo 'Hello you!'; },
+        equals('Hello world!')
+);
+```
+
+The first parameter is a callable which prints some output, the second is any
+predicate which will than be applied to the output. `outputOf()` takes care of
+enabling and disabling output buffering to catch the output.
+
+
 PHPUnit compatibility layer
 ---------------------------
 

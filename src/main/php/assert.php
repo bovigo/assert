@@ -52,13 +52,32 @@ function fail(string $description)
 /**
  * sets up an expectation for given code
  *
- * @param   \bovigo\assert\callable  $code
+ * @param   callable  $code
  * @return  \bovigo\assert\Expectation
  * @since   1.6.0
  */
 function expect(callable $code): Expectation
 {
     return new Expectation($code);
+}
+
+/**
+ * asserts that the output of given code satisfies given predicate
+ *
+ * @param   callable                                     $code
+ * @param   \bovigo\assert\predicate\Predicate|callable  $predicate    predicate or callable to test given value
+ * @param   string                                       $description  optional  additional description for failure message
+ * @return  true
+ * @throws  \bovigo\assert\AssertionFailure
+ * @since   2.1.0
+ */
+function outputOf(callable $code, callable $predicate, string $description = null): bool
+{
+    ob_start();
+    $code();
+    $printed = ob_get_contents();
+    ob_end_clean();
+    return assert($printed, $predicate, $description);
 }
 
 /**

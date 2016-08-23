@@ -1,6 +1,7 @@
-2.1.0 (2016-08-22)
+2.1.0 (2016-08-23)
 ------------------
 
+  * implemented #3 add support for testing output by adding `bovigo\assert\outputOf()`
   * implemented #4 `bovigo\assert\expect()` should work with `\Error`
   * implemented #5 `bovigo\assert\expect()` should provide possibility to test `trigger_error()`
   * allowed to use `bovigo\assert\expect()->throws()` with an instance of `\Throwable`, will assert thrown exception is identical insteaf of asserting correct type only
