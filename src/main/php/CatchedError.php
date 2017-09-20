@@ -20,7 +20,7 @@ class CatchedError
     /**
      * map of error level numbers and their textual name
      */
-    const LEVEL = [
+    private const LEVEL = [
                 E_ERROR             => 'E_ERROR',
                 E_WARNING           => 'E_WARNING',
                 E_PARSE             => 'E_PARSE',
@@ -38,6 +38,18 @@ class CatchedError
                 E_USER_DEPRECATED   => 'E_USER_DEPRECATED',
                 E_ALL               => 'E_ALL'
     ];
+
+    /**
+     * checks whether a given error level value is known
+     *
+     * @since   3.0.0
+     * @param   int  $level
+     * @return  bool
+     */
+    public static function knowsLevel(int $level): bool
+    {
+      return isset(CatchedError::LEVEL[$level]);
+    }
 
     /**
      * returns the name of the integer error level

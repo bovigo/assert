@@ -161,7 +161,7 @@ class Expectation
      */
     public function triggers(int $expectedError = null): CatchedError
     {
-        if (null !== $expectedError && !isset(CatchedError::LEVEL[$expectedError])) {
+        if (null !== $expectedError && !CatchedError::knowsLevel($expectedError)) {
             throw new \InvalidArgumentException('Unknown error level ' . $expectedError);
         }
 

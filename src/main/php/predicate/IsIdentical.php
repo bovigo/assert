@@ -18,7 +18,7 @@ class IsIdentical extends Predicate
     /**
      * @type float
      */
-    const EPSILON = 0.0000000001;
+    private const EPSILON = 0.0000000001;
     /**
      *
      * @type  mixed
