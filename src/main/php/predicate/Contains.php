@@ -47,7 +47,7 @@ class Contains extends Predicate
             return false !== strpos($value, (string) $this->needle);
         }
 
-        if (is_array($value) || $value instanceof \Traversable) {
+        if (is_iterable($value)) {
             foreach ($value as $element) {
                 if ($element === $this->needle) {
                     return true;
