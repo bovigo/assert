@@ -58,18 +58,18 @@ abstract class IteratingPredicate extends Predicate
     /**
      * actually tests the value
      *
-     * @param   array|\Traversable  $traversable
+     * @param   iterable  $traversable
      * @return  bool
      */
-    protected abstract function doTest($traversable): bool;
+    protected abstract function doTest(iterable $traversable): bool;
 
     /**
      * retrieve actual iterator
      *
-     * @param   array|\Traversable  $traversable
+     * @param   iterable  $traversable
      * @return  array|\Iterator
      */
-    private function traversable($traversable)
+    private function traversable(iterable $traversable)
     {
         if ($traversable instanceof \IteratorAggregate) {
             return $traversable->getIterator();
@@ -96,10 +96,10 @@ abstract class IteratingPredicate extends Predicate
     /**
      * rewinds traversable to given key to not change state of traversable
      *
-     * @param  array|\Iterator  $traversable
-     * @param  int|string          $key
+     * @param  iterable    $traversable
+     * @param  int|string  $key
      */
-    private function rewind($traversable, $key)
+    private function rewind(iterable $traversable, $key)
     {
         if ($key === null) {
             return;

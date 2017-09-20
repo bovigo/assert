@@ -26,10 +26,10 @@ class EachKey extends IteratingPredicate
     /**
      * actually tests the value
      *
-     * @param   array|\Traversable  $traversable
+     * @param   iterable  $traversable
      * @return  bool
      */
-    protected function doTest($traversable): bool
+    protected function doTest(iterable $traversable): bool
     {
         foreach ($traversable as $key => $entry) {
             if (!$this->predicate->test($key)) {
