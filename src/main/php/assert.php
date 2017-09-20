@@ -199,7 +199,7 @@ function assertNotEmpty($value, string $description = null): bool
  * @staticvar  \ReflectionProperty  $property
  * @param   int  $assertions
  */
-function increaseAssertionCounter(int $assertions)
+function increaseAssertionCounter(int $assertions): void
 {
     static $property = null;
     if (null === $property && class_exists('\PHPUnit\Framework\Assert')) {
