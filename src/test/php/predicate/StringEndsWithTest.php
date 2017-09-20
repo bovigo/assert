@@ -8,6 +8,7 @@ declare(strict_types=1);
  */
 namespace bovigo\assert\predicate;
 use bovigo\assert\AssertionFailure;
+use PHPUnit\Framework\TestCase;
 
 use function bovigo\assert\assert;
 use function bovigo\assert\expect;
@@ -17,7 +18,7 @@ use function bovigo\assert\expect;
  * @group  predicate
  * @since  1.1.0
  */
-class StringEndsWithTest extends \PHPUnit_Framework_TestCase
+class StringEndsWithTest extends TestCase
 {
     /**
      * @test

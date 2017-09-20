@@ -1,3 +1,12 @@
+3.0.0 (2017-09-20)
+------------------
+
+### BC breaks
+
+  * raised minimum required PHP version to 7.1.0
+  * updated dependencies to be compatible with PHPUnit 6.x
+
+
 2.2.0 (2017-09-20)
 ------------------
 

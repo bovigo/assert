@@ -7,13 +7,15 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 namespace bovigo\assert\predicate;
+use PHPUnit\Framework\TestCase;
+
 use function bovigo\assert\assert;
 /**
  * Test for bovigo\assert\assert\predicate\AndPredicate.
  *
  * @group  predicate
  */
-class AndPredicateTest extends \PHPUnit_Framework_TestCase
+class AndPredicateTest extends TestCase
 {
     /**
      * instance to test

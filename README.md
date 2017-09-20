@@ -19,17 +19,17 @@ _bovigo/assert_ is distributed as [Composer](https://getcomposer.org/) package.
 To install it as a development dependency of your package use the following
 command:
 
-    composer require --dev "bovigo/assert": "^2.0"
+    composer require --dev "bovigo/assert": "^3.0"
 
 To install it as a runtime dependency for your package use the following command:
 
-    composer require "bovigo/assert=^2.0"
+    composer require "bovigo/assert=^3.0"
 
 
 Requirements
 ------------
 
-_bovigo/assert_ 2.x requires at least PHP 7.0. For PHP 5.6 use the 1.x releases.
+_bovigo/assert_ 3.x requires at least PHP 7.1. For PHP 7.0 use the 2.x releases.
 
 
 Why?
@@ -57,7 +57,7 @@ supplied to enhance clarity in case the assertion fails.
 
 In case the predicate fails an `AssertionFailure` will be thrown with useful
 information of why the test failed. In case PHPUnit is used `AssertionFailure`
-is an instance of `\PHPUnit_Framework_ExpectationFailedException` so it
+is an instance of `\PHPUnit\Framework\ExpectationFailedException` so it
 integrates nicely into PHPUnit, yielding a similar test output as PHPUnit's
 constraints. Here is an example of the output in case of a test failure:
 
@@ -823,8 +823,8 @@ PHPUnit compatibility layer
 
 In case you want to check out how _bovigo/assert_ works with your tests there is
 a PHPUnit compatibility layer available. Instead of extending directly from
-`\PHPUnit_Framework_TestCase` let your tests extend
-`bovigo\assert\phpunit\PHPUnit_Framework_TestCase`. It overlays all constraints
+`\PHPUnit\Framework\TestCase` let your tests extend
+`bovigo\assert\phpunit\TestCase`. It overlays all constraints
 from PHPUnit with predicates from _bovigo/assert_  where they are available.
 For constraints which have no equivalent predicate in _bovigo/assert_ the
 default constraints from PHPUnit are used.

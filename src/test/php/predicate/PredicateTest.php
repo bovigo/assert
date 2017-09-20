@@ -8,6 +8,7 @@ declare(strict_types=1);
  */
 namespace bovigo\assert\predicate;
 use bovigo\assert\AssertionFailure;
+use PHPUnit\Framework\TestCase;
 
 use function bovigo\assert\assert;
 use function bovigo\assert\expect;
@@ -52,7 +53,7 @@ class ThrowingPredicate extends FooPredicate
  *
  * @group  predicate
  */
-class PredicateTest extends \PHPUnit_Framework_TestCase
+class PredicateTest extends TestCase
 {
     /**
      * @test

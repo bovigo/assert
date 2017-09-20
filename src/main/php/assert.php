@@ -197,22 +197,32 @@ function assertNotEmpty($value, string $description = null): bool
  *
  * @internal
  * @staticvar  \ReflectionProperty  $property
- * @param   \bovigo\assert\predicate\Predicate  $predicate
- * @return  \bovigo\assert\predicate\Predicate
+ * @param   int  $assertions
  */
-function counting(Predicate $predicate): Predicate
+function increaseAssertionCounter(int $assertions)
 {
     static $property = null;
-    if (null === $property && class_exists('\PHPUnit_Framework_Assert')) {
-        $assertClass = new \ReflectionClass(\PHPUnit_Framework_Assert::class);
+    if (null === $property && class_exists('\PHPUnit\Framework\Assert')) {
+        $assertClass = new \ReflectionClass(\PHPUnit\Framework\Assert::class);
         $property = $assertClass->getProperty('count');
         $property->setAccessible(true);
     }
 
     if (null !== $property) {
-        $property->setValue(null, $property->getValue() + count($predicate));
+        $property->setValue(null, $property->getValue() + $assertions);
     }
+}
 
+/**
+ * adds predicate count as constraint count to PHPUnit if present
+ *
+ * @internal
+ * @param   \bovigo\assert\predicate\Predicate  $predicate
+ * @return  \bovigo\assert\predicate\Predicate
+ */
+function counting(Predicate $predicate): Predicate
+{
+    increaseAssertionCounter(count($predicate));
     return $predicate;
 }
 
@@ -248,9 +258,9 @@ function exporter(): Exporter
 /**
  * blacklist our own classes from being displayed in PHPUnit error stacks
  */
-if (class_exists('\PHPUnit_Util_Blacklist')) {
-    \PHPUnit_Util_Blacklist::$blacklistedClassNames = array_merge(
-            \PHPUnit_Util_Blacklist::$blacklistedClassNames,
+if (class_exists('\PHPUnit\Util\Blacklist')) {
+    \PHPUnit\Util\Blacklist::$blacklistedClassNames = array_merge(
+            \PHPUnit\Util\Blacklist::$blacklistedClassNames,
             [Assertion::class => 1]
     );
 }

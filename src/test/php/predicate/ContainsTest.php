@@ -8,6 +8,7 @@ declare(strict_types=1);
  */
 namespace bovigo\assert\predicate;
 use bovigo\assert\AssertionFailure;
+use PHPUnit\Framework\TestCase;
 
 use function bovigo\assert\assert;
 use function bovigo\assert\expect;
@@ -16,7 +17,7 @@ use function bovigo\assert\expect;
  *
  * @group  predicate
  */
-class ContainsTest extends \PHPUnit_Framework_TestCase
+class ContainsTest extends TestCase
 {
     /**
      * returns tuples which evaluate to true

@@ -8,6 +8,7 @@ declare(strict_types=1);
  */
 namespace bovigo\assert\predicate;
 use bovigo\assert\AssertionFailure;
+use PHPUnit\Framework\TestCase;
 
 use function bovigo\assert\assert;
 use function bovigo\assert\expect;
@@ -33,7 +34,7 @@ class IteratorAggregateEachExample implements \IteratorAggregate
  * @group  predicate
  * @since  1.1.0
  */
-class EachTest extends \PHPUnit_Framework_TestCase
+class EachTest extends TestCase
 {
     /**
      * @test

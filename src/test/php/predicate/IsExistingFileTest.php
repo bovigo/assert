@@ -9,6 +9,7 @@ declare(strict_types=1);
 namespace bovigo\assert\predicate;
 use bovigo\assert\AssertionFailure;
 use org\bovigo\vfs\vfsStream;
+use PHPUnit\Framework\TestCase;
 
 use function bovigo\assert\assert;
 use function bovigo\assert\expect;
@@ -18,7 +19,7 @@ use function bovigo\assert\expect;
  * @group  filesystem
  * @group  predicate
  */
-class IsExistingFileTest extends \PHPUnit_Framework_TestCase
+class IsExistingFileTest extends TestCase
 {
     /**
      * set up test environment

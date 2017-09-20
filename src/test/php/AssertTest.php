@@ -7,16 +7,19 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 namespace bovigo\assert;
+use PHPUnit\Framework\TestCase;
+
 use function bovigo\assert\predicate\equals;
 use function bovigo\assert\predicate\isSameAs;
 use function bovigo\assert\predicate\isTrue;
+use function bovigo\assert\predicate\startsWith;
 /**
  * Tests for bovigo\assert\*().
  *
  * @group  assert
  * @since  1.2.0
  */
-class AssertTest extends \PHPUnit_Framework_TestCase
+class AssertTest extends TestCase
 {
     /**
      * @test
@@ -84,14 +87,14 @@ some more info'
      */
     public function assertionCounterIsIncreasedByAmountOfPredicatesUsedForAssertion()
     {
-        if (!class_exists('\PHPUnit_Framework_Assert')) {
+        if (!class_exists('\PHPUnit\Framework\Assert')) {
             $this->skip('Can not test this without PHPUnit');
         }
 
-        $countBeforeAssertion = \PHPUnit_Framework_Assert::getCount();
+        $countBeforeAssertion = \PHPUnit\Framework\Assert::getCount();
         assert('some value', function() { return true; });
         assert(
-                \PHPUnit_Framework_Assert::getCount(),
+                \PHPUnit\Framework\Assert::getCount(),
                 equals($countBeforeAssertion + 1)
         );
     }
@@ -101,17 +104,17 @@ some more info'
      */
     public function assertionCounterIsIncreasedInCaseOfFailure()
     {
-        if (!class_exists('\PHPUnit_Framework_Assert')) {
+        if (!class_exists('\PHPUnit\Framework\Assert')) {
             $this->skip('Can not test this without PHPUnit');
         }
 
-        $countBeforeAssertion = \PHPUnit_Framework_Assert::getCount();
+        $countBeforeAssertion = \PHPUnit\Framework\Assert::getCount();
         expect(function() {
             assert('some value', function() { return false; }, 'some more info');
         })
         ->throws(AssertionFailure::class)
         ->after(
-                \PHPUnit_Framework_Assert::getCount(),
+                \PHPUnit\Framework\Assert::getCount(),
                 equals($countBeforeAssertion + 2) // one for assert(), one for throws()
         );
     }
@@ -160,16 +163,15 @@ some more info'
     {
         expect(function() { assertEmptyArray(['foo']); })
                 ->throws(AssertionFailure::class)
-                ->withMessage(
+                ->message(startsWith(
                         'Failed asserting that an array is an empty array.
 --- Expected
 +++ Actual
 @@ @@
  Array (
 +    0 => \'foo\'
- )
 '
-        );
+        ));
     }
 
     /**

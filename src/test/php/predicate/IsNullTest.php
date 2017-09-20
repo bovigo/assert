@@ -8,6 +8,7 @@ declare(strict_types=1);
  */
 namespace bovigo\assert\predicate;
 use bovigo\assert\AssertionFailure;
+use PHPUnit\Framework\TestCase;
 
 use function bovigo\assert\{
     assertFalse,
@@ -21,7 +22,7 @@ use function bovigo\assert\{
  *
  * @group  predicate
  */
-class IsNullTest extends \PHPUnit_Framework_TestCase
+class IsNullTest extends TestCase
 {
     /**
      * @test

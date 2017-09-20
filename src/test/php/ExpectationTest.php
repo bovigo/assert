@@ -9,6 +9,7 @@ declare(strict_types=1);
 namespace bovigo\assert;
 use bovigo\assert\predicate\ExpectedError;
 use bovigo\assert\predicate\ExpectedException;
+use PHPUnit\Framework\TestCase;
 
 use function bovigo\assert\predicate\{
     isFalse,
@@ -21,7 +22,7 @@ use function bovigo\assert\predicate\{
  *
  * @since  1.6.0
  */
-class ExpectationTest extends \PHPUnit_Framework_TestCase
+class ExpectationTest extends TestCase
 {
     public static function throwables(): array
     {

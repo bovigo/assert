@@ -16,7 +16,7 @@ use function bovigo\assert\predicate\contains;
  *
  * @group  phpunit
  */
-class CompatibilityTest extends PHPUnit_Framework_TestCase
+class CompatibilityTest extends TestCase
 {
     /**
      * @test
@@ -813,7 +813,7 @@ class CompatibilityTest extends PHPUnit_Framework_TestCase
      */
     public function testAssertThat()
     {
-        $this->assertThat('foo', new \PHPUnit_Framework_Constraint_IsEqual('foo'));
+        $this->assertThat('foo', new \PHPUnit\Framework\Constraint\IsEqual('foo'));
     }
 
     /**
@@ -823,7 +823,7 @@ class CompatibilityTest extends PHPUnit_Framework_TestCase
     public function testAssertThatWithFailure()
     {
         expect(function() {
-                $this->assertThat('foo', new \PHPUnit_Framework_Constraint_IsEqual('bar'));
+                $this->assertThat('foo', new \PHPUnit\Framework\Constraint\IsEqual('bar'));
         })->throws(AssertionFailure::class);
     }
 }

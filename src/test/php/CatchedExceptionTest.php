@@ -7,6 +7,8 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 namespace bovigo\assert;
+use PHPUnit\Framework\TestCase;
+
 use function bovigo\assert\predicate\{
     contains,
     isInstanceOf,
@@ -18,7 +20,7 @@ use function bovigo\assert\predicate\{
  *
  * @since  1.6.0
  */
-class CatchedExceptionTest extends \PHPUnit_Framework_TestCase
+class CatchedExceptionTest extends TestCase
 {
     public static function throwables(): array
     {

@@ -9,6 +9,7 @@ declare(strict_types=1);
 namespace bovigo\assert\phpunit;
 use bovigo\assert\AssertionFailure;
 use bovigo\assert\predicate\Predicate;
+use PHPUnit\Framework\Constraint\Constraint;
 use SebastianBergmann\Exporter\Exporter;
 /**
  * Predicate which allows to use constraints from PHPUnit as predicate.
@@ -18,16 +19,16 @@ use SebastianBergmann\Exporter\Exporter;
 class ConstraintAdapter extends Predicate
 {
     /**
-     * @type  \PHPUnit_Framework_Constraint
+     * @type  \PHPUnit\Framework\Constraint
      */
     private $constraint;
 
     /**
      * constructor
      *
-     * @param  \PHPUnit_Framework_Constraint  $constraint
+     * @param  \PHPUnit\Framework\Constraint  $constraint
      */
-    public function __construct(\PHPUnit_Framework_Constraint $constraint)
+    public function __construct(Constraint $constraint)
     {
         $this->constraint = $constraint;
     }

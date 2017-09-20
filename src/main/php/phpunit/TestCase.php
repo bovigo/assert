@@ -43,7 +43,9 @@ declare(strict_types=1);
  * POSSIBILITY OF SUCH DAMAGE.
  */
 namespace bovigo\assert\phpunit;
-use \PHPUnit_Framework_TestCase as Original;
+use PHPUnit\Framework\TestCase as Original;
+use PHPUnit\Framework\Constraint\Constraint;
+use PHPUnit\Util\Type;
 
 use function bovigo\assert\{
     assert,
@@ -93,7 +95,7 @@ use function bovigo\assert\predicate\{
  *
  * @api
  */
-abstract class PHPUnit_Framework_TestCase extends Original
+abstract class TestCase extends Original
 {
     /**
      * Asserts that an array has a specified key.
@@ -177,7 +179,7 @@ abstract class PHPUnit_Framework_TestCase extends Original
     public static function assertContainsOnly($type, $haystack, $isNativeType = null, $message = '')
     {
         if (null === $isNativeType) {
-            $isNativeType = \PHPUnit_Util_Type::isType($type);
+            $isNativeType = Type::isType($type);
         }
 
         if (false === $isNativeType) {
@@ -212,7 +214,7 @@ abstract class PHPUnit_Framework_TestCase extends Original
     public static function assertNotContainsOnly($type, $haystack, $isNativeType = null, $message = '')
     {
         if (null === $isNativeType) {
-            $isNativeType = \PHPUnit_Util_Type::isType($type);
+            $isNativeType = Type::isType($type);
         }
 
         assert(
@@ -617,13 +619,13 @@ abstract class PHPUnit_Framework_TestCase extends Original
     }
 
     /**
-     * Evaluates a PHPUnit_Framework_Constraint matcher object.
+     * Evaluates a PHPUnit\Framework\Constraint matcher object.
      *
-     * @param  mixed                          $value
-     * @param  \PHPUnit_Framework_Constraint  $constraint
-     * @param  string                         $message
+     * @param  mixed                         $value
+     * @param  PHPUnit\Framework\Constraint  $constraint
+     * @param  string                        $message
      */
-    public static function assertThat($value, \PHPUnit_Framework_Constraint $constraint, $message = '')
+    public static function assertThat($value, Constraint $constraint, $message = '')
     {
         assert($value, new ConstraintAdapter($constraint), $message);
     }

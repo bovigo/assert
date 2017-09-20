@@ -129,6 +129,7 @@ class Expectation
      */
     public function doesNotThrow(string $unexpectedType = null): self
     {
+        increaseAssertionCounter(1);
         $this->runCode();
         if (null !== $this->exception
                 && (null === $unexpectedType || $this->exception instanceof $unexpectedType)) {
