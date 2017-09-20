@@ -1,9 +1,3 @@
-2.2.0 (2017-09-20)
-------------------
-
-  * updated sebastian/exporter to 2.0 to ensure compatibility with PHPUnit 5.7
-
-
 2.1.0 (2016-08-23)
 ------------------
 
