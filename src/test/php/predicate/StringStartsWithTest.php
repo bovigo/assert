@@ -10,7 +10,9 @@ namespace bovigo\assert\predicate;
 use bovigo\assert\AssertionFailure;
 use PHPUnit\Framework\TestCase;
 
-use function bovigo\assert\assert;
+use function bovigo\assert\assertFalse;
+use function bovigo\assert\assertThat;
+use function bovigo\assert\assertTrue;
 use function bovigo\assert\expect;
 /**
  * Tests for bovigo\assert\predicate\StringStartsWith.
@@ -47,7 +49,7 @@ class StringStartsWithTest extends TestCase
      */
     public function evaluatesToTrueIfStringStartsWithPrefix($value)
     {
-        assert(startsWith('foo')->test($value), isTrue());
+        assertTrue(startsWith('foo')->test($value));
     }
 
     /**
@@ -68,7 +70,7 @@ class StringStartsWithTest extends TestCase
      */
     public function evaluatesToFalseIfGivenValueIsFalse($value)
     {
-        assert(startsWith('foo')->test($value), isFalse());
+        assertFalse(startsWith('foo')->test($value));
     }
 
     /**
@@ -76,7 +78,7 @@ class StringStartsWithTest extends TestCase
      */
     public function assertionFailureContainsMeaningfulInformation()
     {
-        expect(function() { assert('bar', startsWith('foo')); })
+        expect(function() { assertThat('bar', startsWith('foo')); })
                 ->throws(AssertionFailure::class)
                 ->withMessage("Failed asserting that 'bar' starts with 'foo'.");
     }

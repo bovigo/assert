@@ -10,7 +10,9 @@ namespace bovigo\assert\predicate;
 use bovigo\assert\AssertionFailure;
 use PHPUnit\Framework\TestCase;
 
-use function bovigo\assert\assert;
+use function bovigo\assert\assertFalse;
+use function bovigo\assert\assertThat;
+use function bovigo\assert\assertTrue;
 use function bovigo\assert\expect;
 /**
  * Helper class for the test.
@@ -51,7 +53,7 @@ class EachTest extends TestCase
      */
     function canBeUsedWithCallable()
     {
-        assert([3.03, 3.13], each('is_finite'));
+        assertThat([3.03, 3.13], each('is_finite'));
     }
 
     /**
@@ -59,7 +61,7 @@ class EachTest extends TestCase
      */
     public function evaluatesToTrueIfArrayIsEmpty()
     {
-        assert(each(isNotNull())->test([]), isTrue());
+        assertTrue(each(isNotNull())->test([]));
     }
 
     /**
@@ -67,7 +69,7 @@ class EachTest extends TestCase
      */
     public function evaluatesToTrueIfTraversableIsEmpty()
     {
-        assert(each(isNotNull())->test(new \ArrayIterator([])), isTrue());
+        assertTrue(each(isNotNull())->test(new \ArrayIterator([])));
     }
 
     /**
@@ -75,7 +77,7 @@ class EachTest extends TestCase
      */
     public function evaluatesToTrueIfEachValueInArrayFulfillsPredicate()
     {
-        assert(each(isNotNull())->test([303, 'foo']), isTrue());
+        assertTrue(each(isNotNull())->test([303, 'foo']));
     }
 
     /**
@@ -83,10 +85,7 @@ class EachTest extends TestCase
      */
     public function evaluatesToTrueIfEachValueInTraversableFulfillsPredicate()
     {
-        assert(
-                each(isNotNull())->test(new \ArrayIterator([303, 'foo'])),
-                isTrue()
-        );
+        assertTrue(each(isNotNull())->test(new \ArrayIterator([303, 'foo'])));
     }
 
     /**
@@ -94,7 +93,7 @@ class EachTest extends TestCase
      */
     public function evaluatesToFalseIfSingleValueInArrayDoesNotFulfillPredicate()
     {
-        assert(each(isNotNull())->test([303, null, 'foo']), isFalse());
+        assertFalse(each(isNotNull())->test([303, null, 'foo']));
     }
 
     /**
@@ -102,10 +101,7 @@ class EachTest extends TestCase
      */
     public function evaluatesToFalseIfSingleValueInTraversableDoesNotFulfillPredicate()
     {
-        assert(
-                each(isNotNull())->test(new \ArrayIterator([303, null, 'foo'])),
-                isFalse()
-        );
+        assertFalse(each(isNotNull())->test(new \ArrayIterator([303, null, 'foo'])));
     }
 
     /**
@@ -116,7 +112,7 @@ class EachTest extends TestCase
         $array = [303, 313, 'foo'];
         next($array);
         each(isNotNull())->test($array);
-        assert(current($array), equals(313));
+        assertThat(current($array), equals(313));
     }
 
     /**
@@ -127,7 +123,7 @@ class EachTest extends TestCase
         $traversable = new \ArrayIterator([303, 313, 'foo']);
         $traversable->next();
         each(isNotNull())->test($traversable);
-        assert($traversable->current(), equals(313));
+        assertThat($traversable->current(), equals(313));
     }
 
     /**
@@ -138,7 +134,7 @@ class EachTest extends TestCase
         $traversable = new IteratorAggregateEachExample();
         $traversable->getIterator()->next();
         each(isNotNull())->test($traversable);
-        assert($traversable->getIterator()->current(), equals(313));
+        assertThat($traversable->getIterator()->current(), equals(313));
     }
 
     /**
@@ -146,7 +142,7 @@ class EachTest extends TestCase
      */
     public function countReturnsCountOfWrappedPredicate()
     {
-        assert(count(each(isGreaterThanOrEqualTo(4))), equals(2));
+        assertThat(count(each(isGreaterThanOrEqualTo(4))), equals(2));
     }
 
     /**
@@ -154,7 +150,7 @@ class EachTest extends TestCase
      */
     public function assertionFailureContainsMeaningfulInformation()
     {
-        expect(function() { assert(['foo'], each(isNull())); })
+        expect(function() { assertThat(['foo'], each(isNull())); })
                 ->throws(AssertionFailure::class)
                 ->withMessage(
                         'Failed asserting that element \'foo\' at key 0 in Array &0 (
@@ -169,7 +165,7 @@ class EachTest extends TestCase
     public function assertionFailureContainsMeaningfulInformationWhenCombined()
     {
         expect(function() {
-            assert([], isNotEmpty()->and(each(isNotNull())));
+            assertThat([], isNotEmpty()->and(each(isNotNull())));
         })
         ->throws(AssertionFailure::class)
         ->withMessage(
@@ -182,7 +178,7 @@ class EachTest extends TestCase
      */
     public function assertionFailureContainsMeaningfulInformationOnWhichElementFailed()
     {
-        expect(function() { assert(['foo', 'bar', null, 'baz'], each(isNotNull())); })
+        expect(function() { assertThat(['foo', 'bar', null, 'baz'], each(isNotNull())); })
                 ->throws(AssertionFailure::class)
                 ->withMessage(
                         'Failed asserting that element null at key 2 in Array &0 (

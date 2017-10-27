@@ -10,7 +10,9 @@ namespace bovigo\assert\predicate;
 use bovigo\assert\AssertionFailure;
 use PHPUnit\Framework\TestCase;
 
-use function bovigo\assert\assert;
+use function bovigo\assert\assertFalse;
+use function bovigo\assert\assertThat;
+use function bovigo\assert\assertTrue;
 use function bovigo\assert\expect;
 /**
  * Helper class for the test.
@@ -68,7 +70,7 @@ class HasKeyTest extends TestCase
      */
     public function evaluatesToTrue($key, $array)
     {
-        assert(hasKey($key)->test($array), isTrue());
+        assertTrue(hasKey($key)->test($array));
     }
 
     /**
@@ -94,7 +96,7 @@ class HasKeyTest extends TestCase
      */
     public function evaluatesToFalse($key, $array)
     {
-        assert(hasKey($key)->test($array), isFalse());
+        assertFalse(hasKey($key)->test($array));
     }
 
     /**
@@ -111,7 +113,7 @@ class HasKeyTest extends TestCase
      */
     public function assertionFailureWithArrayContainsMeaningfulInformation()
     {
-        expect(function() { assert([], hasKey('bar')); })
+        expect(function() { assertThat([], hasKey('bar')); })
                 ->throws(AssertionFailure::class)
                 ->withMessage("Failed asserting that an array has the key 'bar'.");
     }
@@ -121,7 +123,7 @@ class HasKeyTest extends TestCase
      */
     public function assertionFailureWithArrayAccessContainsMeaningfulInformation()
     {
-        expect(function() { assert(new ArrayAccessExample(), hasKey('bar')); })
+        expect(function() { assertThat(new ArrayAccessExample(), hasKey('bar')); })
                 ->throws(AssertionFailure::class)
                 ->withMessage(
                         "Failed asserting that " . ArrayAccessExample::class

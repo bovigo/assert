@@ -11,7 +11,7 @@ use bovigo\assert\AssertionFailure;
 use PHPUnit\Framework\TestCase;
 
 use function bovigo\assert\{
-    assert,
+    assertThat,
     assertFalse,
     assertTrue,
     expect
@@ -54,7 +54,7 @@ class EachKeyTest extends TestCase
      */
     function canBeUsedWithCallable()
     {
-        assert([303, 313], eachKey('is_int'));
+        assertThat([303, 313], eachKey('is_int'));
     }
 
     /**
@@ -119,7 +119,7 @@ class EachKeyTest extends TestCase
         $array = [303, 313, 'foo'];
         next($array);
         eachKey(isOfType('int'))->test($array);
-        assert(current($array), equals(313));
+        assertThat(current($array), equals(313));
     }
 
     /**
@@ -130,7 +130,7 @@ class EachKeyTest extends TestCase
         $traversable = new \ArrayIterator([303, 313, 'foo']);
         $traversable->next();
         eachKey(isOfType('int'))->test($traversable);
-        assert($traversable->current(), equals(313));
+        assertThat($traversable->current(), equals(313));
     }
 
     /**
@@ -141,7 +141,7 @@ class EachKeyTest extends TestCase
         $traversable = new IteratorAggregateEachKeyExample();
         $traversable->getIterator()->next();
         eachKey(isOfType('int'))->test($traversable);
-        assert($traversable->getIterator()->current(), equals(313));
+        assertThat($traversable->getIterator()->current(), equals(313));
     }
 
     /**
@@ -149,7 +149,7 @@ class EachKeyTest extends TestCase
      */
     public function countReturnsCountOfWrappedPredicate()
     {
-        assert(count(eachKey(isGreaterThanOrEqualTo(4))), equals(2));
+        assertThat(count(eachKey(isGreaterThanOrEqualTo(4))), equals(2));
     }
 
     /**
@@ -157,7 +157,7 @@ class EachKeyTest extends TestCase
      */
     public function assertionFailureContainsMeaningfulInformation()
     {
-        expect(function() { assert(['foo'], eachKey(isNotOfType('int'))); })
+        expect(function() { assertThat(['foo'], eachKey(isNotOfType('int'))); })
                 ->throws(AssertionFailure::class)
                 ->withMessage(
                         'Failed asserting that key 0 in Array &0 (
@@ -172,7 +172,7 @@ class EachKeyTest extends TestCase
     public function assertionFailureContainsMeaningfulInformationWhenCombined()
     {
         expect(function() {
-            assert([], isNotEmpty()->and(eachKey(isNotOfType('int'))));
+            assertThat([], isNotEmpty()->and(eachKey(isNotOfType('int'))));
         })
         ->throws(AssertionFailure::class)
         ->withMessage(

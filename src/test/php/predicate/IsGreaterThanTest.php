@@ -10,7 +10,9 @@ namespace bovigo\assert\predicate;
 use bovigo\assert\AssertionFailure;
 use PHPUnit\Framework\TestCase;
 
-use function bovigo\assert\assert;
+use function bovigo\assert\assertFalse;
+use function bovigo\assert\assertThat;
+use function bovigo\assert\assertTrue;
 use function bovigo\assert\expect;
 /**
  * Tests for bovigo\assert\predicate\IsGreaterThan.
@@ -24,7 +26,7 @@ class IsGreaterThanTest extends TestCase
      */
     public function evaluatesToTrueIfGivenValueIsGreater()
     {
-        assert(isGreaterThan(3)->test(4), isTrue());
+        assertTrue(isGreaterThan(3)->test(4));
     }
 
     /**
@@ -32,7 +34,7 @@ class IsGreaterThanTest extends TestCase
      */
     public function evaluatesToFalseIfGivenValueIsEqual()
     {
-        assert(isGreaterThan(3)->test(3), isFalse());
+        assertFalse(isGreaterThan(3)->test(3));
     }
 
     /**
@@ -40,7 +42,7 @@ class IsGreaterThanTest extends TestCase
      */
     public function evaluatesToFalseIfGivenValueIsLesser()
     {
-        assert(isGreaterThan(3)->test(2), isFalse());
+        assertFalse(isGreaterThan(3)->test(2));
     }
 
     /**
@@ -48,7 +50,7 @@ class IsGreaterThanTest extends TestCase
      */
     public function evaluatesToTrueWhenCombinedWithEqualsAndGivenValueIsEqual()
     {
-        assert(isGreaterThanOrEqualTo(3)->test(3), isTrue());
+        assertTrue(isGreaterThanOrEqualTo(3)->test(3));
     }
 
     /**
@@ -56,7 +58,7 @@ class IsGreaterThanTest extends TestCase
      */
     public function evaluatesToTrueWhenCombinedWithEqualsIfGivenValueIsGreater()
     {
-        assert(isGreaterThanOrEqualTo(3)->test(4), isTrue());
+        assertTrue(isGreaterThanOrEqualTo(3)->test(4));
     }
 
     /**
@@ -64,7 +66,7 @@ class IsGreaterThanTest extends TestCase
      */
     public function evaluatesToFalseWhenCombinedWithEqualsIfGivenValueIsLesser()
     {
-        assert(isGreaterThanOrEqualTo(3)->test(2), isFalse());
+        assertFalse(isGreaterThanOrEqualTo(3)->test(2));
     }
 
     /**
@@ -72,7 +74,7 @@ class IsGreaterThanTest extends TestCase
      */
     public function assertionFailureContainsMeaningfulInformation()
     {
-        expect(function() { assert(1, isGreaterThan(2)); })
+        expect(function() { assertThat(1, isGreaterThan(2)); })
                 ->throws(AssertionFailure::class)
                 ->withMessage("Failed asserting that 1 is greater than 2.");
     }
@@ -82,7 +84,7 @@ class IsGreaterThanTest extends TestCase
      */
     public function assertionFailureWhenCombinedWithEqualsContainsMeaningfulInformation()
     {
-        expect(function() { assert(1, isGreaterThanOrEqualTo(2)); })
+        expect(function() { assertThat(1, isGreaterThanOrEqualTo(2)); })
                 ->throws(AssertionFailure::class)
                 ->withMessage(
                         "Failed asserting that 1 is equal to 2 or is greater than 2."

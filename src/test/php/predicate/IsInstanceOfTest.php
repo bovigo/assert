@@ -10,7 +10,9 @@ namespace bovigo\assert\predicate;
 use bovigo\assert\AssertionFailure;
 use PHPUnit\Framework\TestCase;
 
-use function bovigo\assert\assert;
+use function bovigo\assert\assertFalse;
+use function bovigo\assert\assertThat;
+use function bovigo\assert\assertTrue;
 use function bovigo\assert\expect;
 /**
  * Tests for bovigo\assert\predicate\IsInstanceOf.
@@ -33,7 +35,7 @@ class IsInstanceOfTest extends TestCase
      */
     public function evaluatesToTrueIfGivenValueIsInstanceOfExpectedType()
     {
-        assert(isInstanceOf(__CLASS__)->test($this), isTrue());
+        assertTrue(isInstanceOf(__CLASS__)->test($this));
     }
 
     /**
@@ -41,7 +43,7 @@ class IsInstanceOfTest extends TestCase
      */
     public function evaluatesToFalseIfGivenValueIsNotInstanceOfExpectedType()
     {
-        assert(isInstanceOf('\stdClass')->test($this), isFalse());
+        assertFalse(isInstanceOf('\stdClass')->test($this));
     }
 
     /**
@@ -50,7 +52,7 @@ class IsInstanceOfTest extends TestCase
     public function assertionFailureContainsMeaningfulInformation()
     {
 
-        expect(function() { assert([], isInstanceOf('\stdClass')); })
+        expect(function() { assertThat([], isInstanceOf('\stdClass')); })
                 ->throws(AssertionFailure::class)
                 ->withMessage(
                         'Failed asserting that an array is an instance of class "\stdClass".'
@@ -62,7 +64,7 @@ class IsInstanceOfTest extends TestCase
      */
     public function assertionFailureWithObjectsContainsMeaningfulInformation()
     {
-        expect(function() { assert(new self(), isInstanceOf('\stdClass')); })
+        expect(function() { assertThat(new self(), isInstanceOf('\stdClass')); })
                 ->throws(AssertionFailure::class)
                 ->withMessage(
                         'Failed asserting that ' . IsInstanceOfTest::class

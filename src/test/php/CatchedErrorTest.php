@@ -33,7 +33,7 @@ class CatchedErrorTest extends TestCase
      */
     public function withMessageComparesUsingEquals()
     {
-        assert(
+        assertThat(
                 $this->catchedError->withMessage('error'),
                 isInstanceOf(CatchedError::class)
         );
@@ -64,7 +64,7 @@ class CatchedErrorTest extends TestCase
      */
     public function messageAssertsWithGivenPredicate()
     {
-        assert(
+        assertThat(
                 $this->catchedError->message(contains('err')),
                 isInstanceOf(CatchedError::class)
         );

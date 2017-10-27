@@ -10,7 +10,9 @@ namespace bovigo\assert\predicate;
 use bovigo\assert\AssertionFailure;
 use PHPUnit\Framework\TestCase;
 
-use function bovigo\assert\assert;
+use function bovigo\assert\assertFalse;
+use function bovigo\assert\assertThat;
+use function bovigo\assert\assertTrue;
 use function bovigo\assert\expect;
 /**
  * Tests for bovigo\assert\predicate\Equals.
@@ -43,7 +45,7 @@ class EqualsTest extends TestCase
      */
     public function evaluatesToTrue($expected, $value)
     {
-        assert(equals($expected)->test($value), isTrue());
+        assertTrue(equals($expected)->test($value));
     }
 
     /**
@@ -71,7 +73,7 @@ class EqualsTest extends TestCase
      */
     public function evaluatesToFalse($expected, $value)
     {
-        assert(equals($expected)->test($value), isFalse());
+        assertFalse(equals($expected)->test($value));
     }
 
     /**
@@ -79,7 +81,7 @@ class EqualsTest extends TestCase
      */
     public function assertionFailureContainsMeaningfulInformation()
     {
-        expect(function() { assert('bar', equals('foo'), 'additional info'); })
+        expect(function() { assertThat('bar', equals('foo'), 'additional info'); })
                 ->throws(AssertionFailure::class)
                 ->withMessage(
                         "Failed asserting that 'bar' is equal to <string:foo>.
@@ -98,7 +100,7 @@ additional info"
      */
     public function assertionFailureDoesNotReferenceStringWithLinebreaksInMessage()
     {
-        expect(function() { assert('bar', equals("foo\n"), 'additional info'); })
+        expect(function() { assertThat('bar', equals("foo\n"), 'additional info'); })
                 ->throws(AssertionFailure::class)
                 ->withMessage(
                         "Failed asserting that 'bar' is equal to <text>.

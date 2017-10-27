@@ -10,7 +10,9 @@ namespace bovigo\assert\predicate;
 use bovigo\assert\AssertionFailure;
 use PHPUnit\Framework\TestCase;
 
-use function bovigo\assert\assert;
+use function bovigo\assert\assertFalse;
+use function bovigo\assert\assertThat;
+use function bovigo\assert\assertTrue;
 use function bovigo\assert\expect;
 /**
  * Tests for bovigo\assert\predicate\Contains.
@@ -45,7 +47,7 @@ class ContainsTest extends TestCase
      */
     public function evaluatesToTrue($needle, $haystack)
     {
-        assert(contains($needle)->test($haystack), isTrue());
+        assertTrue(contains($needle)->test($haystack));
     }
 
     /**
@@ -71,7 +73,7 @@ class ContainsTest extends TestCase
      */
     public function evaluatesToFalse($needle, $haystack)
     {
-        assert(contains($needle)->test($haystack), isFalse());
+        assertFalse(contains($needle)->test($haystack));
     }
 
     /**
@@ -89,7 +91,7 @@ class ContainsTest extends TestCase
      */
     public function assertionFailureContainsMeaningfulInformation()
     {
-        expect(function() { assert([], contains('foo')); })
+        expect(function() { assertThat([], contains('foo')); })
                 ->throws(AssertionFailure::class)
                 ->withMessage("Failed asserting that an array contains 'foo'.");
     }

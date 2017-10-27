@@ -39,7 +39,7 @@ class ExpectationTest extends TestCase
      */
     public function expectationReturnsCatchedExceptionWhenThrowsSucceeds(\Throwable $throwable)
     {
-        assert(
+        assertThat(
                 expect(function() use($throwable) { throw $throwable; })->throws(),
                 isInstanceOf(CatchedException::class)
         );
@@ -69,7 +69,7 @@ class ExpectationTest extends TestCase
      */
     public function expectationReturnsCatchedErrorWhenTriggersSucceeds()
     {
-        assert(
+        assertThat(
                 expect(function() { trigger_error('error'); })->triggers(),
                 isInstanceOf(CatchedError::class)
         );
@@ -95,7 +95,7 @@ class ExpectationTest extends TestCase
     public function expectationReturnsItselfWhenDoesNotThrowSucceeds()
     {
         $expectation = expect(function() { /* intentionally empty */});
-        assert($expectation->doesNotThrow(), isSameAs($expectation));
+        assertThat($expectation->doesNotThrow(), isSameAs($expectation));
     }
 
     /**
@@ -308,7 +308,7 @@ class ExpectationTest extends TestCase
     public function expectationReturnsItselfWhenResultCheckSucceeds()
     {
         $expectation = expect(function() { return true; });
-        assert($expectation->result(isTrue()), isSameAs($expectation));
+        assertThat($expectation->result(isTrue()), isSameAs($expectation));
     }
 
     /**
@@ -375,7 +375,7 @@ class ExpectationTest extends TestCase
     public function expectationCanAssertAfterCodeExecution()
     {
         $expectation = expect(function() { return false; });
-        assert($expectation->after(true, isTrue()), isSameAs($expectation));
+        assertThat($expectation->after(true, isTrue()), isSameAs($expectation));
     }
 
     /**
@@ -387,7 +387,7 @@ class ExpectationTest extends TestCase
         $expectation = expect(function() use($throwable) {
                 throw $throwable;
         });
-        assert($expectation->after(true, isTrue()), isSameAs($expectation));
+        assertThat($expectation->after(true, isTrue()), isSameAs($expectation));
     }
 
     /**

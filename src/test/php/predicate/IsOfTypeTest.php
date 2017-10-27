@@ -10,7 +10,9 @@ namespace bovigo\assert\predicate;
 use bovigo\assert\AssertionFailure;
 use PHPUnit\Framework\TestCase;
 
-use function bovigo\assert\assert;
+use function bovigo\assert\assertFalse;
+use function bovigo\assert\assertThat;
+use function bovigo\assert\assertTrue;
 use function bovigo\assert\expect;
 /**
  * Tests for bovigo\assert\predicate\IsOfType.
@@ -69,7 +71,7 @@ class IsOfTypeTest extends TestCase
      */
     public function evaluatesToTrueIfTypeOfValueEqualsExpectedType($expectedType, $value)
     {
-        assert(isOfType($expectedType)->test($value), isTrue());
+        assertTrue(isOfType($expectedType)->test($value));
     }
 
     /**
@@ -77,7 +79,7 @@ class IsOfTypeTest extends TestCase
      */
     public function evaluatesToFalseIfTypeOfValueDoesNotEqualExpectedType()
     {
-        assert(isOfType('int')->test('foo'), isFalse());
+        assertFalse(isOfType('int')->test('foo'));
     }
 
     /**
@@ -85,7 +87,7 @@ class IsOfTypeTest extends TestCase
      */
     public function assertionFailureContainsMeaningfulInformation()
     {
-        expect(function() { assert([], isOfType('int')); })
+        expect(function() { assertThat([], isOfType('int')); })
                 ->throws(AssertionFailure::class)
                 ->withMessage('Failed asserting that an array is of type "int".');
     }

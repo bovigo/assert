@@ -26,7 +26,7 @@ class AssertTest extends TestCase
      */
     public function assertSucceedsWhenPredicateReturnsTrue()
     {
-        assert(assert('some value', function() { return true; }), isTrue());
+        assertThat(assertThat('some value', function() { return true; }), isTrue());
     }
 
     /**
@@ -35,7 +35,7 @@ class AssertTest extends TestCase
     public function assertFailsWhenPredicateReturnsFalse()
     {
         expect(function() {
-            assert('some value', function() { return false; });
+            assertThat('some value', function() { return false; });
         })
         ->throws(AssertionFailure::class)
         ->withMessage(
@@ -49,7 +49,7 @@ class AssertTest extends TestCase
     public function assertionFailureContainsAdditionalDescription()
     {
         expect(function() {
-                assert(
+                assertThat(
                         'some value',
                         function() { return false; },
                         'some more info'
@@ -79,7 +79,7 @@ some more info'
      */
     public function exporterAlwaysReturnsSameInstance()
     {
-        assert(exporter(), isSameAs(exporter()));
+        assertThat(exporter(), isSameAs(exporter()));
     }
 
     /**
@@ -92,8 +92,8 @@ some more info'
         }
 
         $countBeforeAssertion = \PHPUnit\Framework\Assert::getCount();
-        assert('some value', function() { return true; });
-        assert(
+        assertThat('some value', function() { return true; });
+        assertThat(
                 \PHPUnit\Framework\Assert::getCount(),
                 equals($countBeforeAssertion + 1)
         );
@@ -110,12 +110,12 @@ some more info'
 
         $countBeforeAssertion = \PHPUnit\Framework\Assert::getCount();
         expect(function() {
-            assert('some value', function() { return false; }, 'some more info');
+            assertThat('some value', function() { return false; }, 'some more info');
         })
         ->throws(AssertionFailure::class)
         ->after(
                 \PHPUnit\Framework\Assert::getCount(),
-                equals($countBeforeAssertion + 2) // one for assert(), one for throws()
+                equals($countBeforeAssertion + 2) // one for assertThat(), one for throws()
         );
     }
 

@@ -9,7 +9,8 @@ declare(strict_types=1);
 namespace bovigo\assert\predicate;
 use PHPUnit\Framework\TestCase;
 
-use function bovigo\assert\assert;
+use function bovigo\assert\assertThat;
+use function bovigo\assert\assertTrue;
 /**
  * Test for bovigo\assert\predicate\NegatePredicate.
  *
@@ -37,7 +38,7 @@ class NegatePredicateTest extends TestCase
      */
     public function negatesWrappedPredicate()
     {
-        assert($this->negatePredicate->test('bar'), isTrue());
+        assertTrue($this->negatePredicate->test('bar'));
     }
 
     public function predicates(): array
@@ -56,7 +57,7 @@ class NegatePredicateTest extends TestCase
      */
     public function hasStringRepresentation(NegatePredicate $negatePredicate, $expected)
     {
-        assert((string) $negatePredicate, equals($expected));
+        assertThat((string) $negatePredicate, equals($expected));
     }
 
     /**
@@ -64,7 +65,7 @@ class NegatePredicateTest extends TestCase
      */
     public function countEqualsCountOfNegatedPredicate()
     {
-        assert(
+        assertThat(
                 count(not(new AndPredicate(function() {}, function() {}))),
                 equals(2)
         );

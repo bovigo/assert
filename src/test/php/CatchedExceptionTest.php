@@ -40,7 +40,7 @@ class CatchedExceptionTest extends TestCase
      */
     public function withMessageComparesUsingEquals(\Throwable $throwable)
     {
-        assert(
+        assertThat(
                 $this->catchedException($throwable)->withMessage('failure'),
                 isInstanceOf(CatchedException::class)
         );
@@ -73,7 +73,7 @@ class CatchedExceptionTest extends TestCase
      */
     public function messageAssertsWithGivenPredicate(\Throwable $throwable)
     {
-        assert(
+        assertThat(
                 $this->catchedException($throwable)->message(contains('fail')),
                 isInstanceOf(CatchedException::class)
         );
@@ -100,7 +100,7 @@ class CatchedExceptionTest extends TestCase
      */
     public function withCodeComparesUsingEquals(\Throwable $throwable)
     {
-        assert(
+        assertThat(
                 $this->catchedException($throwable)->withCode(2),
                 isInstanceOf(CatchedException::class)
         );
@@ -137,7 +137,7 @@ class CatchedExceptionTest extends TestCase
     public function withReturnsSelfOnSuccess(\Throwable $throwable)
     {
         $catchedException = $this->catchedException($throwable);
-        assert(
+        assertThat(
                 $catchedException->with(function() { return true; }),
                 isSameAs($catchedException)
         );

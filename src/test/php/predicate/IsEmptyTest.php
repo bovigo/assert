@@ -11,7 +11,7 @@ use bovigo\assert\AssertionFailure;
 use PHPUnit\Framework\TestCase;
 
 use function bovigo\assert\{
-    assert,
+    assertThat,
     assertEmpty,
     assertFalse,
     assertNotEmpty,
@@ -92,7 +92,7 @@ class IsEmptyTest extends TestCase
      */
     public function stringRepresentation()
     {
-        assert((string) new IsEmpty(), equals('is empty'));
+        assertThat((string) new IsEmpty(), equals('is empty'));
     }
 
     /**

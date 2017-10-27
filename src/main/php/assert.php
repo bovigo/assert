@@ -24,6 +24,24 @@ use function bovigo\assert\predicate\{
  * assert that a value fulfills a predicate
  *
  * @api
+ * @since   3.1.0
+ * @param   mixed                                        $value        value to test
+ * @param   \bovigo\assert\predicate\Predicate|callable  $predicate    predicate or callable to test given value
+ * @param   string                                       $description  optional  additional description for failure message
+ * @return  true
+ * @throws  \bovigo\assert\AssertionFailure
+ */
+function assertThat($value, callable $predicate, string $description = null): bool
+{
+    return (new Assertion($value, exporter()))
+            ->evaluate(counting(Predicate::castFrom($predicate)), $description);
+}
+
+/**
+ * assert that a value fulfills a predicate
+ *
+ * @api
+ * @deprecated  since 3.1.0, use assertThat() instead, see https://github.com/mikey179/bovigo-assert/issues/7
  * @param   mixed                                        $value        value to test
  * @param   \bovigo\assert\predicate\Predicate|callable  $predicate    predicate or callable to test given value
  * @param   string                                       $description  optional  additional description for failure message
@@ -32,8 +50,7 @@ use function bovigo\assert\predicate\{
  */
 function assert($value, callable $predicate, string $description = null): bool
 {
-    return (new Assertion($value, exporter()))
-            ->evaluate(counting(Predicate::castFrom($predicate)), $description);
+    return assertThat($value, $predicate, $description);
 }
 
 /**
@@ -77,11 +94,11 @@ function outputOf(callable $code, callable $predicate, string $description = nul
     $code();
     $printed = ob_get_contents();
     ob_end_clean();
-    return assert($printed, $predicate, $description);
+    return assertThat($printed, $predicate, $description);
 }
 
 /**
- * alias for assert($value, isTrue()[, $description])
+ * alias for assertThat($value, isTrue()[, $description])
  *
  * @api
  * @param   mixed   $value        value to test
@@ -91,11 +108,11 @@ function outputOf(callable $code, callable $predicate, string $description = nul
  */
 function assertTrue($value, string $description = null): bool
 {
-    return assert($value, isTrue(), $description);
+    return assertThat($value, isTrue(), $description);
 }
 
 /**
- * alias for assert($value, isFalse()[, $description])
+ * alias for assertThat($value, isFalse()[, $description])
  *
  * @api
  * @param   mixed   $value        value to test
@@ -105,11 +122,11 @@ function assertTrue($value, string $description = null): bool
  */
 function assertFalse($value, string $description = null): bool
 {
-    return assert($value, isFalse(), $description);
+    return assertThat($value, isFalse(), $description);
 }
 
 /**
- * alias for assert($value, isNull()[, $description])
+ * alias for assertThat($value, isNull()[, $description])
  *
  * @api
  * @param   mixed   $value        value to test
@@ -119,11 +136,11 @@ function assertFalse($value, string $description = null): bool
  */
 function assertNull($value, string $description = null): bool
 {
-    return assert($value, isNull(), $description);
+    return assertThat($value, isNull(), $description);
 }
 
 /**
- * alias for assert($value, isNotNull()[, $description])
+ * alias for assertThat($value, isNotNull()[, $description])
  *
  * @api
  * @param   mixed   $value        value to test
@@ -133,11 +150,11 @@ function assertNull($value, string $description = null): bool
  */
 function assertNotNull($value, string $description = null): bool
 {
-    return assert($value, isNotNull(), $description);
+    return assertThat($value, isNotNull(), $description);
 }
 
 /**
- * alias for assert($value, isEmpty()[, $description])
+ * alias for assertThat($value, isEmpty()[, $description])
  *
  * @api
  * @param   mixed   $value        value to test
@@ -147,11 +164,11 @@ function assertNotNull($value, string $description = null): bool
  */
 function assertEmpty($value, string $description = null): bool
 {
-    return assert($value, isEmpty(), $description);
+    return assertThat($value, isEmpty(), $description);
 }
 
 /**
- * alias for assert($value, equals(''), $description)
+ * alias for assertThat($value, equals(''), $description)
  * @api
  * @param   mixed   $value        value to test
  * @param   string  $description  optional  additional description for failure message
@@ -160,11 +177,11 @@ function assertEmpty($value, string $description = null): bool
  */
 function assertEmptyString($value, string $description = null): bool
 {
-    return assert($value, equals(''), $description);
+    return assertThat($value, equals(''), $description);
 }
 
 /**
- * alias for assert($value, equals([]), $description)
+ * alias for assertThat($value, equals([]), $description)
  * @api
  * @param   mixed   $value        value to test
  * @param   string  $description  optional  additional description for failure message
@@ -173,11 +190,11 @@ function assertEmptyString($value, string $description = null): bool
  */
 function assertEmptyArray($value, string $description = null): bool
 {
-    return assert($value, equals([]), $description);
+    return assertThat($value, equals([]), $description);
 }
 
 /**
- * alias for assert($value, isNotEmpty()[, $description])
+ * alias for assertThat($value, isNotEmpty()[, $description])
  *
  * @api
  * @param   mixed   $value        value to test
@@ -187,7 +204,7 @@ function assertEmptyArray($value, string $description = null): bool
  */
 function assertNotEmpty($value, string $description = null): bool
 {
-    return assert($value, isNotEmpty(), $description);
+    return assertThat($value, isNotEmpty(), $description);
 }
 
 /**

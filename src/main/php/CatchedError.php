@@ -137,7 +137,7 @@ class CatchedError
      */
     public function message(callable $predicate): self
     {
-        assert($this->errstr, new Wrap($predicate, 'error message %s'));
+        assertThat($this->errstr, new Wrap($predicate, 'error message %s'));
         return $this;
     }
 
@@ -172,7 +172,7 @@ class CatchedError
      */
     public function after($value, callable $predicate, string $description = null): self
     {
-        assert($value, $predicate, $description);
+        assertThat($value, $predicate, $description);
         return $this;
     }
 }

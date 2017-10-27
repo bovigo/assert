@@ -10,7 +10,8 @@ namespace bovigo\assert\predicate;
 use bovigo\assert\AssertionFailure;
 use PHPUnit\Framework\TestCase;
 
-use function bovigo\assert\assert;
+use function bovigo\assert\assertThat;
+use function bovigo\assert\assertTrue;
 use function bovigo\assert\expect;
 /**
  * Helper class for the test.
@@ -61,7 +62,7 @@ class PredicateTest extends TestCase
     public function castFromWithPredicateReturnsInstance()
     {
         $predicate = new FooPredicate();
-        assert($predicate, isSameAs(Predicate::castFrom($predicate)));
+        assertThat($predicate, isSameAs(Predicate::castFrom($predicate)));
     }
 
     /**
@@ -69,7 +70,7 @@ class PredicateTest extends TestCase
      */
     public function castFromWithCallableReturnsCallablePredicate()
     {
-        assert(
+        assertThat(
                 Predicate::castFrom(function($value) { return 'foo' === $value; }),
                 isInstanceOf(CallablePredicate::class)
         );
@@ -81,7 +82,7 @@ class PredicateTest extends TestCase
     public function predicateIsCallable()
     {
         $predicate = new FooPredicate();
-        assert($predicate('foo'), isTrue());
+        assertTrue($predicate('foo'));
     }
 
     /**
@@ -90,7 +91,7 @@ class PredicateTest extends TestCase
     public function andReturnsAndPredicate()
     {
         $predicate = new FooPredicate();
-        assert(
+        assertThat(
                 $predicate->and(function($value) { return 'foo' === $value; }),
                 isInstanceOf(AndPredicate::class)
         );
@@ -102,7 +103,7 @@ class PredicateTest extends TestCase
     public function orReturnsOrPredicate()
     {
         $predicate = new FooPredicate();
-        assert(
+        assertThat(
                 $predicate->or(function($value) { return 'foo' === $value; }),
                 isInstanceOf(OrPredicate::class)
         );
@@ -115,7 +116,7 @@ class PredicateTest extends TestCase
     public function everyPredicateCanBeNegated()
     {
         $isNotFoo = not(new FooPredicate());
-        assert('bar', $isNotFoo);
+        assertThat('bar', $isNotFoo);
     }
 
     /**
@@ -123,7 +124,7 @@ class PredicateTest extends TestCase
      */
     public function defaultCountOfPredicateIs1()
     {
-        assert(count(new FooPredicate()), equals(1));
+        assertThat(count(new FooPredicate()), equals(1));
     }
 
     /**
@@ -131,7 +132,7 @@ class PredicateTest extends TestCase
      */
     public function assertionFailureContainsMeaningfulInformation()
     {
-        expect(function() { assert([], new FooPredicate()); })
+        expect(function() { assertThat([], new FooPredicate()); })
                 ->throws(AssertionFailure::class)
                 ->withMessage("Failed asserting that an array is foo.");
     }
@@ -141,7 +142,7 @@ class PredicateTest extends TestCase
      */
     public function assertionFailureNegatedContainsMeaningfulInformation()
     {
-        expect(function() { assert('foo', not(new FooPredicate())); })
+        expect(function() { assertThat('foo', not(new FooPredicate())); })
                 ->throws(AssertionFailure::class)
                 ->withMessage("Failed asserting that 'foo' is not foo.");
     }
@@ -152,7 +153,7 @@ class PredicateTest extends TestCase
     public function assertionFailureNegatedContainsMeaningfulInformationWithDescription()
     {
         expect(function() {
-                assert([], new FooPredicate(), 'some useful description');
+                assertThat([], new FooPredicate(), 'some useful description');
         })
         ->throws(AssertionFailure::class)
         ->withMessage(
@@ -167,7 +168,7 @@ some useful description'
     public function assertionFailureNegatedContainsMeaningfulInformationWithDescriptionAndExceptionMessage()
     {
         expect(function() {
-                assert([], new ThrowingPredicate(), 'some useful description');
+                assertThat([], new ThrowingPredicate(), 'some useful description');
         })
         ->throws(AssertionFailure::class)
         ->withMessage(

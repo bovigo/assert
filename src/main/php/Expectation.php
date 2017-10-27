@@ -110,7 +110,7 @@ class Expectation
                 );
             }
 
-            assert($this->exception, $isExpected);
+            assertThat($this->exception, $isExpected);
         }
 
         return new CatchedException($this->exception);
@@ -184,7 +184,7 @@ class Expectation
                     . ' is triggered.'
             );
         } elseif (null !== $expectedError) {
-            assert($this->error, new ExpectedError($expectedError));
+            assertThat($this->error, new ExpectedError($expectedError));
         }
 
         return $this->error;
@@ -211,7 +211,7 @@ class Expectation
             );
         }
 
-        assert($this->result, $predicate, $description);
+        assertThat($this->result, $predicate, $description);
         return $this;
     }
 
@@ -227,7 +227,7 @@ class Expectation
     public function after($value, callable $predicate, string $description = null): self
     {
         $this->runCode();
-        assert($value, $predicate, $description);
+        assertThat($value, $predicate, $description);
         return $this;
     }
 }

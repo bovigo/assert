@@ -53,7 +53,7 @@ class CatchedException
      */
     public function message(callable $predicate): self
     {
-        assert(
+        assertThat(
                 $this->actualException->getMessage(),
                 new Wrap($predicate, 'exception message %s')
         );
@@ -69,7 +69,7 @@ class CatchedException
      */
     public function withCode(int $expectedCode): self
     {
-        assert(
+        assertThat(
                 $this->actualException->getCode(),
                 new Wrap(equals($expectedCode), 'exception code %s')
         );
@@ -86,7 +86,7 @@ class CatchedException
      */
     public function with(callable $predicate, string $description = null): self
     {
-        assert($this->actualException, $predicate, $description);
+        assertThat($this->actualException, $predicate, $description);
         return $this;
     }
 
@@ -101,7 +101,7 @@ class CatchedException
      */
     public function after($value, callable $predicate, string $description = null): self
     {
-        assert($value, $predicate, $description);
+        assertThat($value, $predicate, $description);
         return $this;
     }
 }

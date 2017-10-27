@@ -1,3 +1,11 @@
+3.1.0 (2017-10-27)
+------------------
+
+  * Fixed #7: `bovigo\assert\assert()` not executed when zend.assertions not set to 1
+    * Added new function `bovigo\assert\assertThat()`, made `bovigo\assert\assert()` an alias for this
+    * Deprecated `bovigo\assert\assert()`
+
+
 3.0.0 (2017-09-20)
 ------------------
 
@@ -19,7 +27,7 @@
   * implemented #3 add support for testing output by adding `bovigo\assert\outputOf()`
   * implemented #4 `bovigo\assert\expect()` should work with `\Error`
   * implemented #5 `bovigo\assert\expect()` should provide possibility to test `trigger_error()`
-  * allowed to use `bovigo\assert\expect()->throws()` with an instance of `\Throwable`, will assert thrown exception is identical insteaf of asserting correct type only
+  * allowed to use `bovigo\assert\expect()->throws()` with an instance of `\Throwable`, will assert thrown exception is identical instead of asserting correct type only
 
 
 2.0.0 (2016-07-10)

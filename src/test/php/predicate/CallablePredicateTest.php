@@ -10,7 +10,7 @@ namespace bovigo\assert\predicate;
 use bovigo\assert\AssertionFailure;
 use PHPUnit\Framework\TestCase;
 
-use function bovigo\assert\assert;
+use function bovigo\assert\assertThat;
 use function bovigo\assert\expect;
 /**
  * Tests for bovigo\assert\predicate\CallablePredicate.
@@ -34,7 +34,7 @@ class CallablePredicateTest extends TestCase
      */
     public function assertionFailureContainsMeaningfulInformationWithClassCallable()
     {
-        expect(function() { assert('bar', [__CLASS__, 'isGood']); })
+        expect(function() { assertThat('bar', [__CLASS__, 'isGood']); })
                 ->throws(AssertionFailure::class)
                 ->withMessage(
                         "Failed asserting that 'bar' satisfies "
@@ -52,7 +52,7 @@ class CallablePredicateTest extends TestCase
      */
     public function assertionFailureContainsMeaningfulInformationWithObjectCallable()
     {
-        expect(function() { assert('bar', [$this, 'isGoodEnough']); })
+        expect(function() { assertThat('bar', [$this, 'isGoodEnough']); })
                 ->throws(AssertionFailure::class)
                 ->withMessage(
                         "Failed asserting that 'bar' satisfies "
@@ -65,7 +65,7 @@ class CallablePredicateTest extends TestCase
      */
     public function assertionFailureContainsMeaningfulInformationWithStringCallable()
     {
-        expect(function() { assert('bar', 'is_int'); })
+        expect(function() { assertThat('bar', 'is_int'); })
                 ->throws(AssertionFailure::class)
                 ->withMessage("Failed asserting that 'bar' satisfies is_int().");
     }
@@ -77,7 +77,7 @@ class CallablePredicateTest extends TestCase
     public function assertionFailureContainsNonDefaultDescriptionWhenPassed()
     {
         expect(function() {
-            assert(
+            assertThat(
                     'bar',
                     new CallablePredicate(
                             [$this, 'isGoodEnough'],

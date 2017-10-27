@@ -10,7 +10,8 @@ namespace bovigo\assert\predicate;
 use bovigo\assert\AssertionFailure;
 use PHPUnit\Framework\TestCase;
 
-use function bovigo\assert\assert;
+use function bovigo\assert\assertThat;
+use function bovigo\assert\assertTrue;
 use function bovigo\assert\expect;
 /**
  * Tests for bovigo\assert\predicate\IsTrue.
@@ -24,7 +25,7 @@ class IsTrueTest extends TestCase
      */
     public function evaluatesToTrueIfGivenValueIsTrue()
     {
-        assert(isTrue()->test(true), isSameAs(true));
+        assertThat(isTrue()->test(true), isSameAs(true));
     }
 
     /**
@@ -48,7 +49,7 @@ class IsTrueTest extends TestCase
      */
     public function evaluatesToFalseIfGivenValueIsFalse($false)
     {
-        assert(isTrue()->test($false), isSameAs(false));
+        assertThat(isTrue()->test($false), isSameAs(false));
     }
 
     /**
@@ -56,7 +57,7 @@ class IsTrueTest extends TestCase
      */
     public function assertionFailureContainsMeaningfulInformation()
     {
-        expect(function() { assert([], isTrue()); })
+        expect(function() { assertTrue([]); })
                 ->throws(AssertionFailure::class)
                 ->withMessage("Failed asserting that an array is true.");
     }

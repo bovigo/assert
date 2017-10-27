@@ -19,11 +19,11 @@ _bovigo/assert_ is distributed as [Composer](https://getcomposer.org/) package.
 To install it as a development dependency of your package use the following
 command:
 
-    composer require --dev "bovigo/assert": "^3.0"
+    composer require --dev "bovigo/assert": "^3.1"
 
 To install it as a runtime dependency for your package use the following command:
 
-    composer require "bovigo/assert=^3.0"
+    composer require "bovigo/assert=^3.1"
 
 
 Requirements
@@ -44,11 +44,13 @@ wanted to use it in my own code, so I made a package of it.
 Usage
 -----
 
+**Note: `assertThat()` was introduced with release 3.1.0 due to [issue #7](https://github.com/mikey179/bovigo-assert/issues/7). If you use a version lower than 3.1.0 simply use assert() instead but set `zend.assertions=1`.**
+
 All assertions are written in the same way using functions:
 
 ```php
-assert(303, equals(303));
-assert($someArray, isOfSize(3), 'array always must have size 3');
+assertThat(303, equals(303));
+assertThat($someArray, isOfSize(3), 'array always must have size 3');
 ```
 
 The first parameter is the value to test, and the second is the predicate that
@@ -73,10 +75,10 @@ Failed asserting that 'matches regular expression "/^([a-z]{3})$/"' is equal to 
 bovigo-assert/src/test/php/predicate/RegexTest.php:99
 ```
 
-Note: for the sake of brevity below it is assumed the used functions are
-imported into the current namespace via
+For the sake of brevity below it is assumed the used functions are imported into
+the current namespace via
 ```php
-use function bovigo\assert\assert;
+use function bovigo\assert\assertThat;
 use function bovigo\assert\predicate\isOfSize;
 use function bovigo\assert\predicate\equals;
 // ... and so on
@@ -94,7 +96,7 @@ This is the list of predicates that are included in _bovigo/assert_ by default.
 Tests if value is `null`.
 
 ```php
-assert($value, isNull());
+assertThat($value, isNull());
 ```
 
 Alias: `bovigo\assert\assertNull($value, $description = null)`
@@ -105,7 +107,7 @@ Alias: `bovigo\assert\assertNull($value, $description = null)`
 Tests that value is not `null`.
 
 ```php
-assert($value, isNotNull());
+assertThat($value, isNotNull());
 ```
 
 Alias: `bovigo\assert\assertNotNull($value, $description = null)`
@@ -120,7 +122,7 @@ Tests that value is empty. Empty is defined as follows:
 * For all other values the rules for PHP's `empty()` apply.
 
 ```php
-assert($value, isEmpty());
+assertThat($value, isEmpty());
 ```
 
 Aliases:
@@ -134,7 +136,7 @@ Aliases:
 Tests that value is not empty. See `isEmpty()` for definition of emptyness.
 
 ```php
-assert($value, isNotEmpty());
+assertThat($value, isNotEmpty());
 ```
 
 Alias: `bovigo\assert\assertNotEmpty($value, $description = null)`
@@ -146,7 +148,7 @@ Tests that a value is true. The value must be boolean true, no value conversion
 is applied.
 
 ```php
-assert($value, isTrue());
+assertThat($value, isTrue());
 ```
 
 Alias: `bovigo\assert\assertTrue($value, $description = null)`
@@ -158,7 +160,7 @@ Tests that a value is false. The value must be boolean false, no value
 conversion is applied.
 
 ```php
-assert($value, isFalse());
+assertThat($value, isFalse());
 ```
 
 Alias: `bovigo\assert\assertFalse($value, $description = null)`
@@ -171,7 +173,7 @@ can be used when equality of float values should be tested and allows for a
 certain range in which two floats are considered equal.
 
 ```php
-assert($value, equals('Roland TB 303'));
+assertThat($value, equals('Roland TB 303'));
 ```
 
 
@@ -182,7 +184,7 @@ Tests that a value is not equal to the unexpected value. The optional parameter
 for a certain range in which two floats are considered equal.
 
 ```php
-assert($value, isNotEqualTo('Roland TB 303'));
+assertThat($value, isNotEqualTo('Roland TB 303'));
 ```
 
 
@@ -191,7 +193,7 @@ assert($value, isNotEqualTo('Roland TB 303'));
 Tests that a value is an instance of the expected type.
 
 ```php
-assert($value, isInstanceOf(\stdClass::class));
+assertThat($value, isInstanceOf(\stdClass::class));
 ```
 
 
@@ -200,7 +202,7 @@ assert($value, isInstanceOf(\stdClass::class));
 Tests that a value is not an instance of the unexpected type.
 
 ```php
-assert($value, isNotInstanceOf(\stdClass::class));
+assertThat($value, isNotInstanceOf(\stdClass::class));
 ```
 
 
@@ -210,7 +212,7 @@ Tests that a value is identical to the expected value. Both values are compared
 with `===`, the according rules apply.
 
 ```php
-assert($value, isSameAs($anotherValue));
+assertThat($value, isSameAs($anotherValue));
 ```
 
 
@@ -220,7 +222,7 @@ Tests that a value is not identical to the unexpected value. Both values are
 compared with `===`, the according rules apply.
 
 ```php
-assert($value, isNotSameAs($anotherValue));
+assertThat($value, isNotSameAs($anotherValue));
 ```
 
 
@@ -236,7 +238,7 @@ Tests that a value has the expected size. The rules for the size are as follows:
 * All other value types will be rejected.
 
 ```php
-assert($value, isOfSize(3));
+assertThat($value, isOfSize(3));
 ```
 
 
@@ -246,7 +248,7 @@ Tests that a value does not have the unexpected size. The rules are the same as
 for `isOfSize($expectedSize)`.
 
 ```php
-assert($value, isNotOfSize(3));
+assertThat($value, isNotOfSize(3));
 ```
 
 
@@ -255,7 +257,7 @@ assert($value, isNotOfSize(3));
 Tests that a value is of the expected internal PHP type.
 
 ```php
-assert($value, isOfType('resource'));
+assertThat($value, isOfType('resource'));
 ```
 
 
@@ -264,7 +266,7 @@ assert($value, isOfType('resource'));
 Tests that a value is not of the unexpected internal PHP type.
 
 ```php
-assert($value, isNotOfType('resource'));
+assertThat($value, isNotOfType('resource'));
 ```
 
 
@@ -273,7 +275,7 @@ assert($value, isNotOfType('resource'));
 Tests that a value is greater than the expected value.
 
 ```php
-assert($value, isGreaterThan(3));
+assertThat($value, isGreaterThan(3));
 ```
 
 
@@ -282,7 +284,7 @@ assert($value, isGreaterThan(3));
 Tests that a value is greater than or equal to the expected value.
 
 ```php
-assert($value, isGreaterThanOrEqualTo(3));
+assertThat($value, isGreaterThanOrEqualTo(3));
 ```
 
 
@@ -291,7 +293,7 @@ assert($value, isGreaterThanOrEqualTo(3));
 Tests that a value is less than the expected value.
 
 ```php
-assert($value, isLessThan(3));
+assertThat($value, isLessThan(3));
 ```
 
 
@@ -300,7 +302,7 @@ assert($value, isLessThan(3));
 Tests that a value is less than or equal to the expected value.
 
 ```php
-assert($value, isLessThanOrEqualTo(3));
+assertThat($value, isLessThanOrEqualTo(3));
 ```
 
 
@@ -315,7 +317,7 @@ Tests that `$needle` is contained in value. The following rules apply:
 * For all other cases, the value is rejected.
 
 ```php
-assert($value, contains('Roland TB 303'));
+assertThat($value, contains('Roland TB 303'));
 ```
 
 
@@ -325,7 +327,7 @@ Tests that `$needle` is not contained in value. The rules of `contains($needle)`
 apply.
 
 ```php
-assert($value, doesNotContain('Roland TB 303'));
+assertThat($value, doesNotContain('Roland TB 303'));
 ```
 
 
@@ -336,7 +338,7 @@ The key must be either of type `integer` or `string`. Values that are neither an
 array nor an instance of `\ArrayAccess` are rejected.
 
 ```php
-assert($value, hasKey('roland'));
+assertThat($value, hasKey('roland'));
 ```
 
 
@@ -347,7 +349,7 @@ given name. The key must be either of type `integer` or `string`. Values that
 are neither an array nor an instance of `\ArrayAccess` are rejected.
 
 ```php
-assert($value, doesNotHaveKey('roland'));
+assertThat($value, doesNotHaveKey('roland'));
 ```
 
 
@@ -358,7 +360,7 @@ value is not a string it is rejected. The test is successful if the pattern
 yields at least one match in the value.
 
 ```php
-assert($value, matches('/^([a-z]{3})$/'));
+assertThat($value, matches('/^([a-z]{3})$/'));
 ```
 
 
@@ -369,7 +371,7 @@ the value is not a string it is rejected. The test is successful if the pattern
 yields no match in the value.
 
 ```php
-assert($value, doesNotMatch('/^([a-z]{3})$/'));
+assertThat($value, doesNotMatch('/^([a-z]{3})$/'));
 ```
 
 
@@ -381,8 +383,8 @@ directory. When `$basepath` is given the value must be a relative path to this
 basepath.
 
 ```php
-assert($value, isExistingFile());
-assert($value, isExistingFile('/path/to/files'));
+assertThat($value, isExistingFile());
+assertThat($value, isExistingFile('/path/to/files'));
 ```
 
 
@@ -394,8 +396,8 @@ current working directory. When `$basepath` is given the value must be a
 relative path to this basepath.
 
 ```php
-assert($value, isNonExistingFile());
-assert($value, isNonExistingFile('/path/to/files'));
+assertThat($value, isNonExistingFile());
+assertThat($value, isNonExistingFile('/path/to/files'));
 ```
 
 
@@ -407,8 +409,8 @@ current working directory. When `$basepath` is given the value must be a
 relative path to this basepath.
 
 ```php
-assert($value, isExistingDirectory());
-assert($value, isExistingDirectory('/path/to/directories'));
+assertThat($value, isExistingDirectory());
+assertThat($value, isExistingDirectory('/path/to/directories'));
 ```
 
 
@@ -420,8 +422,8 @@ current working directory. When `$basepath` is given the value must be a
 relative path to this basepath.
 
 ```php
-assert($value, isNonExistingDirectory());
-assert($value, isNonExistingDirectory('/path/to/directories'));
+assertThat($value, isNonExistingDirectory());
+assertThat($value, isNonExistingDirectory('/path/to/directories'));
 ```
 
 
@@ -431,7 +433,7 @@ _Available since release 1.1.0._
 Tests that the value which must be a string starts with given prefix.
 
 ```php
-assert($value, startsWith('foo'));
+assertThat($value, startsWith('foo'));
 ```
 
 
@@ -441,7 +443,7 @@ _Available since release 1.1.0._
 Tests that the value which must be a string does not start with given prefix.
 
 ```php
-assert($value, startsWith('foo'));
+assertThat($value, startsWith('foo'));
 ```
 
 
@@ -451,7 +453,7 @@ _Available since release 1.1.0._
 Tests that the value which must be a string ends with given suffix.
 
 ```php
-assert($value, endsWith('foo'));
+assertThat($value, endsWith('foo'));
 ```
 
 
@@ -461,7 +463,7 @@ _Available since release 1.1.0._
 Tests that the value which must be a string does not end with given suffix.
 
 ```php
-assert($value, doesNotEndWith('foo'));
+assertThat($value, doesNotEndWith('foo'));
 ```
 
 
@@ -471,21 +473,21 @@ _Available since release 1.1.0._
 Applies a predicate to each value of an array or traversable.
 
 ```php
-assert($value, each(isInstanceOf($expectedType));
+assertThat($value, each(isInstanceOf($expectedType));
 ```
 
 Please note that an empty array or traversable will result in a successful test.
 If it must not be empty use `isNotEmpty()->and(each($predicate))`:
 
 ```php
-assert($value, isNotEmpty()->and(each(isInstanceOf($expectedType))));
+assertThat($value, isNotEmpty()->and(each(isInstanceOf($expectedType))));
 ```
 
 It can also be used with any callable:
 
 ```php
-assert($value, each('is_nan'));
-assert($value, each(function($value) { return substr($value, 4, 3) === 'foo'; }));
+assertThat($value, each('is_nan'));
+assertThat($value, each(function($value) { return substr($value, 4, 3) === 'foo'; }));
 ```
 
 ### `eachKey($predicate)`
@@ -494,21 +496,21 @@ _Available since release 1.3.0._
 Applies a predicate to each key of an array or traversable.
 
 ```php
-assert($value, eachKey(isOfType('int'));
+assertThat($value, eachKey(isOfType('int'));
 ```
 
 Please note that an empty array or traversable will result in a successful test.
 If it must not be empty use `isNotEmpty()->and(eachKey($predicate))`:
 
 ```php
-assert($value, isNotEmpty()->and(eachKey(isOfType('int'))));
+assertThat($value, isNotEmpty()->and(eachKey(isOfType('int'))));
 ```
 
 It can also be used with any callable:
 
 ```php
-assert($value, eachKey('is_int'));
-assert($value, eachKey(function($value) { return substr($value, 4, 3) === 'foo'; }));
+assertThat($value, eachKey('is_int'));
+assertThat($value, eachKey(function($value) { return substr($value, 4, 3) === 'foo'; }));
 ```
 
 
@@ -517,14 +519,14 @@ assert($value, eachKey(function($value) { return substr($value, 4, 3) === 'foo';
 Reverses the meaning of a predicate.
 
 ```php
-assert($value, not(isTrue()));
+assertThat($value, not(isTrue()));
 ```
 
 It can also be used with any callable:
 
 ```php
-assert($value, not('is_nan'));
-assert($value, not(function($value) { return substr($value, 4, 3) === 'foo'; }));
+assertThat($value, not('is_nan'));
+assertThat($value, not(function($value) { return substr($value, 4, 3) === 'foo'; }));
 ```
 
 
@@ -542,13 +544,13 @@ combined predicate is `true` as well. If one of the predicates fails, the
 combined predicate will fail as well.
 
 ```php
-assert($value, isNotEmpty()->and(eachKey(isOfType('int'))));
+assertThat($value, isNotEmpty()->and(eachKey(isOfType('int'))));
 ```
 
 It can also be used with any callable:
 
 ```php
-assert($value, isNotEmpty()->and('is_string'));
+assertThat($value, isNotEmpty()->and('is_string'));
 ```
 
 
@@ -558,13 +560,13 @@ Creates a predicate where one of the combined predicates must be `true`. Only if
 all predicates fail the combined predicate will fail as well.
 
 ```php
-assert($value, equals(5)->or(isLessThan(5)));
+assertThat($value, equals(5)->or(isLessThan(5)));
 ```
 
 It can also be used with any callable:
 
 ```php
-assert($value, isNull()->or('is_finite'));
+assertThat($value, isNull()->or('is_finite'));
 ```
 
 
@@ -575,9 +577,9 @@ To define a predicate to be used in an assertion there are two possibilities:
 
 ### Use a callable
 
-You can pass anything that is a `callable` to the `assert()` function:
+You can pass anything that is a `callable` to the `assertThat()` function:
 ```php
-assert($value, 'is_nan');
+assertThat($value, 'is_nan');
 ```
 This will create a predicate which uses PHP's builtin `is_nan()` function to
 test the value.
@@ -588,7 +590,7 @@ throw any exception.
 
 Here is an example with a closure:
 ```php
-assert(
+assertThat(
         $value,
         function($value)
         {
@@ -837,7 +839,7 @@ FAQ
 
 Unlike PHPUnit _bovigo/assert_  does not provide means to assert that a property
 of a class fullfills a certain constraint. If the property is public you can
-pass it directly into the `assert()` function as a value. In any other case
+pass it directly into the `assertThat()` function as a value. In any other case
 _bovigo/assert_ does not support accessing protected or private properties.
 There's a reason why they are protected or private, and a test should only be
 against the public API of a class, not against their inner workings.

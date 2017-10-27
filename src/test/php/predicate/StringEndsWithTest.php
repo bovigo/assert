@@ -10,7 +10,9 @@ namespace bovigo\assert\predicate;
 use bovigo\assert\AssertionFailure;
 use PHPUnit\Framework\TestCase;
 
-use function bovigo\assert\assert;
+use function bovigo\assert\assertFalse;
+use function bovigo\assert\assertThat;
+use function bovigo\assert\assertTrue;
 use function bovigo\assert\expect;
 /**
  * Tests for bovigo\assert\predicate\StringEndsWith.
@@ -47,7 +49,7 @@ class StringEndsWithTest extends TestCase
      */
     public function evaluatesToTrueIfStringStartsWithPrefix($value)
     {
-        assert(endsWith('foo')->test($value), isTrue());
+        assertTrue(endsWith('foo')->test($value));
     }
 
     /**
@@ -68,7 +70,7 @@ class StringEndsWithTest extends TestCase
      */
     public function evaluatesToFalseIfStringDoesNotEndWithSuffix($value)
     {
-        assert(endsWith('foo')->test($value), isFalse());
+        assertFalse(endsWith('foo')->test($value));
     }
 
     /**
@@ -76,7 +78,7 @@ class StringEndsWithTest extends TestCase
      */
     public function assertionFailureContainsMeaningfulInformation()
     {
-        expect(function() { assert('bar', endsWith('foo')); })
+        expect(function() { assertThat('bar', endsWith('foo')); })
                 ->throws(AssertionFailure::class)
                 ->withMessage("Failed asserting that 'bar' ends with 'foo'.");
     }

@@ -10,7 +10,9 @@ namespace bovigo\assert\predicate;
 use bovigo\assert\AssertionFailure;
 use PHPUnit\Framework\TestCase;
 
-use function bovigo\assert\assert;
+use function bovigo\assert\assertFalse;
+use function bovigo\assert\assertThat;
+use function bovigo\assert\assertTrue;
 use function bovigo\assert\expect;
 /**
  * Tests for bovigo\assert\predicate\IsLessThan.
@@ -24,7 +26,7 @@ class IsLessThanTest extends TestCase
      */
     public function evaluatesToTrueIfGivenValueIsSmaller()
     {
-        assert(isLessThan(3)->test(2), isTrue());
+        assertTrue(isLessThan(3)->test(2));
     }
 
     /**
@@ -32,7 +34,7 @@ class IsLessThanTest extends TestCase
      */
     public function evaluatesToFalseIfGivenValueIsEqual()
     {
-        assert(isLessThan(3)->test(3), isFalse());
+        assertFalse(isLessThan(3)->test(3));
     }
 
     /**
@@ -40,7 +42,7 @@ class IsLessThanTest extends TestCase
      */
     public function evaluatesToFalseIfGivenValueIsGreater()
     {
-        assert(isLessThan(3)->test(4), isFalse());
+        assertFalse(isLessThan(3)->test(4));
     }
 
     /**
@@ -48,7 +50,7 @@ class IsLessThanTest extends TestCase
      */
     public function evaluatesToTrueWhenCombinedWithEqualsIfGivenValueIsSmaller()
     {
-        assert(isLessThanOrEqualTo(3)->test(2), isTrue());
+        assertTrue(isLessThanOrEqualTo(3)->test(2));
     }
 
     /**
@@ -56,7 +58,7 @@ class IsLessThanTest extends TestCase
      */
     public function evaluatesToFalseWhenCombinedWithEqualsIfGivenValueIsEqual()
     {
-        assert(isLessThanOrEqualTo(3)->test(3), isTrue());
+        assertTrue(isLessThanOrEqualTo(3)->test(3));
     }
 
     /**
@@ -64,7 +66,7 @@ class IsLessThanTest extends TestCase
      */
     public function evaluatesToFalseWhenCombinedWithEqualsIfGivenValueIsGreater()
     {
-        assert(isLessThanOrEqualTo(3)->test(4), isFalse());
+        assertFalse(isLessThanOrEqualTo(3)->test(4));
     }
 
     /**
@@ -72,7 +74,7 @@ class IsLessThanTest extends TestCase
      */
     public function assertionFailureContainsMeaningfulInformation()
     {
-        expect(function() { assert(3, isLessThan(2)); })
+        expect(function() { assertThat(3, isLessThan(2)); })
                 ->throws(AssertionFailure::class)
                 ->withMessage("Failed asserting that 3 is less than 2.");
     }
@@ -82,7 +84,7 @@ class IsLessThanTest extends TestCase
      */
     public function assertionFailureWhenCombinedWithEqualsContainsMeaningfulInformation()
     {
-        expect(function() { assert(3, isLessThanOrEqualTo(2)); })
+        expect(function() { assertThat(3, isLessThanOrEqualTo(2)); })
                 ->throws(AssertionFailure::class)
                 ->withMessage(
                         "Failed asserting that 3 is equal to 2 or is less than 2."

@@ -10,7 +10,9 @@ namespace bovigo\assert\predicate;
 use bovigo\assert\AssertionFailure;
 use PHPUnit\Framework\TestCase;
 
-use function bovigo\assert\assert;
+use function bovigo\assert\assertFalse;
+use function bovigo\assert\assertThat;
+use function bovigo\assert\assertTrue;
 use function bovigo\assert\expect;
 /**
  * Tests for bovigo\assert\predicate\Regex.
@@ -38,7 +40,7 @@ class RegexTest extends TestCase
      */
     public function validValueEvaluatesToTrue($pattern, $value)
     {
-        assert(matches($pattern)->test($value), isTrue());
+        assertTrue(matches($pattern)->test($value));
     }
 
     /**
@@ -60,7 +62,7 @@ class RegexTest extends TestCase
      */
     public function invalidValueEvaluatesToFalse($pattern, $value)
     {
-        assert(matches($pattern)->test($value), isFalse());
+        assertFalse(matches($pattern)->test($value));
     }
 
     /**
@@ -107,7 +109,7 @@ class RegexTest extends TestCase
      */
     public function stringRepresentationContainsRegex()
     {
-        assert(
+        assertThat(
                 (string) new Regex('/^([a-z]{3})$/'),
                 equals('matches regular expression "/^([a-z]{3})$/"')
         );
@@ -118,7 +120,7 @@ class RegexTest extends TestCase
      */
     public function assertionFailureContainsMeaningfulInformation()
     {
-        expect(function() { assert('f', matches('/^([a-z]{3})$/')); })
+        expect(function() { assertThat('f', matches('/^([a-z]{3})$/')); })
                 ->throws(AssertionFailure::class)
                 ->withMessage(
                         "Failed asserting that 'f' matches regular expression \"/^([a-z]{3})$/\"."
