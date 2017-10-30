@@ -1,4 +1,4 @@
-3.1.0 (2017-10-27)
+3.1.0 (2017-10-30)
 ------------------
 
   * Fixed #7: `bovigo\assert\assert()` not executed when zend.assertions not set to 1
