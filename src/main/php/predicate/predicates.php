@@ -378,18 +378,6 @@ function matches(string $pattern): Regex
 }
 
 /**
- * returns predicate which tests against a PHPUnit format expression
- *
- * @api
- * @param   string  $pattern
- * @return  \bovigo\assert\predicate\StringMatchesFormat
- */
-function assertStringMatchesFormat(string $pattern): StringMatchesFormat
-{
-    return new StringMatchesFormat($pattern);
-}
-
-/**
  * returns predicate which tests against a regular expression
  *
  * @api
@@ -399,6 +387,45 @@ function assertStringMatchesFormat(string $pattern): StringMatchesFormat
 function doesNotMatch(string $pattern): Predicate
 {
     return not(matches($pattern));
+}
+
+/**
+ * returns predicate which tests against a PHPUnit format expression
+ *
+ * Format can contain the following expressions:
+ * %e: directory separator, for example / on Linux
+ * %s: one or more of anything (character or white space) except the end of line character
+ * %S: zero or more of anything (character or white space) except the end of line character
+ * %a: one or more of anything (character or white space) including the end of line character
+ * %A: zero or more of anything (character or white space) including the end of line character
+ * %w: zero or more white space characters
+ * %i: signed integer value, for example +3142, -3142
+ * %d: unsigned integer value, for example 123456
+ * %x: one or more hexadecimal character. That is, characters in the range 0-9, a-f, A-F
+ * %f: floating point number, for example: 3.142, -3.142, 3.142E-10, 3.142e+10
+ * %c: single character of any sort
+ *
+ * @since   3.2.0
+ * @api
+ * @param   string  $format
+ * @return  \bovigo\assert\predicate\StringMatchesFormat
+ */
+function matchesFormat(string $format): StringMatchesFormat
+{
+    return new StringMatchesFormat($format);
+}
+
+/**
+ * returns predicate which tests against a string does not match a particular PHPUnit format expression
+ *
+ * @since   3.2.0
+ * @api
+ * @param   string  $pattern
+ * @return  \bovigo\assert\predicate\NegatePredicate
+ */
+function doesNotMatchFormat(string $format): Predicate
+{
+    return not(matchesFormat($format));
 }
 
 /**

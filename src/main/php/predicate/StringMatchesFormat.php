@@ -16,32 +16,31 @@ namespace bovigo\assert\predicate;
  */
 class StringMatchesFormat extends Regex
 {
-    private $initialPattern;
+    private $format;
 
-    public function __construct(string $pattern)
+    public function __construct(string $format)
     {
-        $this->initialPattern = $pattern;
-
-        $pattern = $this->createPatternFromFormat(\preg_replace('/\r\n/', "\n", $pattern));
-
-        parent::__construct($pattern);
+        $this->format = $format;
+        parent::__construct($this->patternForFormat(
+            \preg_replace('/\r\n/', "\n", $format)
+        ));
     }
 
-    private function createPatternFromFormat(string $string): string
+    private function patternForFormat(string $format): string
     {
-        $string = \preg_replace(
+        $pattern = \preg_replace(
             [
-                '/(?<!%)%e/',
-                '/(?<!%)%s/',
-                '/(?<!%)%S/',
-                '/(?<!%)%a/',
-                '/(?<!%)%A/',
-                '/(?<!%)%w/',
-                '/(?<!%)%i/',
-                '/(?<!%)%d/',
-                '/(?<!%)%x/',
-                '/(?<!%)%f/',
-                '/(?<!%)%c/'
+                '/(?<!%)%e/', // %e: directory separator, for example / on Linux
+                '/(?<!%)%s/', // %s: one or more of anything (character or white space) except the end of line character
+                '/(?<!%)%S/', // %S: zero or more of anything (character or white space) except the end of line character
+                '/(?<!%)%a/', // %a: one or more of anything (character or white space) including the end of line character
+                '/(?<!%)%A/', // %A: zero or more of anything (character or white space) including the end of line character
+                '/(?<!%)%w/', // %w: zero or more white space characters
+                '/(?<!%)%i/', // %i: signed integer value, for example +3142, -3142
+                '/(?<!%)%d/', // %d: unsigned integer value, for example 123456
+                '/(?<!%)%x/', // %x: one or more hexadecimal character. That is, characters in the range 0-9, a-f, A-F
+                '/(?<!%)%f/', // %f: floating point number, for example: 3.142, -3.142, 3.142E-10, 3.142e+10
+                '/(?<!%)%c/'  // %c: single character of any sort
             ],
             [
                 \str_replace('\\', '\\\\', '\\' . DIRECTORY_SEPARATOR),
@@ -56,16 +55,13 @@ class StringMatchesFormat extends Regex
                 '[+-]?\.?\d+\.?\d*(?:[Ee][+-]?\d+)?',
                 '.'
             ],
-            \preg_quote($string, '/')
+            \preg_quote($format, '/')
         );
-
-        $string = \str_replace('%%', '%', $string);
-
-        return '/^' . $string . '$/s';
+        return '/^' . \str_replace('%%', '%', $pattern) . '$/s';
     }
 
     public function __toString(): string
     {
-        return 'matches regular expression "' . $this->initialPattern . '"';
+        return 'matches format "' . $this->format . '"';
     }
 }
