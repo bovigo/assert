@@ -378,6 +378,18 @@ function matches(string $pattern): Regex
 }
 
 /**
+ * returns predicate which tests against a PHPUnit format expression
+ *
+ * @api
+ * @param   string  $pattern
+ * @return  \bovigo\assert\predicate\StringMatchesFormat
+ */
+function assertStringMatchesFormat(string $pattern): StringMatchesFormat
+{
+    return new StringMatchesFormat($pattern);
+}
+
+/**
  * returns predicate which tests against a regular expression
  *
  * @api
