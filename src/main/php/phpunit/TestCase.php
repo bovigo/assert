@@ -85,6 +85,7 @@ use function bovigo\assert\predicate\{
     isOfType,
     isSameAs,
     matches,
+    matchesFormat,
     startsWith
 };
 /**
@@ -564,6 +565,30 @@ abstract class TestCase extends Original
     public static function assertNotRegExp($pattern, $string, $message = '')
     {
         assertThat($string, doesNotMatch($pattern), $message);
+    }
+
+    /**
+     * Asserts that a string matches a given format string.
+     *
+     * @param string $format
+     * @param string $string
+     * @param string $message
+     */
+    public static function assertStringMatchesFormat($format, $string, $message = '')
+    {
+        assertThat($string, matchesFormat($format), $message);
+    }
+
+    /**
+     * Asserts that a string does not match a given format string.
+     *
+     * @param string $format
+     * @param string $string
+     * @param string $message
+     */
+    public static function assertStringNotMatchesFormat($format, $string, $message = '')
+    {
+        assertThat($string, doesNotMatchFormat($format), $message);
     }
 
     /**

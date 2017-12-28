@@ -1,3 +1,10 @@
+3.2.0 (2017-12-28)
+------------------
+
+  * Implemented #8: add support for assertStringMatchesFormat
+    * Added new functions `bovigo\assert\predicate\matchesFormat()` and `bovigo\assert\predicate\doesNotMatchFormat()`
+
+
 3.1.0 (2017-10-30)
 ------------------
 

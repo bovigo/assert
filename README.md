@@ -375,6 +375,42 @@ assertThat($value, doesNotMatch('/^([a-z]{3})$/'));
 ```
 
 
+### `matchesFormat($format)`
+_Available since release 3.2.0._
+
+Tests that a string matches the given PHP format expression. If the value is not
+a string it is rejected. The test is successful if the format yields at least
+one match in the value. The format string may contain the following placeholders:
+
+* `%e`: Represents a directory separator, for example / on Linux.
+* `%s`: One or more of anything (character or white space) except the end of line character.
+* `%S`: Zero or more of anything (character or white space) except the end of line character.
+* `%a`: One or more of anything (character or white space) including the end of line character.
+* `%A`: Zero or more of anything (character or white space) including the end of line character.
+* `%w`: Zero or more white space characters.
+* `%i`: A signed integer value, for example +3142, -3142.
+* `%d`: An unsigned integer value, for example 123456.
+* `%x`: One or more hexadecimal character. That is, characters in the range 0-9, a-f, A-F.
+* `%f`: A floating point number, for example: 3.142, -3.142, 3.142E-10, 3.142e+10.
+* `%c`: A single character of any sort.
+
+```php
+assertThat($value, matchesFormat('%w'));
+```
+
+
+### `doesNotMatchFormat($format)`
+_Available since release 3.2.0._
+
+Tests that a string does not match the given PHP format expression. If the value
+is not a string it is rejected. The test is successful if the pattern yields no
+match in the value. See above for a list of possible formats.
+
+```php
+assertThat($value, doesNotMatchFormat('%w'));
+```
+
+
 ### `isExistingFile($basePath = null)`
 
 Tests that the value denotes an existing file. If no `$basepath` is supplied the
