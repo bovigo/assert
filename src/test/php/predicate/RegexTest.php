@@ -94,14 +94,21 @@ class RegexTest extends TestCase
      */
     public function invalidRegexThrowsRuntimeExceptionOnEvaluation()
     {
-        expect(function() {
+        $expect = expect(function() {
             $regex = new Regex('^([a-z]{3})$');
             $regex('foo');
         })
-        ->throws(\RuntimeException::class)
-        ->withMessage(
-                'Failure while matching "^([a-z]{3})$", reason: invalid regular expression.'
-        );
+        ->throws(\RuntimeException::class);
+        if (version_compare(PHP_VERSION, '7.2.0', '<')) {
+            $expect->withMessage(
+                    'Failure while matching "^([a-z]{3})$", reason: invalid regular expression.'
+            );
+        } else {
+            $expect->withMessage(
+                    'Failure while matching "^([a-z]{3})$", reason: internal PCRE error.'
+            );
+        }
+
     }
 
     /**
