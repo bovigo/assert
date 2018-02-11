@@ -1,3 +1,11 @@
+4.0.0 (2018-02-11)
+------------------
+
+### BC breaks
+
+  * updated dependencies to be compatible with PHPUnit 7.x
+
+
 3.2.0 (2017-12-28)
 ------------------
 

@@ -105,7 +105,7 @@ abstract class TestCase extends Original
      * @param array|ArrayAccess $array
      * @param string            $message
      */
-    public static function assertArrayHasKey($key, $array, $message = '')
+    public static function assertArrayHasKey($key, $array, string $message = ''): void
     {
         assertThat($array, hasKey($key), $message);
     }
@@ -117,7 +117,7 @@ abstract class TestCase extends Original
      * @param array|ArrayAccess $array
      * @param string            $message
      */
-    public static function assertArrayNotHasKey($key, $array, $message = '')
+    public static function assertArrayNotHasKey($key, $array, string $message = ''): void
     {
         assertThat($array, doesNotHaveKey($key), $message);
     }
@@ -136,7 +136,7 @@ abstract class TestCase extends Original
      * @param bool   $checkForObjectIdentity
      * @param bool   $checkForNonObjectIdentity
      */
-    public static function assertContains($needle, $haystack, $message = '', $ignoreCase = false, $checkForObjectIdentity = true, $checkForNonObjectIdentity = false)
+    public static function assertContains($needle, $haystack, string $message = '', bool $ignoreCase = false, bool $checkForObjectIdentity = true, bool $checkForNonObjectIdentity = false): void
     {
         if (true === $ignoreCase || false === $checkForObjectIdentity || true === $checkForNonObjectIdentity) {
             parent::assertContains($needle, $haystack, $message, $ignoreCase, $checkForObjectIdentity, $checkForNonObjectIdentity);
@@ -159,7 +159,7 @@ abstract class TestCase extends Original
      * @param bool   $checkForObjectIdentity
      * @param bool   $checkForNonObjectIdentity
      */
-    public static function assertNotContains($needle, $haystack, $message = '', $ignoreCase = false, $checkForObjectIdentity = true, $checkForNonObjectIdentity = false)
+    public static function assertNotContains($needle, $haystack, string $message = '', bool $ignoreCase = false, bool $checkForObjectIdentity = true, bool $checkForNonObjectIdentity = false): void
     {
         if (true === $ignoreCase || false === $checkForObjectIdentity || true === $checkForNonObjectIdentity) {
             parent::assertNotContains($needle, $haystack, $message, $ignoreCase, $checkForObjectIdentity, $checkForNonObjectIdentity);
@@ -177,7 +177,7 @@ abstract class TestCase extends Original
      * @param  string             $message
      * @since  1.1.0
      */
-    public static function assertContainsOnly($type, $haystack, $isNativeType = null, $message = '')
+    public static function assertContainsOnly(string $type, iterable $haystack, ?bool $isNativeType = null, string $message = ''): void
     {
         if (null === $isNativeType) {
             $isNativeType = Type::isType($type);
@@ -198,7 +198,7 @@ abstract class TestCase extends Original
      * @param  string            $message
      * @since  1.1.0
      */
-    public static function assertContainsOnlyInstancesOf($classname, $haystack, $message = '')
+    public static function assertContainsOnlyInstancesOf(string $classname, iterable $haystack, string $message = ''): void
     {
         assertThat($haystack, each(isInstanceOf($classname)), $message);
     }
@@ -212,7 +212,7 @@ abstract class TestCase extends Original
      * @param  string             $message
      * @since  1.1.0
      */
-    public static function assertNotContainsOnly($type, $haystack, $isNativeType = null, $message = '')
+    public static function assertNotContainsOnly(string $type, iterable $haystack, ?bool $isNativeType = null, string $message = ''): void
     {
         if (null === $isNativeType) {
             $isNativeType = Type::isType($type);
@@ -232,7 +232,7 @@ abstract class TestCase extends Original
      * @param mixed  $haystack
      * @param string $message
      */
-    public static function assertCount($expectedCount, $haystack, $message = '')
+    public static function assertCount(int $expectedCount, $haystack, string $message = ''): void
     {
         assertThat($haystack, isOfSize($expectedCount), $message);
     }
@@ -244,7 +244,7 @@ abstract class TestCase extends Original
      * @param mixed  $haystack
      * @param string $message
      */
-    public static function assertNotCount($expectedCount, $haystack, $message = '')
+    public static function assertNotCount(int $expectedCount, $haystack, string $message = ''): void
     {
         assertThat($haystack, isNotOfSize($expectedCount), $message);
     }
@@ -263,7 +263,7 @@ abstract class TestCase extends Original
      * @param bool   $canonicalize
      * @param bool   $ignoreCase
      */
-    public static function assertEquals($expected, $actual, $message = '', $delta = 0.0, $maxDepth = 10, $canonicalize = false, $ignoreCase = false)
+    public static function assertEquals($expected, $actual, string $message = '', float $delta = 0.0, int $maxDepth = 10, bool $canonicalize = false, bool $ignoreCase = false): void
     {
         if (true === $canonicalize || true === $ignoreCase) {
             parent::assertEquals($expected, $actual, $message, $delta, $maxDepth, $canonicalize, $ignoreCase);
@@ -286,7 +286,7 @@ abstract class TestCase extends Original
      * @param bool   $canonicalize
      * @param bool   $ignoreCase
      */
-    public static function assertNotEquals($expected, $actual, $message = '', $delta = 0.0, $maxDepth = 10, $canonicalize = false, $ignoreCase = false)
+    public static function assertNotEquals($expected, $actual, string $message = '', $delta = 0.0, $maxDepth = 10, $canonicalize = false, $ignoreCase = false): void
     {
         if (true === $canonicalize || true === $ignoreCase) {
             parent::assertNotEquals($expected, $actual, $message, $delta, $maxDepth, $canonicalize, $ignoreCase);
@@ -301,7 +301,7 @@ abstract class TestCase extends Original
      * @param mixed  $actual
      * @param string $message
      */
-    public static function assertEmpty($actual, $message = '')
+    public static function assertEmpty($actual, string $message = ''): void
     {
         assertEmpty($actual, $message);
     }
@@ -312,7 +312,7 @@ abstract class TestCase extends Original
      * @param mixed  $actual
      * @param string $message
      */
-    public static function assertNotEmpty($actual, $message = '')
+    public static function assertNotEmpty($actual, string $message = ''): void
     {
         assertNotEmpty($actual, $message);
     }
@@ -324,7 +324,7 @@ abstract class TestCase extends Original
      * @param mixed  $actual
      * @param string $message
      */
-    public static function assertGreaterThan($expected, $actual, $message = '')
+    public static function assertGreaterThan($expected, $actual, string $message = ''): void
     {
         assertThat($actual, isGreaterThan($expected), $message);
     }
@@ -336,7 +336,7 @@ abstract class TestCase extends Original
      * @param mixed  $actual
      * @param string $message
      */
-    public static function assertGreaterThanOrEqual($expected, $actual, $message = '')
+    public static function assertGreaterThanOrEqual($expected, $actual, string $message = ''): void
     {
         assertThat($actual, isGreaterThanOrEqualTo($expected), $message);
     }
@@ -348,7 +348,7 @@ abstract class TestCase extends Original
      * @param mixed  $actual
      * @param string $message
      */
-    public static function assertLessThan($expected, $actual, $message = '')
+    public static function assertLessThan($expected, $actual, string $message = ''): void
     {
         assertThat($actual, isLessThan($expected), $message);
     }
@@ -360,7 +360,7 @@ abstract class TestCase extends Original
      * @param mixed  $actual
      * @param string $message
      */
-    public static function assertLessThanOrEqual($expected, $actual, $message = '')
+    public static function assertLessThanOrEqual($expected, $actual, string $message = ''): void
     {
         assertThat($actual, isLessThanOrEqualTo($expected), $message);
     }
@@ -371,7 +371,7 @@ abstract class TestCase extends Original
      * @param string $filename
      * @param string $message
      */
-    public static function assertFileExists($filename, $message = '')
+    public static function assertFileExists(string $filename, string $message = ''): void
     {
         assertThat($filename, isExistingFile()->or(isExistingDirectory()), $message);
     }
@@ -382,7 +382,7 @@ abstract class TestCase extends Original
      * @param string $filename
      * @param string $message
      */
-    public static function assertFileNotExists($filename, $message = '')
+    public static function assertFileNotExists(string $filename, string $message = ''): void
     {
         assertThat($filename, isNonExistingFile()->and(isNonExistingDirectory()), $message);
     }
@@ -393,7 +393,7 @@ abstract class TestCase extends Original
      * @param bool   $condition
      * @param string $message
      */
-    public static function assertTrue($condition, $message = '')
+    public static function assertTrue($condition, string $message = ''): void
     {
         assertTrue($condition, $message);
     }
@@ -404,7 +404,7 @@ abstract class TestCase extends Original
      * @param bool   $condition
      * @param string $message
      */
-    public static function assertFalse($condition, $message = '')
+    public static function assertFalse($condition, string $message = ''): void
     {
         assertFalse($condition, $message);
     }
@@ -415,7 +415,7 @@ abstract class TestCase extends Original
      * @param mixed  $actual
      * @param string $message
      */
-    public static function assertNotNull($actual, $message = '')
+    public static function assertNotNull($actual, string $message = ''): void
     {
         assertNotNull($actual, $message);
     }
@@ -426,7 +426,7 @@ abstract class TestCase extends Original
      * @param mixed  $actual
      * @param string $message
      */
-    public static function assertNull($actual, $message = '')
+    public static function assertNull($actual, string $message = ''): void
     {
         assertNull($actual, $message);
     }
@@ -438,7 +438,7 @@ abstract class TestCase extends Original
      * @param  string  $message
      * @since  1.1.0
      */
-    public static function assertFinite($actual, $message = '')
+    public static function assertFinite($actual, string $message = ''): void
     {
         assertThat($actual, 'is_finite', $message);
     }
@@ -450,7 +450,7 @@ abstract class TestCase extends Original
      * @param  string  $message
      * @since  1.1.0
      */
-    public static function assertInfinite($actual, $message = '')
+    public static function assertInfinite($actual, string $message = ''): void
     {
         assertThat($actual, 'is_infinite', $message);
     }
@@ -462,7 +462,7 @@ abstract class TestCase extends Original
      * @param  string  $message
      * @since  1.1.0
      */
-    public static function assertNan($actual, $message = '')
+    public static function assertNan($actual, string $message = ''): void
     {
         assertThat($actual, 'is_nan', $message);
     }
@@ -476,7 +476,7 @@ abstract class TestCase extends Original
      * @param mixed  $actual
      * @param string $message
      */
-    public static function assertSame($expected, $actual, $message = '')
+    public static function assertSame($expected, $actual, string $message = ''): void
     {
         assertThat($actual, isSameAs($expected), $message);
     }
@@ -490,7 +490,7 @@ abstract class TestCase extends Original
      * @param mixed  $actual
      * @param string $message
      */
-    public static function assertNotSame($expected, $actual, $message = '')
+    public static function assertNotSame($expected, $actual, string $message = ''): void
     {
         assertThat($actual, isNotSameAs($expected), $message);
     }
@@ -502,7 +502,7 @@ abstract class TestCase extends Original
      * @param mixed  $actual
      * @param string $message
      */
-    public static function assertInstanceOf($expected, $actual, $message = '')
+    public static function assertInstanceOf(string $expected, $actual, string $message = ''): void
     {
         assertThat($actual, isInstanceOf($expected), $message);
     }
@@ -514,7 +514,7 @@ abstract class TestCase extends Original
      * @param mixed  $actual
      * @param string $message
      */
-    public static function assertNotInstanceOf($expected, $actual, $message = '')
+    public static function assertNotInstanceOf(string $expected, $actual, string $message = ''): void
     {
         assertThat($actual, isNotInstanceOf($expected), $message);
     }
@@ -526,7 +526,7 @@ abstract class TestCase extends Original
      * @param mixed  $actual
      * @param string $message
      */
-    public static function assertInternalType($expected, $actual, $message = '')
+    public static function assertInternalType(string $expected, $actual, string $message = ''): void
     {
         assertThat($actual, isOfType($expected), $message);
     }
@@ -538,7 +538,7 @@ abstract class TestCase extends Original
      * @param mixed  $actual
      * @param string $message
      */
-    public static function assertNotInternalType($expected, $actual, $message = '')
+    public static function assertNotInternalType(string $expected, $actual, string $message = ''): void
     {
         assertThat($actual, isNotOfType($expected), $message);
     }
@@ -550,7 +550,7 @@ abstract class TestCase extends Original
      * @param string $string
      * @param string $message
      */
-    public static function assertRegExp($pattern, $string, $message = '')
+    public static function assertRegExp(string $pattern, string $string, string $message = ''): void
     {
         assertThat($string, matches($pattern), $message);
     }
@@ -562,7 +562,7 @@ abstract class TestCase extends Original
      * @param string $string
      * @param string $message
      */
-    public static function assertNotRegExp($pattern, $string, $message = '')
+    public static function assertNotRegExp(string $pattern, string $string, string $message = ''): void
     {
         assertThat($string, doesNotMatch($pattern), $message);
     }
@@ -574,7 +574,7 @@ abstract class TestCase extends Original
      * @param string $string
      * @param string $message
      */
-    public static function assertStringMatchesFormat($format, $string, $message = '')
+    public static function assertStringMatchesFormat(string $format, string $string, string $message = ''): void
     {
         assertThat($string, matchesFormat($format), $message);
     }
@@ -586,7 +586,7 @@ abstract class TestCase extends Original
      * @param string $string
      * @param string $message
      */
-    public static function assertStringNotMatchesFormat($format, $string, $message = '')
+    public static function assertStringNotMatchesFormat(string $format, string $string, string $message = ''): void
     {
         assertThat($string, doesNotMatchFormat($format), $message);
     }
@@ -599,7 +599,7 @@ abstract class TestCase extends Original
      * @param  string  $message
      * @since  1.1.0
      */
-    public static function assertStringStartsWith($prefix, $string, $message = '')
+    public static function assertStringStartsWith(string $prefix, string $string, string $message = ''): void
     {
         assertThat($string, startsWith($prefix), $message);
     }
@@ -612,7 +612,7 @@ abstract class TestCase extends Original
      * @param  string  $message
      * @since  1.1.0
      */
-    public static function assertStringStartsNotWith($prefix, $string, $message = '')
+    public static function assertStringStartsNotWith($prefix, $string, string $message = ''): void
     {
         assertThat($string, doesNotStartWith($prefix), $message);
     }
@@ -625,7 +625,7 @@ abstract class TestCase extends Original
      * @param  string  $message
      * @since  1.1.0
      */
-    public static function assertStringEndsWith($suffix, $string, $message = '')
+    public static function assertStringEndsWith(string $suffix, string $string, string $message = ''): void
     {
         assertThat($string, endsWith($suffix), $message);
     }
@@ -638,7 +638,7 @@ abstract class TestCase extends Original
      * @param  string  $message
      * @since  1.1.0
      */
-    public static function assertStringEndsNotWith($suffix, $string, $message = '')
+    public static function assertStringEndsNotWith(string $suffix, string $string, string $message = ''): void
     {
         assertThat($string, doesNotEndWith($suffix), $message);
     }
@@ -650,7 +650,7 @@ abstract class TestCase extends Original
      * @param  PHPUnit\Framework\Constraint  $constraint
      * @param  string                        $message
      */
-    public static function assertThat($value, Constraint $constraint, $message = '')
+    public static function assertThat($value, Constraint $constraint, string $message = ''): void
     {
         assertThat($value, new ConstraintAdapter($constraint), $message);
     }

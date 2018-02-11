@@ -4,11 +4,11 @@
     "license": "BSD-3-Clause",
     "require": {
         "php": "^7.1",
-        "sebastian/comparator": "^2.0",
+        "sebastian/comparator": "^2.1",
         "sebastian/exporter": "^3.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "^6.3",
+        "phpunit/phpunit": "^7.0",
         "mikey179/vfsStream": "^1.6"
     },
     "autoload": {
@@ -22,7 +22,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "3.2.x-dev"
+            "dev-master": "4.0.x-dev"
         }
     },
     "minimum-stability": "dev",
