@@ -3,7 +3,7 @@
     "description": "Provides assertions for unit tests.",
     "license": "BSD-3-Clause",
     "require": {
-        "php": "^7.1",
+        "php": "^7.2",
         "sebastian/comparator": "^2.1",
         "sebastian/exporter": "^3.0"
     },

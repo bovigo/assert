@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6988ea4f5173a03715ff26fc4f4e27a4",
+    "content-hash": "cf138fcc3d431f359f68d7e31a067cce",
     "packages": [
         {
             "name": "sebastian/comparator",
@@ -1093,6 +1093,7 @@
                 "mock",
                 "xunit"
             ],
+            "abandoned": true,
             "time": "2018-02-01T13:11:13+00:00"
         },
         {
@@ -1515,7 +1516,7 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": "^7.1"
+        "php": "^7.2"
     },
     "platform-dev": []
 }
