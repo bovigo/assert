@@ -5,7 +5,7 @@
     "require": {
         "php": "^7.2",
         "sebastian/comparator": "^2.1",
-        "sebastian/exporter": "^3.0"
+        "sebastian/exporter": "^3.1"
     },
     "require-dev": {
         "phpunit/phpunit": "^7.0",
