@@ -19,17 +19,17 @@ _bovigo/assert_ is distributed as [Composer](https://getcomposer.org/) package.
 To install it as a development dependency of your package use the following
 command:
 
-    composer require --dev "bovigo/assert": "^3.2"
+    composer require --dev "bovigo/assert": "^5.0"
 
 To install it as a runtime dependency for your package use the following command:
 
-    composer require "bovigo/assert=^3.2"
+    composer require "bovigo/assert=^5.0"
 
 
 Requirements
 ------------
 
-_bovigo/assert_ 3.x requires at least PHP 7.1. For PHP 7.0 use the 2.x releases.
+_bovigo/assert_ 5.x requires at least PHP 7.2.
 
 
 Why?
@@ -44,8 +44,6 @@ wanted to use it in my own code, so I made a package of it.
 Usage
 -----
 
-**Note: `assertThat()` was introduced with release 3.1.0 due to [issue #7](https://github.com/mikey179/bovigo-assert/issues/7). If you use a version lower than 3.1.0 simply use assert() instead but set `zend.assertions=1`.**
-
 All assertions are written in the same way using functions:
 
 ```php
@@ -59,7 +57,7 @@ supplied to enhance clarity in case the assertion fails.
 
 In case the predicate fails an `AssertionFailure` will be thrown with useful
 information of why the test failed. In case PHPUnit is used `AssertionFailure`
-is an instance of `\PHPUnit\Framework\ExpectationFailedException` so it
+is an instance of `\PHPUnit\Framework\AssertionFailedError` so it
 integrates nicely into PHPUnit, yielding a similar test output as PHPUnit's
 constraints. Here is an example of the output in case of a test failure:
 
@@ -568,7 +566,6 @@ assertThat($value, not(function($value) { return substr($value, 4, 3) === 'foo';
 
 Combining predicates
 --------------------
-_Available since release 1.4.0. For previous releases use `asWellAs()` and `orElse()`._
 
 Each predicate provides both two methods to combine this predicate with another
 predicate into a new predicate.
