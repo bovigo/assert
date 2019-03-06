@@ -59,7 +59,8 @@ class IsOfTypeTest extends TestCase
             'scalar string'          => ['scalar', 'foo'],
             'callable closure'       => ['callable', function() {}],
             'callable function name' => ['callable', 'strlen'],
-            'callable class method'  => ['callable', [__CLASS__, 'validValuesAndTypes']]
+            'callable class method'  => ['callable', [__CLASS__, 'validValuesAndTypes']],
+            'iterable'               => ['iterable', [1, 2, 3]]
         ];
     }
 

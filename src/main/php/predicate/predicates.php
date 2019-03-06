@@ -239,7 +239,8 @@ function isOfType(string $expectedType): Predicate
             'resource' => 'is_resource',
             'string'   => 'is_string',
             'scalar'   => 'is_scalar',
-            'callable' => 'is_callable'
+            'callable' => 'is_callable',
+            'iterable' => 'is_iterable'
     ];
     if (!isset($types[$expectedType])) {
         throw new \InvalidArgumentException(

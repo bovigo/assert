@@ -6,6 +6,9 @@
   * removed deprecated `bovigo\assert\assert()`
   * raised minimum required PHP version to 7.2.0
 
+### Other changes
+  * `bovigo\assert\predicate\isOfType()` can now check for iterable types
+
 
 4.0.0 (2018-02-11)
 ------------------
