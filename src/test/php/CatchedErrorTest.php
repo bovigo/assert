@@ -23,7 +23,7 @@ class CatchedErrorTest extends TestCase
 {
     private $catchedError;
 
-    public function setup()
+    public function setup(): void
     {
         $this->catchedError = new CatchedError(E_NOTICE , 'error', __FILE__, 303);
     }

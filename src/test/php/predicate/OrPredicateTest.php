@@ -31,7 +31,7 @@ class OrPredicateTest extends TestCase
     /**
      * set up test environment
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->orPredicate = new OrPredicate(
                 function($value) { return 'bar' === $value; },

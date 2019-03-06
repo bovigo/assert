@@ -27,7 +27,7 @@ class NegatePredicateTest extends TestCase
     /**
      * set up test environment
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->negatePredicate = not(
                 function($value) { return 'foo' === $value; }

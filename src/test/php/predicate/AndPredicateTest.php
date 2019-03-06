@@ -29,7 +29,7 @@ class AndPredicateTest extends TestCase
     /**
      * set up test environment
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->andPredicate = new AndPredicate(
                 function($value) { return 'foo' === $value; },
