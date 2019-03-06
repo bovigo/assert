@@ -6,11 +6,11 @@
  * file that was distributed with this source code.
  */
 namespace bovigo\assert;
-if (class_exists('\PHPUnit\Framework\ExpectationFailedException')) {
+if (class_exists('\PHPUnit\Framework\AssertionFailedError')) {
     /**
      * Thrown when amount of received arguments is lower than expected amount.
      */
-    class AssertionFailure extends \PHPUnit\Framework\ExpectationFailedException
+    class AssertionFailure extends \PHPUnit\Framework\AssertionFailedError
     {
         // intentionally empty
     }
