@@ -38,22 +38,6 @@ function assertThat($value, callable $predicate, string $description = null): bo
 }
 
 /**
- * assert that a value fulfills a predicate
- *
- * @api
- * @deprecated  since 3.1.0, use assertThat() instead, see https://github.com/mikey179/bovigo-assert/issues/7
- * @param   mixed                                        $value        value to test
- * @param   \bovigo\assert\predicate\Predicate|callable  $predicate    predicate or callable to test given value
- * @param   string                                       $description  optional  additional description for failure message
- * @return  true
- * @throws  \bovigo\assert\AssertionFailure
- */
-function assert($value, callable $predicate, string $description = null): bool
-{
-    return assertThat($value, $predicate, $description);
-}
-
-/**
  * fail a test with given message
  *
  * @api
