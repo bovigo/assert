@@ -4,6 +4,7 @@
 ### BC breaks
 
   * removed deprecated `bovigo\assert\assert()`
+  * raised minimum required PHP version to 7.2.0
 
 
 4.0.0 (2018-02-11)
