@@ -644,6 +644,226 @@ abstract class TestCase extends Original
     }
 
     /**
+     * Asserts that a variable is of type array.
+     *
+     * @since  5.0.0
+     */
+    public static function assertIsArray($actual, string $message = ''): void
+    {
+        assertThat($actual, isOfType('array'), $message);
+    }
+
+    /**
+     * Asserts that a variable is of type bool.
+     *
+     * @since  5.0.0
+     */
+    public static function assertIsBool($actual, string $message = ''): void
+    {
+        assertThat($actual, isOfType('bool'), $message);
+    }
+
+    /**
+     * Asserts that a variable is of type float.
+     *
+     * @since  5.0.0
+     */
+    public static function assertIsFloat($actual, string $message = ''): void
+    {
+        assertThat($actual, isOfType('float'), $message);
+    }
+
+    /**
+     * Asserts that a variable is of type int.
+     *
+     * @since  5.0.0
+     */
+    public static function assertIsInt($actual, string $message = ''): void
+    {
+        assertThat($actual, isOfType('int'), $message);
+    }
+
+    /**
+     * Asserts that a variable is of type numeric.
+     *
+     * @since  5.0.0
+     */
+    public static function assertIsNumeric($actual, string $message = ''): void
+    {
+        assertThat($actual, isOfType('numeric'), $message);
+    }
+
+    /**
+     * Asserts that a variable is of type object.
+     *
+     * @since  5.0.0
+     */
+    public static function assertIsObject($actual, string $message = ''): void
+    {
+        assertThat($actual, isOfType('object'), $message);
+    }
+
+    /**
+     * Asserts that a variable is of type resource.
+     *
+     * @since  5.0.0
+     */
+    public static function assertIsResource($actual, string $message = ''): void
+    {
+        assertThat($actual, isOfType('resource'), $message);
+    }
+
+    /**
+     * Asserts that a variable is of type string.
+     *
+     * @since  5.0.0
+     */
+    public static function assertIsString($actual, string $message = ''): void
+    {
+        assertThat($actual, isOfType('string'), $message);
+    }
+
+    /**
+     * Asserts that a variable is of type scalar.
+     *
+     * @since  5.0.0
+     */
+    public static function assertIsScalar($actual, string $message = ''): void
+    {
+        assertThat($actual, isOfType('scalar'), $message);
+    }
+
+    /**
+     * Asserts that a variable is of type callable.
+     *
+     * @since  5.0.0
+     */
+    public static function assertIsCallable($actual, string $message = ''): void
+    {
+        assertThat($actual, isOfType('callable'), $message);
+    }
+
+    /**
+     * Asserts that a variable is of type iterable.
+     *
+     * @since  5.0.0
+     */
+    public static function assertIsIterable($actual, string $message = ''): void
+    {
+        assertThat($actual, isOfType('iterable'), $message);
+    }
+
+    /**
+     * Asserts that a variable is not of type array.
+     *
+     * @since  5.0.0
+     */
+    public static function assertIsNotArray($actual, string $message = ''): void
+    {
+        assertThat($actual, isNotOfType('array'), $message);
+    }
+
+    /**
+     * Asserts that a variable is not of type bool.
+     *
+     * @since  5.0.0
+     */
+    public static function assertIsNotBool($actual, string $message = ''): void
+    {
+        assertThat($actual, isNotOfType('bool'), $message);
+    }
+
+    /**
+     * Asserts that a variable is not of type float.
+     *
+     * @since  5.0.0
+     */
+    public static function assertIsNotFloat($actual, string $message = ''): void
+    {
+        assertThat($actual, isNotOfType('float'), $message);
+    }
+
+    /**
+     * Asserts that a variable is not of type int.
+     *
+     * @since  5.0.0
+     */
+    public static function assertIsNotInt($actual, string $message = ''): void
+    {
+        assertThat($actual, isNotOfType('int'), $message);
+    }
+
+    /**
+     * Asserts that a variable is not of type numeric.
+     *
+     * @since  5.0.0
+     */
+    public static function assertIsNotNumeric($actual, string $message = ''): void
+    {
+        assertThat($actual, isNotOfType('numeric'), $message);
+    }
+
+    /**
+     * Asserts that a variable is not of type object.
+     *
+     * @since  5.0.0
+     */
+    public static function assertIsNotObject($actual, string $message = ''): void
+    {
+        assertThat($actual, isNotOfType('object'), $message);
+    }
+
+    /**
+     * Asserts that a variable is not of type resource.
+     *
+     * @since  5.0.0
+     */
+    public static function assertIsNotResource($actual, string $message = ''): void
+    {
+        assertThat($actual, isNotOfType('resource'), $message);
+    }
+
+    /**
+     * Asserts that a variable is not of type string.
+     *
+     * @since  5.0.0
+     */
+    public static function assertIsNotString($actual, string $message = ''): void
+    {
+        assertThat($actual, isNotOfType('string'), $message);
+    }
+
+    /**
+     * Asserts that a variable is not of type scalar.
+     *
+     * @since  5.0.0
+     */
+    public static function assertIsNotScalar($actual, string $message = ''): void
+    {
+        assertThat($actual, isNotOfType('scalar'), $message);
+    }
+
+    /**
+     * Asserts that a variable is not of type callable.
+     *
+     * @since  5.0.0
+     */
+    public static function assertIsNotCallable($actual, string $message = ''): void
+    {
+        assertThat($actual, isNotOfType('callable'), $message);
+    }
+
+    /**
+     * Asserts that a variable is not of type iterable.
+     *
+     * @since  5.0.0
+     */
+    public static function assertIsNotIterable($actual, string $message = ''): void
+    {
+        assertThat($actual, isNotOfType('iterable'), $message);
+    }
+
+    /**
      * Evaluates a PHPUnit\Framework\Constraint matcher object.
      *
      * @param  mixed                         $value

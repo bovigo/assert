@@ -11,6 +11,7 @@ use bovigo\assert\AssertionFailure;
 
 use function bovigo\assert\expect;
 use function bovigo\assert\predicate\contains;
+use function bovigo\assert\predicate\endsWith;
 /**
  * Test for bovigo\assert\assert\predicate\AndPredicate.
  *
@@ -804,6 +805,497 @@ class CompatibilityTest extends TestCase
                 ->throws(AssertionFailure::class)
                 ->withMessage(
                         "Failed asserting that 'barbazfoo' does not end with 'foo'."
+        );
+    }
+
+    /**
+     * @test
+     * @since  5.0.0
+     */
+    public function testAssertIsArraySuccess()
+    {
+        $this->assertIsArray(['foo']);
+    }
+
+    /**
+     * @test
+     * @since  5.0.0
+     */
+    public function testAssertIsArrayWithFailure()
+    {
+        expect(function() { $this->assertIsArray('foo'); })
+                ->throws(AssertionFailure::class)
+                ->withMessage(
+                        "Failed asserting that 'foo' is of type \"array\"."
+        );
+    }
+
+    /**
+     * @test
+     * @since  5.0.0
+     */
+    public function testAssertIsBoolSuccess()
+    {
+        $this->assertIsBool(true);
+    }
+
+    /**
+     * @test
+     * @since  5.0.0
+     */
+    public function testAssertIsBoolWithFailure()
+    {
+        expect(function() { $this->assertIsBool('foo'); })
+                ->throws(AssertionFailure::class)
+                ->withMessage(
+                        "Failed asserting that 'foo' is of type \"bool\"."
+        );
+    }
+
+    /**
+     * @test
+     * @since  5.0.0
+     */
+    public function testAssertIsFloatSuccess()
+    {
+        $this->assertIsFloat(1.1);
+    }
+
+    /**
+     * @test
+     * @since  5.0.0
+     */
+    public function testAssertIsFloatWithFailure()
+    {
+        expect(function() { $this->assertIsFloat('foo'); })
+                ->throws(AssertionFailure::class)
+                ->withMessage(
+                        "Failed asserting that 'foo' is of type \"float\"."
+        );
+    }
+
+    /**
+     * @test
+     * @since  5.0.0
+     */
+    public function testAssertIsIntSuccess()
+    {
+        $this->assertIsInt(1);
+    }
+
+    /**
+     * @test
+     * @since  5.0.0
+     */
+    public function testAssertIsIntWithFailure()
+    {
+        expect(function() { $this->assertIsInt('foo'); })
+                ->throws(AssertionFailure::class)
+                ->withMessage(
+                        "Failed asserting that 'foo' is of type \"int\"."
+        );
+    }
+
+    /**
+     * @test
+     * @since  5.0.0
+     */
+    public function testAssertIsNumericSuccess()
+    {
+        $this->assertIsNumeric(1);
+    }
+
+    /**
+     * @test
+     * @since  5.0.0
+     */
+    public function testAssertIsNumericWithFailure()
+    {
+        expect(function() { $this->assertIsNumeric('foo'); })
+                ->throws(AssertionFailure::class)
+                ->withMessage(
+                        "Failed asserting that 'foo' is of type \"numeric\"."
+        );
+    }
+
+    /**
+     * @test
+     * @since  5.0.0
+     */
+    public function testAssertIsObjectSuccess()
+    {
+        $this->assertIsObject(new \stdClass());
+    }
+
+    /**
+     * @test
+     * @since  5.0.0
+     */
+    public function testAssertIsObjectWithFailure()
+    {
+        expect(function() { $this->assertIsObject('foo'); })
+                ->throws(AssertionFailure::class)
+                ->withMessage(
+                        "Failed asserting that 'foo' is of type \"object\"."
+        );
+    }
+
+    /**
+     * @test
+     * @since  5.0.0
+     */
+    public function testAssertIsResourceSuccess()
+    {
+        $fd = fopen(__FILE__, 'r');
+        try {
+            $this->assertIsResource($fd);
+        } finally {
+            fclose($fd);
+        }
+    }
+
+    /**
+     * @test
+     * @since  5.0.0
+     */
+    public function testAssertIsResourceWithFailure()
+    {
+        expect(function() { $this->assertIsResource('foo'); })
+                ->throws(AssertionFailure::class)
+                ->withMessage(
+                        "Failed asserting that 'foo' is of type \"resource\"."
+        );
+    }
+
+    /**
+     * @test
+     * @since  5.0.0
+     */
+    public function testAssertIsStringSuccess()
+    {
+        $this->assertIsString('example');
+    }
+
+    /**
+     * @test
+     * @since  5.0.0
+     */
+    public function testAssertIsStringWithFailure()
+    {
+        expect(function() { $this->assertIsString(false); })
+                ->throws(AssertionFailure::class)
+                ->withMessage(
+                        "Failed asserting that false is of type \"string\"."
+        );
+    }
+
+    /**
+     * @test
+     * @since  5.0.0
+     */
+    public function testAssertIsScalarSuccess()
+    {
+        $this->assertIsScalar(1);
+    }
+
+    /**
+     * @test
+     * @since  5.0.0
+     */
+    public function testAssertIsScalarWithFailure()
+    {
+        expect(function() { $this->assertIsScalar(['foo']); })
+                ->throws(AssertionFailure::class)
+                ->withMessage(
+                        "Failed asserting that an array is of type \"scalar\"."
+        );
+    }
+
+    /**
+     * @test
+     * @since  5.0.0
+     */
+    public function testAssertIsCallableSuccess()
+    {
+        $this->assertIsCallable(function() {});
+    }
+
+    /**
+     * @test
+     * @since  5.0.0
+     */
+    public function testAssertIsCallableWithFailure()
+    {
+        expect(function() { $this->assertIsCallable(['foo']); })
+                ->throws(AssertionFailure::class)
+                ->withMessage(
+                        "Failed asserting that an array is of type \"callable\"."
+        );
+    }
+
+    /**
+     * @test
+     * @since  5.0.0
+     */
+    public function testAssertIsIterableSuccess()
+    {
+        $this->assertIsIterable([]);
+    }
+
+    /**
+     * @test
+     * @since  5.0.0
+     */
+    public function testAssertIsIterableWithFailure()
+    {
+        expect(function() { $this->assertIsIterable('foo'); })
+                ->throws(AssertionFailure::class)
+                ->withMessage(
+                        "Failed asserting that 'foo' is of type \"iterable\"."
+        );
+    }
+
+    /**
+     * @test
+     * @since  5.0.0
+     */
+    public function testAssertIsNotArraySuccess()
+    {
+        $this->assertIsNotArray('foo');
+    }
+
+    /**
+     * @test
+     * @since  5.0.0
+     */
+    public function testAssertIsNotArrayWithFailure()
+    {
+        expect(function() { $this->assertIsNotArray(['foo']); })
+                ->throws(AssertionFailure::class)
+                ->withMessage(
+                        "Failed asserting that an array is not of type \"array\"."
+        );
+    }
+
+    /**
+     * @test
+     * @since  5.0.0
+     */
+    public function testAssertIsNotBoolSuccess()
+    {
+        $this->assertIsNotBool('foo');
+    }
+
+    /**
+     * @test
+     * @since  5.0.0
+     */
+    public function testAssertIsNotBoolWithFailure()
+    {
+        expect(function() { $this->assertIsNotBool(true); })
+                ->throws(AssertionFailure::class)
+                ->withMessage(
+                        "Failed asserting that true is not of type \"bool\"."
+        );
+    }
+
+    /**
+     * @test
+     * @since  5.0.0
+     */
+    public function testAssertIsNotFloatSuccess()
+    {
+        $this->assertIsNotFloat(1);
+    }
+
+    /**
+     * @test
+     * @since  5.0.0
+     */
+    public function testAssertIsNotFloatWithFailure()
+    {
+        expect(function() { $this->assertIsNotFloat(1.1); })
+                ->throws(AssertionFailure::class)
+                ->withMessage(
+                        "Failed asserting that 1.1 is not of type \"float\"."
+        );
+    }
+
+    /**
+     * @test
+     * @since  5.0.0
+     */
+    public function testAssertIsNotIntSuccess()
+    {
+        $this->assertIsNotInt(1.0);
+    }
+
+    /**
+     * @test
+     * @since  5.0.0
+     */
+    public function testAssertIsNotIntWithFailure()
+    {
+        expect(function() { $this->assertIsNotInt(1); })
+                ->throws(AssertionFailure::class)
+                ->withMessage(
+                        "Failed asserting that 1 is not of type \"int\"."
+        );
+    }
+
+    /**
+     * @test
+     * @since  5.0.0
+     */
+    public function testAssertIsNotNumericSuccess()
+    {
+        $this->assertIsNotNumeric('example');
+    }
+
+    /**
+     * @test
+     * @since  5.0.0
+     */
+    public function testAssertIsNotNumericWithFailure()
+    {
+        expect(function() { $this->assertIsNotNumeric(1); })
+                ->throws(AssertionFailure::class)
+                ->withMessage(
+                        "Failed asserting that 1 is not of type \"numeric\"."
+        );
+    }
+
+    /**
+     * @test
+     * @since  5.0.0
+     */
+    public function testAssertIsNotObjectSuccess()
+    {
+        $this->assertIsNotObject('example');
+    }
+
+    /**
+     * @test
+     * @since  5.0.0
+     */
+    public function testAssertIsNotObjectWithFailure()
+    {
+        expect(function() { $this->assertIsNotObject(new \stdClass()); })
+                ->throws(AssertionFailure::class)
+                ->message(endsWith("is not of type \"object\"."));
+    }
+
+    /**
+     * @test
+     * @since  5.0.0
+     */
+    public function testAssertIsNotResourceSuccess()
+    {
+        $this->assertIsNotResource('example');
+    }
+
+    /**
+     * @test
+     * @since  5.0.0
+     */
+    public function testAssertIsNotResourceWithFailure()
+    {
+
+        expect(function() {
+            $fd = fopen(__FILE__, 'r');
+            try {
+              $this->assertIsNotResource($fd);
+            } finally {
+              fclose($fd);
+            }
+        })
+                ->throws(AssertionFailure::class)
+                ->message(endsWith("is not of type \"resource\"."));
+    }
+
+    /**
+     * @test
+     * @since  5.0.0
+     */
+    public function testAssertIsNotStringSuccess()
+    {
+        $this->assertIsNotString(1);
+    }
+
+    /**
+     * @test
+     * @since  5.0.0
+     */
+    public function testAssertIsNotStringWithFailure()
+    {
+        expect(function() { $this->assertIsNotString('example'); })
+                ->throws(AssertionFailure::class)
+                ->withMessage(
+                        "Failed asserting that 'example' is not of type \"string\"."
+        );
+    }
+
+    /**
+     * @test
+     * @since  5.0.0
+     */
+    public function testAssertIsNotScalarSuccess()
+    {
+        $this->assertIsNotScalar([]);
+    }
+
+    /**
+     * @test
+     * @since  5.0.0
+     */
+    public function testAssertIsNotScalarWithFailure()
+    {
+        expect(function() { $this->assertIsNotScalar('foo'); })
+                ->throws(AssertionFailure::class)
+                ->withMessage(
+                        "Failed asserting that 'foo' is not of type \"scalar\"."
+        );
+    }
+
+    /**
+     * @test
+     * @since  5.0.0
+     */
+    public function testAssertIsNotCallableSuccess()
+    {
+        $this->assertIsNotCallable(1);
+    }
+
+    /**
+     * @test
+     * @since  5.0.0
+     */
+    public function testAssertIsNotCallableWithFailure()
+    {
+        expect(function() { $this->assertIsNotCallable(function() {}); })
+                ->throws(AssertionFailure::class)
+                ->message(endsWith("is not of type \"callable\"."));
+    }
+
+    /**
+     * @test
+     * @since  5.0.0
+     */
+    public function testAssertIsNotIterableSuccess()
+    {
+        $this->assertIsNotIterable(1);
+    }
+
+    /**
+     * @test
+     * @since  5.0.0
+     */
+    public function testAssertIsNotIterableWithFailure()
+    {
+        expect(function() { $this->assertIsNotIterable(['foo']); })
+                ->throws(AssertionFailure::class)
+                ->withMessage(
+                        "Failed asserting that an array is not of type \"iterable\"."
         );
     }
 

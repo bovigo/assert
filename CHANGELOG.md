@@ -3,11 +3,12 @@
 
 ### BC breaks
 
-  * removed deprecated `bovigo\assert\assert()`
-  * raised minimum required PHP version to 7.2.0
+  * Removed deprecated `bovigo\assert\assert()`
+  * Raised minimum required PHP version to 7.2.0
 
 ### Other changes
   * `bovigo\assert\predicate\isOfType()` can now check for iterable types
+  * Added support in compatibility layer for specialized alternatives to `assertInternalType()` and `assertNotInternalType()` introduced with PHPUnit 7.5
 
 
 4.0.0 (2018-02-11)
