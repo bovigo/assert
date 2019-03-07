@@ -26,7 +26,7 @@ class ConstraintAdapter extends Predicate
     /**
      * constructor
      *
-     * @param  \PHPUnit\Framework\Constraint  $constraint
+     * @param  \PHPUnit\Framework\Constraint\Constraint  $constraint
      */
     public function __construct(Constraint $constraint)
     {
