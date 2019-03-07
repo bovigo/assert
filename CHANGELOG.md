@@ -10,7 +10,7 @@
   * `bovigo\assert\predicate\isOfType()` can now check for iterable types
   * Added support in compatibility layer for specialized alternatives to `assertInternalType()` and `assertNotInternalType()` introduced with PHPUnit 7.5
   * Ensured compatibility with PHPUnit 8.0
-  * Added new shortcut functions for specific `bovigo\assert\predicate\isOfType()` uses:
+  * Added new shortcut functions for specific `bovigo\assert\predicate\isOfType()` and `bovigo\assert\predicate\isNotOfType()` uses:
     * `bovigo\assert\predicate\isArray()`
     * `bovigo\assert\predicate\isNotAnArray()`
     * `bovigo\assert\predicate\isBool()`
