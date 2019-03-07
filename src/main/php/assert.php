@@ -68,7 +68,7 @@ function expect(callable $code): Expectation
  * @param   callable                                     $code
  * @param   \bovigo\assert\predicate\Predicate|callable  $predicate    predicate or callable to test given value
  * @param   string                                       $description  optional  additional description for failure message
- * @return  true
+ * @return  bool
  * @throws  \bovigo\assert\AssertionFailure
  * @since   2.1.0
  */
