@@ -16,14 +16,14 @@ class IsLessThan extends Predicate
     /**
      * expected maximum value
      *
-     * @type  numeric
+     * @type  int|float
      */
     private $expected;
 
     /**
      * constructor
      *
-     * @param  numeric  $expected  expected maximum value
+     * @param  int|float  $expected  expected maximum value
      */
     public function __construct($expected)
     {

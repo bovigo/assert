@@ -538,7 +538,7 @@ function isNotOfType(string $unexpectedType): Predicate
  * returns predicate which tests something is greather than the expected value
  *
  * @api
- * @param   numeric  $expected
+ * @param   int|float  $expected
  * @return  \bovigo\assert\predicate\IsGreaterThan
  */
 function isGreaterThan($expected): IsGreaterThan
@@ -550,7 +550,7 @@ function isGreaterThan($expected): IsGreaterThan
  * returns predicate which tests something is greater than or equal to the expected value
  *
  * @api
- * @param   numeric  $expected
+ * @param   int|float  $expected
  * @return  \bovigo\assert\predicate\OrPredicate
  */
 function isGreaterThanOrEqualTo($expected): Predicate
@@ -562,7 +562,7 @@ function isGreaterThanOrEqualTo($expected): Predicate
  * returns predicate which tests something is smaller than the expected value
  *
  * @api
- * @param   numeric  $expected
+ * @param   int|float  $expected
  * @return  \bovigo\assert\predicate\IsLessThan
  */
 function isLessThan($expected): IsLessThan
@@ -574,7 +574,7 @@ function isLessThan($expected): IsLessThan
  * returns predicate which tests something is smaller than or equal to the expected value
  *
  * @api
- * @param   numeric  $expected
+ * @param   int|float  $expected
  * @return  \bovigo\assert\predicate\OrPredicate
  */
 function isLessThanOrEqualTo($expected): Predicate

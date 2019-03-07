@@ -25,12 +25,14 @@ class IsNumericTest extends TestCase
     public function validNumerics(): array
     {
         return [
-            'default int'    => [0],
-            'normal int'     => [303],
-            'negative int'   => [-313],
-            'default float'  => [0.0],
-            'normal float'   => [30.3],
-            'negative float' => [-3.13]
+            'default int'             => [0],
+            'normal int'              => [303],
+            'negative int'            => [-313],
+            'default float'           => [0.0],
+            'normal float'            => [30.3],
+            'negative float'          => [-3.13],
+            'numeric string'          => ['42'],
+            'negative numeric string' => ['-42']
         ];
     }
 
@@ -44,7 +46,7 @@ class IsNumericTest extends TestCase
     }
 
     /**
-     * @param  numeric  $value
+     * @param  int|float  $value
      * @test
      * @dataProvider  validNumerics
      */
@@ -65,7 +67,7 @@ class IsNumericTest extends TestCase
     }
 
     /**
-     * @param  mixed  $value
+     * @param  int|float  $value
      * @test
      * @dataProvider  invalidNumerics
      */
