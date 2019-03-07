@@ -88,7 +88,7 @@ some more info'
     public function assertionCounterIsIncreasedByAmountOfPredicatesUsedForAssertion()
     {
         if (!class_exists('\PHPUnit\Framework\Assert')) {
-            $this->skip('Can not test this without PHPUnit');
+            $this->markTestSkipped('Can not test this without PHPUnit');
         }
 
         $countBeforeAssertion = \PHPUnit\Framework\Assert::getCount();
@@ -105,7 +105,7 @@ some more info'
     public function assertionCounterIsIncreasedInCaseOfFailure()
     {
         if (!class_exists('\PHPUnit\Framework\Assert')) {
-            $this->skip('Can not test this without PHPUnit');
+            $this->markTestSkipped('Can not test this without PHPUnit');
         }
 
         $countBeforeAssertion = \PHPUnit\Framework\Assert::getCount();
