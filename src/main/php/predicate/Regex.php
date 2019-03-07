@@ -8,12 +8,6 @@ declare(strict_types=1);
  */
 namespace bovigo\assert\predicate;
 /**
- * define this constant for HHVM
- */
-if (!defined('PREG_JIT_STACKLIMIT_ERROR')) {
-    define('PREG_JIT_STACKLIMIT_ERROR', 6);
-}
-/**
  * Predicate to ensure a value complies to a given regular expression.
  *
  * The predicate uses preg_match() and checks if the value occurs one or more
