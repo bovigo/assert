@@ -72,7 +72,7 @@ abstract class IteratingPredicate extends Predicate
     private function traversable(iterable $traversable)
     {
         if ($traversable instanceof \IteratorAggregate) {
-            return $traversable->getIterator();
+            return $this->traversable($traversable->getIterator());
         }
 
         return $traversable;

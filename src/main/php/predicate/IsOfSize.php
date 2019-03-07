@@ -64,7 +64,7 @@ class IsOfSize extends Predicate
     /**
      * calculates the size of given value
      *
-     * @param   string|array|\Countable|\Traversable  $value
+     * @param   string|array|\Countable|\Iterator|\IteratorAggregate  $value
      * @return  int
      */
     private function sizeOf($value): int
@@ -91,13 +91,13 @@ class IsOfSize extends Predicate
     /**
      * retrieve actual iterator
      *
-     * @param   \Traversable  $traversable
+     * @param   \Iterator|\IteratorAggregate  $traversable
      * @return  \Iterator
      */
-    private function traversable(\Traversable $traversable): \Iterator
+    private function traversable($traversable): \Iterator
     {
         if ($traversable instanceof \IteratorAggregate) {
-            return $traversable->getIterator();
+            return $this->traversable($traversable->getIterator());
         }
 
         return $traversable;
