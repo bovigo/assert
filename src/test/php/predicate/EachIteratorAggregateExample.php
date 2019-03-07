@@ -18,7 +18,7 @@ class EachIteratorAggregateExample implements \IteratorAggregate
     {
         $this->iterator = new \ArrayIterator([303, 313, 'foo']);
     }
-    public function getIterator(): \Traversable
+    public function getIterator(): \Iterator
     {
         return $this->iterator;
     }
