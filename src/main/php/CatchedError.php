@@ -168,7 +168,7 @@ class CatchedError
      * @param   mixed                                        $value        value to test
      * @param   \bovigo\assert\predicate\Predicate|callable  $predicate    predicate or callable to test given value
      * @param   string                                       $description  optional  additional description for failure message
-     * @return  \bovigo\assert\Expectation
+     * @return  \bovigo\assert\CatchedError
      */
     public function after($value, callable $predicate, string $description = null): self
     {
