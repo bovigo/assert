@@ -101,9 +101,9 @@ abstract class TestCase extends Original
     /**
      * Asserts that an array has a specified key.
      *
-     * @param mixed             $key
-     * @param array|ArrayAccess $array
-     * @param string            $message
+     * @param mixed              $key
+     * @param array|\ArrayAccess $array
+     * @param string             $message
      */
     public static function assertArrayHasKey($key, $array, string $message = ''): void
     {
@@ -113,9 +113,9 @@ abstract class TestCase extends Original
     /**
      * Asserts that an array does not have a specified key.
      *
-     * @param mixed             $key
-     * @param array|ArrayAccess $array
-     * @param string            $message
+     * @param mixed              $key
+     * @param array|\ArrayAccess $array
+     * @param string             $message
      */
     public static function assertArrayNotHasKey($key, $array, string $message = ''): void
     {
