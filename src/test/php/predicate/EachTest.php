@@ -15,22 +15,6 @@ use function bovigo\assert\assertThat;
 use function bovigo\assert\assertTrue;
 use function bovigo\assert\expect;
 /**
- * Helper class for the test.
- */
-class IteratorAggregateEachExample implements \IteratorAggregate
-{
-    private $iterator;
-
-    public function __construct()
-    {
-        $this->iterator = new \ArrayIterator([303, 313, 'foo']);
-    }
-    public function getIterator(): \Traversable
-    {
-        return $this->iterator;
-    }
-}
-/**
  * Tests for bovigo\assert\predicate\Each.
  *
  * @group  predicate
@@ -131,7 +115,7 @@ class EachTest extends TestCase
      */
     public function doesNotMovePointerOfPassedIteratorAggregate()
     {
-        $traversable = new IteratorAggregateEachExample();
+        $traversable = new EachIteratorAggregateExample();
         $traversable->getIterator()->next();
         each(isNotNull())->test($traversable);
         assertThat($traversable->getIterator()->current(), equals(313));

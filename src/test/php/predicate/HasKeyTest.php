@@ -15,23 +15,6 @@ use function bovigo\assert\assertThat;
 use function bovigo\assert\assertTrue;
 use function bovigo\assert\expect;
 /**
- * Helper class for the test.
- */
-class ArrayAccessExample implements \ArrayAccess
-{
-    public function offsetExists($offset)
-    {
-        return 'foo' === $offset || 303 === $offset;
-    }
-
-    public function offsetGet($offset) { }
-
-    public function offsetSet($offset, $value) { }
-
-    public function offsetUnset($offset) { }
-
-}
-/**
  * Tests for bovigo\assert\predicate\HasKey.
  *
  * @group  predicate
@@ -57,8 +40,8 @@ class HasKeyTest extends TestCase
         return [
                 [0, ['foo']],
                 ['bar', ['bar' => 'foo5']],
-                [303, new ArrayAccessExample()],
-                ['foo', new ArrayAccessExample()],
+                [303, new HasKeyArrayAccessExample()],
+                ['foo', new HasKeyArrayAccessExample()],
         ];
     }
 
@@ -83,8 +66,8 @@ class HasKeyTest extends TestCase
         return [
                 [5, []],
                 ['foo', []],
-                [313, new ArrayAccessExample()],
-                ['bar', new ArrayAccessExample()]
+                [313, new HasKeyArrayAccessExample()],
+                ['bar', new HasKeyArrayAccessExample()]
         ];
     }
 
@@ -123,10 +106,10 @@ class HasKeyTest extends TestCase
      */
     public function assertionFailureWithArrayAccessContainsMeaningfulInformation()
     {
-        expect(function() { assertThat(new ArrayAccessExample(), hasKey('bar')); })
+        expect(function() { assertThat(new HasKeyArrayAccessExample(), hasKey('bar')); })
                 ->throws(AssertionFailure::class)
                 ->withMessage(
-                        "Failed asserting that " . ArrayAccessExample::class
+                        "Failed asserting that " . HasKeyArrayAccessExample::class
                         . " implementing \ArrayAccess has the key 'bar'."
         );
     }

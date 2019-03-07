@@ -17,22 +17,6 @@ use function bovigo\assert\{
     expect
 };
 /**
- * Helper class for the test.
- */
-class IteratorAggregateEachKeyExample implements \IteratorAggregate
-{
-    private $iterator;
-
-    public function __construct()
-    {
-        $this->iterator = new \ArrayIterator([303, 313, 'foo']);
-    }
-    public function getIterator(): \Traversable
-    {
-        return $this->iterator;
-    }
-}
-/**
  * Tests for bovigo\assert\predicate\EachKey.
  *
  * @group  predicate
@@ -138,7 +122,7 @@ class EachKeyTest extends TestCase
      */
     public function doesNotMovePointerOfPassedIteratorAggregate()
     {
-        $traversable = new IteratorAggregateEachKeyExample();
+        $traversable = new EachKeyIteratorAggregateExample();
         $traversable->getIterator()->next();
         eachKey(isOfType('int'))->test($traversable);
         assertThat($traversable->getIterator()->current(), equals(313));

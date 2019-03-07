@@ -20,6 +20,11 @@
             "src/main/php/predicate/predicates.php"
         ]
     },
+    "autoload-dev": {
+        "psr-4": {
+            "bovigo\\assert\\": "src/test/php"
+        }
+    },
     "extra": {
         "branch-alias": {
             "dev-master": "5.0.x-dev"

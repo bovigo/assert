@@ -19,21 +19,6 @@ use function bovigo\assert\{
     expect
 };
 /**
- * Helper class for the test.
- */
-class EmptyCountableExample implements \Countable
-{
-    private $count;
-    public function __construct(int $count)
-    {
-        $this->count = $count;
-    }
-    public function count(): int
-    {
-        return $this->count;
-    }
-}
-/**
  * Tests for bovigo\assert\predicate\IsEmpty.
  *
  * @group  predicate
@@ -51,7 +36,7 @@ class IsEmptyTest extends TestCase
             'empty string'          => [''],
             'empty array'           => [[]],
             'integer 0'             => [0],
-            'Countable with size 0' => [new EmptyCountableExample(0)]
+            'Countable with size 0' => [new IsEmptyCountableExample(0)]
         ];
     }
 
@@ -73,7 +58,7 @@ class IsEmptyTest extends TestCase
             'boolean true'            => [true],
             'non-empty string'        => ['foo'],
             'non-empty array'         => [[1]],
-            'Countable with size > 0' => [new EmptyCountableExample(1)]
+            'Countable with size > 0' => [new IsEmptyCountableExample(1)]
         ];
     }
 
@@ -140,10 +125,10 @@ class IsEmptyTest extends TestCase
      */
     public function assertionFailureWithCountableContainsMeaningfulInformation()
     {
-        expect(function() { assertEmpty(new EmptyCountableExample(1)); })
+        expect(function() { assertEmpty(new IsEmptyCountableExample(1)); })
                 ->throws(AssertionFailure::class)
                 ->withMessage(
-                        "Failed asserting that " . EmptyCountableExample::class
+                        "Failed asserting that " . IsEmptyCountableExample::class
                         . " implementing \Countable is empty."
         );
     }
