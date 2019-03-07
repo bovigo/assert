@@ -217,6 +217,270 @@ function isNotOfSize(int $unexpectedSize): Predicate
 }
 
 /**
+ * returns predicate which tests something is an array
+ *
+ * @api
+ * @return  \bovigo\assert\predicate\CallablePredicate
+ * @since   5.0.0
+ */
+function isArray(): Predicate
+{
+  return isOfType('array');
+}
+
+/**
+ * returns predicate which tests something is not an array
+ *
+ * @api
+ * @return  \bovigo\assert\predicate\CallablePredicate
+ * @since   5.0.0
+ */
+function isNotAnArray(): Predicate
+{
+  return not(isArray());
+}
+
+/**
+ * returns predicate which tests something is a boolean value
+ *
+ * @api
+ * @return  \bovigo\assert\predicate\CallablePredicate
+ * @since   5.0.0
+ */
+function isBool(): Predicate
+{
+  return isOfType('bool');
+}
+
+/**
+ * returns predicate which tests something is not a boolean value
+ *
+ * @api
+ * @return  \bovigo\assert\predicate\CallablePredicate
+ * @since   5.0.0
+ */
+function isNotBool(): Predicate
+{
+  return not(isBool());
+}
+
+/**
+ * returns predicate which tests something is a float
+ *
+ * @api
+ * @return  \bovigo\assert\predicate\CallablePredicate
+ * @since   5.0.0
+ */
+function isFloat(): Predicate
+{
+  return isOfType('float');
+}
+
+/**
+ * returns predicate which tests something is not a float
+ *
+ * @api
+ * @return  \bovigo\assert\predicate\CallablePredicate
+ * @since   5.0.0
+ */
+function isNotFloat(): Predicate
+{
+  return not(isFloat());
+}
+
+/**
+ * returns predicate which tests something is an integer
+ *
+ * @api
+ * @return  \bovigo\assert\predicate\CallablePredicate
+ * @since   5.0.0
+ */
+function isInt(): Predicate
+{
+  return isOfType('int');
+}
+
+/**
+ * returns predicate which tests something is not an integer
+ *
+ * @api
+ * @return  \bovigo\assert\predicate\CallablePredicate
+ * @since   5.0.0
+ */
+function isNotInt(): Predicate
+{
+  return not(isInt());
+}
+
+/**
+ * returns predicate which tests something is a numeric value
+ *
+ * @api
+ * @return  \bovigo\assert\predicate\CallablePredicate
+ * @since   5.0.0
+ */
+function isNumeric(): Predicate
+{
+  return isOfType('numeric');
+}
+
+/**
+ * returns predicate which tests something is not a numeric value
+ *
+ * @api
+ * @return  \bovigo\assert\predicate\CallablePredicate
+ * @since   5.0.0
+ */
+function isNotNumeric(): Predicate
+{
+  return not(isNumeric());
+}
+
+/**
+ * returns predicate which tests something is an object
+ *
+ * @api
+ * @return  \bovigo\assert\predicate\CallablePredicate
+ * @since   5.0.0
+ */
+function isObject(): Predicate
+{
+  return isOfType('object');
+}
+
+/**
+ * returns predicate which tests something is not an object
+ *
+ * @api
+ * @return  \bovigo\assert\predicate\CallablePredicate
+ * @since   5.0.0
+ */
+function isNotAnObject(): Predicate
+{
+  return not(isObject());
+}
+
+/**
+ * returns predicate which tests something is a resource
+ *
+ * @api
+ * @return  \bovigo\assert\predicate\CallablePredicate
+ * @since   5.0.0
+ */
+function isResource(): Predicate
+{
+  return isOfType('resource');
+}
+
+/**
+ * returns predicate which tests something is not a resource
+ *
+ * @api
+ * @return  \bovigo\assert\predicate\CallablePredicate
+ * @since   5.0.0
+ */
+function isNotAResource(): Predicate
+{
+  return not(isResource());
+}
+
+/**
+ * returns predicate which tests something is a string
+ *
+ * @api
+ * @return  \bovigo\assert\predicate\CallablePredicate
+ * @since   5.0.0
+ */
+function isString(): Predicate
+{
+  return isOfType('string');
+}
+
+/**
+ * returns predicate which tests something is not a string
+ *
+ * @api
+ * @return  \bovigo\assert\predicate\CallablePredicate
+ * @since   5.0.0
+ */
+function isNotAString(): Predicate
+{
+  return not(isString());
+}
+
+/**
+ * returns predicate which tests something is a scalar value
+ *
+ * @api
+ * @return  \bovigo\assert\predicate\CallablePredicate
+ * @since   5.0.0
+ */
+function isScalar(): Predicate
+{
+  return isOfType('scalar');
+}
+
+/**
+ * returns predicate which tests something is not a scalar value
+ *
+ * @api
+ * @return  \bovigo\assert\predicate\CallablePredicate
+ * @since   5.0.0
+ */
+function isNotScalar(): Predicate
+{
+  return not(isScalar());
+}
+
+/**
+ * returns predicate which tests something is a callable
+ *
+ * @api
+ * @return  \bovigo\assert\predicate\CallablePredicate
+ * @since   5.0.0
+ */
+function isCallable(): Predicate
+{
+  return isOfType('callable');
+}
+
+/**
+ * returns predicate which tests something is not a callable
+ *
+ * @api
+ * @return  \bovigo\assert\predicate\CallablePredicate
+ * @since   5.0.0
+ */
+function isNotCallable(): Predicate
+{
+  return not(isCallable());
+}
+
+/**
+ * returns predicate which tests something is iterable
+ *
+ * @api
+ * @return  \bovigo\assert\predicate\CallablePredicate
+ * @since   5.0.0
+ */
+function isIterable(): Predicate
+{
+  return isOfType('iterable');
+}
+
+/**
+ * returns predicate which tests something is not iterable
+ *
+ * @api
+ * @return  \bovigo\assert\predicate\CallablePredicate
+ * @since   5.0.0
+ */
+function isNotIterable(): Predicate
+{
+  return not(isIterable());
+}
+
+/**
  * returns predicate which tests something is a specific internal PHP type
  *
  * @api

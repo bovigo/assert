@@ -10,6 +10,29 @@
   * `bovigo\assert\predicate\isOfType()` can now check for iterable types
   * Added support in compatibility layer for specialized alternatives to `assertInternalType()` and `assertNotInternalType()` introduced with PHPUnit 7.5
   * Ensured compatibility with PHPUnit 8.0
+  * Added new shortcut functions for specific `bovigo\assert\predicate\isOfType()` uses:
+    * `bovigo\assert\predicate\isArray()`
+    * `bovigo\assert\predicate\isNotAnArray()`
+    * `bovigo\assert\predicate\isBool()`
+    * `bovigo\assert\predicate\isNotBool()`
+    * `bovigo\assert\predicate\isFloat()`
+    * `bovigo\assert\predicate\isNotFloat()`
+    * `bovigo\assert\predicate\isInt()`
+    * `bovigo\assert\predicate\isNotInt()`
+    * `bovigo\assert\predicate\isNumeric()`
+    * `bovigo\assert\predicate\isNotNumeric()`
+    * `bovigo\assert\predicate\isObject()`
+    * `bovigo\assert\predicate\isNotAnObject()`
+    * `bovigo\assert\predicate\isResource()`
+    * `bovigo\assert\predicate\isNotAResource()`
+    * `bovigo\assert\predicate\isString()`
+    * `bovigo\assert\predicate\isNotAString()`
+    * `bovigo\assert\predicate\isScalar()`
+    * `bovigo\assert\predicate\isNotScalar()`
+    * `bovigo\assert\predicate\isCallable()`
+    * `bovigo\assert\predicate\isNotCallable()`
+    * `bovigo\assert\predicate\isIterable()`
+    * `bovigo\assert\predicate\isNotIterable()`
 
 
 4.0.0 (2018-02-11)

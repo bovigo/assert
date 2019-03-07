@@ -258,6 +258,22 @@ Tests that a value is of the expected internal PHP type.
 assertThat($value, isOfType('resource'));
 ```
 
+#### Aliases
+
+Since release 5.0 some alias functions are provided to prevent typos in usages of that function:
+
+* `bovigo\assert\predicate\isArray()`
+* `bovigo\assert\predicate\isBool()`
+* `bovigo\assert\predicate\isFloat()`
+* `bovigo\assert\predicate\isInt()`
+* `bovigo\assert\predicate\isNumeric()`
+* `bovigo\assert\predicate\isObject()`
+* `bovigo\assert\predicate\isResource()`
+* `bovigo\assert\predicate\isString()`
+* `bovigo\assert\predicate\isScalar()`
+* `bovigo\assert\predicate\isCallable()`
+* `bovigo\assert\predicate\isIterable()`
+
 
 ### `isNotOfType($unexpectedType)`
 
@@ -266,6 +282,22 @@ Tests that a value is not of the unexpected internal PHP type.
 ```php
 assertThat($value, isNotOfType('resource'));
 ```
+
+#### Aliases
+
+Since release 5.0 some alias functions are provided to prevent typos in usages of that function. Please note that some are specific to ensure the code you write with them forms a grammatically valid sentence.
+
+* `bovigo\assert\predicate\isNotAnArray()`
+* `bovigo\assert\predicate\isNotBool()`
+* `bovigo\assert\predicate\isNotFloat()`
+* `bovigo\assert\predicate\isNotInt()`
+* `bovigo\assert\predicate\isNotNumeric()`
+* `bovigo\assert\predicate\isNotAnObject()`
+* `bovigo\assert\predicate\isNotAResource()`
+* `bovigo\assert\predicate\isNotAString()`
+* `bovigo\assert\predicate\isNotScalar()`
+* `bovigo\assert\predicate\isNotCallable()`
+* `bovigo\assert\predicate\isNotIterable()`
 
 
 ### `isGreaterThan($expected)`
