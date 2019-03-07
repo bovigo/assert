@@ -96,10 +96,10 @@ abstract class IteratingPredicate extends Predicate
     /**
      * rewinds traversable to given key to not change state of traversable
      *
-     * @param  iterable    $traversable
+     * @param  array|\Iterator    $traversable
      * @param  int|string  $key
      */
-    private function rewind(iterable $traversable, $key)
+    private function rewind($traversable, $key)
     {
         if ($key === null) {
             return;
