@@ -32,7 +32,7 @@ function each(callable $predicate): Each
  *
  * @api
  * @param   callable|\bovigo\assert\predicate\Predicate  $predicate
- * @return  \bovigo\assert\predicate\Each
+ * @return  \bovigo\assert\predicate\EachKey
  * @since   1.3.0
  */
 function eachKey(callable $predicate): EachKey
@@ -685,7 +685,7 @@ function matchesFormat(string $format): StringMatchesFormat
  *
  * @since   3.2.0
  * @api
- * @param   string  $pattern
+ * @param   string  $format
  * @return  \bovigo\assert\predicate\NegatePredicate
  */
 function doesNotMatchFormat(string $format): Predicate
