@@ -51,7 +51,7 @@ class Equals extends Predicate
      */
     public function test($value): bool
     {
-        $this->lastFailure = null; // reset in case predicate is used more than once
+        $this->lastFailureDiff = null; // reset in case predicate is used more than once
         if ($this->expected === $value) {
             return true;
         }
