@@ -172,10 +172,10 @@ abstract class TestCase extends Original
     /**
      * Asserts that a haystack contains only values of a given type.
      *
-     * @param  string             $type
-     * @param  array|Traversable  $haystack
-     * @param  bool               $isNativeType
-     * @param  string             $message
+     * @param  string    $type
+     * @param  iterable  $haystack
+     * @param  bool      $isNativeType
+     * @param  string    $message
      * @since  1.1.0
      */
     public static function assertContainsOnly(string $type, iterable $haystack, ?bool $isNativeType = null, string $message = ''): void
@@ -194,9 +194,9 @@ abstract class TestCase extends Original
     /**
      * Asserts that a haystack contains only instances of a given classname
      *
-     * @param  string            $classname
-     * @param  array|Traversable $haystack
-     * @param  string            $message
+     * @param  string    $classname
+     * @param  iterable  $haystack
+     * @param  string    $message
      * @since  1.1.0
      */
     public static function assertContainsOnlyInstancesOf(string $classname, iterable $haystack, string $message = ''): void
@@ -207,10 +207,10 @@ abstract class TestCase extends Original
     /**
      * Asserts that a haystack does not contain only values of a given type.
      *
-     * @param  string             $type
-     * @param  array|Traversable  $haystack
-     * @param  bool               $isNativeType
-     * @param  string             $message
+     * @param  string    $type
+     * @param  iterable  $haystack
+     * @param  bool      $isNativeType
+     * @param  string     $message
      * @since  1.1.0
      */
     public static function assertNotContainsOnly(string $type, iterable $haystack, ?bool $isNativeType = null, string $message = ''): void
@@ -865,11 +865,11 @@ abstract class TestCase extends Original
     }
 
     /**
-     * Evaluates a PHPUnit\Framework\Constraint matcher object.
+     * Evaluates a PHPUnit\Framework\Constraint\Constraint matcher object.
      *
-     * @param  mixed                         $value
-     * @param  PHPUnit\Framework\Constraint  $constraint
-     * @param  string                        $message
+     * @param  mixed                                     $value
+     * @param  \PHPUnit\Framework\Constraint\Constraint  $constraint
+     * @param  string                                    $message
      */
     public static function assertThat($value, Constraint $constraint, string $message = ''): void
     {
