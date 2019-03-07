@@ -91,10 +91,10 @@ class IsOfSize extends Predicate
     /**
      * retrieve actual iterator
      *
-     * @param   array|\Traversable  $traversable
-     * @return  array|\Traversable
+     * @param   \Traversable  $traversable
+     * @return  \Iterator
      */
-    private function traversable($traversable)
+    private function traversable(\Traversable $traversable): \Iterator
     {
         if ($traversable instanceof \IteratorAggregate) {
             return $traversable->getIterator();
