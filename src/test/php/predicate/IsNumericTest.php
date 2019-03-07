@@ -77,7 +77,7 @@ class IsNumericTest extends TestCase
     }
 
     /**
-     * @param  numeric  $value
+     * @param  int|float  $value
      * @test
      * @dataProvider  validNumerics
      */
