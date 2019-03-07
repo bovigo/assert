@@ -62,6 +62,7 @@ use function bovigo\assert\predicate\{
     doesNotEndWith,
     doesNotHaveKey,
     doesNotMatch,
+    doesNotMatchFormat,
     doesNotStartWith,
     each,
     endsWith,
