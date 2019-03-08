@@ -350,6 +350,14 @@ Tests that `$needle` is contained in value. The following rules apply:
 assertThat($value, contains('Roland TB 303'));
 ```
 
+Sometimes it is necessary to differentiate between arrays, Traversables and strings.
+If a particular type should be enforced it is recommended to combine predicates:
+```php
+assertThat($value, isArray()->and(contains('Roland TB 303')));
+assertThat($value, isString()->and(contains('Roland TB 303')));
+assertThat($value, isInstanceOf(\Iterator::class)->and(contains('Roland TB 303')));
+```
+
 
 ### `doesNotContain($needle)`
 
