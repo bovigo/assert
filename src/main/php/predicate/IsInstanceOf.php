@@ -39,8 +39,8 @@ class IsInstanceOf extends Predicate
     /**
      * test that the given value is true
      *
-     * @param   scalar  $value
-     * @return  bool    true if value is true, else false
+     * @param   mixed  $value
+     * @return  bool   true if value is instance of expected type
      */
     public function test($value): bool
     {

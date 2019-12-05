@@ -35,7 +35,7 @@ abstract class IteratingPredicate extends Predicate
     /**
      * evaluates predicate against given value
      *
-     * @param   array|\Traversable  $value
+     * @param   mixed  $value
      * @return  bool
      * @throws  \InvalidArgumentException
      */
@@ -96,8 +96,8 @@ abstract class IteratingPredicate extends Predicate
     /**
      * rewinds traversable to given key to not change state of traversable
      *
-     * @param  array|\Iterator    $traversable
-     * @param  int|string  $key
+     * @param  array|\Iterator  $traversable
+     * @param  int|string       $key
      */
     private function rewind($traversable, $key)
     {
