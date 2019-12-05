@@ -33,7 +33,7 @@ class IsOfSize extends Predicate
     /**
      * test that the given value is of a certain size
      *
-     * @param   string|array|\Countable|\Traversable  $value
+     * @param   mixed  $value
      * @return  bool   true if size of value is equal to expected size, else false
      * @throws  \InvalidArgumentException
      */
