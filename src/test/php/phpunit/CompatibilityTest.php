@@ -10,6 +10,7 @@ namespace bovigo\assert\phpunit;
 use bovigo\assert\AssertionFailure;
 
 use function bovigo\assert\expect;
+use function bovigo\assert\fail;
 use function bovigo\assert\predicate\contains;
 use function bovigo\assert\predicate\endsWith;
 /**
@@ -947,6 +948,11 @@ class CompatibilityTest extends TestCase
     public function testAssertIsResourceSuccess()
     {
         $fd = fopen(__FILE__, 'r');
+        if (false === $fd) {
+            fail('Could not open file');
+            return;
+        }
+
         try {
             $this->assertIsResource($fd);
         } finally {
@@ -1203,6 +1209,11 @@ class CompatibilityTest extends TestCase
 
         expect(function() {
             $fd = fopen(__FILE__, 'r');
+            if (false === $fd) {
+                fail('Could not open file');
+                return;
+            }
+
             try {
               $this->assertIsNotResource($fd);
             } finally {
