@@ -28,13 +28,10 @@ class IsExistingFileTest extends TestCase
      */
     public function setUp(): void
     {
-        $root = vfsStream::setup();
-        vfsStream::newDirectory('basic')
-                 ->at($root);
-        vfsStream::newFile('foo.txt')
-                 ->at($root);
-        vfsStream::newFile('bar.txt')
-                 ->at($root->getChild('basic'));
+        $root  = vfsStream::setup();
+        $basic = vfsStream::newDirectory('basic')->at($root);
+        vfsStream::newFile('foo.txt')->at($root);
+        vfsStream::newFile('bar.txt')->at($basic);
     }
 
     /**
