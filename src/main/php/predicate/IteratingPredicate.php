@@ -51,7 +51,10 @@ abstract class IteratingPredicate extends Predicate
         $traversable = $this->traversable($value);
         $key         = $this->key($traversable);
         $result      = $this->doTest($traversable);
-        $this->rewind($traversable, $key);
+        if (null !== $key) {
+            $this->rewind($traversable, $key);
+        }
+
         return $result;
     }
 
@@ -82,7 +85,7 @@ abstract class IteratingPredicate extends Predicate
      * retrieves current key of traversable
      *
      * @param   array|\Iterator  $traversable
-     * @return  int|string
+     * @return  int|string|null
      */
     private function key($traversable)
     {
