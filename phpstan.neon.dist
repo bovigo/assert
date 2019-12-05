@@ -10,3 +10,6 @@ parameters:
       -
           message: '#Parameter (.)+ of of function bovigo\\assert\\predicate\\hasKey expects int|string, array given#'
           path: src/test/php/predicate/HasKeyTest.php
+      -
+          message: '#Parameter (.)+ of method bovigo\\assert\\predicate\\IsOfSize::traversable\(\) expects Iterator|IteratorAggregate, Traversable given#'
+          path: src/main/php/predicate/IsOfSize.php
