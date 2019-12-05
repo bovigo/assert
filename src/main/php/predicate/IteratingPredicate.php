@@ -101,10 +101,6 @@ abstract class IteratingPredicate extends Predicate
      */
     private function rewind($traversable, $key)
     {
-        if ($key === null) {
-            return;
-        }
-
         if (is_array($traversable)) {
             foreach ($traversable as $currentKey => $value) {
                 if ($currentKey === $key) {
