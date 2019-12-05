@@ -21,9 +21,12 @@ class StringMatchesFormat extends Regex
     public function __construct(string $format)
     {
         $this->format = $format;
-        parent::__construct($this->patternForFormat(
-            \preg_replace('/\r\n/', "\n", $format)
-        ));
+        $withoutCarriageReturn = \preg_replace('/\r\n/', "\n", $format);
+        if (null === $withoutCarriageReturn) {
+            throw new \RuntimeException('Could not replace carriage return in given format');
+        }
+
+        parent::__construct($this->patternForFormat($withoutCarriageReturn));
     }
 
     private function patternForFormat(string $format): string
