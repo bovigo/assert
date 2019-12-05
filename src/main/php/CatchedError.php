@@ -7,6 +7,7 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 namespace bovigo\assert;
+use bovigo\assert\predicate\Predicate;
 use bovigo\assert\predicate\Wrap;
 
 use function bovigo\assert\predicate\equals;
@@ -137,7 +138,7 @@ class CatchedError
      */
     public function message(callable $predicate): self
     {
-        assertThat($this->errstr, new Wrap($predicate, 'error message %s'));
+        assertThat($this->errstr, new Wrap(Predicate::castFrom($predicate), 'error message %s'));
         return $this;
     }
 

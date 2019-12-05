@@ -72,6 +72,18 @@ class CatchedErrorTest extends TestCase
 
     /**
      * @test
+     * @since  5.0.1
+     */
+    public function messageAssertsWithGivenCallable()
+    {
+        assertThat(
+                $this->catchedError->message('is_string'),
+                isInstanceOf(CatchedError::class)
+        );
+    }
+
+    /**
+     * @test
      */
     public function messageAssertsWithGivenPredicateThrowsAssertionFailureWhenPredicateFails()
     {

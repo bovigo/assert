@@ -1,5 +1,9 @@
 # Changelog
 
+## 5.0.1 (2019-12-??)
+
+* Fixed `bovigo\assert\CatchedError::message()` and `bovigo\assert\CatchedException::message()` to really accept a callable
+
 ## 5.0.0 (2019-04-08)
 
 ### BC breaks

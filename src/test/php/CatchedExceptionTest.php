@@ -82,6 +82,19 @@ class CatchedExceptionTest extends TestCase
     /**
      * @test
      * @dataProvider  throwables
+     * @since 5.0.1
+     */
+    public function messageAssertsWithGivenCallable(\Throwable $throwable)
+    {
+        assertThat(
+                $this->catchedException($throwable)->message('is_string'),
+                isInstanceOf(CatchedException::class)
+        );
+    }
+
+    /**
+     * @test
+     * @dataProvider  throwables
      */
     public function messageAssertsWithGivenPredicateThrowsAssertionFailureWhenPredicateFails(\Throwable $throwable)
     {
