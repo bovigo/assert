@@ -512,6 +512,7 @@ function isOfType(string $expectedType): Predicate
         );
     }
 
+    // create instance, but only if not done yet
     if (is_string($types[$expectedType])) {
         $types[$expectedType] = new CallablePredicate(
                 $types[$expectedType],
