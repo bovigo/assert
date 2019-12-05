@@ -1,0 +1,12 @@
+parameters:
+  level: 7
+  paths:
+      - ./src
+  ignoreErrors:
+      # False positives
+      -
+          message: '#Parameter (.)+ of method bovigo\\assert\\Expectation::throws\(\) expects (.)+, int given#'
+          path: src/test/php/ExpectationTest.php
+      -
+          message: '#Parameter (.)+ of of function bovigo\\assert\\predicate\\hasKey expects int|string, array given#'
+          path: src/test/php/predicate/HasKeyTest.php
