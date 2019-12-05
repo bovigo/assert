@@ -60,6 +60,10 @@ class StringMatchesFormat extends Regex
             ],
             \preg_quote($format, '/')
         );
+        if (null === $pattern) {
+            throw new \RuntimeException('Could not create pattern from format');
+        }
+
         return '/^' . \str_replace('%%', '%', $pattern) . '$/s';
     }
 
