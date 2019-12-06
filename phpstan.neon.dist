@@ -1,6 +1,6 @@
 parameters:
   inferPrivatePropertyTypeFromConstructor: true
-  level: 7
+  level: 8
   paths:
       - ./src
   excludes_analyse:
