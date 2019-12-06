@@ -25,7 +25,7 @@ class EachTest extends TestCase
     /**
      * @test
      */
-    public function testNonIterableValueThrowsInvalidArgumentException()
+    public function testNonIterableValueThrowsInvalidArgumentException(): void
     {
         expect(function() { each(isNull())->test(303); })
                 ->throws(\InvalidArgumentException::class);
@@ -35,7 +35,7 @@ class EachTest extends TestCase
     /**
      * @test
      */
-    function canBeUsedWithCallable()
+    function canBeUsedWithCallable(): void
     {
         assertThat([3.03, 3.13], each('is_finite'));
     }
@@ -43,7 +43,7 @@ class EachTest extends TestCase
     /**
      * @test
      */
-    public function evaluatesToTrueIfArrayIsEmpty()
+    public function evaluatesToTrueIfArrayIsEmpty(): void
     {
         assertTrue(each(isNotNull())->test([]));
     }
@@ -51,7 +51,7 @@ class EachTest extends TestCase
     /**
      * @test
      */
-    public function evaluatesToTrueIfTraversableIsEmpty()
+    public function evaluatesToTrueIfTraversableIsEmpty(): void
     {
         assertTrue(each(isNotNull())->test(new \ArrayIterator([])));
     }
@@ -59,7 +59,7 @@ class EachTest extends TestCase
     /**
      * @test
      */
-    public function evaluatesToTrueIfEachValueInArrayFulfillsPredicate()
+    public function evaluatesToTrueIfEachValueInArrayFulfillsPredicate(): void
     {
         assertTrue(each(isNotNull())->test([303, 'foo']));
     }
@@ -67,7 +67,7 @@ class EachTest extends TestCase
     /**
      * @test
      */
-    public function evaluatesToTrueIfEachValueInTraversableFulfillsPredicate()
+    public function evaluatesToTrueIfEachValueInTraversableFulfillsPredicate(): void
     {
         assertTrue(each(isNotNull())->test(new \ArrayIterator([303, 'foo'])));
     }
@@ -75,7 +75,7 @@ class EachTest extends TestCase
     /**
      * @test
      */
-    public function evaluatesToFalseIfSingleValueInArrayDoesNotFulfillPredicate()
+    public function evaluatesToFalseIfSingleValueInArrayDoesNotFulfillPredicate(): void
     {
         assertFalse(each(isNotNull())->test([303, null, 'foo']));
     }
@@ -83,7 +83,7 @@ class EachTest extends TestCase
     /**
      * @test
      */
-    public function evaluatesToFalseIfSingleValueInTraversableDoesNotFulfillPredicate()
+    public function evaluatesToFalseIfSingleValueInTraversableDoesNotFulfillPredicate(): void
     {
         assertFalse(each(isNotNull())->test(new \ArrayIterator([303, null, 'foo'])));
     }
@@ -91,7 +91,7 @@ class EachTest extends TestCase
     /**
      * @test
      */
-    public function doesNotMovePointerOfPassedArray()
+    public function doesNotMovePointerOfPassedArray(): void
     {
         $array = [303, 313, 'foo'];
         next($array);
@@ -102,7 +102,7 @@ class EachTest extends TestCase
     /**
      * @test
      */
-    public function doesNotMovePointerOfPassedTraversable()
+    public function doesNotMovePointerOfPassedTraversable(): void
     {
         $traversable = new \ArrayIterator([303, 313, 'foo']);
         $traversable->next();
@@ -113,7 +113,7 @@ class EachTest extends TestCase
     /**
      * @test
      */
-    public function doesNotMovePointerOfPassedIteratorAggregate()
+    public function doesNotMovePointerOfPassedIteratorAggregate(): void
     {
         $traversable = new EachIteratorAggregateExample();
         $traversable->getIterator()->next();
@@ -124,7 +124,7 @@ class EachTest extends TestCase
     /**
      * @test
      */
-    public function countReturnsCountOfWrappedPredicate()
+    public function countReturnsCountOfWrappedPredicate(): void
     {
         assertThat(count(each(isGreaterThanOrEqualTo(4))), equals(2));
     }
@@ -132,7 +132,7 @@ class EachTest extends TestCase
     /**
      * @test
      */
-    public function assertionFailureContainsMeaningfulInformation()
+    public function assertionFailureContainsMeaningfulInformation(): void
     {
         expect(function() { assertThat(['foo'], each(isNull())); })
                 ->throws(AssertionFailure::class)
@@ -146,7 +146,7 @@ class EachTest extends TestCase
     /**
      * @test
      */
-    public function assertionFailureContainsMeaningfulInformationWhenCombined()
+    public function assertionFailureContainsMeaningfulInformationWhenCombined(): void
     {
         expect(function() {
             assertThat([], isNotEmpty()->and(each(isNotNull())));
@@ -160,7 +160,7 @@ class EachTest extends TestCase
     /**
      * @test
      */
-    public function assertionFailureContainsMeaningfulInformationOnWhichElementFailed()
+    public function assertionFailureContainsMeaningfulInformationOnWhichElementFailed(): void
     {
         expect(function() { assertThat(['foo', 'bar', null, 'baz'], each(isNotNull())); })
                 ->throws(AssertionFailure::class)

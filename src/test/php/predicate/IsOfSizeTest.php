@@ -24,7 +24,7 @@ class IsOfSizeTest extends TestCase
     /**
      * @test
      */
-    public function evaluatesToTrueIfStringLengthMatchesExpectedSize()
+    public function evaluatesToTrueIfStringLengthMatchesExpectedSize(): void
     {
         assertTrue(isOfSize(3)->test('foo'));
     }
@@ -32,7 +32,7 @@ class IsOfSizeTest extends TestCase
     /**
      * @test
      */
-    public function evaluatesToFalseIfStringLengthDoesNotMatchExpectedSize()
+    public function evaluatesToFalseIfStringLengthDoesNotMatchExpectedSize(): void
     {
         assertFalse(isOfSize(4)->test('foo'));
     }
@@ -40,7 +40,7 @@ class IsOfSizeTest extends TestCase
     /**
      * @test
      */
-    public function evaluatesToTrueIfArraySizeMatchesExpectedSize()
+    public function evaluatesToTrueIfArraySizeMatchesExpectedSize(): void
     {
         assertTrue(isOfSize(3)->test([1, 2, 3]));
     }
@@ -48,7 +48,7 @@ class IsOfSizeTest extends TestCase
     /**
      * @test
      */
-    public function evaluatesToFalseIfArraySizeDoesNotMatchExpectedSize()
+    public function evaluatesToFalseIfArraySizeDoesNotMatchExpectedSize(): void
     {
         assertFalse(isOfSize(4)->test([1, 2, 3]));
     }
@@ -56,7 +56,7 @@ class IsOfSizeTest extends TestCase
     /**
      * @test
      */
-    public function evaluatesToTrueIfCountableSizeMatchesExpectedSize()
+    public function evaluatesToTrueIfCountableSizeMatchesExpectedSize(): void
     {
         assertTrue(isOfSize(3)->test(new IsOfSizeCountableExample()));
     }
@@ -64,7 +64,7 @@ class IsOfSizeTest extends TestCase
     /**
      * @test
      */
-    public function evaluatesToFalseIfCountableSizeDoesNotMatchExpectedSize()
+    public function evaluatesToFalseIfCountableSizeDoesNotMatchExpectedSize(): void
     {
         assertFalse(isOfSize(4)->test(new IsOfSizeCountableExample()));
     }
@@ -72,7 +72,7 @@ class IsOfSizeTest extends TestCase
     /**
      * @test
      */
-    public function evaluatesToTrueIfTraversableSizeMatchesExpectedSize()
+    public function evaluatesToTrueIfTraversableSizeMatchesExpectedSize(): void
     {
         assertTrue(isOfSize(3)->test(new IsOfSizeTraversableExample()));
     }
@@ -80,7 +80,7 @@ class IsOfSizeTest extends TestCase
     /**
      * @test
      */
-    public function evaluatesToFalseIfTraversableSizeDoesNotMatchExpectedSize()
+    public function evaluatesToFalseIfTraversableSizeDoesNotMatchExpectedSize(): void
     {
         assertFalse(isOfSize(4)->test(new IsOfSizeTraversableExample()));
     }
@@ -88,7 +88,7 @@ class IsOfSizeTest extends TestCase
     /**
      * @test
      */
-    public function evaluatesToTrueIfIteratorAggregateSizeMatchesExpectedSize()
+    public function evaluatesToTrueIfIteratorAggregateSizeMatchesExpectedSize(): void
     {
         assertTrue(isOfSize(3)->test(new IsOfSizeIteratorAggregateExample()));
     }
@@ -96,7 +96,7 @@ class IsOfSizeTest extends TestCase
     /**
      * @test
      */
-    public function evaluatesToFalseIfIteratorAggregateSizeDoesNotMatchExpectedSize()
+    public function evaluatesToFalseIfIteratorAggregateSizeDoesNotMatchExpectedSize(): void
     {
         assertFalse(isOfSize(4)->test(new IsOfSizeIteratorAggregateExample()));
     }
@@ -104,7 +104,7 @@ class IsOfSizeTest extends TestCase
     /**
      * @test
      */
-    public function iteratorPointerIsNotChangedByEvaluationForTraversable()
+    public function iteratorPointerIsNotChangedByEvaluationForTraversable(): void
     {
         $example = new IsOfSizeTraversableExample();
         $example->next();
@@ -115,7 +115,7 @@ class IsOfSizeTest extends TestCase
     /**
      * @test
      */
-    public function throwsInvalidArgumentExceptionWhenValueIsNotTestableForSize()
+    public function throwsInvalidArgumentExceptionWhenValueIsNotTestableForSize(): void
     {
         expect(function() { isOfSize(3)->test(true); })
                 ->throws(\InvalidArgumentException::class);
@@ -124,7 +124,7 @@ class IsOfSizeTest extends TestCase
     /**
      * @test
      */
-    public function assertionFailureWithStringContainsMeaningfulInformation()
+    public function assertionFailureWithStringContainsMeaningfulInformation(): void
     {
         expect(function() { assertThat('foo', isOfSize(4)); })
                 ->throws(AssertionFailure::class)
@@ -136,7 +136,7 @@ class IsOfSizeTest extends TestCase
     /**
      * @test
      */
-    public function assertionFailureWithArrayContainsMeaningfulInformation()
+    public function assertionFailureWithArrayContainsMeaningfulInformation(): void
     {
         expect(function() { assertThat([], isOfSize(4)); })
                 ->throws(AssertionFailure::class)
@@ -148,7 +148,7 @@ class IsOfSizeTest extends TestCase
     /**
      * @test
      */
-    public function assertionFailureWithCountableContainsMeaningfulInformation()
+    public function assertionFailureWithCountableContainsMeaningfulInformation(): void
     {
         expect(function() { assertThat(new IsOfSizeCountableExample(), isOfSize(4)); })
                 ->throws(AssertionFailure::class)
@@ -162,7 +162,7 @@ class IsOfSizeTest extends TestCase
     /**
      * @test
      */
-    public function assertionFailureWithTraversableContainsMeaningfulInformation()
+    public function assertionFailureWithTraversableContainsMeaningfulInformation(): void
     {
         expect(function() { assertThat(new IsOfSizeTraversableExample(), isOfSize(4)); })
                 ->throws(AssertionFailure::class)
@@ -176,7 +176,7 @@ class IsOfSizeTest extends TestCase
     /**
      * @test
      */
-    public function assertionFailureWithIteratorAggregateContainsMeaningfulInformation()
+    public function assertionFailureWithIteratorAggregateContainsMeaningfulInformation(): void
     {
         expect(function() {
             assertThat(new IsOfSizeIteratorAggregateExample(), isOfSize(4));

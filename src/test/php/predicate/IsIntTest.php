@@ -45,7 +45,7 @@ class IsIntTest extends TestCase
      * @test
      * @dataProvider  validInts
      */
-    public function validIntsAreRecognized(int $value)
+    public function validIntsAreRecognized(int $value): void
     {
         assertThat($value, isInt());
     }
@@ -55,7 +55,7 @@ class IsIntTest extends TestCase
      * @test
      * @dataProvider  invalidInts
      */
-    public function invalidIntsAreRejected($value)
+    public function invalidIntsAreRejected($value): void
     {
         expect(function() use($value) { assertThat($value, isInt()); })
             ->throws(AssertionFailure::class);
@@ -66,7 +66,7 @@ class IsIntTest extends TestCase
      * @test
      * @dataProvider  invalidInts
      */
-    public function invalidIntsAreRecognizedOnNegation($value)
+    public function invalidIntsAreRecognizedOnNegation($value): void
     {
         assertThat($value, isNotInt());
     }
@@ -76,7 +76,7 @@ class IsIntTest extends TestCase
      * @test
      * @dataProvider  validInts
      */
-    public function validIntsAreRejectedOnNegation(int $value)
+    public function validIntsAreRejectedOnNegation(int $value): void
     {
         expect(function() use($value) { assertThat($value, isNotInt()); })
             ->throws(AssertionFailure::class);

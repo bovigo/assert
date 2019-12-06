@@ -47,7 +47,7 @@ class IsIterableTest extends TestCase
      * @test
      * @dataProvider  validIterables
      */
-    public function validIterablesAreRecognized(iterable $value)
+    public function validIterablesAreRecognized(iterable $value): void
     {
         assertThat($value, isIterable());
     }
@@ -57,7 +57,7 @@ class IsIterableTest extends TestCase
      * @test
      * @dataProvider  invalidIterables
      */
-    public function invalidIterablesAreRejected($value)
+    public function invalidIterablesAreRejected($value): void
     {
         expect(function() use($value) { assertThat($value, isIterable()); })
             ->throws(AssertionFailure::class);
@@ -68,7 +68,7 @@ class IsIterableTest extends TestCase
      * @test
      * @dataProvider  invalidIterables
      */
-    public function invalidIterablesAreRecognizedOnNegation($value)
+    public function invalidIterablesAreRecognizedOnNegation($value): void
     {
         assertThat($value, isNotIterable());
     }
@@ -78,7 +78,7 @@ class IsIterableTest extends TestCase
      * @test
      * @dataProvider  validIterables
      */
-    public function validIterablesAreRejectedOnNegation(iterable $value)
+    public function validIterablesAreRejectedOnNegation(iterable $value): void
     {
         expect(function() use($value) { assertThat($value, isNotIterable()); })
             ->throws(AssertionFailure::class);

@@ -43,7 +43,7 @@ class EqualsTest extends TestCase
      * @test
      * @dataProvider  tuplesEvaluatingToTrue
      */
-    public function evaluatesToTrue($expected, $value)
+    public function evaluatesToTrue($expected, $value): void
     {
         assertTrue(equals($expected)->test($value));
     }
@@ -71,7 +71,7 @@ class EqualsTest extends TestCase
      * @test
      * @dataProvider  tuplesEvaluatingToFalse
      */
-    public function evaluatesToFalse($expected, $value)
+    public function evaluatesToFalse($expected, $value): void
     {
         assertFalse(equals($expected)->test($value));
     }
@@ -79,7 +79,7 @@ class EqualsTest extends TestCase
     /**
      * @test
      */
-    public function assertionFailureContainsMeaningfulInformation()
+    public function assertionFailureContainsMeaningfulInformation(): void
     {
         expect(function() { assertThat('bar', equals('foo'), 'additional info'); })
                 ->throws(AssertionFailure::class)
@@ -98,7 +98,7 @@ additional info"
     /**
      * @test
      */
-    public function assertionFailureDoesNotReferenceStringWithLinebreaksInMessage()
+    public function assertionFailureDoesNotReferenceStringWithLinebreaksInMessage(): void
     {
         expect(function() { assertThat('bar', equals("foo\n"), 'additional info'); })
                 ->throws(AssertionFailure::class)

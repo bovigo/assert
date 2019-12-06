@@ -24,10 +24,7 @@ class NegatePredicateTest extends TestCase
      */
     private $negatePredicate;
 
-    /**
-     * set up test environment
-     */
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->negatePredicate = not(
                 function($value) { return 'foo' === $value; }
@@ -36,7 +33,7 @@ class NegatePredicateTest extends TestCase
     /**
      * @test
      */
-    public function negatesWrappedPredicate()
+    public function negatesWrappedPredicate(): void
     {
         assertTrue($this->negatePredicate->test('bar'));
     }
@@ -55,7 +52,7 @@ class NegatePredicateTest extends TestCase
      * @test
      * @dataProvider  predicates
      */
-    public function hasStringRepresentation(NegatePredicate $negatePredicate, $expected)
+    public function hasStringRepresentation(NegatePredicate $negatePredicate, $expected): void
     {
         assertThat((string) $negatePredicate, equals($expected));
     }
@@ -63,7 +60,7 @@ class NegatePredicateTest extends TestCase
     /**
      * @test
      */
-    public function countEqualsCountOfNegatedPredicate()
+    public function countEqualsCountOfNegatedPredicate(): void
     {
         assertThat(
                 count(not(new AndPredicate(function() {}, function() {}))),

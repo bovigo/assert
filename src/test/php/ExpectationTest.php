@@ -37,7 +37,7 @@ class ExpectationTest extends TestCase
      * @test
      * @dataProvider  throwables
      */
-    public function expectationReturnsCatchedExceptionWhenThrowsSucceeds(\Throwable $throwable)
+    public function expectationReturnsCatchedExceptionWhenThrowsSucceeds(\Throwable $throwable): void
     {
         assertThat(
                 expect(function() use($throwable) { throw $throwable; })->throws(),
@@ -50,7 +50,7 @@ class ExpectationTest extends TestCase
      * @dataProvider  throwables
      * @since  2.1.0
      */
-    public function expectationThrowsInvalidArgumentExceptionWhenThrowsArgumentIsInvalid(\Throwable $throwable)
+    public function expectationThrowsInvalidArgumentExceptionWhenThrowsArgumentIsInvalid(\Throwable $throwable): void
     {
         expect(function() use($throwable) {
                 expect(function() use($throwable) { throw $throwable; })->throws(303);
@@ -67,7 +67,7 @@ class ExpectationTest extends TestCase
      * @group  issue_5
      * @since  2.1.0
      */
-    public function expectationReturnsCatchedErrorWhenTriggersSucceeds()
+    public function expectationReturnsCatchedErrorWhenTriggersSucceeds(): void
     {
         assertThat(
                 expect(function() { trigger_error('error'); })->triggers(),
@@ -80,7 +80,7 @@ class ExpectationTest extends TestCase
      * @group  issue_5
      * @since  2.1.0
      */
-    public function expectationThrowsInvalidArgumentExceptionWhenExpectingUnknownErrorLevel()
+    public function expectationThrowsInvalidArgumentExceptionWhenExpectingUnknownErrorLevel(): void
     {
         expect(function() {
                 expect(function() { /* doesn't matter */ })->triggers(303);
@@ -92,7 +92,7 @@ class ExpectationTest extends TestCase
     /**
      * @test
      */
-    public function expectationReturnsItselfWhenDoesNotThrowSucceeds()
+    public function expectationReturnsItselfWhenDoesNotThrowSucceeds(): void
     {
         $expectation = expect(function() { /* intentionally empty */});
         assertThat($expectation->doesNotThrow(), isSameAs($expectation));
@@ -101,7 +101,7 @@ class ExpectationTest extends TestCase
     /**
      * @test
      */
-    public function expectationThrowsAssertionFailureWhenCodeDoesNotThrowAnyExpectedException()
+    public function expectationThrowsAssertionFailureWhenCodeDoesNotThrowAnyExpectedException(): void
     {
         expect(function() {
                 expect(function() { /* intentionally empty */ })->throws();
@@ -115,7 +115,7 @@ class ExpectationTest extends TestCase
      * @group  issue_5
      * @since  2.1.0
      */
-    public function expectationThrowsAssertionFailureWhenCodeDoesNotTriggerAnyExpectedError()
+    public function expectationThrowsAssertionFailureWhenCodeDoesNotTriggerAnyExpectedError(): void
     {
         expect(function() {
                 expect(function() { /* intentionally empty */ })->triggers();
@@ -128,7 +128,7 @@ class ExpectationTest extends TestCase
      * @test
      * @dataProvider  throwables
      */
-    public function expectationThrowsAssertionFailureWhenCodeDoesNotThrowExpectedExceptionType(\Throwable $throwable)
+    public function expectationThrowsAssertionFailureWhenCodeDoesNotThrowExpectedExceptionType(\Throwable $throwable): void
     {
         expect(function() use($throwable) {
                 expect(function() { /* intentionally empty */ })
@@ -145,7 +145,7 @@ class ExpectationTest extends TestCase
      * @test
      * @dataProvider  throwables
      */
-    public function expectationThrowsAssertionFailureWhenCodeDoesNotThrowExpectedException(\Throwable $throwable)
+    public function expectationThrowsAssertionFailureWhenCodeDoesNotThrowExpectedException(\Throwable $throwable): void
     {
         expect(function() use($throwable) {
                 expect(function() { /* intentionally empty */ })
@@ -163,7 +163,7 @@ class ExpectationTest extends TestCase
      * @group  issue_5
      * @since  2.1.0
      */
-    public function expectationThrowsAssertionFailureWhenCodeDoesNotTriggerExpectedErrorLevel()
+    public function expectationThrowsAssertionFailureWhenCodeDoesNotTriggerExpectedErrorLevel(): void
     {
         expect(function() {
                 expect(function() { /* intentionally empty */ })
@@ -179,7 +179,7 @@ class ExpectationTest extends TestCase
      * @test
      * @dataProvider  throwables
      */
-    public function expectationDoesNotThrowAssertionFailureWhenCodeThrowsAnyExpectedException(\Throwable $throwable)
+    public function expectationDoesNotThrowAssertionFailureWhenCodeThrowsAnyExpectedException(\Throwable $throwable): void
     {
         expect(function() use($throwable) {
                 expect(function() use($throwable) { throw $throwable; })
@@ -192,7 +192,7 @@ class ExpectationTest extends TestCase
      * @test
      * @dataProvider  throwables
      */
-    public function expectationDoesNotThrowAssertionFailureWhenCodeThrowsExpectedExceptionType(\Throwable $throwable)
+    public function expectationDoesNotThrowAssertionFailureWhenCodeThrowsExpectedExceptionType(\Throwable $throwable): void
     {
         expect(function() use($throwable) {
                 expect(function() use($throwable) { throw $throwable; })
@@ -206,7 +206,7 @@ class ExpectationTest extends TestCase
      * @group  issue_5
      * @since  2.1.0
      */
-    public function expectationDoesNotThrowAssertionFailureWhenCodeTriggersAnyExpectedError()
+    public function expectationDoesNotThrowAssertionFailureWhenCodeTriggersAnyExpectedError(): void
     {
         expect(function() {
                 expect(function() { trigger_error('error'); })->triggers();
@@ -219,7 +219,7 @@ class ExpectationTest extends TestCase
      * @group  issue_5
      * @since  2.1.0
      */
-    public function expectationDoesNotThrowAssertionFailureWhenCodeTriggersExpectedErrorLevel()
+    public function expectationDoesNotThrowAssertionFailureWhenCodeTriggersExpectedErrorLevel(): void
     {
         expect(function() {
                 expect(function() { trigger_error('error', E_USER_WARNING); })
@@ -231,7 +231,7 @@ class ExpectationTest extends TestCase
     /**
      * @test
      */
-    public function expectationDoesNotThrowAssertionFailureIfCodeDoesNotThrowAnyException()
+    public function expectationDoesNotThrowAssertionFailureIfCodeDoesNotThrowAnyException(): void
     {
         expect(function() {
                 expect(function() { /* intentionally empty */ })->doesNotThrow();
@@ -243,7 +243,7 @@ class ExpectationTest extends TestCase
      * @test
      * @dataProvider  throwables
      */
-    public function expectationDoesNotThrowAssertionFailureIfCodeDoesNotThrowExpectedExceptionType(\Throwable $throwable)
+    public function expectationDoesNotThrowAssertionFailureIfCodeDoesNotThrowExpectedExceptionType(\Throwable $throwable): void
     {
         expect(function() use($throwable) {
             expect(function() { /* intentionally empty */ })
@@ -256,7 +256,7 @@ class ExpectationTest extends TestCase
      * @test
      * @dataProvider  throwables
      */
-    public function expectationDoesThrowAssertionFailureWhenCodeThrowsUnexpectedException(\Throwable $throwable)
+    public function expectationDoesThrowAssertionFailureWhenCodeThrowsUnexpectedException(\Throwable $throwable): void
     {
         expect(function() use($throwable) {
             expect(function() use($throwable) { throw $throwable; })
@@ -273,7 +273,7 @@ class ExpectationTest extends TestCase
      * @test
      * @dataProvider  throwables
      */
-    public function expectationDoesThrowAssertionFailureWhenCodeThrowsUnexpectedExceptionType(\Throwable $throwable)
+    public function expectationDoesThrowAssertionFailureWhenCodeThrowsUnexpectedExceptionType(\Throwable $throwable): void
     {
         expect(function() use($throwable) {
             expect(function() use($throwable) { throw $throwable; })
@@ -293,7 +293,7 @@ class ExpectationTest extends TestCase
      * @test
      * @dataProvider  throwables
      */
-    public function expectationDoesNotThrowAssertionFailureWhenCodeThrowsOtherExceptionType(\Throwable $throwable, string $other)
+    public function expectationDoesNotThrowAssertionFailureWhenCodeThrowsOtherExceptionType(\Throwable $throwable, string $other): void
     {
         expect(function() use($throwable, $other) {
             expect(function()  use($throwable) { throw $throwable; })
@@ -305,7 +305,7 @@ class ExpectationTest extends TestCase
     /**
      * @test
      */
-    public function expectationReturnsItselfWhenResultCheckSucceeds()
+    public function expectationReturnsItselfWhenResultCheckSucceeds(): void
     {
         $expectation = expect(function() { return true; });
         assertThat($expectation->result(isTrue()), isSameAs($expectation));
@@ -314,7 +314,7 @@ class ExpectationTest extends TestCase
     /**
      * @test
      */
-    public function expectationDoesNotThrowAssertionFailureWhenResultFulfillsPredicate()
+    public function expectationDoesNotThrowAssertionFailureWhenResultFulfillsPredicate(): void
     {
         expect(function() {
             expect(function() { return true; })->result(isTrue());
@@ -325,7 +325,7 @@ class ExpectationTest extends TestCase
     /**
      * @test
      */
-    public function expectationThrowsAssertionFailureWhenResultDoesNotFulfillPredicate()
+    public function expectationThrowsAssertionFailureWhenResultDoesNotFulfillPredicate(): void
     {
         expect(function() {
             expect(function() { return true; })->result(isFalse());
@@ -338,7 +338,7 @@ class ExpectationTest extends TestCase
      * @test
      * @dataProvider  throwables
      */
-    public function expectationThrowsAssertionFailureWhenResultNotAvailableBecauseCodeThrowsException(\Throwable $throwable)
+    public function expectationThrowsAssertionFailureWhenResultNotAvailableBecauseCodeThrowsException(\Throwable $throwable): void
     {
         expect(function() use($throwable) {
             expect(function() use($throwable) { throw $throwable; })
@@ -356,7 +356,7 @@ class ExpectationTest extends TestCase
      * @test
      * @dataProvider  throwables
      */
-    public function expectationThrowsAssertionFailureWhenResultNotAvailableBecauseCodeThrowsExceptionWithCallable(\Throwable $throwable)
+    public function expectationThrowsAssertionFailureWhenResultNotAvailableBecauseCodeThrowsExceptionWithCallable(\Throwable $throwable): void
     {
         expect(function() use($throwable) {
             expect(function() use($throwable) { throw $throwable;})
@@ -372,7 +372,7 @@ class ExpectationTest extends TestCase
     /**
      * @test
      */
-    public function expectationCanAssertAfterCodeExecution()
+    public function expectationCanAssertAfterCodeExecution(): void
     {
         $expectation = expect(function() { return false; });
         assertThat($expectation->after(true, isTrue()), isSameAs($expectation));
@@ -382,7 +382,7 @@ class ExpectationTest extends TestCase
      * @test
      * @dataProvider  throwables
      */
-    public function expectationCanAssertAfterCodeExecutionEvenIfExceptionThrown(\Throwable $throwable)
+    public function expectationCanAssertAfterCodeExecutionEvenIfExceptionThrown(\Throwable $throwable): void
     {
         $expectation = expect(function() use($throwable) {
                 throw $throwable;
@@ -394,7 +394,7 @@ class ExpectationTest extends TestCase
      * @test
      * @dataProvider  throwables
      */
-    public function codeIsOnlyExecutedOnce(\Throwable $throwable)
+    public function codeIsOnlyExecutedOnce(\Throwable $throwable): void
     {
         $expectation = expect(function() use($throwable) {
                 static $count = 0;
@@ -414,7 +414,7 @@ class ExpectationTest extends TestCase
     /**
      * @test
      */
-    public function expectedExceptionThrowsInvalidArgumentExceptionWhenValueToTestIsNotAnException()
+    public function expectedExceptionThrowsInvalidArgumentExceptionWhenValueToTestIsNotAnException(): void
     {
         expect(function() {
                 $expectedException = new ExpectedException(\Exception::class);
@@ -429,7 +429,7 @@ class ExpectationTest extends TestCase
      * @group  issue_5
      * @since  2.1.0
      */
-    public function expectedErrorThrowsInvalidArgumentExceptionWhenValueToTestIsNotCatchedError()
+    public function expectedErrorThrowsInvalidArgumentExceptionWhenValueToTestIsNotCatchedError(): void
     {
         expect(function() {
                 $expectedException = new ExpectedError(E_NOTICE);
@@ -445,7 +445,7 @@ class ExpectationTest extends TestCase
      * @group  issue_1
      * @since  1.6.1
      */
-    public function outputOfUnexpectedExceptionTypeIsHelpful(\Throwable $throwable, string $other)
+    public function outputOfUnexpectedExceptionTypeIsHelpful(\Throwable $throwable, string $other): void
     {
         expect(function() use ($throwable, $other) {
                 expect(function() use ($throwable) { throw $throwable; })
@@ -466,7 +466,7 @@ class ExpectationTest extends TestCase
      * @dataProvider  throwables
      * @since  2.1.0
      */
-    public function outputOfUnexpectedExceptionIsHelpful(\Throwable $throwable, string $other)
+    public function outputOfUnexpectedExceptionIsHelpful(\Throwable $throwable, string $other): void
     {
         expect(function() use ($throwable, $other) {
                 expect(function() use ($throwable) { throw $throwable; })
@@ -486,7 +486,7 @@ class ExpectationTest extends TestCase
      * @group  issue_5
      * @since  2.1.0
      */
-    public function outputOfUnexpectedErrorIsHelpful()
+    public function outputOfUnexpectedErrorIsHelpful(): void
     {
         $line = null;
         expect(function() use(&$line) {

@@ -40,7 +40,7 @@ class AndPredicateTest extends TestCase
     /**
      * @test
      */
-    public function returnsTrueWhenBothPredicatesReturnsTrue()
+    public function returnsTrueWhenBothPredicatesReturnsTrue(): void
     {
         assertTrue($this->andPredicate->test('foo'));
     }
@@ -48,7 +48,7 @@ class AndPredicateTest extends TestCase
     /**
      * @test
      */
-    public function returnsFalseWhenOnePredicateReturnsFalse()
+    public function returnsFalseWhenOnePredicateReturnsFalse(): void
     {
         assertFalse($this->andPredicate->test('baz'));
     }
@@ -56,7 +56,7 @@ class AndPredicateTest extends TestCase
     /**
      * @test
      */
-    public function hasStringRepresentation()
+    public function hasStringRepresentation(): void
     {
         assertThat(
                 $this->andPredicate,
@@ -67,7 +67,7 @@ class AndPredicateTest extends TestCase
     /**
      * @test
      */
-    public function countEqualsSumOfCountOfBothPredicates()
+    public function countEqualsSumOfCountOfBothPredicates(): void
     {
         assertThat(
                 count(new AndPredicate(

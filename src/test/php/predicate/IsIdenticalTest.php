@@ -41,7 +41,7 @@ class IsIdenticalTest extends TestCase
      * @test
      * @dataProvider  identicalValues
      */
-    public function evaluatesToTrueIfGivenValueIsIdentical($value)
+    public function evaluatesToTrueIfGivenValueIsIdentical($value): void
     {
         assertTrue(isSameAs($value)->test($value));
     }
@@ -49,7 +49,7 @@ class IsIdenticalTest extends TestCase
     /**
      * @test
      */
-    public function evaluatesToFalseIfGivenValueIsNotIdentical()
+    public function evaluatesToFalseIfGivenValueIsNotIdentical(): void
     {
         assertFalse(isSameAs(3.03)->test(3.02));
     }
@@ -57,7 +57,7 @@ class IsIdenticalTest extends TestCase
     /**
      * @test
      */
-    public function assertionFailureContainsMeaningfulInformation()
+    public function assertionFailureContainsMeaningfulInformation(): void
     {
         expect(function() { assertThat(true, isSameAs(false)); })
                 ->throws(AssertionFailure::class)
@@ -67,7 +67,7 @@ class IsIdenticalTest extends TestCase
     /**
      * @test
      */
-    public function assertionFailureWithObjectsContainsMeaningfulInformation()
+    public function assertionFailureWithObjectsContainsMeaningfulInformation(): void
     {
         expect(function() {
             assertThat(new \stdClass(), isSameAs(new \stdClass()));
@@ -81,7 +81,7 @@ class IsIdenticalTest extends TestCase
     /**
      * @test
      */
-    public function assertionFailureWithObjectAndOtherContainsMeaningfulInformation()
+    public function assertionFailureWithObjectAndOtherContainsMeaningfulInformation(): void
     {
         expect(function() { assertThat(new \stdClass(), isSameAs('foo')); })
                 ->throws(AssertionFailure::class)

@@ -44,7 +44,7 @@ class IsBoolTest extends TestCase
      * @test
      * @dataProvider  validBooleans
      */
-    public function validBooleansAreRecognized(bool $value)
+    public function validBooleansAreRecognized(bool $value): void
     {
         assertThat($value, isBool());
     }
@@ -54,7 +54,7 @@ class IsBoolTest extends TestCase
      * @test
      * @dataProvider  invalidBooleans
      */
-    public function invalidBooleansAreRejected($value)
+    public function invalidBooleansAreRejected($value): void
     {
         expect(function() use($value) { assertThat($value, isBool()); })
             ->throws(AssertionFailure::class);
@@ -65,7 +65,7 @@ class IsBoolTest extends TestCase
      * @test
      * @dataProvider  invalidBooleans
      */
-    public function invalidBooleansAreRecognizedOnNegation($value)
+    public function invalidBooleansAreRecognizedOnNegation($value): void
     {
         assertThat($value, isNotBool());
     }
@@ -75,7 +75,7 @@ class IsBoolTest extends TestCase
      * @test
      * @dataProvider  validBooleans
      */
-    public function validBooleansAreRejectedOnNegation(bool $value)
+    public function validBooleansAreRejectedOnNegation(bool $value): void
     {
         expect(function() use($value) { assertThat($value, isNotBool()); })
             ->throws(AssertionFailure::class);

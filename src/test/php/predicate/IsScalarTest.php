@@ -45,7 +45,7 @@ class IsScalarTest extends TestCase
      * @test
      * @dataProvider  validScalars
      */
-    public function validScalarsAreRecognized($value)
+    public function validScalarsAreRecognized($value): void
     {
         assertThat($value, isScalar());
     }
@@ -55,7 +55,7 @@ class IsScalarTest extends TestCase
      * @test
      * @dataProvider  invalidScalars
      */
-    public function invalidScalarsAreRejected($value)
+    public function invalidScalarsAreRejected($value): void
     {
         expect(function() use($value) { assertThat($value, isScalar()); })
             ->throws(AssertionFailure::class);
@@ -66,7 +66,7 @@ class IsScalarTest extends TestCase
      * @test
      * @dataProvider  invalidScalars
      */
-    public function invalidScalarsAreRecognizedOnNegation($value)
+    public function invalidScalarsAreRecognizedOnNegation($value): void
     {
         assertThat($value, isNotScalar());
     }
@@ -76,7 +76,7 @@ class IsScalarTest extends TestCase
      * @test
      * @dataProvider  validScalars
      */
-    public function validScalarsAreRejectedOnNegation($value)
+    public function validScalarsAreRejectedOnNegation($value): void
     {
         expect(function() use($value) { assertThat($value, isNotScalar()); })
             ->throws(AssertionFailure::class);

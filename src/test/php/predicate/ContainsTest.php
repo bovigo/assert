@@ -45,7 +45,7 @@ class ContainsTest extends TestCase
      * @test
      * @dataProvider  tuplesEvaluatingToTrue
      */
-    public function evaluatesToTrue($needle, $haystack)
+    public function evaluatesToTrue($needle, $haystack): void
     {
         assertTrue(contains($needle)->test($haystack));
     }
@@ -71,7 +71,7 @@ class ContainsTest extends TestCase
      * @test
      * @dataProvider  tuplesEvaluatingToFalse
      */
-    public function evaluatesToFalse($needle, $haystack)
+    public function evaluatesToFalse($needle, $haystack): void
     {
         assertFalse(contains($needle)->test($haystack));
     }
@@ -79,7 +79,7 @@ class ContainsTest extends TestCase
     /**
      * @test
      */
-    public function throwsInvalidArgumentExceptionWhenValueCanNotContainAnything()
+    public function throwsInvalidArgumentExceptionWhenValueCanNotContainAnything(): void
     {
         expect(function() { contains('foo')->test(303); })
                 ->throws(\InvalidArgumentException::class)
@@ -89,7 +89,7 @@ class ContainsTest extends TestCase
     /**
      * @test
      */
-    public function assertionFailureContainsMeaningfulInformation()
+    public function assertionFailureContainsMeaningfulInformation(): void
     {
         expect(function() { assertThat([], contains('foo')); })
                 ->throws(AssertionFailure::class)

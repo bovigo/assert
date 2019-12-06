@@ -23,7 +23,7 @@ class CompatibilityTest extends TestCase
     /**
      * @test
      */
-    public function testAssertArrayHasKeySuccess()
+    public function testAssertArrayHasKeySuccess(): void
     {
         $this->assertArrayHasKey('foo', ['foo' => 303]);
     }
@@ -31,7 +31,7 @@ class CompatibilityTest extends TestCase
     /**
      * @test
      */
-    public function testAssertArrayHasKeyFailure()
+    public function testAssertArrayHasKeyFailure(): void
     {
         expect(function() { $this->assertArrayHasKey('bar', ['foo' => 303]); })
                 ->throws(AssertionFailure::class)
@@ -41,7 +41,7 @@ class CompatibilityTest extends TestCase
     /**
      * @test
      */
-    public function testAssertArrayNotHasKeySuccess()
+    public function testAssertArrayNotHasKeySuccess(): void
     {
         $this->assertArrayNotHasKey('bar', ['foo' => 303]);
     }
@@ -49,7 +49,7 @@ class CompatibilityTest extends TestCase
     /**
      * @test
      */
-    public function testAssertArrayNotHasKeyFailure()
+    public function testAssertArrayNotHasKeyFailure(): void
     {
         expect(function() {
             $this->assertArrayNotHasKey('foo', ['foo' => 303]);
@@ -61,7 +61,7 @@ class CompatibilityTest extends TestCase
     /**
      * @test
      */
-    public function testAssertContainsSuccess()
+    public function testAssertContainsSuccess(): void
     {
         $this->assertContains(303, ['foo' => 303]);
     }
@@ -69,7 +69,7 @@ class CompatibilityTest extends TestCase
     /**
      * @test
      */
-    public function testAssertContainsFailure()
+    public function testAssertContainsFailure(): void
     {
         expect(function() { $this->assertContains(313, ['foo' => 303]); })
                 ->throws(AssertionFailure::class)
@@ -79,7 +79,7 @@ class CompatibilityTest extends TestCase
     /**
      * @test
      */
-    public function testAssertNotContainsSuccess()
+    public function testAssertNotContainsSuccess(): void
     {
         $this->assertNotContains(313, ['foo' => 303]);
     }
@@ -87,7 +87,7 @@ class CompatibilityTest extends TestCase
     /**
      * @test
      */
-    public function testAssertNotContainsFailure()
+    public function testAssertNotContainsFailure(): void
     {
         expect(function() { $this->assertNotContains(303, ['foo' => 303]); })
                 ->throws(AssertionFailure::class)
@@ -98,7 +98,7 @@ class CompatibilityTest extends TestCase
      * @test
      * @since  1.1.0
      */
-    public function testAssertContainsOnlySuccessForNativeTypes()
+    public function testAssertContainsOnlySuccessForNativeTypes(): void
     {
         $this->assertContainsOnly('int', [303, 313]);
     }
@@ -107,7 +107,7 @@ class CompatibilityTest extends TestCase
      * @test
      * @since  1.1.0
      */
-    public function testAssertContainsOnlySuccessForNonNativeTypes()
+    public function testAssertContainsOnlySuccessForNonNativeTypes(): void
     {
         $this->assertContainsOnly(
                 'stdClass',
@@ -119,7 +119,7 @@ class CompatibilityTest extends TestCase
      * @test
      * @since  1.1.0
      */
-    public function testAssertContainsOnlyFailure()
+    public function testAssertContainsOnlyFailure(): void
     {
         expect(function() { $this->assertContainsOnly('int', [303, 'foo']); })
                 ->throws(AssertionFailure::class)
@@ -135,7 +135,7 @@ class CompatibilityTest extends TestCase
      * @test
      * @since  1.1.0
      */
-    public function testAssertContainsOnlyInstancesOfSuccess()
+    public function testAssertContainsOnlyInstancesOfSuccess(): void
     {
         $this->assertContainsOnlyInstancesOf(
                 'stdClass',
@@ -147,7 +147,7 @@ class CompatibilityTest extends TestCase
      * @test
      * @since  1.1.0
      */
-    public function testAssertContainsOnlyInstancesOfFailure()
+    public function testAssertContainsOnlyInstancesOfFailure(): void
     {
         expect(function() {
                 $this->assertContainsOnlyInstancesOf('stdClass', [303, 'foo']);
@@ -165,7 +165,7 @@ class CompatibilityTest extends TestCase
      * @test
      * @since  1.1.0
      */
-    public function testAssertNotContainsOnlySuccessForNativeTypes()
+    public function testAssertNotContainsOnlySuccessForNativeTypes(): void
     {
         $this->assertNotContainsOnly('int', ['foo', 'bar']);
     }
@@ -174,7 +174,7 @@ class CompatibilityTest extends TestCase
      * @test
      * @since  1.1.0
      */
-    public function testAssertNotContainsOnlySuccessForNonNativeTypes()
+    public function testAssertNotContainsOnlySuccessForNonNativeTypes(): void
     {
         $this->assertNotContainsOnly('stdClass', ['foo', 'bar']);
     }
@@ -183,7 +183,7 @@ class CompatibilityTest extends TestCase
      * @test
      * @since  1.1.0
      */
-    public function testAssertNotContainsOnlyFailure()
+    public function testAssertNotContainsOnlyFailure(): void
     {
         expect(function() {
                 $this->assertNotContainsOnly('int', [303, 'foo']);
@@ -200,7 +200,7 @@ class CompatibilityTest extends TestCase
     /**
      * @test
      */
-    public function testAssertCountSuccess()
+    public function testAssertCountSuccess(): void
     {
         $this->assertCount(1, ['foo' => 303]);
     }
@@ -208,7 +208,7 @@ class CompatibilityTest extends TestCase
     /**
      * @test
      */
-    public function testAssertCountFailure()
+    public function testAssertCountFailure(): void
     {
         expect(function() { $this->assertCount(2, ['foo' => 303]); })
                 ->throws(AssertionFailure::class)
@@ -220,7 +220,7 @@ class CompatibilityTest extends TestCase
     /**
      * @test
      */
-    public function testAssertNotCountSuccess()
+    public function testAssertNotCountSuccess(): void
     {
         $this->assertNotCount(2, ['foo' => 303]);
     }
@@ -228,7 +228,7 @@ class CompatibilityTest extends TestCase
     /**
      * @test
      */
-    public function testAssertNotCountFailure()
+    public function testAssertNotCountFailure(): void
     {
         expect(function() { $this->assertNotCount(1, ['foo' => 303]); })
                 ->throws(AssertionFailure::class)
@@ -240,7 +240,7 @@ class CompatibilityTest extends TestCase
     /**
      * @test
      */
-    public function testAssertEqualsSuccess()
+    public function testAssertEqualsSuccess(): void
     {
         $this->assertEquals(303, 303);
     }
@@ -248,7 +248,7 @@ class CompatibilityTest extends TestCase
     /**
      * @test
      */
-    public function testAssertEqualsFailure()
+    public function testAssertEqualsFailure(): void
     {
         expect(function() { $this->assertEquals(313, 303); })
                 ->throws(AssertionFailure::class)
@@ -258,7 +258,7 @@ class CompatibilityTest extends TestCase
     /**
      * @test
      */
-    public function testAssertNotEqualsSuccess()
+    public function testAssertNotEqualsSuccess(): void
     {
         $this->assertNotEquals(313, 303);
     }
@@ -266,7 +266,7 @@ class CompatibilityTest extends TestCase
     /**
      * @test
      */
-    public function testAssertNotEqualsFailure()
+    public function testAssertNotEqualsFailure(): void
     {
         expect(function() { $this->assertNotEquals(303, 303); })
                 ->throws(AssertionFailure::class)
@@ -276,7 +276,7 @@ class CompatibilityTest extends TestCase
     /**
      * @test
      */
-    public function testAssertEmptySuccess()
+    public function testAssertEmptySuccess(): void
     {
         $this->assertEmpty('');
     }
@@ -284,7 +284,7 @@ class CompatibilityTest extends TestCase
     /**
      * @test
      */
-    public function testAssertEmptyFailure()
+    public function testAssertEmptyFailure(): void
     {
         expect(function() { $this->assertEmpty('not empty'); })
                 ->throws(AssertionFailure::class)
@@ -294,7 +294,7 @@ class CompatibilityTest extends TestCase
     /**
      * @test
      */
-    public function testAssertNotEmptySuccess()
+    public function testAssertNotEmptySuccess(): void
     {
         $this->assertNotEmpty('not empty');
     }
@@ -302,7 +302,7 @@ class CompatibilityTest extends TestCase
     /**
      * @test
      */
-    public function testAssertNotEmptyFailure()
+    public function testAssertNotEmptyFailure(): void
     {
         expect(function() { $this->assertNotEmpty(''); })
                 ->throws(AssertionFailure::class)
@@ -312,7 +312,7 @@ class CompatibilityTest extends TestCase
     /**
      * @test
      */
-    public function testAssertGreaterThanSuccess()
+    public function testAssertGreaterThanSuccess(): void
     {
         $this->assertGreaterThan(3, 4);
     }
@@ -320,7 +320,7 @@ class CompatibilityTest extends TestCase
     /**
      * @test
      */
-    public function testAssertGreaterThanFailure()
+    public function testAssertGreaterThanFailure(): void
     {
         expect(function() { $this->assertGreaterThan(3, 2); })
                 ->throws(AssertionFailure::class)
@@ -330,7 +330,7 @@ class CompatibilityTest extends TestCase
     /**
      * @test
      */
-    public function testAssertGreaterThanOrEqualSuccess()
+    public function testAssertGreaterThanOrEqualSuccess(): void
     {
         $this->assertGreaterThanOrEqual(3, 4);
     }
@@ -338,7 +338,7 @@ class CompatibilityTest extends TestCase
     /**
      * @test
      */
-    public function testAssertGreaterThanOrEqualFailure()
+    public function testAssertGreaterThanOrEqualFailure(): void
     {
         expect(function() { $this->assertGreaterThanOrEqual(3, 2); })
                 ->throws(AssertionFailure::class)
@@ -350,7 +350,7 @@ class CompatibilityTest extends TestCase
     /**
      * @test
      */
-    public function testAssertLessThanSuccess()
+    public function testAssertLessThanSuccess(): void
     {
         $this->assertLessThan(4, 3);
     }
@@ -358,7 +358,7 @@ class CompatibilityTest extends TestCase
     /**
      * @test
      */
-    public function testAssertLessThanFailure()
+    public function testAssertLessThanFailure(): void
     {
         expect(function() { $this->assertLessThan(2, 3); })
                 ->throws(AssertionFailure::class)
@@ -368,7 +368,7 @@ class CompatibilityTest extends TestCase
     /**
      * @test
      */
-    public function testAssertLessThanOrEqualSuccess()
+    public function testAssertLessThanOrEqualSuccess(): void
     {
         $this->assertLessThanOrEqual(4, 3);
     }
@@ -376,7 +376,7 @@ class CompatibilityTest extends TestCase
     /**
      * @test
      */
-    public function testAssertLessThanOrEqualFailure()
+    public function testAssertLessThanOrEqualFailure(): void
     {
         expect(function() { $this->assertLessThanOrEqual(2, 3); })
                 ->throws(AssertionFailure::class)
@@ -388,7 +388,7 @@ class CompatibilityTest extends TestCase
     /**
      * @test
      */
-    public function testAssertFileExistsSuccess()
+    public function testAssertFileExistsSuccess(): void
     {
         $this->assertFileExists(__FILE__);
     }
@@ -396,7 +396,7 @@ class CompatibilityTest extends TestCase
     /**
      * @test
      */
-    public function testAssertFileExistsFailure()
+    public function testAssertFileExistsFailure(): void
     {
         expect(function() { $this->assertFileExists(__FILE__ . '.bak'); })
                 ->throws(AssertionFailure::class)
@@ -406,7 +406,7 @@ class CompatibilityTest extends TestCase
     /**
      * @test
      */
-    public function testAssertFileNotExistsSuccess()
+    public function testAssertFileNotExistsSuccess(): void
     {
         $this->assertFileNotExists(__FILE__ . '.bak');
     }
@@ -414,7 +414,7 @@ class CompatibilityTest extends TestCase
     /**
      * @test
      */
-    public function testAssertFileNotExistsFailure()
+    public function testAssertFileNotExistsFailure(): void
     {
         expect(function() { $this->assertFileNotExists(__FILE__); })
                 ->throws(AssertionFailure::class)
@@ -424,7 +424,7 @@ class CompatibilityTest extends TestCase
     /**
      * @test
      */
-    public function testAssertTrueSuccess()
+    public function testAssertTrueSuccess(): void
     {
         $this->assertTrue(true);
     }
@@ -432,7 +432,7 @@ class CompatibilityTest extends TestCase
     /**
      * @test
      */
-    public function testAssertTrueFailure()
+    public function testAssertTrueFailure(): void
     {
         expect(function() { $this->assertTrue(false); })
                 ->throws(AssertionFailure::class)
@@ -442,7 +442,7 @@ class CompatibilityTest extends TestCase
     /**
      * @test
      */
-    public function testAssertFalseSuccess()
+    public function testAssertFalseSuccess(): void
     {
         $this->assertFalse(false);
     }
@@ -450,7 +450,7 @@ class CompatibilityTest extends TestCase
     /**
      * @test
      */
-    public function testAssertFalseFailure()
+    public function testAssertFalseFailure(): void
     {
         expect(function() { $this->assertFalse(true); })
                 ->throws(AssertionFailure::class)
@@ -460,7 +460,7 @@ class CompatibilityTest extends TestCase
     /**
      * @test
      */
-    public function testAssertNotNullSuccess()
+    public function testAssertNotNullSuccess(): void
     {
         $this->assertNotNull(303);
     }
@@ -468,7 +468,7 @@ class CompatibilityTest extends TestCase
     /**
      * @test
      */
-    public function testAssertNotNullFailure()
+    public function testAssertNotNullFailure(): void
     {
         expect(function() { $this->assertNotNull(null); })
                 ->throws(AssertionFailure::class)
@@ -478,7 +478,7 @@ class CompatibilityTest extends TestCase
     /**
      * @test
      */
-    public function testAssertNullSuccess()
+    public function testAssertNullSuccess(): void
     {
         $this->assertNull(null);
     }
@@ -486,7 +486,7 @@ class CompatibilityTest extends TestCase
     /**
      * @test
      */
-    public function testAssertNullFailure()
+    public function testAssertNullFailure(): void
     {
         expect(function() { $this->assertNull(303); })
                 ->throws(AssertionFailure::class)
@@ -497,7 +497,7 @@ class CompatibilityTest extends TestCase
      * @test
      * @since  1.1.0
      */
-    public function testAssertFiniteSuccess()
+    public function testAssertFiniteSuccess(): void
     {
         $this->assertFinite(1.0);
     }
@@ -506,7 +506,7 @@ class CompatibilityTest extends TestCase
      * @test
      * @since  1.1.0
      */
-    public function testAssertFiniteFailure()
+    public function testAssertFiniteFailure(): void
     {
         expect(function() { $this->assertFinite(INF); })
                 ->throws(AssertionFailure::class)
@@ -517,7 +517,7 @@ class CompatibilityTest extends TestCase
      * @test
      * @since  1.1.0
      */
-    public function testAssertInfiniteSuccess()
+    public function testAssertInfiniteSuccess(): void
     {
         $this->assertInfinite(INF);
     }
@@ -526,7 +526,7 @@ class CompatibilityTest extends TestCase
      * @test
      * @since  1.1.0
      */
-    public function testAssertInfiniteFailure()
+    public function testAssertInfiniteFailure(): void
     {
         expect(function() { $this->assertInfinite(1.0); })
                 ->throws(AssertionFailure::class)
@@ -537,7 +537,7 @@ class CompatibilityTest extends TestCase
      * @test
      * @since  1.1.0
      */
-    public function testAssertNanSuccess()
+    public function testAssertNanSuccess(): void
     {
         $this->assertNan(NAN);
     }
@@ -546,7 +546,7 @@ class CompatibilityTest extends TestCase
      * @test
      * @since  1.1.0
      */
-    public function testAssertNanFailure()
+    public function testAssertNanFailure(): void
     {
         expect(function() { $this->assertNan(1.0); })
                 ->throws(AssertionFailure::class)
@@ -556,7 +556,7 @@ class CompatibilityTest extends TestCase
     /**
      * @test
      */
-    public function testAssertSameSuccess()
+    public function testAssertSameSuccess(): void
     {
         $foo = new \stdClass();
         $this->assertSame($foo, $foo);
@@ -565,7 +565,7 @@ class CompatibilityTest extends TestCase
     /**
      * @test
      */
-    public function testAssertSameFailure()
+    public function testAssertSameFailure(): void
     {
         expect(function() {
             $this->assertSame(new \stdClass(), new \stdClass());
@@ -579,7 +579,7 @@ class CompatibilityTest extends TestCase
     /**
      * @test
      */
-    public function testAssertNotSameSuccess()
+    public function testAssertNotSameSuccess(): void
     {
         $this->assertNotSame(new \stdClass(), new \stdClass());
     }
@@ -587,7 +587,7 @@ class CompatibilityTest extends TestCase
     /**
      * @test
      */
-    public function testAssertNotSameFailure()
+    public function testAssertNotSameFailure(): void
     {
         expect(function() {
                 $foo = new \stdClass();
@@ -602,7 +602,7 @@ class CompatibilityTest extends TestCase
     /**
      * @test
      */
-    public function testAssertInstanceOfSuccess()
+    public function testAssertInstanceOfSuccess(): void
     {
         $this->assertInstanceOf(\stdClass::class, new \stdClass());
     }
@@ -610,7 +610,7 @@ class CompatibilityTest extends TestCase
     /**
      * @test
      */
-    public function testAsserInstanceOfFailure()
+    public function testAsserInstanceOfFailure(): void
     {
         expect(function() {
             $this->assertInstanceOf(__CLASS__, new \stdClass());
@@ -624,7 +624,7 @@ class CompatibilityTest extends TestCase
     /**
      * @test
      */
-    public function testAssertNotInstanceOfSuccess()
+    public function testAssertNotInstanceOfSuccess(): void
     {
         $this->assertNotInstanceOf(__CLASS__, new \stdClass());
     }
@@ -632,7 +632,7 @@ class CompatibilityTest extends TestCase
     /**
      * @test
      */
-    public function testAssertNotInstanceOfFailure()
+    public function testAssertNotInstanceOfFailure(): void
     {
         expect(function() {
             $this->assertNotInstanceOf(\stdClass::class, new \stdClass());
@@ -646,7 +646,7 @@ class CompatibilityTest extends TestCase
     /**
      * @test
      */
-    public function testAssertInternalTypeSuccess()
+    public function testAssertInternalTypeSuccess(): void
     {
         $this->assertInternalType('string', 'foo');
     }
@@ -654,7 +654,7 @@ class CompatibilityTest extends TestCase
     /**
      * @test
      */
-    public function testAssertInternalTypeFailure()
+    public function testAssertInternalTypeFailure(): void
     {
         expect(function() { $this->assertInternalType('string', 303); })
                 ->throws(AssertionFailure::class)
@@ -664,7 +664,7 @@ class CompatibilityTest extends TestCase
     /**
      * @test
      */
-    public function testAssertNotInternalTypeSuccess()
+    public function testAssertNotInternalTypeSuccess(): void
     {
         $this->assertNotInternalType('string', 303);
     }
@@ -672,7 +672,7 @@ class CompatibilityTest extends TestCase
     /**
      * @test
      */
-    public function testAssertNotInternalTypeFailure()
+    public function testAssertNotInternalTypeFailure(): void
     {
         expect(function() { $this->assertNotInternalType('string', 'foo'); })
                 ->throws(AssertionFailure::class)
@@ -684,7 +684,7 @@ class CompatibilityTest extends TestCase
     /**
      * @test
      */
-    public function testAssertRegExpSuccess()
+    public function testAssertRegExpSuccess(): void
     {
         $this->assertRegExp('/^([a-z]{3})$/', 'foo');
     }
@@ -692,7 +692,7 @@ class CompatibilityTest extends TestCase
     /**
      * @test
      */
-    public function testAssertRegExpFailure()
+    public function testAssertRegExpFailure(): void
     {
         expect(function() { $this->assertRegExp('/^([a-z]{3})$/', 'dummy'); })
                 ->throws(AssertionFailure::class)
@@ -704,7 +704,7 @@ class CompatibilityTest extends TestCase
     /**
      * @test
      */
-    public function testAssertNotRegExpSuccess()
+    public function testAssertNotRegExpSuccess(): void
     {
         $this->assertNotRegExp('/^([a-z]{3})$/', 'dummy');
     }
@@ -712,7 +712,7 @@ class CompatibilityTest extends TestCase
     /**
      * @test
      */
-    public function testAssertNotRegExNotpFailure()
+    public function testAssertNotRegExNotpFailure(): void
     {
         expect(function() { $this->assertNotRegExp('/^([a-z]{3})$/', 'foo'); })
                 ->throws(AssertionFailure::class)
@@ -725,7 +725,7 @@ class CompatibilityTest extends TestCase
      * @test
      * @since  1.1.0
      */
-    public function testAssertStringStartsWithSuccess()
+    public function testAssertStringStartsWithSuccess(): void
     {
         $this->assertStringStartsWith('foo', 'foobarbaz');
     }
@@ -734,7 +734,7 @@ class CompatibilityTest extends TestCase
      * @test
      * @since  1.1.0
      */
-    public function testAssertStringStartsWithFailure()
+    public function testAssertStringStartsWithFailure(): void
     {
         expect(function() { $this->assertStringStartsWith('foo', 'barbazfoo');})
                 ->throws(AssertionFailure::class)
@@ -747,7 +747,7 @@ class CompatibilityTest extends TestCase
      * @test
      * @since  1.1.0
      */
-    public function testAssertStringStartsNotWithSuccess()
+    public function testAssertStringStartsNotWithSuccess(): void
     {
         $this->assertStringStartsNotWith('foo', 'barbazfoo');
     }
@@ -756,7 +756,7 @@ class CompatibilityTest extends TestCase
      * @test
      * @since  1.1.0
      */
-    public function testAssertStringStartsNotWithFailure()
+    public function testAssertStringStartsNotWithFailure(): void
     {
         expect(function() {
             $this->assertStringStartsNotWith('foo', 'foobarbaz');
@@ -771,7 +771,7 @@ class CompatibilityTest extends TestCase
      * @test
      * @since  1.1.0
      */
-    public function testAssertStringEndsWithSuccess()
+    public function testAssertStringEndsWithSuccess(): void
     {
         $this->assertStringEndsWith('foo', 'barbazfoo');
     }
@@ -780,7 +780,7 @@ class CompatibilityTest extends TestCase
      * @test
      * @since  1.1.0
      */
-    public function testAssertStringEndsWithFailure()
+    public function testAssertStringEndsWithFailure(): void
     {
         expect(function() { $this->assertStringEndsWith('foo', 'foobarbaz'); })
                 ->throws(AssertionFailure::class)
@@ -791,7 +791,7 @@ class CompatibilityTest extends TestCase
      * @test
      * @since  1.1.0
      */
-    public function testAssertStringEndsNotWithSuccess()
+    public function testAssertStringEndsNotWithSuccess(): void
     {
         $this->assertStringEndsNotWith('foo', 'foobarbaz');
     }
@@ -800,7 +800,7 @@ class CompatibilityTest extends TestCase
      * @test
      * @since  1.1.0
      */
-    public function testAssertStringEndsNotWithFailure()
+    public function testAssertStringEndsNotWithFailure(): void
     {
         expect(function() { $this->assertStringEndsNotWith('foo', 'barbazfoo'); })
                 ->throws(AssertionFailure::class)
@@ -813,7 +813,7 @@ class CompatibilityTest extends TestCase
      * @test
      * @since  5.0.0
      */
-    public function testAssertIsArraySuccess()
+    public function testAssertIsArraySuccess(): void
     {
         $this->assertIsArray(['foo']);
     }
@@ -822,7 +822,7 @@ class CompatibilityTest extends TestCase
      * @test
      * @since  5.0.0
      */
-    public function testAssertIsArrayWithFailure()
+    public function testAssertIsArrayWithFailure(): void
     {
         expect(function() { $this->assertIsArray('foo'); })
                 ->throws(AssertionFailure::class)
@@ -835,7 +835,7 @@ class CompatibilityTest extends TestCase
      * @test
      * @since  5.0.0
      */
-    public function testAssertIsBoolSuccess()
+    public function testAssertIsBoolSuccess(): void
     {
         $this->assertIsBool(true);
     }
@@ -844,7 +844,7 @@ class CompatibilityTest extends TestCase
      * @test
      * @since  5.0.0
      */
-    public function testAssertIsBoolWithFailure()
+    public function testAssertIsBoolWithFailure(): void
     {
         expect(function() { $this->assertIsBool('foo'); })
                 ->throws(AssertionFailure::class)
@@ -857,7 +857,7 @@ class CompatibilityTest extends TestCase
      * @test
      * @since  5.0.0
      */
-    public function testAssertIsFloatSuccess()
+    public function testAssertIsFloatSuccess(): void
     {
         $this->assertIsFloat(1.1);
     }
@@ -866,7 +866,7 @@ class CompatibilityTest extends TestCase
      * @test
      * @since  5.0.0
      */
-    public function testAssertIsFloatWithFailure()
+    public function testAssertIsFloatWithFailure(): void
     {
         expect(function() { $this->assertIsFloat('foo'); })
                 ->throws(AssertionFailure::class)
@@ -879,7 +879,7 @@ class CompatibilityTest extends TestCase
      * @test
      * @since  5.0.0
      */
-    public function testAssertIsIntSuccess()
+    public function testAssertIsIntSuccess(): void
     {
         $this->assertIsInt(1);
     }
@@ -888,7 +888,7 @@ class CompatibilityTest extends TestCase
      * @test
      * @since  5.0.0
      */
-    public function testAssertIsIntWithFailure()
+    public function testAssertIsIntWithFailure(): void
     {
         expect(function() { $this->assertIsInt('foo'); })
                 ->throws(AssertionFailure::class)
@@ -901,7 +901,7 @@ class CompatibilityTest extends TestCase
      * @test
      * @since  5.0.0
      */
-    public function testAssertIsNumericSuccess()
+    public function testAssertIsNumericSuccess(): void
     {
         $this->assertIsNumeric(1);
     }
@@ -910,7 +910,7 @@ class CompatibilityTest extends TestCase
      * @test
      * @since  5.0.0
      */
-    public function testAssertIsNumericWithFailure()
+    public function testAssertIsNumericWithFailure(): void
     {
         expect(function() { $this->assertIsNumeric('foo'); })
                 ->throws(AssertionFailure::class)
@@ -923,7 +923,7 @@ class CompatibilityTest extends TestCase
      * @test
      * @since  5.0.0
      */
-    public function testAssertIsObjectSuccess()
+    public function testAssertIsObjectSuccess(): void
     {
         $this->assertIsObject(new \stdClass());
     }
@@ -932,7 +932,7 @@ class CompatibilityTest extends TestCase
      * @test
      * @since  5.0.0
      */
-    public function testAssertIsObjectWithFailure()
+    public function testAssertIsObjectWithFailure(): void
     {
         expect(function() { $this->assertIsObject('foo'); })
                 ->throws(AssertionFailure::class)
@@ -945,7 +945,7 @@ class CompatibilityTest extends TestCase
      * @test
      * @since  5.0.0
      */
-    public function testAssertIsResourceSuccess()
+    public function testAssertIsResourceSuccess(): void
     {
         $fd = fopen(__FILE__, 'r');
         if (false === $fd) {
@@ -964,7 +964,7 @@ class CompatibilityTest extends TestCase
      * @test
      * @since  5.0.0
      */
-    public function testAssertIsResourceWithFailure()
+    public function testAssertIsResourceWithFailure(): void
     {
         expect(function() { $this->assertIsResource('foo'); })
                 ->throws(AssertionFailure::class)
@@ -977,7 +977,7 @@ class CompatibilityTest extends TestCase
      * @test
      * @since  5.0.0
      */
-    public function testAssertIsStringSuccess()
+    public function testAssertIsStringSuccess(): void
     {
         $this->assertIsString('example');
     }
@@ -986,7 +986,7 @@ class CompatibilityTest extends TestCase
      * @test
      * @since  5.0.0
      */
-    public function testAssertIsStringWithFailure()
+    public function testAssertIsStringWithFailure(): void
     {
         expect(function() { $this->assertIsString(false); })
                 ->throws(AssertionFailure::class)
@@ -999,7 +999,7 @@ class CompatibilityTest extends TestCase
      * @test
      * @since  5.0.0
      */
-    public function testAssertIsScalarSuccess()
+    public function testAssertIsScalarSuccess(): void
     {
         $this->assertIsScalar(1);
     }
@@ -1008,7 +1008,7 @@ class CompatibilityTest extends TestCase
      * @test
      * @since  5.0.0
      */
-    public function testAssertIsScalarWithFailure()
+    public function testAssertIsScalarWithFailure(): void
     {
         expect(function() { $this->assertIsScalar(['foo']); })
                 ->throws(AssertionFailure::class)
@@ -1021,7 +1021,7 @@ class CompatibilityTest extends TestCase
      * @test
      * @since  5.0.0
      */
-    public function testAssertIsCallableSuccess()
+    public function testAssertIsCallableSuccess(): void
     {
         $this->assertIsCallable(function() {});
     }
@@ -1030,7 +1030,7 @@ class CompatibilityTest extends TestCase
      * @test
      * @since  5.0.0
      */
-    public function testAssertIsCallableWithFailure()
+    public function testAssertIsCallableWithFailure(): void
     {
         expect(function() { $this->assertIsCallable(['foo']); })
                 ->throws(AssertionFailure::class)
@@ -1043,7 +1043,7 @@ class CompatibilityTest extends TestCase
      * @test
      * @since  5.0.0
      */
-    public function testAssertIsIterableSuccess()
+    public function testAssertIsIterableSuccess(): void
     {
         $this->assertIsIterable([]);
     }
@@ -1052,7 +1052,7 @@ class CompatibilityTest extends TestCase
      * @test
      * @since  5.0.0
      */
-    public function testAssertIsIterableWithFailure()
+    public function testAssertIsIterableWithFailure(): void
     {
         expect(function() { $this->assertIsIterable('foo'); })
                 ->throws(AssertionFailure::class)
@@ -1065,7 +1065,7 @@ class CompatibilityTest extends TestCase
      * @test
      * @since  5.0.0
      */
-    public function testAssertIsNotArraySuccess()
+    public function testAssertIsNotArraySuccess(): void
     {
         $this->assertIsNotArray('foo');
     }
@@ -1074,7 +1074,7 @@ class CompatibilityTest extends TestCase
      * @test
      * @since  5.0.0
      */
-    public function testAssertIsNotArrayWithFailure()
+    public function testAssertIsNotArrayWithFailure(): void
     {
         expect(function() { $this->assertIsNotArray(['foo']); })
                 ->throws(AssertionFailure::class)
@@ -1087,7 +1087,7 @@ class CompatibilityTest extends TestCase
      * @test
      * @since  5.0.0
      */
-    public function testAssertIsNotBoolSuccess()
+    public function testAssertIsNotBoolSuccess(): void
     {
         $this->assertIsNotBool('foo');
     }
@@ -1096,7 +1096,7 @@ class CompatibilityTest extends TestCase
      * @test
      * @since  5.0.0
      */
-    public function testAssertIsNotBoolWithFailure()
+    public function testAssertIsNotBoolWithFailure(): void
     {
         expect(function() { $this->assertIsNotBool(true); })
                 ->throws(AssertionFailure::class)
@@ -1109,7 +1109,7 @@ class CompatibilityTest extends TestCase
      * @test
      * @since  5.0.0
      */
-    public function testAssertIsNotFloatSuccess()
+    public function testAssertIsNotFloatSuccess(): void
     {
         $this->assertIsNotFloat(1);
     }
@@ -1118,7 +1118,7 @@ class CompatibilityTest extends TestCase
      * @test
      * @since  5.0.0
      */
-    public function testAssertIsNotFloatWithFailure()
+    public function testAssertIsNotFloatWithFailure(): void
     {
         expect(function() { $this->assertIsNotFloat(1.1); })
                 ->throws(AssertionFailure::class)
@@ -1131,7 +1131,7 @@ class CompatibilityTest extends TestCase
      * @test
      * @since  5.0.0
      */
-    public function testAssertIsNotIntSuccess()
+    public function testAssertIsNotIntSuccess(): void
     {
         $this->assertIsNotInt(1.0);
     }
@@ -1140,7 +1140,7 @@ class CompatibilityTest extends TestCase
      * @test
      * @since  5.0.0
      */
-    public function testAssertIsNotIntWithFailure()
+    public function testAssertIsNotIntWithFailure(): void
     {
         expect(function() { $this->assertIsNotInt(1); })
                 ->throws(AssertionFailure::class)
@@ -1153,7 +1153,7 @@ class CompatibilityTest extends TestCase
      * @test
      * @since  5.0.0
      */
-    public function testAssertIsNotNumericSuccess()
+    public function testAssertIsNotNumericSuccess(): void
     {
         $this->assertIsNotNumeric('example');
     }
@@ -1162,7 +1162,7 @@ class CompatibilityTest extends TestCase
      * @test
      * @since  5.0.0
      */
-    public function testAssertIsNotNumericWithFailure()
+    public function testAssertIsNotNumericWithFailure(): void
     {
         expect(function() { $this->assertIsNotNumeric(1); })
                 ->throws(AssertionFailure::class)
@@ -1175,7 +1175,7 @@ class CompatibilityTest extends TestCase
      * @test
      * @since  5.0.0
      */
-    public function testAssertIsNotObjectSuccess()
+    public function testAssertIsNotObjectSuccess(): void
     {
         $this->assertIsNotObject('example');
     }
@@ -1184,7 +1184,7 @@ class CompatibilityTest extends TestCase
      * @test
      * @since  5.0.0
      */
-    public function testAssertIsNotObjectWithFailure()
+    public function testAssertIsNotObjectWithFailure(): void
     {
         expect(function() { $this->assertIsNotObject(new \stdClass()); })
                 ->throws(AssertionFailure::class)
@@ -1195,7 +1195,7 @@ class CompatibilityTest extends TestCase
      * @test
      * @since  5.0.0
      */
-    public function testAssertIsNotResourceSuccess()
+    public function testAssertIsNotResourceSuccess(): void
     {
         $this->assertIsNotResource('example');
     }
@@ -1204,7 +1204,7 @@ class CompatibilityTest extends TestCase
      * @test
      * @since  5.0.0
      */
-    public function testAssertIsNotResourceWithFailure()
+    public function testAssertIsNotResourceWithFailure(): void
     {
 
         expect(function() {
@@ -1228,7 +1228,7 @@ class CompatibilityTest extends TestCase
      * @test
      * @since  5.0.0
      */
-    public function testAssertIsNotStringSuccess()
+    public function testAssertIsNotStringSuccess(): void
     {
         $this->assertIsNotString(1);
     }
@@ -1237,7 +1237,7 @@ class CompatibilityTest extends TestCase
      * @test
      * @since  5.0.0
      */
-    public function testAssertIsNotStringWithFailure()
+    public function testAssertIsNotStringWithFailure(): void
     {
         expect(function() { $this->assertIsNotString('example'); })
                 ->throws(AssertionFailure::class)
@@ -1250,7 +1250,7 @@ class CompatibilityTest extends TestCase
      * @test
      * @since  5.0.0
      */
-    public function testAssertIsNotScalarSuccess()
+    public function testAssertIsNotScalarSuccess(): void
     {
         $this->assertIsNotScalar([]);
     }
@@ -1259,7 +1259,7 @@ class CompatibilityTest extends TestCase
      * @test
      * @since  5.0.0
      */
-    public function testAssertIsNotScalarWithFailure()
+    public function testAssertIsNotScalarWithFailure(): void
     {
         expect(function() { $this->assertIsNotScalar('foo'); })
                 ->throws(AssertionFailure::class)
@@ -1272,7 +1272,7 @@ class CompatibilityTest extends TestCase
      * @test
      * @since  5.0.0
      */
-    public function testAssertIsNotCallableSuccess()
+    public function testAssertIsNotCallableSuccess(): void
     {
         $this->assertIsNotCallable(1);
     }
@@ -1281,7 +1281,7 @@ class CompatibilityTest extends TestCase
      * @test
      * @since  5.0.0
      */
-    public function testAssertIsNotCallableWithFailure()
+    public function testAssertIsNotCallableWithFailure(): void
     {
         expect(function() { $this->assertIsNotCallable(function() {}); })
                 ->throws(AssertionFailure::class)
@@ -1292,7 +1292,7 @@ class CompatibilityTest extends TestCase
      * @test
      * @since  5.0.0
      */
-    public function testAssertIsNotIterableSuccess()
+    public function testAssertIsNotIterableSuccess(): void
     {
         $this->assertIsNotIterable(1);
     }
@@ -1301,7 +1301,7 @@ class CompatibilityTest extends TestCase
      * @test
      * @since  5.0.0
      */
-    public function testAssertIsNotIterableWithFailure()
+    public function testAssertIsNotIterableWithFailure(): void
     {
         expect(function() { $this->assertIsNotIterable(['foo']); })
                 ->throws(AssertionFailure::class)
@@ -1314,7 +1314,7 @@ class CompatibilityTest extends TestCase
      * @test
      * @since 2.0.0
      */
-    public function testAssertThat()
+    public function testAssertThat(): void
     {
         $this->assertThat('foo', new \PHPUnit\Framework\Constraint\IsEqual('foo'));
     }
@@ -1323,7 +1323,7 @@ class CompatibilityTest extends TestCase
      * @test
      * @since 2.0.0
      */
-    public function testAssertThatWithFailure()
+    public function testAssertThatWithFailure(): void
     {
         expect(function() {
                 $this->assertThat('foo', new \PHPUnit\Framework\Constraint\IsEqual('bar'));

@@ -32,7 +32,7 @@ class CallablePredicateTest extends TestCase
     /**
      * @test
      */
-    public function assertionFailureContainsMeaningfulInformationWithClassCallable()
+    public function assertionFailureContainsMeaningfulInformationWithClassCallable(): void
     {
         expect(function() { assertThat('bar', [__CLASS__, 'isGood']); })
                 ->throws(AssertionFailure::class)
@@ -50,7 +50,7 @@ class CallablePredicateTest extends TestCase
     /**
      * @test
      */
-    public function assertionFailureContainsMeaningfulInformationWithObjectCallable()
+    public function assertionFailureContainsMeaningfulInformationWithObjectCallable(): void
     {
         expect(function() { assertThat('bar', [$this, 'isGoodEnough']); })
                 ->throws(AssertionFailure::class)
@@ -63,7 +63,7 @@ class CallablePredicateTest extends TestCase
     /**
      * @test
      */
-    public function assertionFailureContainsMeaningfulInformationWithStringCallable()
+    public function assertionFailureContainsMeaningfulInformationWithStringCallable(): void
     {
         expect(function() { assertThat('bar', 'is_int'); })
                 ->throws(AssertionFailure::class)
@@ -74,7 +74,7 @@ class CallablePredicateTest extends TestCase
      * @test
      * @since  1.2.0
      */
-    public function assertionFailureContainsNonDefaultDescriptionWhenPassed()
+    public function assertionFailureContainsNonDefaultDescriptionWhenPassed(): void
     {
         expect(function() {
             assertThat(

@@ -38,7 +38,7 @@ class CatchedExceptionTest extends TestCase
      * @test
      * @dataProvider  throwables
      */
-    public function withMessageComparesUsingEquals(\Throwable $throwable)
+    public function withMessageComparesUsingEquals(\Throwable $throwable): void
     {
         assertThat(
                 $this->catchedException($throwable)->withMessage('failure'),
@@ -50,7 +50,7 @@ class CatchedExceptionTest extends TestCase
      * @test
      * @dataProvider  throwables
      */
-    public function withMessageFailsThrowsAssertionFailure(\Throwable $throwable)
+    public function withMessageFailsThrowsAssertionFailure(\Throwable $throwable): void
     {
         expect(function() use($throwable) {
                 $this->catchedException($throwable)->withMessage('error');
@@ -71,7 +71,7 @@ class CatchedExceptionTest extends TestCase
      * @test
      * @dataProvider  throwables
      */
-    public function messageAssertsWithGivenPredicate(\Throwable $throwable)
+    public function messageAssertsWithGivenPredicate(\Throwable $throwable): void
     {
         assertThat(
                 $this->catchedException($throwable)->message(contains('fail')),
@@ -84,7 +84,7 @@ class CatchedExceptionTest extends TestCase
      * @dataProvider  throwables
      * @since 5.0.1
      */
-    public function messageAssertsWithGivenCallable(\Throwable $throwable)
+    public function messageAssertsWithGivenCallable(\Throwable $throwable): void
     {
         assertThat(
                 $this->catchedException($throwable)->message('is_string'),
@@ -96,7 +96,7 @@ class CatchedExceptionTest extends TestCase
      * @test
      * @dataProvider  throwables
      */
-    public function messageAssertsWithGivenPredicateThrowsAssertionFailureWhenPredicateFails(\Throwable $throwable)
+    public function messageAssertsWithGivenPredicateThrowsAssertionFailureWhenPredicateFails(\Throwable $throwable): void
     {
         expect(function() use($throwable) {
                 $this->catchedException($throwable)->message(contains('error'));
@@ -111,7 +111,7 @@ class CatchedExceptionTest extends TestCase
      * @test
      * @dataProvider  throwables
      */
-    public function withCodeComparesUsingEquals(\Throwable $throwable)
+    public function withCodeComparesUsingEquals(\Throwable $throwable): void
     {
         assertThat(
                 $this->catchedException($throwable)->withCode(2),
@@ -123,7 +123,7 @@ class CatchedExceptionTest extends TestCase
      * @test
      * @dataProvider  throwables
      */
-    public function withCodeFailsThrowsAssertionFailure(\Throwable $throwable)
+    public function withCodeFailsThrowsAssertionFailure(\Throwable $throwable): void
     {
         expect(function() use($throwable) {
                 $this->catchedException($throwable)->withCode(3);
@@ -138,7 +138,7 @@ class CatchedExceptionTest extends TestCase
      * @test
      * @dataProvider  throwables
      */
-    public function withAppliesPredicateToException(\Throwable $throwable)
+    public function withAppliesPredicateToException(\Throwable $throwable): void
     {
         $this->catchedException($throwable)->with(isSameAs($throwable));
     }
@@ -147,7 +147,7 @@ class CatchedExceptionTest extends TestCase
      * @test
      * @dataProvider  throwables
      */
-    public function withReturnsSelfOnSuccess(\Throwable $throwable)
+    public function withReturnsSelfOnSuccess(\Throwable $throwable): void
     {
         $catchedException = $this->catchedException($throwable);
         assertThat(
@@ -160,7 +160,7 @@ class CatchedExceptionTest extends TestCase
      * @test
      * @dataProvider  throwables
      */
-    public function withThrowsAssertionFailureWhenPredicateFails(\Throwable $throwable)
+    public function withThrowsAssertionFailureWhenPredicateFails(\Throwable $throwable): void
     {
         expect(function() use($throwable) {
                 $this->catchedException($throwable)->with(
@@ -181,7 +181,7 @@ additional info'
      * @test
      * @dataProvider  throwables
      */
-    public function afterExecutesGivenPredicateWithGivenValue(\Throwable $throwable)
+    public function afterExecutesGivenPredicateWithGivenValue(\Throwable $throwable): void
     {
         $catchedException = $this->catchedException($throwable);
         $catchedException->after(

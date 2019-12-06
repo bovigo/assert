@@ -38,7 +38,7 @@ class RegexTest extends TestCase
      * @test
      * @dataProvider  validValues
      */
-    public function validValueEvaluatesToTrue($pattern, $value)
+    public function validValueEvaluatesToTrue($pattern, $value): void
     {
         assertTrue(matches($pattern)->test($value));
     }
@@ -60,7 +60,7 @@ class RegexTest extends TestCase
      * @test
      * @dataProvider  invalidValues
      */
-    public function invalidValueEvaluatesToFalse($pattern, $value)
+    public function invalidValueEvaluatesToFalse($pattern, $value): void
     {
         assertFalse(matches($pattern)->test($value));
     }
@@ -68,7 +68,7 @@ class RegexTest extends TestCase
     /**
      * @test
      */
-    public function nonStringsThrowInvalidArgumentException()
+    public function nonStringsThrowInvalidArgumentException(): void
     {
         expect(function() { matches('/^([a-z]{3})$/')->test(303); })
                 ->throws(\InvalidArgumentException::class)
@@ -80,7 +80,7 @@ class RegexTest extends TestCase
     /**
      * @test
      */
-    public function nullThrowInvalidArgumentException()
+    public function nullThrowInvalidArgumentException(): void
     {
         expect(function() { matches('/^([a-z]{3})$/')->test(null); })
                 ->throws(\InvalidArgumentException::class)
@@ -92,7 +92,7 @@ class RegexTest extends TestCase
     /**
      * @test
      */
-    public function invalidRegexThrowsRuntimeExceptionOnEvaluation()
+    public function invalidRegexThrowsRuntimeExceptionOnEvaluation(): void
     {
         $expect = expect(function() {
             $regex = new Regex('^([a-z]{3})$');
@@ -114,7 +114,7 @@ class RegexTest extends TestCase
     /**
      * @test
      */
-    public function stringRepresentationContainsRegex()
+    public function stringRepresentationContainsRegex(): void
     {
         assertThat(
                 (string) new Regex('/^([a-z]{3})$/'),
@@ -125,7 +125,7 @@ class RegexTest extends TestCase
     /**
      * @test
      */
-    public function assertionFailureContainsMeaningfulInformation()
+    public function assertionFailureContainsMeaningfulInformation(): void
     {
         expect(function() { assertThat('f', matches('/^([a-z]{3})$/')); })
                 ->throws(AssertionFailure::class)

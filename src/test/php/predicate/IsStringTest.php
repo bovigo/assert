@@ -44,7 +44,7 @@ class IsStringTest extends TestCase
      * @test
      * @dataProvider  validStrings
      */
-    public function validStringsAreRecognized(string $value)
+    public function validStringsAreRecognized(string $value): void
     {
         assertThat($value, isString());
     }
@@ -54,7 +54,7 @@ class IsStringTest extends TestCase
      * @test
      * @dataProvider  invalidStrings
      */
-    public function invalidStringsAreRejected($value)
+    public function invalidStringsAreRejected($value): void
     {
         expect(function() use($value) { assertThat($value, isString()); })
             ->throws(AssertionFailure::class);
@@ -65,7 +65,7 @@ class IsStringTest extends TestCase
      * @test
      * @dataProvider  invalidStrings
      */
-    public function invalidStringsAreRecognizedOnNegation($value)
+    public function invalidStringsAreRecognizedOnNegation($value): void
     {
         assertThat($value, isNotAString());
     }
@@ -75,7 +75,7 @@ class IsStringTest extends TestCase
      * @test
      * @dataProvider  validStrings
      */
-    public function validStringsAreRejectedOnNegation(string $value)
+    public function validStringsAreRejectedOnNegation(string $value): void
     {
         expect(function() use($value) { assertThat($value, isNotAString()); })
             ->throws(AssertionFailure::class);

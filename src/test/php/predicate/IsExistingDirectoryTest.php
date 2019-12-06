@@ -38,7 +38,7 @@ class IsExistingDirectoryTest extends TestCase
     /**
      * @test
      */
-    public function evaluatesToFalseForNull()
+    public function evaluatesToFalseForNull(): void
     {
         assertFalse(isExistingDirectory()->test(null));
     }
@@ -46,7 +46,7 @@ class IsExistingDirectoryTest extends TestCase
     /**
      * @test
      */
-    public function evaluatesToFalseForEmptyString()
+    public function evaluatesToFalseForEmptyString(): void
     {
         assertFalse(isExistingDirectory()->test(''));
     }
@@ -54,7 +54,7 @@ class IsExistingDirectoryTest extends TestCase
     /**
      * @test
      */
-    public function evaluatesToTrueForRelativePath()
+    public function evaluatesToTrueForRelativePath(): void
     {
         assertTrue(
                 isExistingDirectory(vfsStream::url('root/basic'))
@@ -65,7 +65,7 @@ class IsExistingDirectoryTest extends TestCase
     /**
      * @test
      */
-    public function evaluatesToFalseIfDirDoesNotExistRelatively()
+    public function evaluatesToFalseIfDirDoesNotExistRelatively(): void
     {
         assertFalse(
                 isExistingDirectory(vfsStream::url('root/basic'))
@@ -76,7 +76,7 @@ class IsExistingDirectoryTest extends TestCase
     /**
      * @test
      */
-    public function evaluatesToFalseIfDirDoesNotExistGlobally()
+    public function evaluatesToFalseIfDirDoesNotExistGlobally(): void
     {
         assertFalse(isExistingDirectory()->test(__DIR__ . '/../doesNotExist'));
     }
@@ -84,7 +84,7 @@ class IsExistingDirectoryTest extends TestCase
     /**
      * @test
      */
-    public function evaluatesToTrueIfDirDoesExistRelatively()
+    public function evaluatesToTrueIfDirDoesExistRelatively(): void
     {
         assertTrue(
                 isExistingDirectory(vfsStream::url('root/basic'))->test('bar')
@@ -94,7 +94,7 @@ class IsExistingDirectoryTest extends TestCase
     /**
      * @test
      */
-    public function evaluatesToTrueIfDirDoesExistGlobally()
+    public function evaluatesToTrueIfDirDoesExistGlobally(): void
     {
         assertTrue(isExistingDirectory()->test(__DIR__));
     }
@@ -102,7 +102,7 @@ class IsExistingDirectoryTest extends TestCase
     /**
      * @test
      */
-    public function evaluatesToFalseIfIsRelativeFile()
+    public function evaluatesToFalseIfIsRelativeFile(): void
     {
         assertFalse(
                 isExistingDirectory(vfsStream::url('root'))->test('foo.txt')
@@ -112,7 +112,7 @@ class IsExistingDirectoryTest extends TestCase
     /**
      * @test
      */
-    public function evaluatesToFalseIfIsGlobalFile()
+    public function evaluatesToFalseIfIsGlobalFile(): void
     {
         assertFalse(isExistingDirectory()->test(__FILE__));
     }
@@ -134,7 +134,7 @@ class IsExistingDirectoryTest extends TestCase
      * @test
      * @dataProvider  instances
      */
-    public function hasStringRepresentation(IsExistingDirectory $instance, $message)
+    public function hasStringRepresentation(IsExistingDirectory $instance, $message): void
     {
         assertThat((string) $instance, equals($message));
     }
@@ -142,7 +142,7 @@ class IsExistingDirectoryTest extends TestCase
     /**
      * @test
      */
-    public function assertionFailureContainsMeaningfulInformation()
+    public function assertionFailureContainsMeaningfulInformation(): void
     {
         expect(function() {
             assertThat(vfsStream::url('root/baz'), isExistingDirectory());

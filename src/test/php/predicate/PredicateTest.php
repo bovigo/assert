@@ -23,7 +23,7 @@ class PredicateTest extends TestCase
     /**
      * @test
      */
-    public function castFromWithPredicateReturnsInstance()
+    public function castFromWithPredicateReturnsInstance(): void
     {
         $predicate = new PredicateFooExample();
         assertThat($predicate, isSameAs(Predicate::castFrom($predicate)));
@@ -32,7 +32,7 @@ class PredicateTest extends TestCase
     /**
      * @test
      */
-    public function castFromWithCallableReturnsCallablePredicate()
+    public function castFromWithCallableReturnsCallablePredicate(): void
     {
         assertThat(
                 Predicate::castFrom(function($value) { return 'foo' === $value; }),
@@ -43,7 +43,7 @@ class PredicateTest extends TestCase
     /**
      * @test
      */
-    public function predicateIsCallable()
+    public function predicateIsCallable(): void
     {
         $predicate = new PredicateFooExample();
         assertTrue($predicate('foo'));
@@ -52,7 +52,7 @@ class PredicateTest extends TestCase
     /**
      * @test
      */
-    public function andReturnsAndPredicate()
+    public function andReturnsAndPredicate(): void
     {
         $predicate = new PredicateFooExample();
         assertThat(
@@ -64,7 +64,7 @@ class PredicateTest extends TestCase
     /**
      * @test
      */
-    public function orReturnsOrPredicate()
+    public function orReturnsOrPredicate(): void
     {
         $predicate = new PredicateFooExample();
         assertThat(
@@ -77,7 +77,7 @@ class PredicateTest extends TestCase
      * @test
      * @since  1.4.0
      */
-    public function everyPredicateCanBeNegated()
+    public function everyPredicateCanBeNegated(): void
     {
         $isNotFoo = not(new PredicateFooExample());
         assertThat('bar', $isNotFoo);
@@ -86,7 +86,7 @@ class PredicateTest extends TestCase
     /**
      * @test
      */
-    public function defaultCountOfPredicateIs1()
+    public function defaultCountOfPredicateIs1(): void
     {
         assertThat(count(new PredicateFooExample()), equals(1));
     }
@@ -94,7 +94,7 @@ class PredicateTest extends TestCase
     /**
      * @test
      */
-    public function assertionFailureContainsMeaningfulInformation()
+    public function assertionFailureContainsMeaningfulInformation(): void
     {
         expect(function() { assertThat([], new PredicateFooExample()); })
                 ->throws(AssertionFailure::class)
@@ -104,7 +104,7 @@ class PredicateTest extends TestCase
     /**
      * @test
      */
-    public function assertionFailureNegatedContainsMeaningfulInformation()
+    public function assertionFailureNegatedContainsMeaningfulInformation(): void
     {
         expect(function() { assertThat('foo', not(new PredicateFooExample())); })
                 ->throws(AssertionFailure::class)
@@ -114,7 +114,7 @@ class PredicateTest extends TestCase
     /**
      * @test
      */
-    public function assertionFailureNegatedContainsMeaningfulInformationWithDescription()
+    public function assertionFailureNegatedContainsMeaningfulInformationWithDescription(): void
     {
         expect(function() {
                 assertThat([], new PredicateFooExample(), 'some useful description');
@@ -129,7 +129,7 @@ some useful description'
     /**
      * @test
      */
-    public function assertionFailureNegatedContainsMeaningfulInformationWithDescriptionAndExceptionMessage()
+    public function assertionFailureNegatedContainsMeaningfulInformationWithDescriptionAndExceptionMessage(): void
     {
         expect(function() {
                 assertThat([], new PredicateThrowingExample(), 'some useful description');
@@ -146,7 +146,7 @@ exception message'
      * @test
      * @since  1.4.0
      */
-    public function callToUndefinedMethodThrowsBadMethodCallException()
+    public function callToUndefinedMethodThrowsBadMethodCallException(): void
     {
         expect([new PredicateFooExample(), 'noWay'])
                 ->throws(\BadMethodCallException::class);

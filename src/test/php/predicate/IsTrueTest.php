@@ -23,7 +23,7 @@ class IsTrueTest extends TestCase
     /**
      * @test
      */
-    public function evaluatesToTrueIfGivenValueIsTrue()
+    public function evaluatesToTrueIfGivenValueIsTrue(): void
     {
         assertThat(isTrue()->test(true), isSameAs(true));
     }
@@ -47,7 +47,7 @@ class IsTrueTest extends TestCase
      * @test
      * @dataProvider  falseValues
      */
-    public function evaluatesToFalseIfGivenValueIsFalse($false)
+    public function evaluatesToFalseIfGivenValueIsFalse($false): void
     {
         assertThat(isTrue()->test($false), isSameAs(false));
     }
@@ -55,7 +55,7 @@ class IsTrueTest extends TestCase
     /**
      * @test
      */
-    public function assertionFailureContainsMeaningfulInformation()
+    public function assertionFailureContainsMeaningfulInformation(): void
     {
         expect(function() { assertTrue([]); })
                 ->throws(AssertionFailure::class)

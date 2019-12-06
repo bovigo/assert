@@ -24,7 +24,7 @@ class IsLessThanTest extends TestCase
     /**
      * @test
      */
-    public function evaluatesToTrueIfGivenValueIsSmaller()
+    public function evaluatesToTrueIfGivenValueIsSmaller(): void
     {
         assertTrue(isLessThan(3)->test(2));
     }
@@ -32,7 +32,7 @@ class IsLessThanTest extends TestCase
     /**
      * @test
      */
-    public function evaluatesToFalseIfGivenValueIsEqual()
+    public function evaluatesToFalseIfGivenValueIsEqual(): void
     {
         assertFalse(isLessThan(3)->test(3));
     }
@@ -40,7 +40,7 @@ class IsLessThanTest extends TestCase
     /**
      * @test
      */
-    public function evaluatesToFalseIfGivenValueIsGreater()
+    public function evaluatesToFalseIfGivenValueIsGreater(): void
     {
         assertFalse(isLessThan(3)->test(4));
     }
@@ -48,7 +48,7 @@ class IsLessThanTest extends TestCase
     /**
      * @test
      */
-    public function evaluatesToTrueWhenCombinedWithEqualsIfGivenValueIsSmaller()
+    public function evaluatesToTrueWhenCombinedWithEqualsIfGivenValueIsSmaller(): void
     {
         assertTrue(isLessThanOrEqualTo(3)->test(2));
     }
@@ -56,7 +56,7 @@ class IsLessThanTest extends TestCase
     /**
      * @test
      */
-    public function evaluatesToFalseWhenCombinedWithEqualsIfGivenValueIsEqual()
+    public function evaluatesToFalseWhenCombinedWithEqualsIfGivenValueIsEqual(): void
     {
         assertTrue(isLessThanOrEqualTo(3)->test(3));
     }
@@ -64,7 +64,7 @@ class IsLessThanTest extends TestCase
     /**
      * @test
      */
-    public function evaluatesToFalseWhenCombinedWithEqualsIfGivenValueIsGreater()
+    public function evaluatesToFalseWhenCombinedWithEqualsIfGivenValueIsGreater(): void
     {
         assertFalse(isLessThanOrEqualTo(3)->test(4));
     }
@@ -72,7 +72,7 @@ class IsLessThanTest extends TestCase
     /**
      * @test
      */
-    public function assertionFailureContainsMeaningfulInformation()
+    public function assertionFailureContainsMeaningfulInformation(): void
     {
         expect(function() { assertThat(3, isLessThan(2)); })
                 ->throws(AssertionFailure::class)
@@ -82,7 +82,7 @@ class IsLessThanTest extends TestCase
     /**
      * @test
      */
-    public function assertionFailureWhenCombinedWithEqualsContainsMeaningfulInformation()
+    public function assertionFailureWhenCombinedWithEqualsContainsMeaningfulInformation(): void
     {
         expect(function() { assertThat(3, isLessThanOrEqualTo(2)); })
                 ->throws(AssertionFailure::class)

@@ -22,8 +22,8 @@ use function bovigo\assert\predicate\isNotCallable;
  */
 class IsCallableTest extends TestCase
 {
-    public static function exampleStaticCallable() {}
-    public function exampleCallable() {}
+    public static function exampleStaticCallable(): void {}
+    public function exampleCallable(): void {}
 
     public function validCallables(): array
     {
@@ -49,7 +49,7 @@ class IsCallableTest extends TestCase
      * @test
      * @dataProvider  validCallables
      */
-    public function validCallablesAreRecognized(callable $value)
+    public function validCallablesAreRecognized(callable $value): void
     {
         assertThat($value, isCallable());
     }
@@ -59,7 +59,7 @@ class IsCallableTest extends TestCase
      * @test
      * @dataProvider  invalidCallables
      */
-    public function invalidCallablesAreRejected($value)
+    public function invalidCallablesAreRejected($value): void
     {
         expect(function() use($value) { assertThat($value, isCallable()); })
             ->throws(AssertionFailure::class);
@@ -70,7 +70,7 @@ class IsCallableTest extends TestCase
      * @test
      * @dataProvider  invalidCallables
      */
-    public function invalidCallablesAreRecognizedOnNegation($value)
+    public function invalidCallablesAreRecognizedOnNegation($value): void
     {
         assertThat($value, isNotCallable());
     }
@@ -80,7 +80,7 @@ class IsCallableTest extends TestCase
      * @test
      * @dataProvider  validCallables
      */
-    public function validCallablesAreRejectedOnNegation(callable $value)
+    public function validCallablesAreRejectedOnNegation(callable $value): void
     {
         expect(function() use($value) { assertThat($value, isNotCallable()); })
             ->throws(AssertionFailure::class);

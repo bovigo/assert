@@ -45,7 +45,7 @@ class IsArrayTest extends TestCase
      * @test
      * @dataProvider  validArrays
      */
-    public function validArraysAreRecognized(array $value)
+    public function validArraysAreRecognized(array $value): void
     {
         assertThat($value, isArray());
     }
@@ -55,7 +55,7 @@ class IsArrayTest extends TestCase
      * @test
      * @dataProvider  invalidArrays
      */
-    public function invalidArraysAreRejected($value)
+    public function invalidArraysAreRejected($value): void
     {
         expect(function() use($value) { assertThat($value, isArray()); })
             ->throws(AssertionFailure::class);
@@ -66,7 +66,7 @@ class IsArrayTest extends TestCase
      * @test
      * @dataProvider  invalidArrays
      */
-    public function invalidArraysAreRecognizedOnNegation($value)
+    public function invalidArraysAreRecognizedOnNegation($value): void
     {
         assertThat($value, isNotAnArray());
     }
@@ -76,7 +76,7 @@ class IsArrayTest extends TestCase
      * @test
      * @dataProvider  validArrays
      */
-    public function validArraysAreRejectedOnNegation(array $value)
+    public function validArraysAreRejectedOnNegation(array $value): void
     {
         expect(function() use($value) { assertThat($value, isNotAnArray()); })
             ->throws(AssertionFailure::class);

@@ -24,7 +24,7 @@ class HasKeyTest extends TestCase
     /**
      * @test
      */
-    public function createWithNonIntegetOrStringThrowsInvalidArgumentException()
+    public function createWithNonIntegetOrStringThrowsInvalidArgumentException(): void
     {
         expect(function() { hasKey([]); })
                 ->throws(\InvalidArgumentException::class);
@@ -51,7 +51,7 @@ class HasKeyTest extends TestCase
      * @test
      * @dataProvider  tuplesEvaluatingToTrue
      */
-    public function evaluatesToTrue($key, $array)
+    public function evaluatesToTrue($key, $array): void
     {
         assertTrue(hasKey($key)->test($array));
     }
@@ -77,7 +77,7 @@ class HasKeyTest extends TestCase
      * @test
      * @dataProvider  tuplesEvaluatingToFalse
      */
-    public function evaluatesToFalse($key, $array)
+    public function evaluatesToFalse($key, $array): void
     {
         assertFalse(hasKey($key)->test($array));
     }
@@ -85,7 +85,7 @@ class HasKeyTest extends TestCase
     /**
      * @test
      */
-    public function throwsInvalidArgumentExceptionWhenValueCanNotHaveKey()
+    public function throwsInvalidArgumentExceptionWhenValueCanNotHaveKey(): void
     {
         expect(function() { hasKey('foo')->test(303); })
                 ->throws(\InvalidArgumentException::class);
@@ -94,7 +94,7 @@ class HasKeyTest extends TestCase
     /**
      * @test
      */
-    public function assertionFailureWithArrayContainsMeaningfulInformation()
+    public function assertionFailureWithArrayContainsMeaningfulInformation(): void
     {
         expect(function() { assertThat([], hasKey('bar')); })
                 ->throws(AssertionFailure::class)
@@ -104,7 +104,7 @@ class HasKeyTest extends TestCase
     /**
      * @test
      */
-    public function assertionFailureWithArrayAccessContainsMeaningfulInformation()
+    public function assertionFailureWithArrayAccessContainsMeaningfulInformation(): void
     {
         expect(function() { assertThat(new HasKeyArrayAccessExample(), hasKey('bar')); })
                 ->throws(AssertionFailure::class)

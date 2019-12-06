@@ -46,7 +46,7 @@ class IsResourceTest extends TestCase
     /**
      * @test
      */
-    public function validResourcesAreRecognized()
+    public function validResourcesAreRecognized(): void
     {
         assertThat($this->resource, isResource());
     }
@@ -56,7 +56,7 @@ class IsResourceTest extends TestCase
      * @test
      * @dataProvider  invalidResources
      */
-    public function invalidResourcesAreRejected($value)
+    public function invalidResourcesAreRejected($value): void
     {
         expect(function() use($value) { assertThat($value, isResource()); })
             ->throws(AssertionFailure::class);
@@ -67,7 +67,7 @@ class IsResourceTest extends TestCase
      * @test
      * @dataProvider  invalidResources
      */
-    public function invalidResourcesAreRecognizedOnNegation($value)
+    public function invalidResourcesAreRecognizedOnNegation($value): void
     {
         assertThat($value, isNotAResource());
     }
@@ -75,7 +75,7 @@ class IsResourceTest extends TestCase
     /**
      * @test
      */
-    public function validObjectsAreRejectedOnNegation()
+    public function validObjectsAreRejectedOnNegation(): void
     {
         expect(function() { assertThat($this->resource, isNotAResource()); })
             ->throws(AssertionFailure::class);

@@ -31,7 +31,7 @@ class CatchedErrorTest extends TestCase
     /**
      * @test
      */
-    public function withMessageComparesUsingEquals()
+    public function withMessageComparesUsingEquals(): void
     {
         assertThat(
                 $this->catchedError->withMessage('error'),
@@ -42,7 +42,7 @@ class CatchedErrorTest extends TestCase
     /**
      * @test
      */
-    public function withMessageFailsThrowsAssertionFailure()
+    public function withMessageFailsThrowsAssertionFailure(): void
     {
         expect(function() {
                 $this->catchedError->withMessage('failure');
@@ -62,7 +62,7 @@ class CatchedErrorTest extends TestCase
     /**
      * @test
      */
-    public function messageAssertsWithGivenPredicate()
+    public function messageAssertsWithGivenPredicate(): void
     {
         assertThat(
                 $this->catchedError->message(contains('err')),
@@ -74,7 +74,7 @@ class CatchedErrorTest extends TestCase
      * @test
      * @since  5.0.1
      */
-    public function messageAssertsWithGivenCallable()
+    public function messageAssertsWithGivenCallable(): void
     {
         assertThat(
                 $this->catchedError->message('is_string'),
@@ -85,7 +85,7 @@ class CatchedErrorTest extends TestCase
     /**
      * @test
      */
-    public function messageAssertsWithGivenPredicateThrowsAssertionFailureWhenPredicateFails()
+    public function messageAssertsWithGivenPredicateThrowsAssertionFailureWhenPredicateFails(): void
     {
         expect(function() {
                 $this->catchedError->message(contains('fail'));
@@ -99,7 +99,7 @@ class CatchedErrorTest extends TestCase
     /**
      * @test
      */
-    public function afterExecutesGivenPredicateWithGivenValue()
+    public function afterExecutesGivenPredicateWithGivenValue(): void
     {
         $this->catchedError->after(
                 $this->catchedError,

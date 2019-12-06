@@ -24,7 +24,7 @@ class IsInstanceOfTest extends TestCase
     /**
      * @test
      */
-    public function throwsInvalidArgumentExceptionWhenGivenExpectedTypeIsUnknown()
+    public function throwsInvalidArgumentExceptionWhenGivenExpectedTypeIsUnknown(): void
     {
         expect(function() { isInstanceOf('DoesNotExist'); })
                 ->throws(\InvalidArgumentException::class);
@@ -33,7 +33,7 @@ class IsInstanceOfTest extends TestCase
     /**
      * @test
      */
-    public function evaluatesToTrueIfGivenValueIsInstanceOfExpectedType()
+    public function evaluatesToTrueIfGivenValueIsInstanceOfExpectedType(): void
     {
         assertTrue(isInstanceOf(__CLASS__)->test($this));
     }
@@ -41,7 +41,7 @@ class IsInstanceOfTest extends TestCase
     /**
      * @test
      */
-    public function evaluatesToFalseIfGivenValueIsNotInstanceOfExpectedType()
+    public function evaluatesToFalseIfGivenValueIsNotInstanceOfExpectedType(): void
     {
         assertFalse(isInstanceOf('\stdClass')->test($this));
     }
@@ -49,7 +49,7 @@ class IsInstanceOfTest extends TestCase
     /**
      * @test
      */
-    public function assertionFailureContainsMeaningfulInformation()
+    public function assertionFailureContainsMeaningfulInformation(): void
     {
 
         expect(function() { assertThat([], isInstanceOf('\stdClass')); })
@@ -62,7 +62,7 @@ class IsInstanceOfTest extends TestCase
     /**
      * @test
      */
-    public function assertionFailureWithObjectsContainsMeaningfulInformation()
+    public function assertionFailureWithObjectsContainsMeaningfulInformation(): void
     {
         expect(function() { assertThat(new self(), isInstanceOf('\stdClass')); })
                 ->throws(AssertionFailure::class)

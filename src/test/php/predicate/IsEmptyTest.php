@@ -44,7 +44,7 @@ class IsEmptyTest extends TestCase
      * @test
      * @dataProvider  emptyValues
      */
-    public function evaluatesToTrueIfGivenValueIsEmpty($emptyValue)
+    public function evaluatesToTrueIfGivenValueIsEmpty($emptyValue): void
     {
         assertTrue(isEmpty()->test($emptyValue));
     }
@@ -67,7 +67,7 @@ class IsEmptyTest extends TestCase
      * @test
      * @dataProvider  nonEmptyValues
      */
-    public function evaluatesToFalseIfGivenValueIsNotEmpty($nonEmptyValue)
+    public function evaluatesToFalseIfGivenValueIsNotEmpty($nonEmptyValue): void
     {
         assertFalse(isEmpty()->test($nonEmptyValue));
     }
@@ -75,7 +75,7 @@ class IsEmptyTest extends TestCase
     /**
      * @test
      */
-    public function stringRepresentation()
+    public function stringRepresentation(): void
     {
         assertThat((string) new IsEmpty(), equals('is empty'));
     }
@@ -83,7 +83,7 @@ class IsEmptyTest extends TestCase
     /**
      * @test
      */
-    public function assertionFailureWithStringContainsMeaningfulInformation()
+    public function assertionFailureWithStringContainsMeaningfulInformation(): void
     {
         expect(function() { assertEmpty('foo'); })
                 ->throws(AssertionFailure::class)
@@ -93,7 +93,7 @@ class IsEmptyTest extends TestCase
     /**
      * @test
      */
-    public function assertionFailureWithIntegerContainsMeaningfulInformation()
+    public function assertionFailureWithIntegerContainsMeaningfulInformation(): void
     {
         expect(function() { assertEmpty(1); })
                 ->throws(AssertionFailure::class)
@@ -103,7 +103,7 @@ class IsEmptyTest extends TestCase
     /**
      * @test
      */
-    public function assertionFailureWithBooleanContainsMeaningfulInformation()
+    public function assertionFailureWithBooleanContainsMeaningfulInformation(): void
     {
        expect(function() { assertEmpty(true); })
                 ->throws(AssertionFailure::class)
@@ -113,7 +113,7 @@ class IsEmptyTest extends TestCase
     /**
      * @test
      */
-    public function assertionFailureWithArrayContainsMeaningfulInformation()
+    public function assertionFailureWithArrayContainsMeaningfulInformation(): void
     {
          expect(function() { assertEmpty(['foo']); })
                 ->throws(AssertionFailure::class)
@@ -123,7 +123,7 @@ class IsEmptyTest extends TestCase
     /**
      * @test
      */
-    public function assertionFailureWithCountableContainsMeaningfulInformation()
+    public function assertionFailureWithCountableContainsMeaningfulInformation(): void
     {
         expect(function() { assertEmpty(new IsEmptyCountableExample(1)); })
                 ->throws(AssertionFailure::class)
@@ -137,7 +137,7 @@ class IsEmptyTest extends TestCase
      * @test
      * @since  1.3.0
      */
-    public function aliasAssertNotEmpty()
+    public function aliasAssertNotEmpty(): void
     {
         assertTrue(assertNotEmpty(303));
     }

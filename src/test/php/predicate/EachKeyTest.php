@@ -27,7 +27,7 @@ class EachKeyTest extends TestCase
     /**
      * @test
      */
-    public function testNonIterableValueThrowsInvalidArgumentException()
+    public function testNonIterableValueThrowsInvalidArgumentException(): void
     {
         expect(function() { eachKey(isNotOfType('int'))->test(303); })
                 ->throws(\InvalidArgumentException::class);
@@ -36,7 +36,7 @@ class EachKeyTest extends TestCase
     /**
      * @test
      */
-    function canBeUsedWithCallable()
+    function canBeUsedWithCallable(): void
     {
         assertThat([303, 313], eachKey('is_int'));
     }
@@ -44,7 +44,7 @@ class EachKeyTest extends TestCase
     /**
      * @test
      */
-    public function evaluatesToTrueIfArrayIsEmpty()
+    public function evaluatesToTrueIfArrayIsEmpty(): void
     {
         assertTrue(eachKey(isNotOfType('int'))->test([]));
     }
@@ -52,7 +52,7 @@ class EachKeyTest extends TestCase
     /**
      * @test
      */
-    public function evaluatesToTrueIfTraversableIsEmpty()
+    public function evaluatesToTrueIfTraversableIsEmpty(): void
     {
         assertTrue(eachKey(isNotOfType('int'))->test(new \ArrayIterator([])));
     }
@@ -60,7 +60,7 @@ class EachKeyTest extends TestCase
     /**
      * @test
      */
-    public function evaluatesToTrueIfEachKeyInArrayFulfillsPredicate()
+    public function evaluatesToTrueIfEachKeyInArrayFulfillsPredicate(): void
     {
         assertTrue(eachKey(isNotOfType('int'))->test(['a' => 303, 'b' => 'foo']));
     }
@@ -68,7 +68,7 @@ class EachKeyTest extends TestCase
     /**
      * @test
      */
-    public function evaluatesToTrueIfEachKeyInTraversableFulfillsPredicate()
+    public function evaluatesToTrueIfEachKeyInTraversableFulfillsPredicate(): void
     {
         assertTrue(
                 eachKey(isNotOfType('int'))
@@ -79,7 +79,7 @@ class EachKeyTest extends TestCase
     /**
      * @test
      */
-    public function evaluatesToFalseIfSingleKeyInArrayDoesNotFulfillPredicate()
+    public function evaluatesToFalseIfSingleKeyInArrayDoesNotFulfillPredicate(): void
     {
         assertFalse(eachKey(isNotOfType('int'))->test(['a' => 303, 'foo']));
     }
@@ -87,7 +87,7 @@ class EachKeyTest extends TestCase
     /**
      * @test
      */
-    public function evaluatesToFalseIfSingleValueInTraversableDoesNotFulfillPredicate()
+    public function evaluatesToFalseIfSingleValueInTraversableDoesNotFulfillPredicate(): void
     {
         assertFalse(
                 eachKey(isNotOfType('int'))
@@ -98,7 +98,7 @@ class EachKeyTest extends TestCase
     /**
      * @test
      */
-    public function doesNotMovePointerOfPassedArray()
+    public function doesNotMovePointerOfPassedArray(): void
     {
         $array = [303, 313, 'foo'];
         next($array);
@@ -109,7 +109,7 @@ class EachKeyTest extends TestCase
     /**
      * @test
      */
-    public function doesNotMovePointerOfPassedTraversable()
+    public function doesNotMovePointerOfPassedTraversable(): void
     {
         $traversable = new \ArrayIterator([303, 313, 'foo']);
         $traversable->next();
@@ -120,7 +120,7 @@ class EachKeyTest extends TestCase
     /**
      * @test
      */
-    public function doesNotMovePointerOfPassedIteratorAggregate()
+    public function doesNotMovePointerOfPassedIteratorAggregate(): void
     {
         $traversable = new EachKeyIteratorAggregateExample();
         $traversable->getIterator()->next();
@@ -131,7 +131,7 @@ class EachKeyTest extends TestCase
     /**
      * @test
      */
-    public function countReturnsCountOfWrappedPredicate()
+    public function countReturnsCountOfWrappedPredicate(): void
     {
         assertThat(count(eachKey(isGreaterThanOrEqualTo(4))), equals(2));
     }
@@ -139,7 +139,7 @@ class EachKeyTest extends TestCase
     /**
      * @test
      */
-    public function assertionFailureContainsMeaningfulInformation()
+    public function assertionFailureContainsMeaningfulInformation(): void
     {
         expect(function() { assertThat(['foo'], eachKey(isNotOfType('int'))); })
                 ->throws(AssertionFailure::class)
@@ -153,7 +153,7 @@ class EachKeyTest extends TestCase
     /**
      * @test
      */
-    public function assertionFailureContainsMeaningfulInformationWhenCombined()
+    public function assertionFailureContainsMeaningfulInformationWhenCombined(): void
     {
         expect(function() {
             assertThat([], isNotEmpty()->and(eachKey(isNotOfType('int'))));

@@ -50,7 +50,7 @@ class IsNumericTest extends TestCase
      * @test
      * @dataProvider  validNumerics
      */
-    public function validNumericsAreRecognized($value)
+    public function validNumericsAreRecognized($value): void
     {
         assertThat($value, isNumeric());
     }
@@ -60,7 +60,7 @@ class IsNumericTest extends TestCase
      * @test
      * @dataProvider  invalidNumerics
      */
-    public function invalidNumericsAreRejected($value)
+    public function invalidNumericsAreRejected($value): void
     {
         expect(function() use($value) { assertThat($value, isNumeric()); })
             ->throws(AssertionFailure::class);
@@ -71,7 +71,7 @@ class IsNumericTest extends TestCase
      * @test
      * @dataProvider  invalidNumerics
      */
-    public function invalidArraysAreRecognizedOnNegation($value)
+    public function invalidArraysAreRecognizedOnNegation($value): void
     {
         assertThat($value, isNotNumeric());
     }
@@ -81,7 +81,7 @@ class IsNumericTest extends TestCase
      * @test
      * @dataProvider  validNumerics
      */
-    public function validNumericsAreRejectedOnNegation($value)
+    public function validNumericsAreRejectedOnNegation($value): void
     {
         expect(function() use($value) { assertThat($value, isNotNumeric()); })
             ->throws(AssertionFailure::class);

@@ -45,7 +45,7 @@ class IsFloatTest extends TestCase
      * @test
      * @dataProvider  validFloats
      */
-    public function validFloatsAreRecognized(float $value)
+    public function validFloatsAreRecognized(float $value): void
     {
         assertThat($value, isFloat());
     }
@@ -55,7 +55,7 @@ class IsFloatTest extends TestCase
      * @test
      * @dataProvider  invalidFloats
      */
-    public function invalidFloatsAreRejected($value)
+    public function invalidFloatsAreRejected($value): void
     {
         expect(function() use($value) { assertThat($value, isFloat()); })
             ->throws(AssertionFailure::class);
@@ -66,7 +66,7 @@ class IsFloatTest extends TestCase
      * @test
      * @dataProvider  invalidFloats
      */
-    public function invalidAFloatsAreRecognizedOnNegation($value)
+    public function invalidAFloatsAreRecognizedOnNegation($value): void
     {
         assertThat($value, isNotFloat());
     }
@@ -76,7 +76,7 @@ class IsFloatTest extends TestCase
      * @test
      * @dataProvider  validFloats
      */
-    public function validFloatsAreRejectedOnNegation(float $value)
+    public function validFloatsAreRejectedOnNegation(float $value): void
     {
         expect(function() use($value) { assertThat($value, isNotFloat()); })
             ->throws(AssertionFailure::class);

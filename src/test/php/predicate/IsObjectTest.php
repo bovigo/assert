@@ -44,7 +44,7 @@ class IsObjectTest extends TestCase
      * @test
      * @dataProvider  validObjects
      */
-    public function validObjectsAreRecognized(object $value)
+    public function validObjectsAreRecognized(object $value): void
     {
         assertThat($value, isObject());
     }
@@ -54,7 +54,7 @@ class IsObjectTest extends TestCase
      * @test
      * @dataProvider  invalidObjects
      */
-    public function invalidObjectsAreRejected($value)
+    public function invalidObjectsAreRejected($value): void
     {
         expect(function() use($value) { assertThat($value, isObject()); })
             ->throws(AssertionFailure::class);
@@ -65,7 +65,7 @@ class IsObjectTest extends TestCase
      * @test
      * @dataProvider  invalidObjects
      */
-    public function invalidObjectsAreRecognizedOnNegation($value)
+    public function invalidObjectsAreRecognizedOnNegation($value): void
     {
         assertThat($value, isNotAnObject());
     }
@@ -75,7 +75,7 @@ class IsObjectTest extends TestCase
      * @test
      * @dataProvider  validObjects
      */
-    public function validObjectsAreRejectedOnNegation(object $value)
+    public function validObjectsAreRejectedOnNegation(object $value): void
     {
         expect(function() use($value) { assertThat($value, isNotAnObject()); })
             ->throws(AssertionFailure::class);

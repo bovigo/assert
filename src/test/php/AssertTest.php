@@ -24,7 +24,7 @@ class AssertTest extends TestCase
     /**
      * @test
      */
-    public function assertSucceedsWhenPredicateReturnsTrue()
+    public function assertSucceedsWhenPredicateReturnsTrue(): void
     {
         assertThat(assertThat('some value', function() { return true; }), isTrue());
     }
@@ -32,7 +32,7 @@ class AssertTest extends TestCase
     /**
      * @test
      */
-    public function assertFailsWhenPredicateReturnsFalse()
+    public function assertFailsWhenPredicateReturnsFalse(): void
     {
         expect(function() {
             assertThat('some value', function() { return false; });
@@ -46,7 +46,7 @@ class AssertTest extends TestCase
     /**
      * @test
      */
-    public function assertionFailureContainsAdditionalDescription()
+    public function assertionFailureContainsAdditionalDescription(): void
     {
         expect(function() {
                 assertThat(
@@ -65,7 +65,7 @@ some more info'
     /**
      * @test
      */
-    public function failThrowsAssertionFailure()
+    public function failThrowsAssertionFailure(): void
     {
         expect(function() {
             fail('Fail test hard.');
@@ -77,7 +77,7 @@ some more info'
     /**
      * @test
      */
-    public function exporterAlwaysReturnsSameInstance()
+    public function exporterAlwaysReturnsSameInstance(): void
     {
         assertThat(exporter(), isSameAs(exporter()));
     }
@@ -85,7 +85,7 @@ some more info'
     /**
      * @test
      */
-    public function assertionCounterIsIncreasedByAmountOfPredicatesUsedForAssertion()
+    public function assertionCounterIsIncreasedByAmountOfPredicatesUsedForAssertion(): void
     {
         if (!class_exists('\PHPUnit\Framework\Assert')) {
             $this->markTestSkipped('Can not test this without PHPUnit');
@@ -102,7 +102,7 @@ some more info'
     /**
      * @test
      */
-    public function assertionCounterIsIncreasedInCaseOfFailure()
+    public function assertionCounterIsIncreasedInCaseOfFailure(): void
     {
         if (!class_exists('\PHPUnit\Framework\Assert')) {
             $this->markTestSkipped('Can not test this without PHPUnit');
@@ -123,7 +123,7 @@ some more info'
      * @test
      * @since  1.5.0
      */
-    public function assertEmptyStringIsTrueWhenValueIsEmptyString()
+    public function assertEmptyStringIsTrueWhenValueIsEmptyString(): void
     {
         assertTrue(assertEmptyString(''));
     }
@@ -131,7 +131,7 @@ some more info'
     /**
      * @test
      */
-    public function assertEmptyStringFailsWhenValueIsNotEmptyString()
+    public function assertEmptyStringFailsWhenValueIsNotEmptyString(): void
     {
         expect(function() { assertEmptyString('foo'); })
                 ->throws(AssertionFailure::class)
@@ -150,7 +150,7 @@ some more info'
      * @test
      * @since  1.5.0
      */
-    public function assertEmptyArrayIsTrueWhenValueIsEmptyArray()
+    public function assertEmptyArrayIsTrueWhenValueIsEmptyArray(): void
     {
         assertTrue(assertEmptyArray([]));
     }
@@ -159,7 +159,7 @@ some more info'
      * @test
      * @since  1.5.0
      */
-    public function assertEmptyArrayFailsWhenValueIsNotEmptyArray()
+    public function assertEmptyArrayFailsWhenValueIsNotEmptyArray(): void
     {
         expect(function() { assertEmptyArray(['foo']); })
                 ->throws(AssertionFailure::class)
@@ -179,7 +179,7 @@ some more info'
      * @group  issue_3
      * @since  2.1.0
      */
-    public function outputOfReturnsTrueOnSuccess()
+    public function outputOfReturnsTrueOnSuccess(): void
     {
         assertTrue(
                 outputOf(
@@ -194,7 +194,7 @@ some more info'
      * @group  issue_3
      * @since  2.1.0
      */
-    public function outputOfThrowsAssertionFailureWhenOutputDoesSatisfyPredicate()
+    public function outputOfThrowsAssertionFailureWhenOutputDoesSatisfyPredicate(): void
     {
         expect(function() {
                 outputOf(

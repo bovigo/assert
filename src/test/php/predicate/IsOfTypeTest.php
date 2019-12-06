@@ -24,7 +24,7 @@ class IsOfTypeTest extends TestCase
     /**
      * @test
      */
-    public function throwsInvalidArgumentExceptionWhenCreatedWithUnknownType()
+    public function throwsInvalidArgumentExceptionWhenCreatedWithUnknownType(): void
     {
 
         expect(function() { isOfType('nope'); })
@@ -70,7 +70,7 @@ class IsOfTypeTest extends TestCase
      * @test
      * @dataProvider  validValuesAndTypes
      */
-    public function evaluatesToTrueIfTypeOfValueEqualsExpectedType($expectedType, $value)
+    public function evaluatesToTrueIfTypeOfValueEqualsExpectedType($expectedType, $value): void
     {
         assertTrue(isOfType($expectedType)->test($value));
     }
@@ -78,7 +78,7 @@ class IsOfTypeTest extends TestCase
     /**
      * @test
      */
-    public function evaluatesToFalseIfTypeOfValueDoesNotEqualExpectedType()
+    public function evaluatesToFalseIfTypeOfValueDoesNotEqualExpectedType(): void
     {
         assertFalse(isOfType('int')->test('foo'));
     }
@@ -86,7 +86,7 @@ class IsOfTypeTest extends TestCase
     /**
      * @test
      */
-    public function assertionFailureContainsMeaningfulInformation()
+    public function assertionFailureContainsMeaningfulInformation(): void
     {
         expect(function() { assertThat([], isOfType('int')); })
                 ->throws(AssertionFailure::class)

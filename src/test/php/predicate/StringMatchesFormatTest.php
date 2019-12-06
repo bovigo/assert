@@ -81,7 +81,7 @@ class StringMatchesFormatTest extends TestCase
     /**
      * @test
      */
-    public function assertionFailureContainsMeaningfulInformation()
+    public function assertionFailureContainsMeaningfulInformation(): void
     {
         expect(function() { assertThat('foo', matchesFormat('%w')); })
                 ->throws(AssertionFailure::class)

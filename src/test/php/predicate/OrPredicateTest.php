@@ -28,10 +28,7 @@ class OrPredicateTest extends TestCase
      */
     private $orPredicate;
 
-    /**
-     * set up test environment
-     */
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->orPredicate = new OrPredicate(
                 function($value) { return 'bar' === $value; },
@@ -42,7 +39,7 @@ class OrPredicateTest extends TestCase
     /**
      * @test
      */
-    public function returnsTrueWhenOnePredicateReturnsTrue()
+    public function returnsTrueWhenOnePredicateReturnsTrue(): void
     {
         assertTrue($this->orPredicate->test('foo'));
     }
@@ -50,7 +47,7 @@ class OrPredicateTest extends TestCase
     /**
      * @test
      */
-    public function returnsFalseWhenBothPredicatesReturnsFalse()
+    public function returnsFalseWhenBothPredicatesReturnsFalse(): void
     {
         assertFalse($this->orPredicate->test('baz'));
     }
@@ -58,7 +55,7 @@ class OrPredicateTest extends TestCase
     /**
      * @test
      */
-    public function returnsTrueWhenFirstPredicateThrowsExceptionButOtherSucceeds()
+    public function returnsTrueWhenFirstPredicateThrowsExceptionButOtherSucceeds(): void
     {
         assertTrue(assertThat(null, matches('/^([a-z]{3})$/')->or(isNull())));
     }
@@ -66,7 +63,7 @@ class OrPredicateTest extends TestCase
     /**
      * @test
      */
-    public function doesNotSwallowExceptionFromFirstPredicateIfOtherFails()
+    public function doesNotSwallowExceptionFromFirstPredicateIfOtherFails(): void
     {
         expect(function() {
                 assertThat(303, matches('/^([a-z]{3})$/')->or(isNull()));
@@ -81,7 +78,7 @@ Given value of type "integer" can not be matched against a regular expression.'
     /**
      * @test
      */
-    public function doesNotSwallowExceptionFromSecondPredicateIfFirstFails()
+    public function doesNotSwallowExceptionFromSecondPredicateIfFirstFails(): void
     {
         expect(function() {
                 assertThat(303, isNull()->or(matches('/^([a-z]{3})$/')));
@@ -96,7 +93,7 @@ Given value of type "integer" can not be matched against a regular expression.'
     /**
      * @test
      */
-    public function doesNotSwallowBothExceptionsWhenBothPredicatesFail()
+    public function doesNotSwallowBothExceptionsWhenBothPredicatesFail(): void
     {
         expect(function() {
                 assertThat(303, matches('/^([a-z]{3})$/')->or(contains('dummy')));
@@ -112,7 +109,7 @@ Given value of type "integer" can not contain something.'
     /**
      * @test
      */
-    public function hasStringRepresentation()
+    public function hasStringRepresentation(): void
     {
         assertThat(
                 $this->orPredicate,
@@ -123,7 +120,7 @@ Given value of type "integer" can not contain something.'
     /**
      * @test
      */
-    public function countEqualsSumOfCountOfBothPredicates()
+    public function countEqualsSumOfCountOfBothPredicates(): void
     {
         assertThat(
                 count(new OrPredicate(

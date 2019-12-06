@@ -25,7 +25,7 @@ class StringEndsWithTest extends TestCase
     /**
      * @test
      */
-    public function nonStringValuesThrowInvalidArgumentException()
+    public function nonStringValuesThrowInvalidArgumentException(): void
     {
         expect(function() { endsWith('foo')->test(303); })
                 ->throws(\InvalidArgumentException::class);
@@ -47,7 +47,7 @@ class StringEndsWithTest extends TestCase
      * @test
      * @dataProvider  trueValues
      */
-    public function evaluatesToTrueIfStringStartsWithPrefix($value)
+    public function evaluatesToTrueIfStringStartsWithPrefix($value): void
     {
         assertTrue(endsWith('foo')->test($value));
     }
@@ -68,7 +68,7 @@ class StringEndsWithTest extends TestCase
      * @test
      * @dataProvider  falseValues
      */
-    public function evaluatesToFalseIfStringDoesNotEndWithSuffix($value)
+    public function evaluatesToFalseIfStringDoesNotEndWithSuffix($value): void
     {
         assertFalse(endsWith('foo')->test($value));
     }
@@ -76,7 +76,7 @@ class StringEndsWithTest extends TestCase
     /**
      * @test
      */
-    public function assertionFailureContainsMeaningfulInformation()
+    public function assertionFailureContainsMeaningfulInformation(): void
     {
         expect(function() { assertThat('bar', endsWith('foo')); })
                 ->throws(AssertionFailure::class)

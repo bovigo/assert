@@ -27,7 +27,7 @@ class IsNullTest extends TestCase
     /**
      * @test
      */
-    public function evaluatesToTrueIfGivenValueIsNull()
+    public function evaluatesToTrueIfGivenValueIsNull(): void
     {
         assertTrue(isNull()->test(null));
     }
@@ -54,7 +54,7 @@ class IsNullTest extends TestCase
      * @test
      * @dataProvider  nonNullValues
      */
-    public function evaluatesToFalseIfGivenValueIsNotNull($nonNullValue)
+    public function evaluatesToFalseIfGivenValueIsNotNull($nonNullValue): void
     {
         assertFalse(isNull()->test($nonNullValue));
     }
@@ -62,7 +62,7 @@ class IsNullTest extends TestCase
     /**
      * @test
      */
-    public function assertionFailureContainsMeaningfulInformation()
+    public function assertionFailureContainsMeaningfulInformation(): void
     {
         expect(function() { assertNull([]); })
                 ->throws(AssertionFailure::class)
@@ -73,7 +73,7 @@ class IsNullTest extends TestCase
      * @test
      * @since  1.3.0
      */
-    public function aliasAssertNotNull()
+    public function aliasAssertNotNull(): void
     {
         assertTrue(assertNotNull(303));
     }
