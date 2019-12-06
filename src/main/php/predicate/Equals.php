@@ -27,7 +27,7 @@ class Equals extends Predicate
      */
     private $delta;
     /**
-     * @var  string|null
+     * @var  string
      */
     private $lastFailureDiff;
 
@@ -51,7 +51,7 @@ class Equals extends Predicate
      */
     public function test($value): bool
     {
-        $this->lastFailureDiff = null; // reset in case predicate is used more than once
+        $this->lastFailureDiff = ''; // reset in case predicate is used more than once
         if ($this->expected === $value) {
             return true;
         }

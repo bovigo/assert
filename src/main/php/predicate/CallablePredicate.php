@@ -17,7 +17,7 @@ class CallablePredicate extends Predicate
      */
     private $predicate;
     /**
-     * @var  string
+     * @var  string|null
      */
     private $description = null;
 
