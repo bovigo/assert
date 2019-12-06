@@ -22,6 +22,9 @@ use function bovigo\assert\predicate\isNotIterable;
  */
 class IsIterableTest extends TestCase
 {
+    /**
+     * @return  array<string,array<iterable>>
+     */
     public function validIterables(): array
     {
         $generator = function() { yield true; };
@@ -33,6 +36,9 @@ class IsIterableTest extends TestCase
         ];
     }
 
+    /**
+     * @return  array<string,array<mixed>>
+     */
     public function invalidIterables(): array
     {
         return [
@@ -43,7 +49,7 @@ class IsIterableTest extends TestCase
     }
 
     /**
-     * @param  iterable  $value
+     * @param  iterable<mixed>  $value
      * @test
      * @dataProvider  validIterables
      */
@@ -74,7 +80,7 @@ class IsIterableTest extends TestCase
     }
 
     /**
-     * @param  iterable  $value
+     * @param  iterable<mixed>  $value
      * @test
      * @dataProvider  validIterables
      */

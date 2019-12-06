@@ -22,9 +22,7 @@ use function bovigo\assert\expect;
 class ContainsTest extends TestCase
 {
     /**
-     * returns tuples which evaluate to true
-     *
-     * @return  array
+     * @return  array<array<mixed>>
      */
     public function tuplesEvaluatingToTrue(): array
     {
@@ -41,7 +39,7 @@ class ContainsTest extends TestCase
 
     /**
      * @param  mixed                      $needle
-     * @param  string|array|\Traversable  $haystack
+     * @param  string|array<mixed>|\Traversable<mixed>  $haystack
      * @test
      * @dataProvider  tuplesEvaluatingToTrue
      */
@@ -51,9 +49,7 @@ class ContainsTest extends TestCase
     }
 
     /**
-     * returns tuples which evaluate to false
-     *
-     * @return  array
+     * @return  array<array<mixed>>
      */
     public function tuplesEvaluatingToFalse(): array
     {
@@ -67,7 +63,7 @@ class ContainsTest extends TestCase
 
     /**
      * @param  mixed                      $needle
-     * @param  string|array|\Traversable  $haystack
+     * @param  string|array<mixed>|\Traversable<mixed>  $haystack
      * @test
      * @dataProvider  tuplesEvaluatingToFalse
      */

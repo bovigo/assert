@@ -25,6 +25,9 @@ class IsCallableTest extends TestCase
     public static function exampleStaticCallable(): void {}
     public function exampleCallable(): void {}
 
+    /**
+     * @return  array<string,array<callable>>
+     */
     public function validCallables(): array
     {
         return [
@@ -35,6 +38,9 @@ class IsCallableTest extends TestCase
         ];
     }
 
+    /**
+     * @return  array<string,array<mixed>>
+     */
     public function invalidCallables(): array
     {
         return [

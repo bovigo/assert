@@ -17,7 +17,7 @@ trait ReusablePredicate
     /**
      * reusable instance
      *
-     * @type  Predicate
+     * @var  Predicate
      */
     private static $instance;
 

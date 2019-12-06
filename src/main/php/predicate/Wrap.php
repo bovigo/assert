@@ -17,11 +17,11 @@ use SebastianBergmann\Exporter\Exporter;
 class Wrap extends Predicate
 {
     /**
-     * @type  \bovigo\assert\predicate\Predicate
+     * @var  \bovigo\assert\predicate\Predicate
      */
     private $predicate;
     /**
-     * @type  string
+     * @var  string
      */
     private $wrappedDesciption;
 

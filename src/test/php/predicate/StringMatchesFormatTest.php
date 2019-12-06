@@ -31,6 +31,9 @@ class StringMatchesFormatTest extends TestCase
         assertTrue(matchesFormat($format)->test($value));
     }
 
+    /**
+     * @return  array<string,array<string>>
+     */
     public function validValues(): array
     {
         return [
@@ -61,6 +64,9 @@ class StringMatchesFormatTest extends TestCase
         assertFalse(matchesFormat($format)->test($value));
     }
 
+    /**
+     * @return  array<string,array<string>>
+     */
     public function invalidValues(): array
     {
         return [

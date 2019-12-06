@@ -22,6 +22,9 @@ use function bovigo\assert\predicate\isNotAString;
  */
 class IsStringTest extends TestCase
 {
+    /**
+     * @return  array<string,array<string>>
+     */
     public function validStrings(): array
     {
         return [
@@ -30,6 +33,9 @@ class IsStringTest extends TestCase
         ];
     }
 
+    /**
+     * @return  array<string,array<mixed>>
+     */
     public function invalidStrings(): array
     {
         return [

@@ -19,7 +19,7 @@ use SebastianBergmann\Exporter\Exporter;
 class ConstraintAdapter extends Predicate
 {
     /**
-     * @type  \PHPUnit\Framework\Constraint
+     * @var  \PHPUnit\Framework\Constraint\Constraint
      */
     private $constraint;
 

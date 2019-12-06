@@ -22,18 +22,24 @@ use function bovigo\assert\predicate\isNotAResource;
  */
 class IsResourceTest extends TestCase
 {
+    /**
+     * @var  resource
+     */
     private $resource;
 
-    public function setup(): void
+    protected function setup(): void
     {
         $this->resource = fopen(__FILE__, 'r');
     }
 
-    public function teardown(): void
+    protected function teardown(): void
     {
         fclose($this->resource);
     }
 
+    /**
+     * @return  array<string,array<mixed>>
+     */
     public function invalidResources(): array
     {
         return [

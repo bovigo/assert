@@ -16,7 +16,7 @@ use SebastianBergmann\Exporter\Exporter;
 class ExpectedException extends Predicate
 {
     /**
-     * @type  string
+     * @var  string
      */
     private $expectedType;
 

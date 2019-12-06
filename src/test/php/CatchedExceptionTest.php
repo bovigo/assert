@@ -22,6 +22,9 @@ use function bovigo\assert\predicate\{
  */
 class CatchedExceptionTest extends TestCase
 {
+    /**
+     * @return  array<string,array<mixed>>
+     */
     public static function throwables(): array
     {
         return ['exception' => [new \Exception('failure', 2)],

@@ -22,6 +22,9 @@ use function bovigo\assert\predicate\isNotAnObject;
  */
 class IsObjectTest extends TestCase
 {
+    /**
+     * @return  array<string,array<object>>
+     */
     public function validObjects(): array
     {
         return [
@@ -30,6 +33,9 @@ class IsObjectTest extends TestCase
         ];
     }
 
+    /**
+     * @return  array<string,array<mixed>>
+     */
     public function invalidObjects(): array
     {
         return [

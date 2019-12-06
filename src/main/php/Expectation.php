@@ -20,25 +20,25 @@ use function bovigo\assert\predicate\isSameAs;
 class Expectation
 {
     /**
-     * @type  callable
+     * @var  callable
      */
     private $code;
     /**
      * marker on whether code was already executed
      *
-     * @type  bool
+     * @var  bool
      */
     private $executed = false;
     /**
-     * @type  mixed
+     * @var  mixed
      */
     private $result;
     /**
-     * @type  \Throwable
+     * @var  \Throwable
      */
     private $exception;
     /**
-     * @type  CatchedError
+     * @var  CatchedError
      */
     private $error;
 

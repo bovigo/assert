@@ -31,9 +31,7 @@ class HasKeyTest extends TestCase
     }
 
     /**
-     * returns tuples which evaluate to true
-     *
-     * @return  array
+     * @return  array<array<mixed>>
      */
     public function tuplesEvaluatingToTrue(): array
     {
@@ -47,7 +45,7 @@ class HasKeyTest extends TestCase
 
     /**
      * @param  int|string          $key
-     * @param  array|\ArrayAccess  $array
+     * @param  array<mixed>|\ArrayAccess<mixed,mixed>  $array
      * @test
      * @dataProvider  tuplesEvaluatingToTrue
      */
@@ -57,9 +55,7 @@ class HasKeyTest extends TestCase
     }
 
     /**
-     * returns tuples which evaluate to false
-     *
-     * @return  array
+     * @return  array<array<mixed>>
      */
     public function tuplesEvaluatingToFalse(): array
     {
@@ -73,7 +69,7 @@ class HasKeyTest extends TestCase
 
     /**
      * @param  mixed                      $key
-     * @param  string|array|\Traversable  $array
+     * @param  string|array<mixed>|\Traversable<mixed>  $array
      * @test
      * @dataProvider  tuplesEvaluatingToFalse
      */

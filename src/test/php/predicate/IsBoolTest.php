@@ -22,6 +22,9 @@ use function bovigo\assert\predicate\isNotBool;
  */
 class IsBoolTest extends TestCase
 {
+    /**
+     * @return  array<string,array<bool>>
+     */
     public function validBooleans(): array
     {
         return [
@@ -30,6 +33,9 @@ class IsBoolTest extends TestCase
         ];
     }
 
+    /**
+     * @return  array<string,array<mixed>>
+     */
     public function invalidBooleans(): array
     {
         return [

@@ -20,9 +20,7 @@ use function bovigo\assert\assertThat;
 class AndPredicateTest extends TestCase
 {
     /**
-     * instance to test
-     *
-     * @type  AndPredicate
+     * @var  AndPredicate
      */
     private $andPredicate;
 

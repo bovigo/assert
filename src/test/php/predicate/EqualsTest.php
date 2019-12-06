@@ -22,7 +22,7 @@ use function bovigo\assert\expect;
 class EqualsTest extends TestCase
 {
     /**
-     * @return  array
+     * @return  array<array<mixed>>
      */
     public function tuplesEvaluatingToTrue(): array
     {
@@ -49,7 +49,7 @@ class EqualsTest extends TestCase
     }
 
     /**
-     * @return  array
+     * @return  array<array<mixed>>
      */
     public function tuplesEvaluatingToFalse(): array
     {

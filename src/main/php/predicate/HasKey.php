@@ -18,7 +18,7 @@ class HasKey extends Predicate
     /**
      * key which must be in array
      *
-     * @type  int|string
+     * @var  int|string
      */
     private $key;
 

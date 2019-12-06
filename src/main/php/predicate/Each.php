@@ -19,18 +19,18 @@ use SebastianBergmann\Exporter\Exporter;
 class Each extends IteratingPredicate
 {
     /**
-     * @type  int|string
+     * @var  int|string
      */
     private $violatingKey;
     /**
-     * @type  mixed
+     * @var  mixed
      */
     private $violatingValue;
 
     /**
      * actually tests the value
      *
-     * @param   iterable  $traversable
+     * @param   iterable<mixed>  $traversable
      * @return  bool
      */
     protected function doTest(iterable $traversable): bool

@@ -18,7 +18,7 @@ namespace bovigo\assert\predicate;
 abstract class IteratingPredicate extends Predicate
 {
     /**
-     * @type  \bovigo\assert\predicate\Predicate
+     * @var  \bovigo\assert\predicate\Predicate
      */
     protected $predicate;
 
@@ -61,7 +61,7 @@ abstract class IteratingPredicate extends Predicate
     /**
      * actually tests the value
      *
-     * @param   iterable  $traversable
+     * @param   iterable<mixed>  $traversable
      * @return  bool
      */
     protected abstract function doTest(iterable $traversable): bool;
@@ -69,8 +69,8 @@ abstract class IteratingPredicate extends Predicate
     /**
      * retrieve actual iterator
      *
-     * @param   iterable  $traversable
-     * @return  array|\Iterator
+     * @param   iterable<mixed>  $traversable
+     * @return  array<mixed>|\Iterator<mixed,mixed>
      */
     private function traversable(iterable $traversable)
     {
@@ -84,7 +84,7 @@ abstract class IteratingPredicate extends Predicate
     /**
      * retrieves current key of traversable
      *
-     * @param   array|\Iterator  $traversable
+     * @param   array<mixed>|\Iterator<mixed,mixed>  $traversable
      * @return  int|string|null
      */
     private function key($traversable)
@@ -99,10 +99,10 @@ abstract class IteratingPredicate extends Predicate
     /**
      * rewinds traversable to given key to not change state of traversable
      *
-     * @param  array|\Iterator  $traversable
+     * @param  array<mixed>|\Iterator<mixed,mixed>  $traversable
      * @param  int|string       $key
      */
-    private function rewind($traversable, $key)
+    private function rewind($traversable, $key): void
     {
         if (is_array($traversable)) {
             foreach ($traversable as $currentKey => $value) {

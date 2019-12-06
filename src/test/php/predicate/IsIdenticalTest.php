@@ -22,7 +22,7 @@ use function bovigo\assert\expect;
 class IsIdenticalTest extends TestCase
 {
     /**
-     * @return  array
+     * @return  array<string,array<mixed>>
      */
     public function identicalValues(): array
     {

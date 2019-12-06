@@ -19,7 +19,7 @@ use function bovigo\assert\predicate\equals;
 class CatchedException
 {
     /**
-     * @type  \Exception
+     * @var  \Throwable
      */
     private $actualException;
 

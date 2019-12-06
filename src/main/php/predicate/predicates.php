@@ -754,6 +754,9 @@ function startsWith(string $prefix): Predicate
 {
     return new class($prefix) extends Predicate
     {
+        /**
+         * @var  string
+         */
         private $prefix;
 
         public function __construct(string $prefix)
@@ -810,6 +813,9 @@ function endsWith(string $suffix): Predicate
 {
     return new class($suffix) extends Predicate
     {
+        /**
+         * @var  string
+         */
         private $suffix;
 
         public function __construct(string $suffix)

@@ -9,6 +9,8 @@ declare(strict_types=1);
 namespace bovigo\assert\predicate;
 /**
  * Helper class for the test.
+ *
+ * @implements \ArrayAccess<scalar,mixed>
  */
 class HasKeyArrayAccessExample implements \ArrayAccess
 {

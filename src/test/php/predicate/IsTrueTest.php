@@ -29,7 +29,7 @@ class IsTrueTest extends TestCase
     }
 
     /**
-     * @return  array
+     * @return  array<string,array<mixed>>
      */
     public function falseValues(): array
     {

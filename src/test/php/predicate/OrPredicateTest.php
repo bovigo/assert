@@ -24,7 +24,7 @@ class OrPredicateTest extends TestCase
     /**
      * instance to test
      *
-     * @type  OrPredicate
+     * @var  OrPredicate
      */
     private $orPredicate;
 

@@ -45,7 +45,7 @@ function assertThat($value, callable $predicate, string $description = null): bo
  * @throws  \bovigo\assert\AssertionFailure
  * @since   1.2.0
  */
-function fail(string $description)
+function fail(string $description): void
 {
     throw new AssertionFailure($description);
 }

@@ -14,7 +14,7 @@ use SebastianBergmann\Exporter\Exporter;
 class IsInstanceOf extends Predicate
 {
     /**
-     * @type  string
+     * @var  string
      */
     private $expectedType;
 

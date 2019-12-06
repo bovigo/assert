@@ -17,11 +17,11 @@ class Assertion
     /**
      * value to do the assertion on
      *
-     * @type  mixed
+     * @var  mixed
      */
     private $value;
     /**
-     * @type  \SebastianBergmann\Exporter\Exporter
+     * @var  \SebastianBergmann\Exporter\Exporter
      */
     private $exporter;
 

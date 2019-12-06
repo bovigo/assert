@@ -13,11 +13,11 @@ namespace bovigo\assert\predicate;
 class CallablePredicate extends Predicate
 {
     /**
-     * @type  callable
+     * @var  callable
      */
     private $predicate;
     /**
-     * @type  string
+     * @var  string
      */
     private $description = null;
 

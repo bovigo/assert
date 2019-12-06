@@ -19,15 +19,15 @@ class Equals extends Predicate
     /**
      * the expected value
      *
-     * @type  mixed
+     * @var  mixed
      */
     private $expected;
     /**
-     * @type  double
+     * @var  double
      */
     private $delta;
     /**
-     * @type  string
+     * @var  string|null
      */
     private $lastFailureDiff;
 

@@ -14,7 +14,7 @@ use SebastianBergmann\Exporter\Exporter;
 class NegatePredicate extends Predicate
 {
     /**
-     * @type  Predicate
+     * @var  Predicate
      */
     private $predicate;
 

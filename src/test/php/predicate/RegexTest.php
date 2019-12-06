@@ -22,7 +22,7 @@ use function bovigo\assert\expect;
 class RegexTest extends TestCase
 {
     /**
-     * @return  array
+     * @return  array<array<string>>
      */
     public function validValues(): array
     {
@@ -44,7 +44,7 @@ class RegexTest extends TestCase
     }
 
     /**
-     * @return  array
+     * @return  array<array<string>>
      */
     public function invalidValues(): array
     {

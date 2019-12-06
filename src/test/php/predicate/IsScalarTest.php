@@ -22,6 +22,9 @@ use function bovigo\assert\predicate\isNotScalar;
  */
 class IsScalarTest extends TestCase
 {
+    /**
+     * @return  array<string,array<scalar>>
+     */
     public function validScalars(): array
     {
         return [
@@ -32,6 +35,9 @@ class IsScalarTest extends TestCase
         ];
     }
 
+    /**
+     * @return  array<string,array<mixed>>
+     */
     public function invalidScalars(): array
     {
         return [

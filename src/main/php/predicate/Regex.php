@@ -20,13 +20,13 @@ class Regex extends Predicate
     /**
      * the regular expression to use for validation
      *
-     * @type  string
+     * @var  string
      */
     private $pattern;
     /**
      * map of pcre error codes and according error messages
      *
-     * @array
+     * @var  array<int,string>
      */
     private static $errors = [
             PREG_NO_ERROR              => 'invalid regular expression',

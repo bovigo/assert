@@ -15,7 +15,7 @@ abstract class FilesystemPredicate extends Predicate
     /**
      * base path where file must reside in
      *
-     * @type  string
+     * @var  string
      */
     private $basePath;
 

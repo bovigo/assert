@@ -22,6 +22,9 @@ use function bovigo\assert\predicate\isNotNumeric;
  */
 class IsNumericTest extends TestCase
 {
+    /**
+     * @return  array<string,array<int|float|string>>
+     */
     public function validNumerics(): array
     {
         return [
@@ -36,6 +39,9 @@ class IsNumericTest extends TestCase
         ];
     }
 
+    /**
+     * @return  array<string,array<mixed>>
+     */
     public function invalidNumerics(): array
     {
         return [

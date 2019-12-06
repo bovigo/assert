@@ -13,11 +13,11 @@ namespace bovigo\assert\predicate;
 trait CombinedPredicate
 {
     /**
-     * @type  Predicate
+     * @var  Predicate
      */
     private $leftPredicate;
     /**
-     * @type  Predicate
+     * @var  Predicate
      */
     private $rightPredicate;
 

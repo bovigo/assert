@@ -32,7 +32,7 @@ class StringStartsWithTest extends TestCase
     }
 
     /**
-     * @return  array
+     * @return  array<string,array<string>>
      */
     public function trueValues(): array
     {
@@ -53,7 +53,7 @@ class StringStartsWithTest extends TestCase
     }
 
     /**
-     * @return  array
+     * @return  array<string,array<string>>
      */
     public function falseValues(): array
     {

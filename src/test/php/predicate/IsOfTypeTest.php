@@ -32,7 +32,7 @@ class IsOfTypeTest extends TestCase
     }
 
     /**
-     * @return  array
+     * @return  array<string,array<mixed>>
      */
     public function validValuesAndTypes(): array
     {

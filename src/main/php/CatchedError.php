@@ -63,20 +63,35 @@ class CatchedError
         return self::LEVEL[$level] ?? 'Unknown error ' . $level;
     }
 
+    /**
+     * @var  int
+     */
     private $errno;
+    /**
+     * @var  string
+     */
     private $errstr;
+    /**
+     * @var  string
+     */
     private $errfile;
+    /**
+     * @var  int
+     */
     private $errline;
+    /**
+     * @var  array<mixed>
+     */
     private $errcontext;
 
     /**
      * constructor
      *
-     * @param  int     $errno
-     * @param  string  $errstr
-     * @param  string  $errfile
-     * @param  int     $errline
-     * @param  array   $errcontext
+     * @param  int           $errno
+     * @param  string        $errstr
+     * @param  string        $errfile
+     * @param  int           $errline
+     * @param  array<mixed>  $errcontext
      */
     public function __construct(int $errno , string $errstr, string $errfile, int $errline, array $errcontext = [])
     {

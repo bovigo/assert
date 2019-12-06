@@ -16,7 +16,7 @@ class Contains extends Predicate
     /**
      * the value to be contained in value to validate
      *
-     * @type  mixed
+     * @var  mixed
      */
     private $needle;
 

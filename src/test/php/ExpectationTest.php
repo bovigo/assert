@@ -24,6 +24,9 @@ use function bovigo\assert\predicate\{
  */
 class ExpectationTest extends TestCase
 {
+    /**
+     * @return  array<string,array<mixed>>
+     */
     public static function throwables(): array
     {
         return ['exception against exception' => [new \Exception('not catched', 2), \BadFunctionCallException::class],

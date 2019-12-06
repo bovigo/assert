@@ -22,6 +22,9 @@ use function bovigo\assert\predicate\isNotAnArray;
  */
 class IsArrayTest extends TestCase
 {
+    /**
+     * @return  array<string,array<array<mixed>>>
+     */
     public function validArrays(): array
     {
         return [
@@ -31,6 +34,9 @@ class IsArrayTest extends TestCase
         ];
     }
 
+    /**
+     * @return  array<string,array<mixed>>
+     */
     public function invalidArrays(): array
     {
         return [
@@ -41,7 +47,7 @@ class IsArrayTest extends TestCase
     }
 
     /**
-     * @param  array  $value
+     * @param  array<mixed>  $value
      * @test
      * @dataProvider  validArrays
      */
@@ -72,7 +78,7 @@ class IsArrayTest extends TestCase
     }
 
     /**
-     * @param  array  $value
+     * @param  array<mixed>  $value
      * @test
      * @dataProvider  validArrays
      */

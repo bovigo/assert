@@ -22,6 +22,9 @@ use function bovigo\assert\predicate\isNotInt;
  */
 class IsIntTest extends TestCase
 {
+    /**
+     * @return  array<string,array<int>>
+     */
     public function validInts(): array
     {
         return [
@@ -31,6 +34,9 @@ class IsIntTest extends TestCase
         ];
     }
 
+    /**
+     * @return  array<string,array<mixed>>
+     */
     public function invalidInts(): array
     {
         return [

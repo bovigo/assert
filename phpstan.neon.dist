@@ -1,9 +1,14 @@
 parameters:
+  inferPrivatePropertyTypeFromConstructor: true
   level: 7
   paths:
       - ./src
+  excludes_analyse:
+      - src/main/php/phpunit/TestCase.php
   ignoreErrors:
       # False positives
+      - '#Property bovigo\\assert\\predicate\\(.)+instance has no typehint specified.#'
+      - '#Property bovigo\\assert\\predicate\\(.)+Predicate has no typehint specified#'
       -
           message: '#Parameter (.)+ of method bovigo\\assert\\Expectation::throws\(\) expects (.)+, int given#'
           path: src/test/php/ExpectationTest.php
@@ -22,3 +27,12 @@ parameters:
       -
           message: '#of function bovigo\\assert\\expect expects callable\(\): mixed, array\(bovigo\\assert\\predicate\\PredicateFooExample, .+\) given#'
           path: src/test/php/predicate/PredicateTest.php
+      -
+          message: '#Result of && is always false#'
+          path: src/main/php/predicate/HasKey.php
+      -
+          message: '#Method bovigo\\assert\\predicate\\IsOfSize::sizeOf\(\) has parameter \$value with no value type specified in iterable type#'
+          path: src/main/php/predicate/IsOfSize.php
+      -
+          message: '#Method bovigo\\assert\\predicate\\IsOfSize::traversable\(\) has parameter \$traversable with no value type specified in iterable type#'
+          path: src/main/php/predicate/IsOfSize.php

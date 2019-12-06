@@ -22,6 +22,9 @@ use function bovigo\assert\predicate\isNotFloat;
  */
 class IsFloatTest extends TestCase
 {
+    /**
+     * @return  array<string,array<float>>
+     */
     public function validFloats(): array
     {
         return [
@@ -31,6 +34,9 @@ class IsFloatTest extends TestCase
         ];
     }
 
+    /**
+     * @return  array<string,array<mixed>>
+     */
     public function invalidFloats(): array
     {
         return [

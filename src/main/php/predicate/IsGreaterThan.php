@@ -16,7 +16,7 @@ class IsGreaterThan extends Predicate
     /**
      * expected minimum value
      *
-     * @type  int|float
+     * @var  int|float
      */
     private $expected;
 

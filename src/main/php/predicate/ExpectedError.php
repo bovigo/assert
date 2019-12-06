@@ -17,7 +17,7 @@ use SebastianBergmann\Exporter\Exporter;
 class ExpectedError extends Predicate
 {
     /**
-     * @type  int
+     * @var  int
      */
     private $expectedError;
 

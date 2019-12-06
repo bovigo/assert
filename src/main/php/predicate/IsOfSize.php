@@ -16,7 +16,7 @@ class IsOfSize extends Predicate
     /**
      * the expected size
      *
-     * @type  int
+     * @var  int
      */
     private $expectedSize;
 

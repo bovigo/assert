@@ -20,7 +20,7 @@ class NegatePredicateTest extends TestCase
 {
     /**
      *
-     * @type  \bovigo\assert\predicate\NegatePredicate
+     * @var  \bovigo\assert\predicate\NegatePredicate
      */
     private $negatePredicate;
 
@@ -38,6 +38,9 @@ class NegatePredicateTest extends TestCase
         assertTrue($this->negatePredicate->test('bar'));
     }
 
+    /**
+     * @return  array<array<mixed>>
+     */
     public function predicates(): array
     {
         return [
@@ -52,7 +55,7 @@ class NegatePredicateTest extends TestCase
      * @test
      * @dataProvider  predicates
      */
-    public function hasStringRepresentation(NegatePredicate $negatePredicate, $expected): void
+    public function hasStringRepresentation(NegatePredicate $negatePredicate, string $expected): void
     {
         assertThat((string) $negatePredicate, equals($expected));
     }

@@ -33,7 +33,7 @@ class IsNullTest extends TestCase
     }
 
     /**
-     * @return  array
+     * @return  array<string,array<mixed>>
      */
     public function nonNullValues(): array
     {

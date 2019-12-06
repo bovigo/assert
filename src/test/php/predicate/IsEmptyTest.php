@@ -26,7 +26,7 @@ use function bovigo\assert\{
 class IsEmptyTest extends TestCase
 {
     /**
-     * @return  array
+     * @return  array<string,array<mixed>>
      */
     public function emptyValues(): array
     {
@@ -41,6 +41,7 @@ class IsEmptyTest extends TestCase
     }
 
     /**
+     * @param  mixed  $emptyValue
      * @test
      * @dataProvider  emptyValues
      */
@@ -50,7 +51,7 @@ class IsEmptyTest extends TestCase
     }
 
     /**
-     * @return  array
+     * @return  array<string,array<mixed>>
      */
     public function nonEmptyValues(): array
     {

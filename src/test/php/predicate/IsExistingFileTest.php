@@ -23,10 +23,7 @@ use function bovigo\assert\expect;
  */
 class IsExistingFileTest extends TestCase
 {
-    /**
-     * set up test environment
-     */
-    public function setUp(): void
+    protected function setUp(): void
     {
         $root  = vfsStream::setup();
         $basic = vfsStream::newDirectory('basic')->at($root);
@@ -113,7 +110,7 @@ class IsExistingFileTest extends TestCase
     }
 
     /**
-     * @return  array
+     * @return  array<array<mixed>>
      */
     public function instances(): array
     {

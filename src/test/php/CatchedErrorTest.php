@@ -21,6 +21,9 @@ use function bovigo\assert\predicate\{
  */
 class CatchedErrorTest extends TestCase
 {
+    /**
+     * @var  CatchedError
+     */
     private $catchedError;
 
     public function setup(): void

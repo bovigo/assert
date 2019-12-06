@@ -118,7 +118,7 @@ class IsExistingDirectoryTest extends TestCase
     }
 
     /**
-     * @return  array
+     * @return  array<array<mixed>>
      */
     public function instances(): array
     {
