@@ -12,6 +12,7 @@ use PHPUnit\Framework\TestCase;
 
 use function bovigo\assert\assertThat;
 use function bovigo\assert\expect;
+use function bovigo\assert\fail;
 use function bovigo\assert\predicate\isResource;
 use function bovigo\assert\predicate\isNotAResource;
 
@@ -29,7 +30,12 @@ class IsResourceTest extends TestCase
 
     protected function setup(): void
     {
-        $this->resource = fopen(__FILE__, 'r');
+        $resource = fopen(__FILE__, 'r');
+        if (false === $resource) {
+            fail('Could not open file to create a resource');
+        }
+
+        $this->resource = $resource;
     }
 
     protected function teardown(): void

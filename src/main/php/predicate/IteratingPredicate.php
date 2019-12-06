@@ -61,7 +61,7 @@ abstract class IteratingPredicate extends Predicate
     /**
      * actually tests the value
      *
-     * @param   iterable<mixed>  $traversable
+     * @param   iterable  $traversable
      * @return  bool
      */
     protected abstract function doTest(iterable $traversable): bool;
@@ -69,8 +69,8 @@ abstract class IteratingPredicate extends Predicate
     /**
      * retrieve actual iterator
      *
-     * @param   iterable<mixed>  $traversable
-     * @return  array<mixed>|\Iterator<mixed,mixed>
+     * @param   iterable  $traversable
+     * @return  array|\Iterator
      */
     private function traversable(iterable $traversable)
     {
@@ -84,7 +84,7 @@ abstract class IteratingPredicate extends Predicate
     /**
      * retrieves current key of traversable
      *
-     * @param   array<mixed>|\Iterator<mixed,mixed>  $traversable
+     * @param   array|\Iterator  $traversable
      * @return  int|string|null
      */
     private function key($traversable)

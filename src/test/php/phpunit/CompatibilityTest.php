@@ -950,7 +950,6 @@ class CompatibilityTest extends TestCase
         $fd = fopen(__FILE__, 'r');
         if (false === $fd) {
             fail('Could not open file');
-            return;
         }
 
         try {
@@ -1211,7 +1210,6 @@ class CompatibilityTest extends TestCase
             $fd = fopen(__FILE__, 'r');
             if (false === $fd) {
                 fail('Could not open file');
-                return;
             }
 
             try {
