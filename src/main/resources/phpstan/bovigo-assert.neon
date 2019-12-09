@@ -1,0 +1,3 @@
+parameters:
+  earlyTerminatingFunctionCalls:
+      - bovigo\assert\fail

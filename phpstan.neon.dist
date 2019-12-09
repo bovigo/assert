@@ -1,3 +1,5 @@
+includes:
+  - src/main/resources/phpstan/bovigo-assert.neon
 parameters:
   inferPrivatePropertyTypeFromConstructor: true
   level: 8
@@ -5,12 +7,8 @@ parameters:
       - ./src
   excludes_analyse:
       - src/main/php/phpunit/TestCase.php
-  earlyTerminatingFunctionCalls:
-      - bovigo\assert\fail
   ignoreErrors:
       # False positives
-      - '#Property bovigo\\assert\\predicate\\(.)+instance has no typehint specified.#'
-      - '#Property bovigo\\assert\\predicate\\(.)+Predicate has no typehint specified#'
       -
           message: '#Parameter (.)+ of method bovigo\\assert\\Expectation::throws\(\) expects (.)+, int given#'
           path: src/test/php/ExpectationTest.php
