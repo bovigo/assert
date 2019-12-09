@@ -1,5 +1,9 @@
 # Changelog
 
+## 5.1.0 (2019-12-09)
+
+* Added reusable config for projects using bovigo/assert available in `src/main/resources/phpstan/bovigo-assert.neon`
+
 ## 5.0.1 (2019-12-05)
 
 * Fixed `bovigo\assert\CatchedError::message()` and `bovigo\assert\CatchedException::message()` to really accept a callable

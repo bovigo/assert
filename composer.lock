@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3b76d5b45e1968c057d391eb62b6a200",
+    "content-hash": "ca3abf006bf2c316e5f27339dc589b0a",
     "packages": [
         {
             "name": "mikey179/vfsstream",
