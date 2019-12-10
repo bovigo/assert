@@ -905,6 +905,21 @@ For constraints which have no equivalent predicate in _bovigo/assert_ the
 default constraints from PHPUnit are used.
 
 
+phpstan and early terminating function calls
+--------------------------------------------
+
+_Available since release 5.1.0_
+
+In case you are using [phpstan](https://github.com/phpstan/phpstan) _bovigo/assert_
+provides a config file you can include in your phpstan config so early terminating
+function calls with `fail()` are recognized.
+
+```
+includes:
+  - vendor/bovigo/assert/src/main/resources/phpstan/bovigo-assert.neon
+```
+
+
 FAQ
 ---
 
