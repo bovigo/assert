@@ -1,5 +1,9 @@
 # Changelog
 
+## 5.1.1 (2019-12-10)
+
+* Fixed dependency to _mikey179/vfsstream_, is now a dev dependency again
+
 ## 5.1.0 (2019-12-09)
 
 * Added reusable config for projects using bovigo/assert available in `src/main/resources/phpstan/bovigo-assert.neon`
