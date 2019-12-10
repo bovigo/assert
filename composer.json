@@ -5,11 +5,11 @@
     "require": {
         "php": "^7.2",
         "sebastian/comparator": "^3.0",
-        "sebastian/exporter": "^3.1",
-        "mikey179/vfsstream": "^1.6.8"
+        "sebastian/exporter": "^3.1"
     },
     "require-dev": {
-        "phpunit/phpunit": "^8.0"
+        "phpunit/phpunit": "^8.0",
+        "mikey179/vfsstream": "^1.6.8"
     },
     "autoload": {
         "psr-4": {
