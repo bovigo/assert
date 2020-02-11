@@ -68,6 +68,28 @@ use function bovigo\assert\predicate\{
     endsWith,
     equals,
     hasKey,
+    isArray,
+    isBool,
+    isFloat,
+    isInt,
+    isNumeric,
+    isObject,
+    isResource,
+    isString,
+    isScalar,
+    isCallable,
+    isIterable,
+    isNotAnArray,
+    isNotBool,
+    isNotFloat,
+    isNotInt,
+    isNotNumeric,
+    isNotAnObject,
+    isNotAResource,
+    isNotAString,
+    isNotScalar,
+    isNotCallable,
+    isNotIterable,
     isExistingDirectory,
     isExistingFile,
     isGreaterThan,
@@ -130,20 +152,13 @@ abstract class TestCase extends Original
      * $checkForNonObjectIdentity to a non-default value will cause a fallback
      * to PHPUnit's constraint.
      *
-     * @param mixed  $needle
-     * @param mixed  $haystack
-     * @param string $message
-     * @param bool   $ignoreCase
-     * @param bool   $checkForObjectIdentity
-     * @param bool   $checkForNonObjectIdentity
+     * @param mixed    $needle
+     * @param iterable $haystack
+     * @param string   $message
      */
-    public static function assertContains($needle, $haystack, string $message = '', bool $ignoreCase = false, bool $checkForObjectIdentity = true, bool $checkForNonObjectIdentity = false): void
+    public static function assertContains($needle, iterable $haystack, string $message = ''): void
     {
-        if (true === $ignoreCase || false === $checkForObjectIdentity || true === $checkForNonObjectIdentity) {
-            parent::assertContains($needle, $haystack, $message, $ignoreCase, $checkForObjectIdentity, $checkForNonObjectIdentity);
-        } else {
-            assertThat($haystack, contains($needle), $message);
-        }
+        assertThat($haystack, contains($needle), $message);
     }
 
     /**
@@ -153,20 +168,13 @@ abstract class TestCase extends Original
      * $checkForNonObjectIdentity to a non-default value will cause a fallback
      * to PHPUnit's constraint.
      *
-     * @param mixed  $needle
-     * @param mixed  $haystack
-     * @param string $message
-     * @param bool   $ignoreCase
-     * @param bool   $checkForObjectIdentity
-     * @param bool   $checkForNonObjectIdentity
+     * @param mixed    $needle
+     * @param iterable $haystack
+     * @param string   $message
      */
-    public static function assertNotContains($needle, $haystack, string $message = '', bool $ignoreCase = false, bool $checkForObjectIdentity = true, bool $checkForNonObjectIdentity = false): void
+    public static function assertNotContains($needle, iterable $haystack, string $message = ''): void
     {
-        if (true === $ignoreCase || false === $checkForObjectIdentity || true === $checkForNonObjectIdentity) {
-            parent::assertNotContains($needle, $haystack, $message, $ignoreCase, $checkForObjectIdentity, $checkForNonObjectIdentity);
-        } else {
-            assertThat($haystack, doesNotContain($needle), $message);
-        }
+        assertThat($haystack, doesNotContain($needle), $message);
     }
 
     /**
@@ -259,18 +267,10 @@ abstract class TestCase extends Original
      * @param mixed  $expected
      * @param mixed  $actual
      * @param string $message
-     * @param float  $delta
-     * @param int    $maxDepth      ignored, same as in PHPUnit
-     * @param bool   $canonicalize
-     * @param bool   $ignoreCase
      */
-    public static function assertEquals($expected, $actual, string $message = '', float $delta = 0.0, int $maxDepth = 10, bool $canonicalize = false, bool $ignoreCase = false): void
+    public static function assertEquals($expected, $actual, string $message = ''): void
     {
-        if (true === $canonicalize || true === $ignoreCase) {
-            parent::assertEquals($expected, $actual, $message, $delta, $maxDepth, $canonicalize, $ignoreCase);
-        } else {
-            assertThat($actual, equals($expected, $delta), $message);
-        }
+        assertThat($actual, equals($expected), $message);
     }
 
     /**
@@ -282,18 +282,10 @@ abstract class TestCase extends Original
      * @param mixed  $expected
      * @param mixed  $actual
      * @param string $message
-     * @param float  $delta
-     * @param int    $maxDepth      ignored, same as in PHPUnit
-     * @param bool   $canonicalize
-     * @param bool   $ignoreCase
      */
-    public static function assertNotEquals($expected, $actual, string $message = '', $delta = 0.0, $maxDepth = 10, $canonicalize = false, $ignoreCase = false): void
+    public static function assertNotEquals($expected, $actual, string $message = ''): void
     {
-        if (true === $canonicalize || true === $ignoreCase) {
-            parent::assertNotEquals($expected, $actual, $message, $delta, $maxDepth, $canonicalize, $ignoreCase);
-        } else {
-            assertThat($actual, isNotEqualTo($expected, $delta), $message);
-        }
+        assertThat($actual, isNotEqualTo($expected), $message);
     }
 
     /**
@@ -521,30 +513,6 @@ abstract class TestCase extends Original
     }
 
     /**
-     * Asserts that a variable is of a given type.
-     *
-     * @param string $expected
-     * @param mixed  $actual
-     * @param string $message
-     */
-    public static function assertInternalType(string $expected, $actual, string $message = ''): void
-    {
-        assertThat($actual, isOfType($expected), $message);
-    }
-
-    /**
-     * Asserts that a variable is not of a given type.
-     *
-     * @param string $expected
-     * @param mixed  $actual
-     * @param string $message
-     */
-    public static function assertNotInternalType(string $expected, $actual, string $message = ''): void
-    {
-        assertThat($actual, isNotOfType($expected), $message);
-    }
-
-    /**
      * Asserts that a string matches a given regular expression.
      *
      * @param string $pattern
@@ -651,7 +619,7 @@ abstract class TestCase extends Original
      */
     public static function assertIsArray($actual, string $message = ''): void
     {
-        assertThat($actual, isOfType('array'), $message);
+        assertThat($actual, isArray(), $message);
     }
 
     /**
@@ -661,7 +629,7 @@ abstract class TestCase extends Original
      */
     public static function assertIsBool($actual, string $message = ''): void
     {
-        assertThat($actual, isOfType('bool'), $message);
+        assertThat($actual, isBool(), $message);
     }
 
     /**
@@ -671,7 +639,7 @@ abstract class TestCase extends Original
      */
     public static function assertIsFloat($actual, string $message = ''): void
     {
-        assertThat($actual, isOfType('float'), $message);
+        assertThat($actual, isFloat(), $message);
     }
 
     /**
@@ -681,7 +649,7 @@ abstract class TestCase extends Original
      */
     public static function assertIsInt($actual, string $message = ''): void
     {
-        assertThat($actual, isOfType('int'), $message);
+        assertThat($actual, isInt(), $message);
     }
 
     /**
@@ -691,7 +659,7 @@ abstract class TestCase extends Original
      */
     public static function assertIsNumeric($actual, string $message = ''): void
     {
-        assertThat($actual, isOfType('numeric'), $message);
+        assertThat($actual, isNumeric(), $message);
     }
 
     /**
@@ -701,7 +669,7 @@ abstract class TestCase extends Original
      */
     public static function assertIsObject($actual, string $message = ''): void
     {
-        assertThat($actual, isOfType('object'), $message);
+        assertThat($actual, isObject(), $message);
     }
 
     /**
@@ -711,7 +679,7 @@ abstract class TestCase extends Original
      */
     public static function assertIsResource($actual, string $message = ''): void
     {
-        assertThat($actual, isOfType('resource'), $message);
+        assertThat($actual, isResource(), $message);
     }
 
     /**
@@ -721,7 +689,7 @@ abstract class TestCase extends Original
      */
     public static function assertIsString($actual, string $message = ''): void
     {
-        assertThat($actual, isOfType('string'), $message);
+        assertThat($actual, isString(), $message);
     }
 
     /**
@@ -731,7 +699,7 @@ abstract class TestCase extends Original
      */
     public static function assertIsScalar($actual, string $message = ''): void
     {
-        assertThat($actual, isOfType('scalar'), $message);
+        assertThat($actual, isScalar(), $message);
     }
 
     /**
@@ -741,7 +709,7 @@ abstract class TestCase extends Original
      */
     public static function assertIsCallable($actual, string $message = ''): void
     {
-        assertThat($actual, isOfType('callable'), $message);
+        assertThat($actual, isCallable(), $message);
     }
 
     /**
@@ -751,7 +719,7 @@ abstract class TestCase extends Original
      */
     public static function assertIsIterable($actual, string $message = ''): void
     {
-        assertThat($actual, isOfType('iterable'), $message);
+        assertThat($actual, isIterable(), $message);
     }
 
     /**
@@ -761,7 +729,7 @@ abstract class TestCase extends Original
      */
     public static function assertIsNotArray($actual, string $message = ''): void
     {
-        assertThat($actual, isNotOfType('array'), $message);
+        assertThat($actual, isNotAnArray(), $message);
     }
 
     /**
@@ -771,7 +739,7 @@ abstract class TestCase extends Original
      */
     public static function assertIsNotBool($actual, string $message = ''): void
     {
-        assertThat($actual, isNotOfType('bool'), $message);
+        assertThat($actual, isNotBool(), $message);
     }
 
     /**
@@ -781,7 +749,7 @@ abstract class TestCase extends Original
      */
     public static function assertIsNotFloat($actual, string $message = ''): void
     {
-        assertThat($actual, isNotOfType('float'), $message);
+        assertThat($actual, isNotFloat(), $message);
     }
 
     /**
@@ -791,7 +759,7 @@ abstract class TestCase extends Original
      */
     public static function assertIsNotInt($actual, string $message = ''): void
     {
-        assertThat($actual, isNotOfType('int'), $message);
+        assertThat($actual, isNotInt(), $message);
     }
 
     /**
@@ -801,7 +769,7 @@ abstract class TestCase extends Original
      */
     public static function assertIsNotNumeric($actual, string $message = ''): void
     {
-        assertThat($actual, isNotOfType('numeric'), $message);
+        assertThat($actual, isNotNumeric(), $message);
     }
 
     /**
@@ -811,7 +779,7 @@ abstract class TestCase extends Original
      */
     public static function assertIsNotObject($actual, string $message = ''): void
     {
-        assertThat($actual, isNotOfType('object'), $message);
+        assertThat($actual, isNotAnObject(), $message);
     }
 
     /**
@@ -821,7 +789,7 @@ abstract class TestCase extends Original
      */
     public static function assertIsNotResource($actual, string $message = ''): void
     {
-        assertThat($actual, isNotOfType('resource'), $message);
+        assertThat($actual, isNotAResource(), $message);
     }
 
     /**
@@ -831,7 +799,7 @@ abstract class TestCase extends Original
      */
     public static function assertIsNotString($actual, string $message = ''): void
     {
-        assertThat($actual, isNotOfType('string'), $message);
+        assertThat($actual, isNotAString(), $message);
     }
 
     /**
@@ -841,7 +809,7 @@ abstract class TestCase extends Original
      */
     public static function assertIsNotScalar($actual, string $message = ''): void
     {
-        assertThat($actual, isNotOfType('scalar'), $message);
+        assertThat($actual, isNotScalar(), $message);
     }
 
     /**
@@ -851,7 +819,7 @@ abstract class TestCase extends Original
      */
     public static function assertIsNotCallable($actual, string $message = ''): void
     {
-        assertThat($actual, isNotOfType('callable'), $message);
+        assertThat($actual, isNotCallable(), $message);
     }
 
     /**
@@ -861,7 +829,7 @@ abstract class TestCase extends Original
      */
     public static function assertIsNotIterable($actual, string $message = ''): void
     {
-        assertThat($actual, isNotOfType('iterable'), $message);
+        assertThat($actual, isNotIterable(), $message);
     }
 
     /**

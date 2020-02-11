@@ -3,6 +3,7 @@
 ## 6.0.0 (2020-02-??)
 
 * Raised minimum required PHP version to 7.3.0
+* Upgraded PHPUnit compatibility layer to PHPUnit 9.0
 
 ## 5.1.1 (2019-12-10)
 

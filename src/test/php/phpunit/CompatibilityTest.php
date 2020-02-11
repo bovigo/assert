@@ -646,44 +646,6 @@ class CompatibilityTest extends TestCase
     /**
      * @test
      */
-    public function testAssertInternalTypeSuccess(): void
-    {
-        $this->assertInternalType('string', 'foo');
-    }
-
-    /**
-     * @test
-     */
-    public function testAssertInternalTypeFailure(): void
-    {
-        expect(function() { $this->assertInternalType('string', 303); })
-                ->throws(AssertionFailure::class)
-                ->withMessage('Failed asserting that 303 is of type "string".');
-    }
-
-    /**
-     * @test
-     */
-    public function testAssertNotInternalTypeSuccess(): void
-    {
-        $this->assertNotInternalType('string', 303);
-    }
-
-    /**
-     * @test
-     */
-    public function testAssertNotInternalTypeFailure(): void
-    {
-        expect(function() { $this->assertNotInternalType('string', 'foo'); })
-                ->throws(AssertionFailure::class)
-                ->withMessage(
-                        'Failed asserting that \'foo\' is not of type "string".'
-        );
-    }
-
-    /**
-     * @test
-     */
     public function testAssertRegExpSuccess(): void
     {
         $this->assertRegExp('/^([a-z]{3})$/', 'foo');
