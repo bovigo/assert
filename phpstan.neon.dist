@@ -45,3 +45,7 @@ parameters:
       -
           message: '#Method bovigo\\assert\\predicate\\IteratingPredicate::traversable\(\) return type has no value type specified in iterable type#'
           path: src/main/php/predicate/IteratingPredicate.php
+      # called method will return bool with third parameter set to true
+      -
+          message: '#Method bovigo\\assert\\phpunit\\ConstraintAdapter::test\(\) should return bool but returns bool\|null#'
+          path: src/main/php/phpunit/ConstraintAdapter.php
