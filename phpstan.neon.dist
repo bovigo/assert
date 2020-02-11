@@ -13,13 +13,13 @@ parameters:
           message: '#Parameter (.)+ of method bovigo\\assert\\Expectation::throws\(\) expects (.)+, int given#'
           path: src/test/php/ExpectationTest.php
       -
-          message: '#Parameter (.)+ of of function bovigo\\assert\\predicate\\hasKey expects int|string, array given#'
+          message: '#function bovigo\\assert\\predicate\\hasKey expects int\|string, array given#'
           path: src/test/php/predicate/HasKeyTest.php
       -
-          message: '#Parameter (.)+ of method bovigo\\assert\\predicate\\IsOfSize::traversable\(\) expects Iterator|IteratorAggregate, Traversable given#'
+          message: '#method bovigo\\assert\\predicate\\IsOfSize::traversable\(\) expects Iterator\|IteratorAggregate, Traversable<mixed, mixed> given#'
           path: src/main/php/predicate/IsOfSize.php
       -
-          message: '#method bovigo\\assert\\predicate\\IteratingPredicate::traversable\(\)  should return array|Iterator but returns iterable#'
+          message: '#Method bovigo\\assert\\predicate\\IteratingPredicate::traversable\(\) should return array\|Iterator but returns iterable#'
           path: src/main/php/predicate/IteratingPredicate.php
       -
           message: '#of class bovigo\\assert\\predicate\\CallablePredicate constructor expects callable\(\): mixed, string given#'

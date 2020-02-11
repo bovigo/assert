@@ -15,7 +15,7 @@ matrix:
 
 install:
   - composer install
-  - curl -L https://github.com/phpstan/phpstan/releases/download/0.12.1/phpstan.phar -o phpstan
+  - curl -L https://github.com/phpstan/phpstan/releases/download/0.12.9/phpstan.phar -o phpstan
   - chmod +x phpstan
 
 script:
