@@ -180,7 +180,7 @@ In case a delta is needed, e.g. for float values, the required delta can be set:
 assertThat($value, equals(5)->withDelta(0.1));
 ```
 
-### `isNotEqualTo($unexpected, $delta = 0.0)`
+### `isNotEqualTo($unexpected)`
 
 Tests that a value is not equal to the unexpected value. The optional parameter
 `$delta` can be used when equality of float values should be tested and allows
