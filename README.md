@@ -19,17 +19,17 @@ _bovigo/assert_ is distributed as [Composer](https://getcomposer.org/) package.
 To install it as a development dependency of your package use the following
 command:
 
-    composer require --dev "bovigo/assert": "^5.0"
+    composer require --dev "bovigo/assert": "^6.0"
 
 To install it as a runtime dependency for your package use the following command:
 
-    composer require "bovigo/assert=^5.0"
+    composer require "bovigo/assert=^6.0"
 
 
 Requirements
 ------------
 
-_bovigo/assert_ 5.x requires at least PHP 7.2.
+_bovigo/assert_ 6.x requires at least PHP 7.3.
 
 
 Why?
