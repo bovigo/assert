@@ -114,4 +114,40 @@ additional info"
 additional info"
         );
     }
+
+    /**
+     * @test
+     * @since  6.0.0
+     */
+    public function equalsWithDelta(): void
+    {
+        assertTrue(equals(5)->withDelta(0.1)->test(4.9));
+    }
+
+    /**
+     * @test
+     * @since  6.0.0
+     */
+    public function equalsWithFailingDelta(): void
+    {
+        assertFalse(equals(5)->withDelta(0.1)->test(4.8));
+    }
+
+    /**
+     * @test
+     * @since  6.0.0
+     */
+    public function notEqualsWithDelta(): void
+    {
+        assertTrue(isNotEqualTo(5)->withDelta(0.1)->test(4.8));
+    }
+
+    /**
+     * @test
+     * @since  6.0.0
+     */
+    public function notEqualsWithFailingDelta(): void
+    {
+        assertFalse(isNotEqualTo(5)->withDelta(0.1)->test(4.9));
+    }
 }

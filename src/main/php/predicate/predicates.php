@@ -122,11 +122,12 @@ function isFalse(): Predicate
  * returns predicate which tests for equality
  *
  * @api
+ * @deprecated  param  $delta is deprecated, use withDelta() on returned Predicate instead, will be removed with 7.0
  * @param   mixed  $expected  expected value
  * @param   float  $delta     optional  allowed numerical distance between two values to consider them equal
- * @return  \bovigo\assert\predicate\Predicate
+ * @return  \bovigo\assert\predicate\Equals
  */
-function equals($expected, float $delta = 0.0): Predicate
+function equals($expected, float $delta = 0.0): Equals
 {
     return new Equals($expected, $delta);
 }
@@ -135,13 +136,31 @@ function equals($expected, float $delta = 0.0): Predicate
  * returns predicate which tests for non-equality
  *
  * @api
+ * @deprecated  param  $delta is deprecated, use withDelta() on returned Predicate instead, will be removed with 7.0
  * @param   mixed  $unexpected  expected value
  * @param   float  $delta       optional  allowed numerical distance between two values to consider them not equal
- * @return  \bovigo\assert\predicate\Predicate
+ * @return  \bovigo\assert\predicate\Delta&\bovigo\assert\predicate\Predicate
  */
-function isNotEqualTo($unexpected, float $delta = 0.0): Predicate
+function isNotEqualTo($unexpected, float $delta = 0.0): Delta
 {
-    return not(equals($unexpected, $delta));
+    return new class(equals($unexpected, $delta)) extends NegatePredicate implements Delta
+    {
+        /**
+         * @var  Equals
+         */
+        private $equal;
+        public function __construct(Equals $equal)
+        {
+            $this->equal = $equal;
+            parent::__construct($equal);
+        }
+
+        public function withDelta(float $delta): Predicate
+        {
+            $this->equal->withDelta($delta);
+            return $this;
+        }
+    };
 }
 
 /**

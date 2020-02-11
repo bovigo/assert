@@ -164,7 +164,7 @@ assertThat($value, isFalse());
 Alias: `bovigo\assert\assertFalse($value, $description = null)`
 
 
-### `equals($expected, $delta = 0.0)`
+### `equals($expected)`
 
 Tests that a value equals the expected value. The optional parameter `$delta`
 can be used when equality of float values should be tested and allows for a
@@ -174,6 +174,11 @@ certain range in which two floats are considered equal.
 assertThat($value, equals('Roland TB 303'));
 ```
 
+In case a delta is needed, e.g. for float values, the required delta can be set:
+
+```php
+assertThat($value, equals(5)->withDelta(0.1));
+```
 
 ### `isNotEqualTo($unexpected, $delta = 0.0)`
 
@@ -183,6 +188,12 @@ for a certain range in which two floats are considered equal.
 
 ```php
 assertThat($value, isNotEqualTo('Roland TB 303'));
+```
+
+In case a delta is needed, e.g. for float values, the required delta can be set:
+
+```php
+assertThat($value, isNotEqualTo(5)->withDelta(0.1));
 ```
 
 
