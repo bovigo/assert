@@ -6,10 +6,11 @@ jobs:
   build:
 
     runs-on: ${{ matrix.os }}
-    strategy:      
+    strategy:
+      fail-fast: false
       matrix:
         php-versions: ['7.3', '7.4']
-        os: [ubuntu-latest, windows-latest, macOS-latest] 
+        os: [ubuntu-latest, windows-latest, macOS-latest]
 
     steps:
     - name: Configure git
