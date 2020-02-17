@@ -5,10 +5,19 @@ on: [push]
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+    strategy:      
+      matrix:
+        php-versions: ['7.3', '7.4']
+        os: [ubuntu-latest, windows-latest, macOS-latest] 
 
     steps:
     - uses: actions/checkout@v2
+
+    - name: Set up PHP ${{ matrix.php-versions }}
+       uses: shivammathur/setup-php@v2
+       with:
+         php-version: ${{ matrix.php-versions }}
 
     - name: Validate composer.json and composer.lock
       run: composer validate
