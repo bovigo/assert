@@ -7,7 +7,8 @@ Provides assertions for unit tests.
 Package status
 --------------
 
-[![Build Status](https://secure.travis-ci.org/bovigo/assert.png)](http://travis-ci.org/bovigo/assert) [![Build Status Windows](https://ci.appveyor.com/api/projects/status/t1u7ylbvdkbqqxyv?svg=true)](https://ci.appveyor.com/project/mikey179/assert) [![Coverage Status](https://coveralls.io/repos/github/bovigo/assert/badge.svg?branch=master)](https://coveralls.io/github/bovigo/assert?branch=master)
+
+![Build Status](https://github.com/bovigo/assert/workflows/Tests/badge.svg) [![Coverage Status](https://coveralls.io/repos/github/bovigo/assert/badge.svg?branch=master)](https://coveralls.io/github/bovigo/assert?branch=master)
 
 [![Latest Stable Version](https://poser.pugx.org/bovigo/assert/version.png)](https://packagist.org/packages/bovigo/assert) [![Latest Unstable Version](https://poser.pugx.org/bovigo/assert/v/unstable.png)](//packagist.org/packages/bovigo/assert)
 
