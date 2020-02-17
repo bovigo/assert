@@ -144,9 +144,11 @@ class EachKeyTest extends TestCase
         expect(function() { assertThat(['foo'], eachKey(isNotOfType('int'))); })
                 ->throws(AssertionFailure::class)
                 ->withMessage(
-                        'Failed asserting that key 0 in Array &0 (
-    0 => \'foo\'
-) is not of type "int".'
+                        'Failed asserting that key 0 in Array &0 ('
+                        . PHP_EOL
+                        . '    0 => \'foo\''
+                        . PHP_EOL
+                        . ') is not of type "int".'
         );
     }
 

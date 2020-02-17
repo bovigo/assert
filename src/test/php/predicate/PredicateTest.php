@@ -121,8 +121,9 @@ class PredicateTest extends TestCase
         })
         ->throws(AssertionFailure::class)
         ->withMessage(
-                'Failed asserting that an array is foo.
-some useful description'
+                'Failed asserting that an array is foo.'
+                . PHP_EOL
+                . 'some useful description'
         );
     }
 
@@ -136,9 +137,11 @@ some useful description'
         })
         ->throws(AssertionFailure::class)
         ->withMessage(
-                'Failed asserting that an array is foo.
-some useful description
-exception message'
+                'Failed asserting that an array is foo.'
+                . PHP_EOL
+                . 'some useful description'
+                . PHP_EOL
+                . 'exception message'
         );
     }
 

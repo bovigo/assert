@@ -57,8 +57,9 @@ class AssertTest extends TestCase
         })
         ->throws(AssertionFailure::class)
         ->withMessage(
-                    'Failed asserting that \'some value\' satisfies a lambda function.
-some more info'
+                    'Failed asserting that \'some value\' satisfies a lambda function.'
+                    . PHP_EOL
+                    .'some more info'
         );
     }
 
@@ -136,13 +137,18 @@ some more info'
         expect(function() { assertEmptyString('foo'); })
                 ->throws(AssertionFailure::class)
                 ->withMessage(
-                        "Failed asserting that 'foo' is an empty string.
---- Expected
-+++ Actual
-@@ @@
--''
-+'foo'
-"
+                        "Failed asserting that 'foo' is an empty string."
+                        . PHP_EOL
+                        . '--- Expected'
+                        . PHP_EOL
+                        . '+++ Actual'
+                        . PHP_EOL
+                        . '@@ @@'
+                        . PHP_EOL
+                        . "-''"
+                        . PHP_EOL
+                        . "+'foo'"
+                        . PHP_EOL
                 );
     }
 
@@ -164,13 +170,18 @@ some more info'
         expect(function() { assertEmptyArray(['foo']); })
                 ->throws(AssertionFailure::class)
                 ->message(startsWith(
-                        'Failed asserting that an array is an empty array.
---- Expected
-+++ Actual
-@@ @@
- Array (
-+    0 => \'foo\'
-'
+                        'Failed asserting that an array is an empty array.'
+                        . PHP_EOL
+                        . '--- Expected'
+                        . PHP_EOL
+                        . '+++ Actual'
+                        . PHP_EOL
+                        . '@@ @@'
+                        . PHP_EOL
+                        . ' Array ('
+                            . PHP_EOL
+                            . '+    0 => \'foo\''
+                            . PHP_EOL
         ));
     }
 
@@ -205,14 +216,20 @@ some more info'
         })
         ->throws(AssertionFailure::class)
         ->withMessage(
-                "Failed asserting that 'Hello you!' is equal to <string:Hello world!>.
---- Expected
-+++ Actual
-@@ @@
--'Hello world!'
-+'Hello you!'
-
-So be it"
+                "Failed asserting that 'Hello you!' is equal to <string:Hello world!>."
+                . PHP_EOL
+                . '--- Expected'
+                . PHP_EOL
+                . '+++ Actual'
+                . PHP_EOL
+                . '@@ @@'
+                . PHP_EOL
+                . "-'Hello world!'"
+                . PHP_EOL
+                . "+'Hello you!'"
+                . PHP_EOL
+                . PHP_EOL
+                . 'So be it'
         );
     }
 }

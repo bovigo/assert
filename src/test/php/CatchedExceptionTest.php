@@ -60,13 +60,18 @@ class CatchedExceptionTest extends TestCase
         })
         ->throws(AssertionFailure::class)
         ->withMessage(
-                "Failed asserting that exception message 'failure' is equal to <string:error>.
---- Expected
-+++ Actual
-@@ @@
--'error'
-+'failure'
-"
+                "Failed asserting that exception message 'failure' is equal to <string:error>."
+                . PHP_EOL
+                . '--- Expected'
+                . PHP_EOL
+                . '+++ Actual'
+                . PHP_EOL
+                . '@@ @@'
+                . PHP_EOL
+                . "-'error'"
+                . PHP_EOL
+                . "+'failure'"
+                . PHP_EOL
         );
     }
 
@@ -173,10 +178,10 @@ class CatchedExceptionTest extends TestCase
         })
         ->throws(AssertionFailure::class)
         ->withMessage(
-                'Failed asserting that object of type "' . get_class($throwable)
-                . '" is not identical to object of type "' . get_class($throwable)
-                . '".
-additional info'
+                'Failed asserting that object of type "' . get_class($throwable) . '"'
+                . ' is not identical to object of type "' . get_class($throwable) . '".'
+                . PHP_EOL
+                . 'additional info'
         );
     }
 

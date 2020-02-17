@@ -84,14 +84,20 @@ class EqualsTest extends TestCase
         expect(function() { assertThat('bar', equals('foo'), 'additional info'); })
                 ->throws(AssertionFailure::class)
                 ->withMessage(
-                        "Failed asserting that 'bar' is equal to <string:foo>.
---- Expected
-+++ Actual
-@@ @@
--'foo'
-+'bar'
-
-additional info"
+                        "Failed asserting that 'bar' is equal to <string:foo>."
+                        . PHP_EOL
+                        . '--- Expected'
+                        . PHP_EOL
+                        . '+++ Actual'
+                        . PHP_EOL
+                        . '@@ @@'
+                        . PHP_EOL
+                        . "-'foo'"
+                        . PHP_EOL
+                        . "+'bar'"
+                        . PHP_EOL
+                        . PHP_EOL
+                        . 'additional info'
         );
     }
 
@@ -103,15 +109,22 @@ additional info"
         expect(function() { assertThat('bar', equals("foo\n"), 'additional info'); })
                 ->throws(AssertionFailure::class)
                 ->withMessage(
-                        "Failed asserting that 'bar' is equal to <text>.
---- Expected
-+++ Actual
-@@ @@
--'foo\\n
--'
-+'bar'
-
-additional info"
+                        "Failed asserting that 'bar' is equal to <text>."
+                        . PHP_EOL
+                        . '--- Expected'
+                        . PHP_EOL
+                        . '+++ Actual'
+                        . PHP_EOL
+                        . '@@ @@'
+                        . PHP_EOL
+                        . "-'foo\\n"
+                        . PHP_EOL
+                        . "-'"
+                        . PHP_EOL
+                        . "+'bar'"
+                        . PHP_EOL
+                        . PHP_EOL
+                        . 'additional info'
         );
     }
 
