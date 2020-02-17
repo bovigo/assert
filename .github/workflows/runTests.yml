@@ -26,6 +26,7 @@ jobs:
         php-version: ${{ matrix.php-versions }}
         extensions: mbstring
         coverage: xdebug
+        tools: cs2pr, phpstan
 
     - name: Validate composer.json and composer.lock
       run: composer validate
@@ -52,3 +53,6 @@ jobs:
       run: |
         composer require php-coveralls/php-coveralls
         composer run-script php-coveralls -- --verbose
+
+    - name: PHPStan
+      run: phpstan analyse --error-format=checkstyle | cs2pr
