@@ -70,9 +70,8 @@ class OrPredicateTest extends TestCase
         })
         ->throws(AssertionFailure::class)
         ->withMessage(
-                'Failed asserting that 303 matches regular expression "/^([a-z]{3})$/" or is null.'
-                . PHP_EOL
-                . 'Given value of type "integer" can not be matched against a regular expression.'
+                'Failed asserting that 303 matches regular expression "/^([a-z]{3})$/" or is null.
+Given value of type "integer" can not be matched against a regular expression.'
         );
     }
 
@@ -86,9 +85,8 @@ class OrPredicateTest extends TestCase
         })
         ->throws(AssertionFailure::class)
         ->withMessage(
-                'Failed asserting that 303 is null or matches regular expression "/^([a-z]{3})$/".'
-                . PHP_EOL
-                . 'Given value of type "integer" can not be matched against a regular expression.'
+                'Failed asserting that 303 is null or matches regular expression "/^([a-z]{3})$/".
+Given value of type "integer" can not be matched against a regular expression.'
         );
     }
 
@@ -102,11 +100,9 @@ class OrPredicateTest extends TestCase
         })
         ->throws(AssertionFailure::class)
         ->withMessage(
-                'Failed asserting that 303 matches regular expression "/^([a-z]{3})$/" or contains \'dummy\'.'
-                . PHP_EOL
-                . 'Given value of type "integer" can not be matched against a regular expression.'
-                . PHP_EOL
-                . 'Given value of type "integer" can not contain something.'
+                'Failed asserting that 303 matches regular expression "/^([a-z]{3})$/" or contains \'dummy\'.
+Given value of type "integer" can not be matched against a regular expression.
+Given value of type "integer" can not contain something.'
         );
     }
 

@@ -137,11 +137,9 @@ class EachTest extends TestCase
         expect(function() { assertThat(['foo'], each(isNull())); })
                 ->throws(AssertionFailure::class)
                 ->withMessage(
-                        'Failed asserting that element \'foo\' at key 0 in Array &0 ('
-                        . PHP_EOL
-                        . '    0 => \'foo\''
-                        . PHP_EOL
-                        . ') is null.'
+                        'Failed asserting that element \'foo\' at key 0 in Array &0 (
+    0 => \'foo\'
+) is null.'
         );
     }
 
@@ -167,17 +165,12 @@ class EachTest extends TestCase
         expect(function() { assertThat(['foo', 'bar', null, 'baz'], each(isNotNull())); })
                 ->throws(AssertionFailure::class)
                 ->withMessage(
-                        'Failed asserting that element null at key 2 in Array &0 ('
-                        . PHP_EOL
-                        . '    0 => \'foo\''
-                        . PHP_EOL
-                        . '    1 => \'bar\''
-                        . PHP_EOL
-                        . '    2 => null'
-                        . PHP_EOL
-                        . '    3 => \'baz\''
-                        . PHP_EOL
-                        . ') is not null.'
+                        'Failed asserting that element null at key 2 in Array &0 (
+    0 => \'foo\'
+    1 => \'bar\'
+    2 => null
+    3 => \'baz\'
+) is not null.'
         );
     }
 }

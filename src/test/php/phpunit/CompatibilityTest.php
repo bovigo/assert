@@ -124,13 +124,10 @@ class CompatibilityTest extends TestCase
         expect(function() { $this->assertContainsOnly('int', [303, 'foo']); })
                 ->throws(AssertionFailure::class)
                 ->withMessage(
-                        'Failed asserting that element \'foo\' at key 1 in Array &0 ('
-                        . PHP_EOL
-                        . '    0 => 303'
-                        . PHP_EOL
-                        . '    1 => \'foo\''
-                        . PHP_EOL
-                        . ') is of type "int".'
+                        'Failed asserting that element \'foo\' at key 1 in Array &0 (
+    0 => 303
+    1 => \'foo\'
+) is of type "int".'
         );
     }
 
@@ -157,13 +154,10 @@ class CompatibilityTest extends TestCase
         })
         ->throws(AssertionFailure::class)
         ->withMessage(
-                'Failed asserting that element 303 at key 0 in Array &0 ('
-                . PHP_EOL
-                . '    0 => 303'
-                . PHP_EOL
-                . '    1 => \'foo\''
-                . PHP_EOL
-                . ') is an instance of class "stdClass".'
+                'Failed asserting that element 303 at key 0 in Array &0 (
+    0 => 303
+    1 => \'foo\'
+) is an instance of class "stdClass".'
         );
     }
 
@@ -196,13 +190,10 @@ class CompatibilityTest extends TestCase
         })
         ->throws(AssertionFailure::class)
         ->withMessage(
-                'Failed asserting that element 303 at key 0 in Array &0 ('
-                . PHP_EOL
-                . '    0 => 303'
-                . PHP_EOL
-                . '    1 => \'foo\''
-                . PHP_EOL
-                . ') is not of type "int".'
+                'Failed asserting that element 303 at key 0 in Array &0 (
+    0 => 303
+    1 => \'foo\'
+) is not of type "int".'
         );
     }
 

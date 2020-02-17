@@ -52,18 +52,13 @@ class CatchedErrorTest extends TestCase
         })
         ->throws(AssertionFailure::class)
         ->withMessage(
-                "Failed asserting that error message 'error' is equal to <string:failure>."
-                . PHP_EOL
-                . '--- Expected'
-                . PHP_EOL
-                . '+++ Actual'
-                . PHP_EOL
-                . '@@ @@'
-                . PHP_EOL
-                . "-'failure'"
-                . PHP_EOL
-                . "+'error'"
-                . PHP_EOL
+                "Failed asserting that error message 'error' is equal to <string:failure>.
+--- Expected
++++ Actual
+@@ @@
+-'failure'
++'error'
+"
         );
     }
 
