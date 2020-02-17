@@ -13,7 +13,7 @@ jobs:
 
     steps:
     - name: Configure git
-      if: ${{ matrix.os }} == 'windows-latest'
+      if: runner.os == 'windows-latest'
       run: git config --system core.autocrlf false && git config --system core.eol lf
 
     - name: Checkout
