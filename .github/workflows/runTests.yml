@@ -4,7 +4,7 @@ on: [push]
 
 jobs:
   tests:
-    name: PHP ${{ matrix.php-versions }} on ${{ matrix.operating-system }}
+    name: PHP ${{ matrix.php-versions }} on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
