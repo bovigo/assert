@@ -26,7 +26,7 @@ jobs:
         php-version: ${{ matrix.php-versions }}
         extensions: mbstring
         coverage: xdebug
-        tools: cs2pr, phpstan
+        tools: cs2pr, phpstan:0.12.9
 
     - name: Setup Problem Matchers for PHP
       run: echo "::add-matcher::${{ runner.tool_cache }}/php.json"
