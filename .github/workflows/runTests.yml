@@ -15,6 +15,7 @@ jobs:
       matrix:
         php-versions: ['7.3', '7.4']
         os: [ubuntu-latest, windows-latest, macOS-latest]
+        dependencies: ['install', 'update --prefer-lowest', 'update']
 
     steps:
     - name: Configure git
@@ -52,7 +53,7 @@ jobs:
         restore-keys: ${{ runner.os }}-composer-
 
     - name: Install dependencies
-      run: composer install --prefer-dist --no-progress --no-suggest
+      run: composer ${{ matrix.dependencies }} --prefer-dist --no-progress --no-suggest
 
     - name: Run test suite
       run: composer run-script test -- --coverage-text
