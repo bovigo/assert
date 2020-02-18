@@ -8,7 +8,7 @@ on:
 
 jobs:
   tests:
-    name: PHP ${{ matrix.php-versions }} on ${{ matrix.os }}
+    name: PHP ${{ matrix.php-versions }} on ${{ matrix.os }} w/ ${{ matrix.dependencies }}
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
