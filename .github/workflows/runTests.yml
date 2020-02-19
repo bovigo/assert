@@ -59,6 +59,7 @@ jobs:
       run: composer run-script test -- --coverage-text
 
     - name: Notify Coveralls
+      if: matrix.php-versions == '7.3' && runner.os == 'Linux' && matrix.dependencies == 'install'
       env:
         COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
       run: |
