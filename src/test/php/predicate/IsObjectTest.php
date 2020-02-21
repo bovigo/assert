@@ -27,9 +27,10 @@ class IsObjectTest extends TestCase
      */
     public function validObjects(): array
     {
+        $a = new class() {};
         return [
             'stdclass'        => [new \stdClass()],
-            'anonymous class' => [new class() {}]
+            'anonymous class' => [$a]
         ];
     }
 
