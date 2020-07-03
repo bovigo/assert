@@ -166,9 +166,9 @@ class Expectation
         }
 
         set_error_handler(
-                function(int $errno , string $errstr, string $errfile, int $errline, array $errcontext): bool
+                function(int $errno , string $errstr, string $errfile, int $errline, ?array $errcontext = null): bool
                 {
-                    $this->error = new CatchedError($errno, $errstr, $errfile, $errline, $errcontext);
+                    $this->error = new CatchedError($errno, $errstr, $errfile, $errline, $errcontext ?? []);
                     return true;
                 }
         );
