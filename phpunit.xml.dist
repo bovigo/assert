@@ -1,37 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit backupGlobals="false"
-         backupStaticAttributes="false"
-         bootstrap="vendor/autoload.php"
-         colors="true"
-         convertErrorsToExceptions="true"
-         convertNoticesToExceptions="true"
-         convertWarningsToExceptions="true"
-         forceCoversAnnotation="false"
-         processIsolation="false"
-         stopOnError="false"
-         stopOnFailure="false"
-         stopOnIncomplete="false"
-         stopOnSkipped="false"
-         verbose="true">
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" backupGlobals="false" backupStaticAttributes="false" bootstrap="vendor/autoload.php" colors="true" convertErrorsToExceptions="true" convertNoticesToExceptions="true" convertWarningsToExceptions="true" forceCoversAnnotation="false" processIsolation="false" stopOnError="false" stopOnFailure="false" stopOnIncomplete="false" stopOnSkipped="false" verbose="true" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd">
+  <coverage>
+    <include>
+      <directory>src/main/php</directory>
+    </include>
+    <report>
+      <clover outputFile="docs/phpunit/clover.xml"/>
+      <html outputDirectory="docs/coverage" lowUpperBound="35" highLowerBound="70"/>
+    </report>
+  </coverage>
   <testsuites>
     <testsuite name="default">
       <directory>./src/test/php</directory>
     </testsuite>
   </testsuites>
-
-  <filter>
-    <whitelist>
-      <directory>src/main/php</directory>
-    </whitelist>
-  </filter>
-
   <logging>
-    <log type="coverage-html" target="docs/coverage" lowUpperBound="35" highLowerBound="70"/>
-    <log type="coverage-clover" target="docs/phpunit/clover.xml"/>
-    <log type="junit" target="docs/phpunit/junit.xml"/>
-    <log type="testdox-html" target="docs/phpunit/testdox.html"/>
+    <junit outputFile="docs/phpunit/junit.xml"/>
+    <testdoxHtml outputFile="docs/phpunit/testdox.html"/>
   </logging>
-
   <php>
     <ini name="memory_limit" value="-1"/>
   </php>
