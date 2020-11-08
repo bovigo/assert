@@ -31,6 +31,9 @@ class IsOfTypeTest extends TestCase
                 ->throws(\InvalidArgumentException::class);
     }
 
+    /** only here for test purpose */
+    public static function dummy(): void {}
+
     /**
      * @return  array<string,array<mixed>>
      */
@@ -59,7 +62,8 @@ class IsOfTypeTest extends TestCase
             'scalar string'          => ['scalar', 'foo'],
             'callable closure'       => ['callable', function() {}],
             'callable function name' => ['callable', 'strlen'],
-            'callable class method'  => ['callable', [__CLASS__, 'validValuesAndTypes']],
+            'callable class method'  => ['callable', [$this, 'validValuesAndTypes']],
+            'callable static class method'  => ['callable', [__CLASS__, 'dummy']],
             'iterable'               => ['iterable', [1, 2, 3]]
         ];
     }
