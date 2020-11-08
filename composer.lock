@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5ec1b82d43635d564f423d24c7e437a2",
+    "content-hash": "7c1f6ff19aee7d697fb3107e6f751826",
     "packages": [
         {
             "name": "sebastian/comparator",
@@ -2017,7 +2017,7 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": "^7.3"
+        "php": "^7.3||^8.0"
     },
     "platform-dev": [],
     "plugin-api-version": "1.1.0"
