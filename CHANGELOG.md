@@ -1,5 +1,10 @@
 # Changelog
 
+## 6.1.0 (2020-11-??)
+
+* Ensured compatibility with PHP 8 (@jaapio)
+* Ensured compatibility with PHPUnit 9.2 and later (@jaapio, @mikey179)
+
 ## 6.0.0 (2020-02-11)
 
 ### BC breaks
