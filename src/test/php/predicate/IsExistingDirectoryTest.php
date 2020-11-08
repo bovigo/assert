@@ -26,7 +26,7 @@ class IsExistingDirectoryTest extends TestCase
     /**
      * set up test environment
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         $root  = vfsStream::setup();
         $basic = vfsStream::newDirectory('basic')->at($root);
