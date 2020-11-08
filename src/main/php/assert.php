@@ -259,13 +259,6 @@ function exporter(): Exporter
 /**
  * blacklist our own classes from being displayed in PHPUnit error stacks
  */
-if (class_exists(\PHPUnit\Util\Blacklist::class)) {
-    if (property_exists(\PHPUnit\Util\Blacklist::class, 'blacklistedClassNames')) {
-        \PHPUnit\Util\Blacklist::$blacklistedClassNames = array_merge(
-            \PHPUnit\Util\Blacklist::$blacklistedClassNames,
-            [Assertion::class => 1]
-        );
-    } else {
-        \PHPUnit\Util\Blacklist::addDirectory(__DIR__);
-    }
+if (class_exists(\PHPUnit\Util\ExcludeList::class)) {
+    \PHPUnit\Util\ExcludeList::addDirectory(__DIR__);
 }
