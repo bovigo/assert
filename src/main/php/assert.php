@@ -257,7 +257,7 @@ function exporter(): Exporter
 }
 
 /**
- * blacklist our own classes from being displayed in PHPUnit error stacks
+ * exclude our own classes from being displayed in PHPUnit error stacks
  */
 if (class_exists(\PHPUnit\Util\ExcludeList::class)) {
     \PHPUnit\Util\ExcludeList::addDirectory(__DIR__);
