@@ -58,10 +58,11 @@ jobs:
     - name: Run test suite
       run: composer run-script test -- --coverage-text
 
-    - name: Notify Coveralls
-      if: matrix.php-versions == '7.3' && runner.os == 'Linux' && matrix.dependencies == 'install'
-      env:
-        COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
-      run: |
-        composer require php-coveralls/php-coveralls
-        composer run-script php-coveralls -- --verbose
+# Deactivated until the reason for "Couldn't find a repository matching this job." error is found.
+#    - name: Notify Coveralls
+#      if: matrix.php-versions == '7.3' && runner.os == 'Linux' && matrix.dependencies == 'install'
+#      env:
+#        COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
+#      run: |
+#        composer require php-coveralls/php-coveralls
+#        composer run-script php-coveralls -- --verbose
