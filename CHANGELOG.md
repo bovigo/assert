@@ -1,6 +1,6 @@
 # Changelog
 
-## 6.1.0 (2020-11-??)
+## 6.1.0 (2020-11-15)
 
 * Ensured compatibility with PHP 8 (@jaapio)
 * Ensured compatibility with PHPUnit 9.2 and later (@jaapio, @mikey179)
