@@ -1,5 +1,9 @@
 # Changelog
 
+## 6.2.0 (not released yet)
+
+* Added support for `ArraySubset`
+
 ## 6.1.0 (2020-11-15)
 
 * Ensured compatibility with PHP 8 (@jaapio)
