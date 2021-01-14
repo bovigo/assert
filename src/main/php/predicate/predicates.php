@@ -260,6 +260,18 @@ function isNotAnArray(): Predicate
 }
 
 /**
+ * returns predicate which tests for array subset
+ *
+ * @api
+ * @param array<mixed> $other
+ * @since 6.2.0
+ */
+function containsSubset(array $other): ContainsSubset
+{
+    return new ContainsSubset($other);
+}
+
+/**
  * returns predicate which tests something is a boolean value
  *
  * @api

@@ -1,4 +1,5 @@
 bovigo/assert
+namespace bovigo\assert;
 ==============
 
 Provides assertions for unit tests.
@@ -391,7 +392,6 @@ array nor an instance of `\ArrayAccess` are rejected.
 assertThat($value, hasKey('roland'));
 ```
 
-
 ### `doesNotHaveKey($key)`
 
 Tests that an array or an instance of `\ArrayAccess` does not have a key with
@@ -401,6 +401,11 @@ are neither an array nor an instance of `\ArrayAccess` are rejected.
 ```php
 assertThat($value, doesNotHaveKey('roland'));
 ```
+
+### `containsSubset($other)`
+_Available since release 6.2.0._
+
+Tests that `$other` contains the value.
 
 
 ### `matches($pattern)`
