@@ -407,6 +407,9 @@ _Available since release 6.2.0._
 
 Tests that `$other` contains the value.
 
+```php
+assertThat($value, containsSubset(['TB-303', 'TR-808']));
+```
 
 ### `matches($pattern)`
 
