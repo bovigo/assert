@@ -1,6 +1,6 @@
 # Changelog
 
-## 6.2.0 (not released yet)
+## 6.2.0 (2021-03-07)
 
 * Added support for `containsSubset` (@lyrixx)
 
