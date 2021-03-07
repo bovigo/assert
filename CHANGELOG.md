@@ -2,7 +2,7 @@
 
 ## 6.2.0 (not released yet)
 
-* Added support for `ArraySubset`
+* Added support for `containsSubset` (@lyrixx)
 
 ## 6.1.0 (2020-11-15)
 
