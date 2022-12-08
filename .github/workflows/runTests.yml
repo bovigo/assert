@@ -48,7 +48,7 @@ jobs:
     - name: Cache dependencies
       uses: actions/cache@v3.0.11
       with:
-        path: "${{ env.composer_cache_dir }}"
+        path: ${{ env.composer_cache_dir }}
         key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
         restore-keys: ${{ runner.os }}-composer-
 
