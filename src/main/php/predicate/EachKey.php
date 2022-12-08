@@ -7,6 +7,7 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 namespace bovigo\assert\predicate;
+
 use SebastianBergmann\Exporter\Exporter;
 /**
  * Applies a predicate to each key of an array or traversable.
@@ -43,8 +44,6 @@ class EachKey extends IteratingPredicate
 
     /**
      * returns string representation of predicate
-     *
-     * @return  string
      */
     public function __toString(): string
     {
@@ -53,12 +52,8 @@ class EachKey extends IteratingPredicate
 
     /**
      * returns a textual description of given value
-     *
-     * @param   \SebastianBergmann\Exporter\Exporter  $exporter
-     * @param   mixed                                 $value
-     * @return  string
      */
-    public function describeValue(Exporter $exporter, $value): string
+    public function describeValue(Exporter $exporter, mixed $value): string
     {
         return (null !== $this->violatingKey ? 'key ' . $this->violatingKey . ' ' : '')
          . 'in ' . $exporter->export($value);

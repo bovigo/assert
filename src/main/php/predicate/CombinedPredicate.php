@@ -12,22 +12,10 @@ namespace bovigo\assert\predicate;
  */
 trait CombinedPredicate
 {
-    /**
-     * @var  Predicate
-     */
-    private $leftPredicate;
-    /**
-     * @var  Predicate
-     */
-    private $rightPredicate;
+    private Predicate $leftPredicate;
+    private Predicate $rightPredicate;
 
-    /**
-     * constructor
-     *
-     * @param  \bovigo\assert\predicate\Predicate|callable  $predicate1
-     * @param  \bovigo\assert\predicate\Predicate|callable  $predicate2
-     */
-    public function __construct(callable $predicate1, callable $predicate2)
+    public function __construct(Predicate|callable $predicate1, Predicate|callable $predicate2)
     {
         $this->leftPredicate  = Predicate::castFrom($predicate1);
         $this->rightPredicate = Predicate::castFrom($predicate2);
@@ -35,8 +23,6 @@ trait CombinedPredicate
 
     /**
      * returns amount of checks done in this predicate
-     *
-     * @return  int
      */
     public function count(): int
     {
@@ -45,8 +31,6 @@ trait CombinedPredicate
 
     /**
      * returns string representation of predicate
-     *
-     * @return  string
      */
     public function __toString(): string
     {
@@ -57,8 +41,6 @@ trait CombinedPredicate
 
     /**
      * returns combination operator as string
-     *
-     * @return  string
      */
     protected abstract function operator(): string;
 }

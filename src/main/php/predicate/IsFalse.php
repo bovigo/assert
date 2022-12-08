@@ -16,19 +16,14 @@ class IsFalse extends Predicate
 
     /**
      * test that the given value is false
-     *
-     * @param   scalar  $value
-     * @return  bool    true if value is false, else false
      */
-    public function test($value): bool
+    public function test(mixed $value): bool
     {
         return false === $value;
     }
 
     /**
      * returns string representation of predicate
-     *
-     * @return  string
      */
     public function __toString(): string
     {

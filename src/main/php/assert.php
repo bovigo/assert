@@ -7,6 +7,7 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 namespace bovigo\assert;
+
 use bovigo\assert\predicate\Predicate;
 use SebastianBergmann\Exporter\Exporter;
 
@@ -25,13 +26,9 @@ use function bovigo\assert\predicate\{
  *
  * @api
  * @since   3.1.0
- * @param   mixed                                        $value        value to test
- * @param   \bovigo\assert\predicate\Predicate|callable  $predicate    predicate or callable to test given value
- * @param   string                                       $description  optional  additional description for failure message
- * @return  bool
- * @throws  \bovigo\assert\AssertionFailure
+ * @throws  AssertionFailure
  */
-function assertThat($value, callable $predicate, string $description = null): bool
+function assertThat(mixed $value, Predicate|callable $predicate, string $description = null): bool
 {
     return (new Assertion($value, exporter()))
             ->evaluate(counting(Predicate::castFrom($predicate)), $description);
@@ -41,8 +38,7 @@ function assertThat($value, callable $predicate, string $description = null): bo
  * fail a test with given message
  *
  * @api
- * @param   string  $description
- * @throws  \bovigo\assert\AssertionFailure
+ * @throws  AssertionFailure
  * @since   1.2.0
  */
 function fail(string $description): void
@@ -53,8 +49,6 @@ function fail(string $description): void
 /**
  * sets up an expectation for given code
  *
- * @param   callable  $code
- * @return  \bovigo\assert\Expectation
  * @since   1.6.0
  */
 function expect(callable $code): Expectation
@@ -65,14 +59,10 @@ function expect(callable $code): Expectation
 /**
  * asserts that the output of given code satisfies given predicate
  *
- * @param   callable                                     $code
- * @param   \bovigo\assert\predicate\Predicate|callable  $predicate    predicate or callable to test given value
- * @param   string                                       $description  optional  additional description for failure message
- * @return  bool
- * @throws  \bovigo\assert\AssertionFailure
+ * @throws  AssertionFailure
  * @since   2.1.0
  */
-function outputOf(callable $code, callable $predicate, string $description = null): bool
+function outputOf(callable $code, Predicate|callable $predicate, string $description = null): bool
 {
     ob_start();
     $code();
@@ -85,12 +75,9 @@ function outputOf(callable $code, callable $predicate, string $description = nul
  * alias for assertThat($value, isTrue()[, $description])
  *
  * @api
- * @param   mixed   $value        value to test
- * @param   string  $description  optional  additional description for failure message
- * @return  bool
  * @since   1.3.0
  */
-function assertTrue($value, string $description = null): bool
+function assertTrue(mixed $value, string $description = null): bool
 {
     return assertThat($value, isTrue(), $description);
 }
@@ -99,12 +86,9 @@ function assertTrue($value, string $description = null): bool
  * alias for assertThat($value, isFalse()[, $description])
  *
  * @api
- * @param   mixed   $value        value to test
- * @param   string  $description  optional  additional description for failure message
- * @return  bool
  * @since   1.3.0
  */
-function assertFalse($value, string $description = null): bool
+function assertFalse(mixed $value, string $description = null): bool
 {
     return assertThat($value, isFalse(), $description);
 }
@@ -113,12 +97,9 @@ function assertFalse($value, string $description = null): bool
  * alias for assertThat($value, isNull()[, $description])
  *
  * @api
- * @param   mixed   $value        value to test
- * @param   string  $description  optional  additional description for failure message
- * @return  bool
  * @since   1.3.0
  */
-function assertNull($value, string $description = null): bool
+function assertNull(mixed $value, string $description = null): bool
 {
     return assertThat($value, isNull(), $description);
 }
@@ -127,12 +108,9 @@ function assertNull($value, string $description = null): bool
  * alias for assertThat($value, isNotNull()[, $description])
  *
  * @api
- * @param   mixed   $value        value to test
- * @param   string  $description  optional  additional description for failure message
- * @return  bool
  * @since   1.3.0
  */
-function assertNotNull($value, string $description = null): bool
+function assertNotNull(mixed $value, string $description = null): bool
 {
     return assertThat($value, isNotNull(), $description);
 }
@@ -141,12 +119,9 @@ function assertNotNull($value, string $description = null): bool
  * alias for assertThat($value, isEmpty()[, $description])
  *
  * @api
- * @param   mixed   $value        value to test
- * @param   string  $description  optional  additional description for failure message
- * @return  bool
  * @since   1.3.0
  */
-function assertEmpty($value, string $description = null): bool
+function assertEmpty(mixed $value, string $description = null): bool
 {
     return assertThat($value, isEmpty(), $description);
 }
@@ -154,25 +129,20 @@ function assertEmpty($value, string $description = null): bool
 /**
  * alias for assertThat($value, equals(''), $description)
  * @api
- * @param   mixed   $value        value to test
- * @param   string  $description  optional  additional description for failure message
- * @return  bool
  * @since   1.5.0
  */
-function assertEmptyString($value, string $description = null): bool
+function assertEmptyString(mixed $value, string $description = null): bool
 {
     return assertThat($value, equals(''), $description);
 }
 
 /**
  * alias for assertThat($value, equals([]), $description)
+ *
  * @api
- * @param   mixed   $value        value to test
- * @param   string  $description  optional  additional description for failure message
- * @return  bool
  * @since   1.5.0
  */
-function assertEmptyArray($value, string $description = null): bool
+function assertEmptyArray(mixed $value, string $description = null): bool
 {
     return assertThat($value, equals([]), $description);
 }
@@ -181,12 +151,9 @@ function assertEmptyArray($value, string $description = null): bool
  * alias for assertThat($value, isNotEmpty()[, $description])
  *
  * @api
- * @param   mixed   $value        value to test
- * @param   string  $description  optional  additional description for failure message
- * @return  bool
  * @since   1.3.0
  */
-function assertNotEmpty($value, string $description = null): bool
+function assertNotEmpty(mixed $value, string $description = null): bool
 {
     return assertThat($value, isNotEmpty(), $description);
 }
@@ -198,7 +165,6 @@ function assertNotEmpty($value, string $description = null): bool
  *
  * @internal
  * @staticvar  \ReflectionProperty  $property
- * @param   int  $assertions
  */
 function increaseAssertionCounter(int $assertions): void
 {
@@ -218,8 +184,6 @@ function increaseAssertionCounter(int $assertions): void
  * adds predicate count as constraint count to PHPUnit if present
  *
  * @internal
- * @param   \bovigo\assert\predicate\Predicate  $predicate
- * @return  \bovigo\assert\predicate\Predicate
  */
 function counting(Predicate $predicate): Predicate
 {
@@ -231,10 +195,8 @@ function counting(Predicate $predicate): Predicate
  * exports a value as a string
  *
  * @api
- * @param   mixed   $value
- * @return  string
  */
-function export($value): string
+function export(mixed $value): string
 {
     return exporter()->export($value);
 }
@@ -243,8 +205,7 @@ function export($value): string
  * returns always the same exporter instance
  *
  * @internal
- * @staticvar  \SebastianBergmann\Exporter\Exporter  $exporter
- * @return     \SebastianBergmann\Exporter\Exporter
+ * @staticvar  Exporter  $exporter
  */
 function exporter(): Exporter
 {

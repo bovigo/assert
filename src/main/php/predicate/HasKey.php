@@ -7,6 +7,9 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 namespace bovigo\assert\predicate;
+
+use ArrayAccess;
+use InvalidArgumentException;
 use SebastianBergmann\Exporter\Exporter;
 
 use function bovigo\assert\export;
@@ -15,49 +18,24 @@ use function bovigo\assert\export;
  */
 class HasKey extends Predicate
 {
-    /**
-     * key which must be in array
-     *
-     * @var  int|string
-     */
-    private $key;
-
-    /**
-     * constructor
-     *
-     * @param   int|string  $key  key which must be in array
-     * @throws  \InvalidArgumentException
-     */
-    public function __construct($key)
-    {
-        if (!is_int($key) && !is_string($key)) {
-            throw new \InvalidArgumentException(
-                    'Key must be integer or string, '
-                    . gettype($key) . ' given'
-            );
-        }
-
-        $this->key = $key;
-    }
+    public function __construct(private int|string $key) { }
 
     /**
      * tests that the given value contains expected key
      *
-     * @param   mixed  $value
-     * @return  bool
-     * @throws  \InvalidArgumentException  in case given value can't have a key
+     * @throws  InvalidArgumentException  in case given value can't have a key
      */
-    public function test($value): bool
+    public function test(mixed $value): bool
     {
         if (is_array($value)) {
             return array_key_exists($this->key, $value);
         }
 
-        if ($value instanceof \ArrayAccess) {
+        if ($value instanceof ArrayAccess) {
             return $value->offsetExists($this->key);
         }
 
-        throw new \InvalidArgumentException(
+        throw new InvalidArgumentException(
                 'Given value of type ' . gettype($value)
                 . ' can not have a key'
         );
@@ -65,8 +43,6 @@ class HasKey extends Predicate
 
     /**
      * returns string representation of predicate
-     *
-     * @return  string
      */
     public function __toString(): string
     {
@@ -75,14 +51,10 @@ class HasKey extends Predicate
 
     /**
      * returns a textual description of given value
-     *
-     * @param   \SebastianBergmann\Exporter\Exporter  $exporter
-     * @param   mixed                                 $value
-     * @return  string
      */
-    public function describeValue(Exporter $exporter, $value): string
+    public function describeValue(Exporter $exporter, mixed $value): string
     {
-        if ($value instanceof \ArrayAccess) {
+        if ($value instanceof ArrayAccess) {
             return get_class($value) . ' implementing \ArrayAccess';
         }
 

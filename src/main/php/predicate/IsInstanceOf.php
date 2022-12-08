@@ -7,6 +7,8 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 namespace bovigo\assert\predicate;
+
+use InvalidArgumentException;
 use SebastianBergmann\Exporter\Exporter;
 /**
  * Predicate to test that something is an instance of the expected type.
@@ -14,43 +16,25 @@ use SebastianBergmann\Exporter\Exporter;
 class IsInstanceOf extends Predicate
 {
     /**
-     * @var  string
+     * @throws  InvalidArgumentException  in case given type name is not an existing class or interface
      */
-    private $expectedType;
-
-    /**
-     * constructor
-     *
-     * @param   string  $expectedType  name of expected type
-     * @throws  \InvalidArgumentException  in case given type name is not an existing class or interface
-     */
-    public function __construct(string $expectedType)
+    public function __construct(private string $expectedType)
     {
-        if (!class_exists($expectedType) && !interface_exists($expectedType)) {
-            throw new \InvalidArgumentException(
-                    'Given expected type must be a string representing an'
-                    . ' existing class or interface'
+        if (!class_exists($this->expectedType) && !interface_exists($this->expectedType)) {
+            throw new InvalidArgumentException(
+                'Given expected type must be a string representing an'
+                . ' existing class or interface'
             );
         }
-
-        $this->expectedType = $expectedType;
     }
 
-    /**
-     * test that the given value is true
-     *
-     * @param   mixed  $value
-     * @return  bool   true if value is instance of expected type
-     */
-    public function test($value): bool
+    public function test(mixed $value): bool
     {
         return $value instanceof $this->expectedType;
     }
 
     /**
      * returns string representation of predicate
-     *
-     * @return  string
      */
     public function __toString(): string
     {
@@ -63,12 +47,8 @@ class IsInstanceOf extends Predicate
 
     /**
      * returns a textual description of given value
-     *
-     * @param   \SebastianBergmann\Exporter\Exporter  $exporter
-     * @param   mixed                                 $value
-     * @return  string
      */
-    public function describeValue(Exporter $exporter, $value): string
+    public function describeValue(Exporter $exporter, mixed $value): string
     {
         if (is_array($value)) {
             return 'an array';

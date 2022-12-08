@@ -7,43 +7,21 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 namespace bovigo\assert;
+
 use bovigo\assert\predicate\Predicate;
 use SebastianBergmann\Exporter\Exporter;
+
 /**
  * Allows to evaluate predicates on a given value.
  */
 class Assertion
 {
-    /**
-     * value to do the assertion on
-     *
-     * @var  mixed
-     */
-    private $value;
-    /**
-     * @var  \SebastianBergmann\Exporter\Exporter
-     */
-    private $exporter;
-
-    /**
-     * constructor
-     *
-     * @param  mixed                                 $value
-     * @param  \SebastianBergmann\Exporter\Exporter  $exporter
-     */
-    public function __construct($value, Exporter $exporter)
-    {
-        $this->value    = $value;
-        $this->exporter = $exporter;
-    }
+    public function __construct(private $value, private Exporter $exporter) { }
 
     /**
      * evaluates predicate against value, throwing an AssertionFailure when predicate fails
      *
-     * @param   \bovigo\assert\predicate\Predicate  $predicate    predicate to test given value
-     * @param   string                              $description  optional  additional description for failure message
-     * @return  bool
-     * @throws  \bovigo\assert\AssertionFailure
+     * @throws  AssertionFailure
      */
     public function evaluate(Predicate $predicate, string $description = null): bool
     {
@@ -60,16 +38,12 @@ class Assertion
         }
 
         throw new AssertionFailure(
-                $this->describeFailure($predicate, $description)
+            $this->describeFailure($predicate, $description)
         );
     }
 
     /**
      * creates failure description when value failed the test with given predicate
-     *
-     * @param   \bovigo\assert\predicate\Predicate  $predicate    predicate that failed
-     * @param   string                              $description  additional description for failure message
-     * @return  string
      */
     private function describeFailure(Predicate $predicate, string $description = null): string
     {

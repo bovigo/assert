@@ -7,8 +7,10 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 namespace bovigo\assert;
+
 use bovigo\assert\predicate\Predicate;
 use bovigo\assert\predicate\Wrap;
+use Throwable;
 
 use function bovigo\assert\predicate\equals;
 /**
@@ -18,27 +20,12 @@ use function bovigo\assert\predicate\equals;
  */
 class CatchedException
 {
-    /**
-     * @var  \Throwable
-     */
-    private $actualException;
-
-    /**
-     * constructor
-     *
-     * @param  \Throwable  $actualException
-     */
-    public function __construct(\Throwable $actualException)
-    {
-        $this->actualException = $actualException;
-    }
+    public function __construct(private Throwable $actualException) { }
 
     /**
      * asserts actual exception equals expected message
      *
      * @api
-     * @param   string  $expectedMessage
-     * @return  \bovigo\assert\CatchedException
      */
     public function withMessage(string $expectedMessage): self
     {
@@ -49,10 +36,8 @@ class CatchedException
      * asserts actual exception fulfills given predicate
      *
      * @api
-     * @param   \bovigo\assert\predicate\Predicate|callable  $predicate
-     * @return  \bovigo\assert\CatchedException
      */
-    public function message(callable $predicate): self
+    public function message(Predicate|callable $predicate): self
     {
         assertThat(
                 $this->actualException->getMessage(),
@@ -65,8 +50,6 @@ class CatchedException
      * asserts actual exception code equals expected code
      *
      * @api
-     * @param   int  $expectedCode
-     * @return  \bovigo\assert\CatchedException
      */
     public function withCode(int $expectedCode): self
     {
@@ -81,11 +64,8 @@ class CatchedException
      * asserts actual exception fulfills predicate
      *
      * @api
-     * @param   \bovigo\assert\predicate\Predicate|callable  $predicate
-     * @param   string                                       $description  optional  additional description for failure message
-     * @return  \bovigo\assert\CatchedException
      */
-    public function with(callable $predicate, string $description = null): self
+    public function with(Predicate|callable $predicate, string $description = null): self
     {
         assertThat($this->actualException, $predicate, $description);
         return $this;
@@ -95,12 +75,8 @@ class CatchedException
      * asserts anything after the exception was catched
      *
      * @api
-     * @param   mixed                                        $value        value to test
-     * @param   \bovigo\assert\predicate\Predicate|callable  $predicate    predicate or callable to test given value
-     * @param   string                                       $description  optional  additional description for failure message
-     * @return  \bovigo\assert\CatchedException
      */
-    public function after($value, callable $predicate, string $description = null): self
+    public function after(mixed $value, Predicate|callable $predicate, string $description = null): self
     {
         assertThat($value, $predicate, $description);
         return $this;

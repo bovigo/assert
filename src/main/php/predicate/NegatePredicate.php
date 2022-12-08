@@ -13,36 +13,23 @@ use SebastianBergmann\Exporter\Exporter;
  */
 class NegatePredicate extends Predicate
 {
-    /**
-     * @var  Predicate
-     */
-    private $predicate;
+    private Predicate $predicate;
 
-    /**
-     * constructor
-     *
-     * @param  \bovigo\assert\predicate\Predicate|callable  $predicate
-     */
-    public function __construct($predicate)
+    public function __construct(Predicate|callable $predicate)
     {
         $this->predicate = Predicate::castFrom($predicate);
     }
 
     /**
      * evaluates predicate against given value
-     *
-     * @param   mixed  $value
-     * @return  bool
      */
-    public function test($value): bool
+    public function test(mixed $value): bool
     {
         return !$this->predicate->test($value);
     }
 
     /**
      * returns amount of checks done in this predicate
-     *
-     * @return  int
      */
     public function count(): int
     {
@@ -51,8 +38,6 @@ class NegatePredicate extends Predicate
 
     /**
      * returns string representation of predicate
-     *
-     * @return  string
      */
     public function __toString(): string
     {
@@ -70,9 +55,6 @@ class NegatePredicate extends Predicate
 
     /**
      * returns a negation of the given string
-     *
-     * @param   string  $string
-     * @return  string
      */
     private function reverse(string $string): string
     {
@@ -105,12 +87,8 @@ class NegatePredicate extends Predicate
 
     /**
      * returns a textual description of given value
-     *
-     * @param   \SebastianBergmann\Exporter\Exporter  $exporter
-     * @param   mixed                                 $value
-     * @return  string
      */
-    public function describeValue(Exporter $exporter, $value): string
+    public function describeValue(Exporter $exporter, mixed $value): string
     {
         return $this->predicate->describeValue($exporter, $value);
     }

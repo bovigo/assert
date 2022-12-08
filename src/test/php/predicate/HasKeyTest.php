@@ -22,15 +22,6 @@ use function bovigo\assert\expect;
 class HasKeyTest extends TestCase
 {
     /**
-     * @test
-     */
-    public function createWithNonIntegetOrStringThrowsInvalidArgumentException(): void
-    {
-        expect(function() { hasKey([]); })
-                ->throws(\InvalidArgumentException::class);
-    }
-
-    /**
      * @return  array<array<mixed>>
      */
     public function tuplesEvaluatingToTrue(): array

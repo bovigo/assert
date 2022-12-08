@@ -7,6 +7,12 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 namespace bovigo\assert\predicate;
+
+use InvalidArgumentException;
+use Iterator;
+use IteratorAggregate;
+use Traversable;
+
 /**
  * Applies a predicate to each value of an array or traversable.
  *
@@ -17,17 +23,9 @@ namespace bovigo\assert\predicate;
  */
 abstract class IteratingPredicate extends Predicate
 {
-    /**
-     * @var  \bovigo\assert\predicate\Predicate
-     */
-    protected $predicate;
+    protected Predicate $predicate;
 
-    /**
-     * constructor
-     *
-     * @param  callable|\bovigo\assert\predicate\Predicate  $predicate
-     */
-    public function __construct($predicate)
+    public function __construct(Predicate|callable $predicate)
     {
         $this->predicate = Predicate::castFrom($predicate);
     }
@@ -35,16 +33,14 @@ abstract class IteratingPredicate extends Predicate
     /**
      * evaluates predicate against given value
      *
-     * @param   mixed  $value
-     * @return  bool
-     * @throws  \InvalidArgumentException
+     * @throws  InvalidArgumentException
      */
     public function test($value): bool
     {
-        if (!is_array($value) && !($value instanceof \Traversable)) {
-            throw new \InvalidArgumentException(
-                    'Given value is neither an array nor an instance of '
-                    . '\Traversable, but of type ' . gettype($value)
+        if (!is_array($value) && !($value instanceof Traversable)) {
+            throw new InvalidArgumentException(
+                'Given value is neither an array nor an instance of '
+                . '\Traversable, but of type ' . gettype($value)
             );
         }
 
@@ -60,21 +56,15 @@ abstract class IteratingPredicate extends Predicate
 
     /**
      * actually tests the value
-     *
-     * @param   iterable  $traversable
-     * @return  bool
      */
     protected abstract function doTest(iterable $traversable): bool;
 
     /**
      * retrieve actual iterator
-     *
-     * @param   iterable  $traversable
-     * @return  array|\Iterator
      */
-    private function traversable(iterable $traversable)
+    private function traversable(iterable $traversable): array|Iterator
     {
-        if ($traversable instanceof \IteratorAggregate) {
+        if ($traversable instanceof IteratorAggregate) {
             return $this->traversable($traversable->getIterator());
         }
 
@@ -83,11 +73,8 @@ abstract class IteratingPredicate extends Predicate
 
     /**
      * retrieves current key of traversable
-     *
-     * @param   array|\Iterator  $traversable
-     * @return  int|string|null
      */
-    private function key($traversable)
+    private function key(array|Iterator $traversable): int|string|null
     {
         if (is_array($traversable)) {
             return key($traversable);
@@ -98,11 +85,8 @@ abstract class IteratingPredicate extends Predicate
 
     /**
      * rewinds traversable to given key to not change state of traversable
-     *
-     * @param  array<mixed>|\Iterator<mixed,mixed>  $traversable
-     * @param  int|string       $key
      */
-    private function rewind($traversable, $key): void
+    private function rewind(array|Iterator $traversable, int|string $key): void
     {
         if (is_array($traversable)) {
             foreach ($traversable as $currentKey => $value) {
@@ -120,8 +104,6 @@ abstract class IteratingPredicate extends Predicate
 
     /**
      * returns amount of checks done in this predicate
-     *
-     * @return  int
      */
     public function count(): int
     {

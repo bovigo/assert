@@ -13,38 +13,18 @@ use function bovigo\assert\export;
  */
 class IsLessThan extends Predicate
 {
-    /**
-     * expected maximum value
-     *
-     * @var  int|float
-     */
-    private $expected;
-
-    /**
-     * constructor
-     *
-     * @param  int|float  $expected  expected maximum value
-     */
-    public function __construct($expected)
-    {
-        $this->expected = $expected;
-    }
+    public function __construct(private int|float $expected) { }
 
     /**
      * test that the given value is smaller than the expected value
-     *
-     * @param   mixed  $value
-     * @return  bool
      */
-    public function test($value): bool
+    public function test(mixed $value): bool
     {
         return $value < $this->expected;
     }
 
     /**
      * returns string representation of predicate
-     *
-     * @return  string
      */
     public function __toString(): string
     {

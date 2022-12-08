@@ -7,7 +7,9 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 namespace bovigo\assert\predicate;
+
 use bovigo\assert\CatchedError;
+use InvalidArgumentException;
 use SebastianBergmann\Exporter\Exporter;
 /**
  * Predicate to check that a piece of code triggers an error.
@@ -16,32 +18,17 @@ use SebastianBergmann\Exporter\Exporter;
  */
 class ExpectedError extends Predicate
 {
-    /**
-     * @var  int
-     */
-    private $expectedError;
-
-    /**
-     * constructor
-     *
-     * @param  int  $expectedError
-     */
-    public function __construct(int $expectedError)
-    {
-        $this->expectedError = $expectedError;
-    }
+    public function __construct(private int $expectedError) { }
 
     /**
      * tests that the given value contains expected key
      *
-     * @param   mixed  $value
-     * @return  bool
-     * @throws  \InvalidArgumentException  in case given value isn't a catched error
+     * @throws  InvalidArgumentException  in case given value isn't a catched error
      */
     public function test($value): bool
     {
-        if (! $value instanceof CatchedError) {
-            throw new \InvalidArgumentException('Given value is not an error');
+        if (!$value instanceof CatchedError) {
+            throw new InvalidArgumentException('Given value is not an error');
         }
 
         return $value->level() === $this->expectedError;
@@ -49,8 +36,6 @@ class ExpectedError extends Predicate
 
     /**
      * returns string representation of predicate
-     *
-     * @return  string
      */
     public function __toString(): string
     {
@@ -59,13 +44,8 @@ class ExpectedError extends Predicate
 
     /**
      * returns a textual description of given value
-     *
-     * @param   \SebastianBergmann\Exporter\Exporter  $exporter
-     * @param   mixed                                 $value
-     * @return  string
-     * @throws  \InvalidArgumentException  in case given value can't have a key
      */
-    public function describeValue(Exporter $exporter, $value): string
+    public function describeValue(Exporter $exporter, mixed $value): string
     {
         if (! $value instanceof CatchedError) {
             return parent::describeValue($exporter, $value);

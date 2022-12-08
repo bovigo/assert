@@ -7,43 +7,33 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 namespace bovigo\assert\predicate;
+
+use Countable;
+use InvalidArgumentException;
+use Iterator;
+use IteratorAggregate;
 use SebastianBergmann\Exporter\Exporter;
+use Traversable;
+
 /**
  * Predicate to test that something is of a certain size.
  */
 class IsOfSize extends Predicate
 {
-    /**
-     * the expected size
-     *
-     * @var  int
-     */
-    private $expectedSize;
-
-    /**
-     * constructor
-     *
-     * @param  int   $expectedSize  value to which test size must be equal
-     */
-    public function __construct(int $expectedSize)
-    {
-        $this->expectedSize = $expectedSize;
-    }
+    public function __construct(private int $expectedSize) { }
 
     /**
      * test that the given value is of a certain size
      *
-     * @param   mixed  $value
-     * @return  bool   true if size of value is equal to expected size, else false
-     * @throws  \InvalidArgumentException
+     * @throws  InvalidArgumentException in case given value is not countable
      */
-    public function test($value): bool
+    public function test(mixed $value): bool
     {
         if (!$this->isCountable($value)) {
-            throw new \InvalidArgumentException(
-                    'Given value is neither a string, an array,'
-                    . ' nor an instance of \Countable or \Traversable,'
-                    . ' but of type ' . gettype($value)
+            throw new InvalidArgumentException(
+                'Given value is neither a string, an array,'
+                . ' nor an instance of \Countable or \Traversable,'
+                . ' but of type ' . gettype($value)
             );
         }
 
@@ -52,22 +42,16 @@ class IsOfSize extends Predicate
 
     /**
      * checks if given value is countable
-     *
-     * @param   mixed  $value
-     * @return  bool
      */
-    private function isCountable($value): bool
+    private function isCountable(mixed $value): bool
     {
-        return is_string($value) || is_array($value) || $value instanceof \Countable || $value instanceof \Traversable;
+        return is_string($value) || is_array($value) || $value instanceof Countable || $value instanceof Traversable;
     }
 
     /**
      * calculates the size of given value
-     *
-     * @param   string|array|\Countable|\Iterator|\IteratorAggregate  $value
-     * @return  int
      */
-    private function sizeOf($value): int
+    private function sizeOf(string|array|Countable|Iterator|IteratorAggregate $value): int
     {
         if (is_string($value)) {
             return strlen($value);
@@ -90,11 +74,8 @@ class IsOfSize extends Predicate
 
     /**
      * retrieve actual iterator
-     *
-     * @param   \Iterator|\IteratorAggregate  $traversable
-     * @return  \Iterator
      */
-    private function traversable($traversable): \Iterator
+    private function traversable(Iterator|IteratorAggregate $traversable): Iterator
     {
         if ($traversable instanceof \IteratorAggregate) {
             return $this->traversable($traversable->getIterator());
@@ -105,8 +86,6 @@ class IsOfSize extends Predicate
 
     /**
      * returns string representation of predicate
-     *
-     * @return  string
      */
     public function __toString(): string
     {
@@ -115,12 +94,8 @@ class IsOfSize extends Predicate
 
     /**
      * returns a textual description of given value
-     *
-     * @param   \SebastianBergmann\Exporter\Exporter  $exporter
-     * @param   mixed                                 $value
-     * @return  string
      */
-    public function describeValue(Exporter $exporter, $value): string
+    public function describeValue(Exporter $exporter, mixed $value): string
     {
         if ($this->isCountable($value)) {
             if (is_string($value)) {

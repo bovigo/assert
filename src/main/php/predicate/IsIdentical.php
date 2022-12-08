@@ -19,29 +19,13 @@ class IsIdentical extends Predicate
      * @var float
      */
     private const EPSILON = 0.0000000001;
-    /**
-     *
-     * @var  mixed
-     */
-    private $expected;
 
-    /**
-     * constructor
-     *
-     * @param  mixed  $value
-     */
-    public function __construct($value)
-    {
-        $this->expected = $value;
-    }
+    public function __construct(private mixed $expected) { }
 
     /**
      * test that the given value is eqal in content and type to the expected value
-     *
-     * @param   scalar|null  $value
-     * @return  bool         true if value is equal to expected value, else false
      */
-    public function test($value): bool
+    public function test(mixed $value): bool
     {
         if (is_double($this->expected) && is_double($value) &&
             !is_infinite($this->expected) && !is_infinite($value) &&
@@ -54,8 +38,6 @@ class IsIdentical extends Predicate
 
     /**
      * returns string representation of predicate
-     *
-     * @return  string
      */
     public function __toString(): string
     {
@@ -69,12 +51,8 @@ class IsIdentical extends Predicate
 
     /**
      * returns a textual description of given value
-     *
-     * @param   \SebastianBergmann\Exporter\Exporter  $exporter
-     * @param   mixed                                 $value
-     * @return  string
      */
-    public function describeValue(Exporter $exporter, $value): string
+    public function describeValue(Exporter $exporter, mixed $value): string
     {
         if (is_object($value)) {
             return 'object of type "' . get_class($value) . '"';

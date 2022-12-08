@@ -26,9 +26,6 @@ class CallablePredicate extends Predicate
      *
      * The description will be used instead of the default description in the
      * string representation of this predicate.
-     *
-     * @param  callable  $predicate
-     * @param  string    $description  optional  description for predicate
      */
     public function __construct(callable $predicate, string $description = null)
     {
@@ -50,8 +47,6 @@ class CallablePredicate extends Predicate
 
     /**
      * returns string representation of predicate
-     *
-     * @return  string
      */
     public function __toString(): string
     {
@@ -64,8 +59,6 @@ class CallablePredicate extends Predicate
 
     /**
      * tries to determine a name for the callable
-     *
-     * @return  string
      */
     private function predicateName(): string
     {

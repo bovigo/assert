@@ -7,6 +7,7 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 namespace bovigo\assert\predicate;
+
 use SebastianBergmann\Comparator\ComparisonFailure;
 use SebastianBergmann\Comparator\Factory;
 
@@ -16,12 +17,6 @@ use function bovigo\assert\export;
  */
 class Equals extends Predicate implements Delta
 {
-    /**
-     * the expected value
-     *
-     * @var  mixed
-     */
-    private $expected;
     /**
      * @var  double
      */
@@ -38,9 +33,8 @@ class Equals extends Predicate implements Delta
      * @param  mixed  $expected  value to which test values must be equal
      * @param  float  $delta     allowed numerical distance between two values to consider them equal
      */
-    public function __construct($expected, float $delta = 0.0)
+    public function __construct(private mixed $expected, float $delta = 0.0)
     {
-        $this->expected = $expected;
         $this->delta    = $delta;
     }
 
@@ -58,11 +52,8 @@ class Equals extends Predicate implements Delta
 
     /**
      * test that the given value is eqal in content and type to the expected value
-     *
-     * @param   mixed  $value
-     * @return  bool   true if value is equal to expected value, else false
      */
-    public function test($value): bool
+    public function test(mixed $value): bool
     {
         $this->lastFailureDiff = ''; // reset in case predicate is used more than once
         if ($this->expected === $value) {
@@ -71,8 +62,8 @@ class Equals extends Predicate implements Delta
 
         try {
             $comparator = Factory::getInstance()->getComparatorFor(
-                    $this->expected,
-                    $value
+                $this->expected,
+                $value
             );
             $comparator->assertEquals($this->expected, $value, $this->delta);
             return true;
@@ -86,8 +77,6 @@ class Equals extends Predicate implements Delta
 
     /**
      * returns string representation of predicate
-     *
-     * @return  string
      */
     public function __toString(): string
     {
@@ -103,11 +92,10 @@ class Equals extends Predicate implements Delta
         } elseif (is_array($this->expected) && empty($this->expected)) {
             $result = 'is an empty array';
         } else {
-
             $result = sprintf(
-                    'is equal to %s%s',
-                    export($this->expected),
-                    $this->delta != 0 ? sprintf(' with delta <%F>', $this->delta) : ''
+                'is equal to %s%s',
+                export($this->expected),
+                $this->delta != 0 ? sprintf(' with delta <%F>', $this->delta) : ''
             );
         }
 
@@ -121,7 +109,6 @@ class Equals extends Predicate implements Delta
     /**
      * checks if a diff is available for the last failure
      *
-     * @return  bool
      * @since   1.7.0
      */
     public function hasDiffForLastFailure(): bool
@@ -132,7 +119,6 @@ class Equals extends Predicate implements Delta
     /**
      * returns diff for last failure
      *
-     * @return  string
      * @since   1.7.0
      */
     public function diffForLastFailure(): string

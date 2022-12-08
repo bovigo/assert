@@ -7,6 +7,7 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 namespace bovigo\assert\predicate;
+
 use SebastianBergmann\Exporter\Exporter;
 /**
  * Allows to wrap another predicate to decorate its messages.
@@ -16,42 +17,18 @@ use SebastianBergmann\Exporter\Exporter;
  */
 class Wrap extends Predicate
 {
-    /**
-     * @var  \bovigo\assert\predicate\Predicate
-     */
-    private $predicate;
-    /**
-     * @var  string
-     */
-    private $wrappedDesciption;
-
-    /**
-     * constructor
-     *
-     * @param  \bovigo\assert\predicate\Predicate  $predicate
-     * @param  string                              $wrappedDesciption
-     */
-    public function __construct(Predicate $predicate, string $wrappedDesciption)
-    {
-        $this->predicate         = $predicate;
-        $this->wrappedDesciption = $wrappedDesciption;
-    }
+    public function __construct(private Predicate $predicate, private string $wrappedDesciption) { }
 
     /**
      * evaluates predicate against given value
-     *
-     * @param   mixed  $value
-     * @return  bool
      */
-    public function test($value): bool
+    public function test(mixed $value): bool
     {
         return $this->predicate->test($value);
     }
 
     /**
      * returns string representation of predicate
-     *
-     * @return  string
      */
     public function __toString(): string
     {
@@ -60,12 +37,8 @@ class Wrap extends Predicate
 
     /**
      * returns a textual description of given value
-     *
-     * @param   \SebastianBergmann\Exporter\Exporter  $exporter
-     * @param   mixed                                 $value
-     * @return  string
      */
-    public function describeValue(Exporter $exporter, $value): string
+    public function describeValue(Exporter $exporter, mixed $value): string
     {
         return sprintf(
                 $this->wrappedDesciption,

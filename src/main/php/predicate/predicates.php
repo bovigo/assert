@@ -8,6 +8,8 @@ declare(strict_types=1);
  */
 namespace bovigo\assert\predicate;
 
+use InvalidArgumentException;
+
 /**
  * returns predicate which tests each value of something that is iterable
  *
@@ -15,11 +17,9 @@ namespace bovigo\assert\predicate;
  * test. If it must not be empty use isNotEmpty()->and(each($predicate)).
  *
  * @api
- * @param   callable|\bovigo\assert\predicate\Predicate  $predicate
- * @return  \bovigo\assert\predicate\Each
  * @since   1.1.0
  */
-function each(callable $predicate): Each
+function each(Predicate|callable $predicate): Each
 {
     return new Each($predicate);
 }
@@ -31,11 +31,9 @@ function each(callable $predicate): Each
  * test. If it must not be empty use isNotEmpty()->and(eachKey($predicate)).
  *
  * @api
- * @param   callable|\bovigo\assert\predicate\Predicate  $predicate
- * @return  \bovigo\assert\predicate\EachKey
  * @since   1.3.0
  */
-function eachKey(callable $predicate): EachKey
+function eachKey(Predicate|callable $predicate): EachKey
 {
     return new EachKey($predicate);
 }
@@ -44,10 +42,8 @@ function eachKey(callable $predicate): EachKey
  * negates the given predicate
  *
  * @api
- * @param   callable|\bovigo\assert\predicate\Predicate  $predicate
- * @return  \bovigo\assert\predicate\NegatePredicate
  */
-function not(callable $predicate): Predicate
+function not(Predicate|callable $predicate): Predicate
 {
     return new NegatePredicate($predicate);
 }
@@ -56,7 +52,6 @@ function not(callable $predicate): Predicate
  * returns predicate which tests if value is null
  *
  * @api
- * @return  \bovigo\assert\predicate\Predicate
  */
 function isNull(): Predicate
 {
@@ -67,7 +62,6 @@ function isNull(): Predicate
  * returns predicate which tests that something is not null
  *
  * @api
- * @return  \bovigo\assert\predicate\Predicate
  */
 function isNotNull(): Predicate
 {
@@ -78,7 +72,6 @@ function isNotNull(): Predicate
  * returns predicate which test that something is empty
  *
  * @api
- * @return  \bovigo\assert\predicate\Predicate
  */
 function isEmpty(): Predicate
 {
@@ -89,7 +82,6 @@ function isEmpty(): Predicate
  * returns a predicate which tests that something is not empty
  *
  * @api
- * @return  \bovigo\assert\predicate\Predicate
  */
 function isNotEmpty(): Predicate
 {
@@ -100,7 +92,6 @@ function isNotEmpty(): Predicate
  * returns predicate which tests for truthiness
  *
  * @api
- * @return  \bovigo\assert\predicate\Predicate
  */
 function isTrue(): Predicate
 {
@@ -111,7 +102,6 @@ function isTrue(): Predicate
  * returns predicate which tests for falsiness
  *
  * @api
- * @return  \bovigo\assert\predicate\Predicate
  */
 function isFalse(): Predicate
 {
@@ -167,8 +157,6 @@ function isNotEqualTo($unexpected, float $delta = 0.0): Delta
  * returns predicate which tests for instance type
  *
  * @api
- * @param   string  $expectedType  name of expected type
- * @return  \bovigo\assert\predicate\Predicate
  */
 function isInstanceOf(string $expectedType): Predicate
 {
@@ -179,8 +167,6 @@ function isInstanceOf(string $expectedType): Predicate
  * returns predicate which tests that something is not of given instance type
  *
  * @api
- * @param   string  $unexpectedType  name of expected type
- * @return  \bovigo\assert\predicate\Predicate
  */
 function isNotInstanceOf(string $unexpectedType): Predicate
 {
@@ -191,10 +177,8 @@ function isNotInstanceOf(string $unexpectedType): Predicate
  * returns predicate which tests for identity
  *
  * @api
- * @param   mixed  $expected  expected value
- * @return  \bovigo\assert\predicate\Predicate
  */
-function isSameAs($expected): Predicate
+function isSameAs(mixed $expected): Predicate
 {
     return new IsIdentical($expected);
 }
@@ -203,10 +187,8 @@ function isSameAs($expected): Predicate
  * returns predicate which tests for non-identity
  *
  * @api
- * @param   mixed  $unexpected  expected value
- * @return  \bovigo\assert\predicate\Predicate
  */
-function isNotSameAs($unexpected): Predicate
+function isNotSameAs(mixed $unexpected): Predicate
 {
     return not(isSameAs($unexpected));
 }
@@ -215,8 +197,6 @@ function isNotSameAs($unexpected): Predicate
  * returns predicate which tests for size
  *
  * @api
- * @param   int  $expectedSize  expected count size
- * @return  \bovigo\assert\predicate\Predicate
  */
 function isOfSize(int $expectedSize): Predicate
 {
@@ -227,8 +207,6 @@ function isOfSize(int $expectedSize): Predicate
  * returns predicate which tests something has not the size
  *
  * @api
- * @param   int  $unexpectedSize  count size which is not expected
- * @return  \bovigo\assert\predicate\Predicate
  */
 function isNotOfSize(int $unexpectedSize): Predicate
 {
@@ -239,7 +217,6 @@ function isNotOfSize(int $unexpectedSize): Predicate
  * returns predicate which tests something is an array
  *
  * @api
- * @return  \bovigo\assert\predicate\Predicate
  * @since   5.0.0
  */
 function isArray(): Predicate
@@ -251,7 +228,6 @@ function isArray(): Predicate
  * returns predicate which tests something is not an array
  *
  * @api
- * @return  \bovigo\assert\predicate\Predicate
  * @since   5.0.0
  */
 function isNotAnArray(): Predicate
@@ -275,7 +251,6 @@ function containsSubset(array $other): ContainsSubset
  * returns predicate which tests something is a boolean value
  *
  * @api
- * @return  \bovigo\assert\predicate\Predicate
  * @since   5.0.0
  */
 function isBool(): Predicate
@@ -287,7 +262,6 @@ function isBool(): Predicate
  * returns predicate which tests something is not a boolean value
  *
  * @api
- * @return  \bovigo\assert\predicate\Predicate
  * @since   5.0.0
  */
 function isNotBool(): Predicate
@@ -299,7 +273,6 @@ function isNotBool(): Predicate
  * returns predicate which tests something is a float
  *
  * @api
- * @return  \bovigo\assert\predicate\Predicate
  * @since   5.0.0
  */
 function isFloat(): Predicate
@@ -311,7 +284,6 @@ function isFloat(): Predicate
  * returns predicate which tests something is not a float
  *
  * @api
- * @return  \bovigo\assert\predicate\Predicate
  * @since   5.0.0
  */
 function isNotFloat(): Predicate
@@ -323,7 +295,6 @@ function isNotFloat(): Predicate
  * returns predicate which tests something is an integer
  *
  * @api
- * @return  \bovigo\assert\predicate\Predicate
  * @since   5.0.0
  */
 function isInt(): Predicate
@@ -335,7 +306,6 @@ function isInt(): Predicate
  * returns predicate which tests something is not an integer
  *
  * @api
- * @return  \bovigo\assert\predicate\Predicate
  * @since   5.0.0
  */
 function isNotInt(): Predicate
@@ -347,7 +317,6 @@ function isNotInt(): Predicate
  * returns predicate which tests something is a numeric value
  *
  * @api
- * @return  \bovigo\assert\predicate\Predicate
  * @since   5.0.0
  */
 function isNumeric(): Predicate
@@ -359,7 +328,6 @@ function isNumeric(): Predicate
  * returns predicate which tests something is not a numeric value
  *
  * @api
- * @return  \bovigo\assert\predicate\Predicate
  * @since   5.0.0
  */
 function isNotNumeric(): Predicate
@@ -371,7 +339,6 @@ function isNotNumeric(): Predicate
  * returns predicate which tests something is an object
  *
  * @api
- * @return  \bovigo\assert\predicate\Predicate
  * @since   5.0.0
  */
 function isObject(): Predicate
@@ -383,7 +350,6 @@ function isObject(): Predicate
  * returns predicate which tests something is not an object
  *
  * @api
- * @return  \bovigo\assert\predicate\Predicate
  * @since   5.0.0
  */
 function isNotAnObject(): Predicate
@@ -395,7 +361,6 @@ function isNotAnObject(): Predicate
  * returns predicate which tests something is a resource
  *
  * @api
- * @return  \bovigo\assert\predicate\Predicate
  * @since   5.0.0
  */
 function isResource(): Predicate
@@ -407,7 +372,6 @@ function isResource(): Predicate
  * returns predicate which tests something is not a resource
  *
  * @api
- * @return  \bovigo\assert\predicate\Predicate
  * @since   5.0.0
  */
 function isNotAResource(): Predicate
@@ -419,7 +383,6 @@ function isNotAResource(): Predicate
  * returns predicate which tests something is a string
  *
  * @api
- * @return  \bovigo\assert\predicate\Predicate
  * @since   5.0.0
  */
 function isString(): Predicate
@@ -431,7 +394,6 @@ function isString(): Predicate
  * returns predicate which tests something is not a string
  *
  * @api
- * @return  \bovigo\assert\predicate\Predicate
  * @since   5.0.0
  */
 function isNotAString(): Predicate
@@ -443,7 +405,6 @@ function isNotAString(): Predicate
  * returns predicate which tests something is a scalar value
  *
  * @api
- * @return  \bovigo\assert\predicate\Predicate
  * @since   5.0.0
  */
 function isScalar(): Predicate
@@ -455,7 +416,6 @@ function isScalar(): Predicate
  * returns predicate which tests something is not a scalar value
  *
  * @api
- * @return  \bovigo\assert\predicate\Predicate
  * @since   5.0.0
  */
 function isNotScalar(): Predicate
@@ -467,7 +427,6 @@ function isNotScalar(): Predicate
  * returns predicate which tests something is a callable
  *
  * @api
- * @return  \bovigo\assert\predicate\Predicate
  * @since   5.0.0
  */
 function isCallable(): Predicate
@@ -479,7 +438,6 @@ function isCallable(): Predicate
  * returns predicate which tests something is not a callable
  *
  * @api
- * @return  \bovigo\assert\predicate\Predicate
  * @since   5.0.0
  */
 function isNotCallable(): Predicate
@@ -491,7 +449,6 @@ function isNotCallable(): Predicate
  * returns predicate which tests something is iterable
  *
  * @api
- * @return  \bovigo\assert\predicate\Predicate
  * @since   5.0.0
  */
 function isIterable(): Predicate
@@ -503,7 +460,6 @@ function isIterable(): Predicate
  * returns predicate which tests something is not iterable
  *
  * @api
- * @return  \bovigo\assert\predicate\Predicate
  * @since   5.0.0
  */
 function isNotIterable(): Predicate
@@ -515,39 +471,37 @@ function isNotIterable(): Predicate
  * returns predicate which tests something is a specific internal PHP type
  *
  * @api
- * @param   string  $expectedType  name of Predicate to test for
- * @return  \bovigo\assert\predicate\CallablePredicate
- * @throws  \InvalidArgumentException  in case expected type is unknown
+ * @throws  InvalidArgumentException  in case expected type is unknown
  */
 function isOfType(string $expectedType): Predicate
 {
     static $types = [
-            'array'    => 'is_array',
-            'boolean'  => 'is_bool',
-            'bool'     => 'is_bool',
-            'double'   => 'is_float',
-            'float'    => 'is_float',
-            'integer'  => 'is_integer',
-            'int'      => 'is_integer',
-            'numeric'  => 'is_numeric',
-            'object'   => 'is_object',
-            'resource' => 'is_resource',
-            'string'   => 'is_string',
-            'scalar'   => 'is_scalar',
-            'callable' => 'is_callable',
-            'iterable' => 'is_iterable'
+        'array'    => 'is_array',
+        'boolean'  => 'is_bool',
+        'bool'     => 'is_bool',
+        'double'   => 'is_float',
+        'float'    => 'is_float',
+        'integer'  => 'is_integer',
+        'int'      => 'is_integer',
+        'numeric'  => 'is_numeric',
+        'object'   => 'is_object',
+        'resource' => 'is_resource',
+        'string'   => 'is_string',
+        'scalar'   => 'is_scalar',
+        'callable' => 'is_callable',
+        'iterable' => 'is_iterable'
     ];
     if (!isset($types[$expectedType])) {
-        throw new \InvalidArgumentException(
-                'Unknown internal type ' . $expectedType
+        throw new InvalidArgumentException(
+            'Unknown internal type ' . $expectedType
         );
     }
 
     // create instance, but only if not done yet
     if (is_string($types[$expectedType])) {
         $types[$expectedType] = new CallablePredicate(
-                $types[$expectedType],
-                'is of type "' . $expectedType . '"'
+            $types[$expectedType],
+            'is of type "' . $expectedType . '"'
         );
     }
 
@@ -558,8 +512,6 @@ function isOfType(string $expectedType): Predicate
  * returns predicate which tests something is not a specific internal PHP type
  *
  * @api
- * @param   string  $unexpectedType  name of type to test for
- * @return  \bovigo\assert\predicate\Predicate
  */
 function isNotOfType(string $unexpectedType): Predicate
 {
@@ -570,10 +522,8 @@ function isNotOfType(string $unexpectedType): Predicate
  * returns predicate which tests something is greather than the expected value
  *
  * @api
- * @param   int|float  $expected
- * @return  \bovigo\assert\predicate\Predicate
  */
-function isGreaterThan($expected): Predicate
+function isGreaterThan(int|float $expected): Predicate
 {
     return new IsGreaterThan($expected);
 }
@@ -582,10 +532,8 @@ function isGreaterThan($expected): Predicate
  * returns predicate which tests something is greater than or equal to the expected value
  *
  * @api
- * @param   int|float  $expected
- * @return  \bovigo\assert\predicate\Predicate
  */
-function isGreaterThanOrEqualTo($expected): Predicate
+function isGreaterThanOrEqualTo(int|float $expected): Predicate
 {
     return equals($expected)->or(isGreaterThan($expected));
 }
@@ -594,10 +542,8 @@ function isGreaterThanOrEqualTo($expected): Predicate
  * returns predicate which tests something is smaller than the expected value
  *
  * @api
- * @param   int|float  $expected
- * @return  \bovigo\assert\predicate\Predicate
  */
-function isLessThan($expected): Predicate
+function isLessThan(int|float $expected): Predicate
 {
     return new IsLessThan($expected);
 }
@@ -606,10 +552,8 @@ function isLessThan($expected): Predicate
  * returns predicate which tests something is smaller than or equal to the expected value
  *
  * @api
- * @param   int|float  $expected
- * @return  \bovigo\assert\predicate\Predicate
  */
-function isLessThanOrEqualTo($expected): Predicate
+function isLessThanOrEqualTo(int|float $expected): Predicate
 {
     return equals($expected)->or(isLessThan($expected));
 }
@@ -618,10 +562,8 @@ function isLessThanOrEqualTo($expected): Predicate
  * returns predicate which tests that $needle is contained in a value
  *
  * @api
- * @param   mixed  $needle  value that must be contained
- * @return  \bovigo\assert\predicate\Predicate
  */
-function contains($needle): Predicate
+function contains(mixed $needle): Predicate
 {
     return new Contains($needle);
 }
@@ -630,10 +572,8 @@ function contains($needle): Predicate
  * returns predicate which tests that $needle is not contained in a value
  *
  * @api
- * @param   mixed  $needle  value that must not be contained
- * @return  \bovigo\assert\predicate\Predicate
  */
-function doesNotContain($needle): Predicate
+function doesNotContain(mixed $needle): Predicate
 {
     return not(contains($needle));
 }
@@ -642,10 +582,8 @@ function doesNotContain($needle): Predicate
  * returns predicate which tests that $key is the key of an element
  *
  * @api
- * @param   int|string  $key
- * @return  \bovigo\assert\predicate\Predicate
  */
-function hasKey($key): Predicate
+function hasKey(int|string $key): Predicate
 {
     return new HasKey($key);
 }
@@ -654,10 +592,8 @@ function hasKey($key): Predicate
  * returns predicate which tests that $key is not the key of an element
  *
  * @api
- * @param   int|string  $key
- * @return  \bovigo\assert\predicate\Predicate
  */
-function doesNotHaveKey($key): Predicate
+function doesNotHaveKey(int|string $key): Predicate
 {
     return not(hasKey($key));
 }
@@ -666,8 +602,6 @@ function doesNotHaveKey($key): Predicate
  * returns predicate which tests against a regular expression
  *
  * @api
- * @param   string  $pattern
- * @return  \bovigo\assert\predicate\Predicate
  */
 function matches(string $pattern): Predicate
 {
@@ -678,8 +612,6 @@ function matches(string $pattern): Predicate
  * returns predicate which tests against a regular expression
  *
  * @api
- * @param   string  $pattern
- * @return  \bovigo\assert\predicate\Predicate
  */
 function doesNotMatch(string $pattern): Predicate
 {
@@ -704,8 +636,6 @@ function doesNotMatch(string $pattern): Predicate
  *
  * @since   3.2.0
  * @api
- * @param   string  $format
- * @return  \bovigo\assert\predicate\Predicate
  */
 function matchesFormat(string $format): Predicate
 {
@@ -717,8 +647,6 @@ function matchesFormat(string $format): Predicate
  *
  * @since   3.2.0
  * @api
- * @param   string  $format
- * @return  \bovigo\assert\predicate\Predicate
  */
 function doesNotMatchFormat(string $format): Predicate
 {
@@ -728,9 +656,9 @@ function doesNotMatchFormat(string $format): Predicate
 /**
  * returns predicate which tests whether a file exists
  *
+ * In case basePath is ommitted the check is against the root of the file system.
+ *
  * @api
- * @param   string  $basePath  optional  base path where file must reside in
- * @return  \bovigo\assert\predicate\Predicate
  */
 function isExistingFile(string $basePath = null): Predicate
 {
@@ -740,9 +668,9 @@ function isExistingFile(string $basePath = null): Predicate
 /**
  * returns predicate which tests whether a file does not exist
  *
+ * In case basePath is ommitted the check is against the root of the file system.
+ *
  * @api
- * @param   string  $basePath  optional  base path where file must not reside in
- * @return  \bovigo\assert\predicate\Predicate
  */
 function isNonExistingFile(string $basePath = null): Predicate
 {
@@ -752,9 +680,9 @@ function isNonExistingFile(string $basePath = null): Predicate
 /**
  * returns predicate which tests whether a directory exists
  *
+ * In case basePath is ommitted the check is against the root of the file system.
+ *
  * @api
- * @param   string  $basePath  optional  base path where directory must reside in
- * @return  \bovigo\assert\predicate\Predicate
  */
 function isExistingDirectory(string $basePath = null): Predicate
 {
@@ -764,9 +692,9 @@ function isExistingDirectory(string $basePath = null): Predicate
 /**
  * returns predicate which tests whether a directory does not exist
  *
+ * In case basePath is ommitted the check is against the root of the file system.
+ *
  * @api
- * @param   string  $basePath  optional  base path where directory must not reside in
- * @return  \bovigo\assert\predicate\Predicate
  */
 function isNonExistingDirectory(string $basePath = null): Predicate
 {
@@ -777,38 +705,28 @@ function isNonExistingDirectory(string $basePath = null): Predicate
  * returns predicate which tests that a string starts with given prefix
  *
  * @api
- * @param   string  $prefix
- * @return  \bovigo\assert\predicate\Predicate
  * @since   1.1.0
  */
 function startsWith(string $prefix): Predicate
 {
     return new class($prefix) extends Predicate
     {
-        /**
-         * @var  string
-         */
-        private $prefix;
+        public function __construct(private string $prefix) { }
 
-        public function __construct(string $prefix)
-        {
-            $this->prefix = $prefix;
-        }
-
-        public function test($value): bool
+        public function test(mixed $value): bool
         {
             if (!is_string($value)) {
-                throw new \InvalidArgumentException(
-                        'Given value is not a string, but of type "'
-                        . gettype($value) . '"'
+                throw new InvalidArgumentException(
+                    'Given value is not a string, but of type "'
+                    . gettype($value) . '"'
                 );
             }
 
             return 0 === substr_compare(
-                    $value,
-                    $this->prefix,
-                    0,
-                    strlen($this->prefix)
+                $value,
+                $this->prefix,
+                0,
+                strlen($this->prefix)
             );
         }
 
@@ -823,8 +741,6 @@ function startsWith(string $prefix): Predicate
  * returns a predicate which tests that a string does not start with given prefix
  *
  * @api
- * @param   string  $prefix
- * @return  \bovigo\assert\predicate\Predicate
  * @since   1.1.0
  */
 function doesNotStartWith(string $prefix): Predicate
@@ -836,37 +752,27 @@ function doesNotStartWith(string $prefix): Predicate
  * returns predicate which tests that a string ends with given suffix
  *
  * @api
- * @param   string  $suffix
- * @return  \bovigo\assert\predicate\Predicate
  * @since   1.1.0
  */
 function endsWith(string $suffix): Predicate
 {
     return new class($suffix) extends Predicate
     {
-        /**
-         * @var  string
-         */
-        private $suffix;
+        public function __construct(private string $suffix) { }
 
-        public function __construct(string $suffix)
-        {
-            $this->suffix = $suffix;
-        }
-
-        public function test($value): bool
+        public function test(mixed $value): bool
         {
             if (!is_string($value)) {
-                throw new \InvalidArgumentException(
-                        'Given value is not a string, but of type "'
-                        . gettype($value) . '"'
+                throw new InvalidArgumentException(
+                    'Given value is not a string, but of type "'
+                    . gettype($value) . '"'
                 );
             }
 
             return 0 === substr_compare(
-                    $value,
-                    $this->suffix,
-                    -strlen($this->suffix)
+                $value,
+                $this->suffix,
+                -strlen($this->suffix)
             );
         }
 
@@ -881,8 +787,6 @@ function endsWith(string $suffix): Predicate
  * returns a predicate which tests that a string does not end  with given suffix
  *
  * @api
- * @param   string  $suffix
- * @return  \bovigo\assert\predicate\Predicate
  * @since   1.1.0
  */
 function doesNotEndWith(string $suffix): Predicate

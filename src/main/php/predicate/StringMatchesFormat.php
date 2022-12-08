@@ -7,6 +7,9 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 namespace bovigo\assert\predicate;
+
+use RuntimeException;
+
 /**
  * Predicate to ensure a value complies to a given PHPUnit format expression.
  *
@@ -16,14 +19,11 @@ namespace bovigo\assert\predicate;
  */
 class StringMatchesFormat extends Regex
 {
-    private $format;
-
-    public function __construct(string $format)
+    public function __construct(private string $format)
     {
-        $this->format = $format;
-        $withoutCarriageReturn = \preg_replace('/\r\n/', "\n", $format);
+        $withoutCarriageReturn = \preg_replace('/\r\n/', "\n", $this->format);
         if (null === $withoutCarriageReturn) {
-            throw new \RuntimeException('Could not replace carriage return in given format');
+            throw new RuntimeException('Could not replace carriage return in given format');
         }
 
         parent::__construct($this->patternForFormat($withoutCarriageReturn));
@@ -61,7 +61,7 @@ class StringMatchesFormat extends Regex
             \preg_quote($format, '/')
         );
         if (null === $pattern) {
-            throw new \RuntimeException('Could not create pattern from format');
+            throw new RuntimeException('Could not create pattern from format');
         }
 
         return '/^' . \str_replace('%%', '%', $pattern) . '$/s';

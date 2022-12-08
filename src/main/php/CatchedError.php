@@ -7,6 +7,7 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 namespace bovigo\assert;
+
 use bovigo\assert\predicate\Predicate;
 use bovigo\assert\predicate\Wrap;
 
@@ -44,8 +45,6 @@ class CatchedError
      * checks whether a given error level value is known
      *
      * @since   3.0.0
-     * @param   int  $level
-     * @return  bool
      */
     public static function knowsLevel(int $level): bool
     {
@@ -54,9 +53,6 @@ class CatchedError
 
     /**
      * returns the name of the integer error level
-     *
-     * @param   int  $level
-     * @return  string
      */
     public static function nameOf(int $level): string
     {
@@ -64,48 +60,22 @@ class CatchedError
     }
 
     /**
-     * @var  int
-     */
-    private $errno;
-    /**
-     * @var  string
-     */
-    private $errstr;
-    /**
-     * @var  string
-     */
-    private $errfile;
-    /**
-     * @var  int
-     */
-    private $errline;
-    /**
-     * @var  array<mixed>
-     */
-    private $errcontext;
-
-    /**
-     * constructor
-     *
      * @param  int           $errno
      * @param  string        $errstr
      * @param  string        $errfile
      * @param  int           $errline
      * @param  array<mixed>  $errcontext
      */
-    public function __construct(int $errno , string $errstr, string $errfile, int $errline, array $errcontext = [])
-    {
-        $this->errno      = $errno;
-        $this->errstr     = $errstr;
-        $this->errfile    = $errfile;
-        $this->errline    = $errline;
-        $this->errcontext = $errcontext;
-    }
+    public function __construct(
+        private int $errno,
+        private string $errstr,
+        private string $errfile,
+        private int $errline,
+        private array $errcontext = []
+    ) { }
 
     /**
      * returns the error level of the catched error
-     *
-     * @return  int
      */
     public function level(): int
     {
@@ -114,8 +84,6 @@ class CatchedError
 
     /**
      * returns the error level name of the catched error
-     *
-     * @return  string
      */
     public function name(): string
     {
@@ -124,8 +92,6 @@ class CatchedError
 
     /**
      * returns the actual error strin, i.e. the error message
-     *
-     * @return  string
      */
     public function errstr(): string
     {
@@ -136,8 +102,6 @@ class CatchedError
      * asserts actual error message equals expected message
      *
      * @api
-     * @param   string  $expectedMessage
-     * @return  \bovigo\assert\CatchedError
      */
     public function withMessage(string $expectedMessage): self
     {
@@ -148,10 +112,8 @@ class CatchedError
      * asserts actual error message fulfills given predicate
      *
      * @api
-     * @param   \bovigo\assert\predicate\Predicate|callable  $predicate
-     * @return  \bovigo\assert\CatchedError
      */
-    public function message(callable $predicate): self
+    public function message(Predicate|callable $predicate): self
     {
         assertThat($this->errstr, new Wrap(Predicate::castFrom($predicate), 'error message %s'));
         return $this;
@@ -159,8 +121,6 @@ class CatchedError
 
     /**
      * returns file in which the error was triggered
-     *
-     * @return  string
      */
     public function file(): string
     {
@@ -169,8 +129,6 @@ class CatchedError
 
     /**
      * returns the line on which the error was triggered
-     *
-     * @return  int
      */
     public function line(): int
     {
@@ -181,12 +139,8 @@ class CatchedError
      * asserts anything after the error was catched
      *
      * @api
-     * @param   mixed                                        $value        value to test
-     * @param   \bovigo\assert\predicate\Predicate|callable  $predicate    predicate or callable to test given value
-     * @param   string                                       $description  optional  additional description for failure message
-     * @return  \bovigo\assert\CatchedError
      */
-    public function after($value, callable $predicate, string $description = null): self
+    public function after(mixed $value, Predicate|callable $predicate, string $description = null): self
     {
         assertThat($value, $predicate, $description);
         return $this;

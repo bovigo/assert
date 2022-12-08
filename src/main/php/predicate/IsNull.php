@@ -15,20 +15,15 @@ class IsNull extends Predicate
     use ReusablePredicate;
 
     /**
-     * test that the given value is true
-     *
-     * @param   mixed  $value
-     * @return  bool   true if value is null
+     * test that the given value is null
      */
-    public function test($value): bool
+    public function test(mixed $value): bool
     {
         return null === $value;
     }
 
     /**
      * returns string representation of predicate
-     *
-     * @return  string
      */
     public function __toString(): string
     {

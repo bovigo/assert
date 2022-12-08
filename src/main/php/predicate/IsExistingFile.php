@@ -14,9 +14,6 @@ class IsExistingFile extends FilesystemPredicate
 {
     /**
      * checks if given path exists and is a file
-     *
-     * @param   string  $path
-     * @return  bool
      */
     protected function fileExists(string $path): bool
     {
@@ -25,8 +22,6 @@ class IsExistingFile extends FilesystemPredicate
 
     /**
      * returns file system type which is checked
-     *
-     * @return  string
      */
     protected function type(): string
     {

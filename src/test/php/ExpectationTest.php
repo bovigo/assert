@@ -50,23 +50,6 @@ class ExpectationTest extends TestCase
 
     /**
      * @test
-     * @dataProvider  throwables
-     * @since  2.1.0
-     */
-    public function expectationThrowsInvalidArgumentExceptionWhenThrowsArgumentIsInvalid(\Throwable $throwable): void
-    {
-        expect(function() use($throwable) {
-                expect(function() use($throwable) { throw $throwable; })->throws(303);
-        })
-        ->throws(\InvalidArgumentException::class)
-        ->withMessage(
-                'Given expected is neither a class name nor an instance'
-                . ' of \Throwable, but of type integer'
-        );
-    }
-
-    /**
-     * @test
      * @group  issue_5
      * @since  2.1.0
      */

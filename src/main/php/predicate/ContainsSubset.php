@@ -18,20 +18,15 @@ use SebastianBergmann\Exporter\Exporter;
  */
 class ContainsSubset extends Predicate
 {
-    /**  @var array<mixed> */
-    private $other;
     /** @var ComparisonFailure|null */
     private $diff;
 
     /**
      * @param array<mixed> $other
      */
-    public function __construct(array $other)
-    {
-        $this->other = $other;
-    }
+    public function __construct(private array $other) { }
 
-    public function test($value): bool
+    public function test(mixed $value): bool
     {
         if (!is_iterable($value)) {
             return false;
@@ -67,7 +62,7 @@ class ContainsSubset extends Predicate
         return '';
     }
 
-    public function describeValue(Exporter $exporter, $value): string
+    public function describeValue(Exporter $exporter, mixed $value): string
     {
         return 'an array has the subset '.$exporter->export($value);
     }

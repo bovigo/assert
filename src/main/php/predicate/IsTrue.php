@@ -16,19 +16,14 @@ class IsTrue extends Predicate
 
     /**
      * test that the given value is true
-     *
-     * @param   scalar  $value
-     * @return  bool    true if value is true, else false
      */
-    public function test($value): bool
+    public function test(mixed $value): bool
     {
         return true === $value;
     }
 
     /**
      * returns string representation of predicate
-     *
-     * @return  string
      */
     public function __toString(): string
     {

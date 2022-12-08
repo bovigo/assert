@@ -7,6 +7,10 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 namespace bovigo\assert\predicate;
+
+use InvalidArgumentException;
+use RuntimeException;
+
 /**
  * Predicate to ensure a value complies to a given regular expression.
  *
@@ -17,12 +21,6 @@ namespace bovigo\assert\predicate;
  */
 class Regex extends Predicate
 {
-    /**
-     * the regular expression to use for validation
-     *
-     * @var  string
-     */
-    private $pattern;
     /**
      * map of pcre error codes and according error messages
      *
@@ -38,38 +36,28 @@ class Regex extends Predicate
             PREG_JIT_STACKLIMIT_ERROR  => 'failed because of limited JIT stack space'
     ];
 
-    /**
-     * constructor
-     *
-     * @param  string  $pattern  regular expression to use for validation
-     */
-    public function __construct(string $pattern)
-    {
-        $this->pattern = $pattern;
-    }
+    public function __construct(private string $pattern) { }
 
     /**
      * test that the given value complies with the regular expression
      *
-     * @param   string  $value
-     * @return  bool
-     * @throws  \InvalidArgumentException  in case given value is not a string
-     * @throws  \RuntimeException  in case the used regular expresion is invalid
+     * @throws  InvalidArgumentException  in case given value is not a string
+     * @throws  RuntimeException  in case the used regular expresion is invalid
      */
-    public function test($value): bool
+    public function test(mixed $value): bool
     {
         if (!is_string($value)) {
-            throw new \InvalidArgumentException(
-                    'Given value of type "' . gettype($value)
+            throw new InvalidArgumentException(
+                'Given value of type "' . gettype($value)
                 . '" can not be matched against a regular expression.'
             );
         }
         $check = @preg_match($this->pattern, $value);
         if (false === $check) {
-            throw new \RuntimeException(sprintf(
-                    'Failure while matching "%s", reason: %s.',
-                    $this->pattern,
-                    $this->messageFor(preg_last_error())
+            throw new RuntimeException(sprintf(
+                'Failure while matching "%s", reason: %s.',
+                $this->pattern,
+                $this->messageFor(preg_last_error())
             ));
         }
 
@@ -78,9 +66,6 @@ class Regex extends Predicate
 
     /**
      * translates error code into proper error message
-     *
-     * @param   int  $errorCode
-     * @return  string
      */
     private function messageFor(int $errorCode): string
     {
@@ -89,8 +74,6 @@ class Regex extends Predicate
 
     /**
      * returns string representation of predicate
-     *
-     * @return  string
      */
     public function __toString(): string
     {

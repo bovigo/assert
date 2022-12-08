@@ -7,7 +7,11 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 namespace bovigo\assert\predicate;
+
+use InvalidArgumentException;
 use SebastianBergmann\Exporter\Exporter;
+use Throwable;
+
 /**
  * Predicate to check that a piece of code throws an exception.
  *
@@ -15,32 +19,17 @@ use SebastianBergmann\Exporter\Exporter;
  */
 class ExpectedException extends Predicate
 {
-    /**
-     * @var  string
-     */
-    private $expectedType;
-
-    /**
-     * constructor
-     *
-     * @param  string  $expectedType
-     */
-    public function __construct($expectedType)
-    {
-        $this->expectedType = $expectedType;
-    }
+    public function __construct(private string $expectedType) { }
 
     /**
      * tests that the given value contains expected key
      *
-     * @param   mixed  $value
-     * @return  bool
-     * @throws  \InvalidArgumentException  in case given value can't have a key
+     * @throws  InvalidArgumentException  in case given value isn't an exception
      */
-    public function test($value): bool
+    public function test(mixed $value): bool
     {
-        if (! $value instanceof \Throwable) {
-            throw new \InvalidArgumentException('Given value is not an exception');
+        if (!$value instanceof Throwable) {
+            throw new InvalidArgumentException('Given value is not an exception');
         }
 
         return $value instanceof $this->expectedType;
@@ -48,8 +37,6 @@ class ExpectedException extends Predicate
 
     /**
      * returns string representation of predicate
-     *
-     * @return  string
      */
     public function __toString(): string
     {
@@ -58,13 +45,8 @@ class ExpectedException extends Predicate
 
     /**
      * returns a textual description of given value
-     *
-     * @param   \SebastianBergmann\Exporter\Exporter  $exporter
-     * @param   mixed                                 $value
-     * @return  string
-     * @throws  \InvalidArgumentException  in case given value can't have a key
      */
-    public function describeValue(Exporter $exporter, $value): string
+    public function describeValue(Exporter $exporter, mixed $value): string
     {
         if (! $value instanceof \Throwable) {
             return parent::describeValue($exporter, $value);

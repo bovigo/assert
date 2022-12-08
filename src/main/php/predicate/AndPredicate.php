@@ -14,21 +14,13 @@ class AndPredicate extends Predicate
 {
     use CombinedPredicate;
 
-    /**
-     * evaluates predicate against given value
-     *
-     * @param   mixed  $value
-     * @return  bool
-     */
-    public function test($value): bool
+    public function test(mixed $value): bool
     {
         return $this->leftPredicate->test($value) && $this->rightPredicate->test($value);
     }
 
     /**
      * returns combination operator as string
-     *
-     * @return  string
      */
     protected function operator(): string
     {

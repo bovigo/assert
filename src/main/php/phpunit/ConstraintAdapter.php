@@ -7,9 +7,9 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 namespace bovigo\assert\phpunit;
-use bovigo\assert\AssertionFailure;
 use bovigo\assert\predicate\Predicate;
 use PHPUnit\Framework\Constraint\Constraint;
+use ReflectionMethod;
 use SebastianBergmann\Exporter\Exporter;
 /**
  * Predicate which allows to use constraints from PHPUnit as predicate.
@@ -18,36 +18,18 @@ use SebastianBergmann\Exporter\Exporter;
  */
 class ConstraintAdapter extends Predicate
 {
-    /**
-     * @var  \PHPUnit\Framework\Constraint\Constraint
-     */
-    private $constraint;
-
-    /**
-     * constructor
-     *
-     * @param  \PHPUnit\Framework\Constraint\Constraint  $constraint
-     */
-    public function __construct(Constraint $constraint)
-    {
-        $this->constraint = $constraint;
-    }
+    public function __construct(private Constraint $constraint) { }
 
     /**
      * evaluates predicate against given value
-     *
-     * @param   mixed  $value
-     * @return  bool
      */
-    public function test($value): bool
+    public function test(mixed $value): bool
     {
         return $this->constraint->evaluate($value, '', true);
     }
 
     /**
      * returns amount of checks done in this predicate
-     *
-     * @return  int
      */
     public function count(): int
     {
@@ -56,8 +38,6 @@ class ConstraintAdapter extends Predicate
 
     /**
      * returns string representation of predicate
-     *
-     * @return  string
      */
     public function __toString(): string
     {
@@ -66,14 +46,10 @@ class ConstraintAdapter extends Predicate
 
     /**
      * returns a textual description of given value
-     *
-     * @param   \SebastianBergmann\Exporter\Exporter  $exporter
-     * @param   mixed                                 $value
-     * @return  string
      */
-    public function describeValue(Exporter $exporter, $value): string
+    public function describeValue(Exporter $exporter, mixed $value): string
     {
-        $refMethod = new \ReflectionMethod(get_class($this->constraint), 'failureDescription');
+        $refMethod = new ReflectionMethod(get_class($this->constraint), 'failureDescription');
         $refMethod->setAccessible(true);
         return $refMethod->invoke($this->constraint, $value);
     }

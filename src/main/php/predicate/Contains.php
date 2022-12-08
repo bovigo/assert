@@ -7,37 +7,26 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 namespace bovigo\assert\predicate;
+
+use InvalidArgumentException;
 use function bovigo\assert\export;
+
 /**
  * Predicate to test that a value contains something.
  */
 class Contains extends Predicate
 {
     /**
-     * the value to be contained in value to validate
-     *
-     * @var  mixed
-     */
-    private $needle;
-
-    /**
-     * constructor
-     *
      * @param  mixed  $needle  value that must be contained
      */
-    public function __construct($needle)
-    {
-        $this->needle = $needle;
-    }
+    public function __construct(private mixed $needle) { }
 
     /**
      * tests that the given value contains expected value
      *
-     * @param   mixed  $value
-     * @return  bool
-     * @throws  \InvalidArgumentException  in case given value can't contain another value
+     * @throws  InvalidArgumentException  in case given value can't contain another value
      */
-    public function test($value): bool
+    public function test(mixed $value): bool
     {
         if (null === $value) {
             return is_null($this->needle);
@@ -57,9 +46,8 @@ class Contains extends Predicate
             return false;
         }
 
-        throw new \InvalidArgumentException(
-                'Given value of type "' . gettype($value)
-                . '" can not contain something.'
+        throw new InvalidArgumentException(
+            'Given value of type "' . gettype($value) . '" can not contain something.'
         );
     }
 
