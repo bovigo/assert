@@ -1,5 +1,4 @@
 bovigo/assert
-namespace bovigo\assert;
 ==============
 
 Provides assertions for unit tests.
