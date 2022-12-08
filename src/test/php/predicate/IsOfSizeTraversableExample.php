@@ -7,12 +7,15 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 namespace bovigo\assert\predicate;
+
+use Iterator;
+
 /**
  * Helper class for the test.
  *
  * @implements \Iterator<int,int>
  */
-class IsOfSizeTraversableExample implements \Iterator
+class IsOfSizeTraversableExample implements Iterator
 {
     /**
      * @var  int
@@ -22,7 +25,7 @@ class IsOfSizeTraversableExample implements \Iterator
     /**
      * @return  int
      */
-    public function current()
+    public function current(): mixed
     {
         return $this->current;
     }
@@ -30,31 +33,22 @@ class IsOfSizeTraversableExample implements \Iterator
     /**
      * @return  int
      */
-    public function key()
+    public function key(): mixed
     {
         return $this->current;
     }
 
-    /**
-     * @return  void
-     */
-    public function next()
+    public function next(): void
     {
         $this->current++;
     }
 
-    /**
-     * @return  void
-     */
-    public function rewind()
+    public function rewind(): void
     {
         $this->current = 0;
     }
 
-    /**
-     * @return  bool
-     */
-    public function valid()
+    public function valid(): bool
     {
         return 3 > $this->current;
     }
