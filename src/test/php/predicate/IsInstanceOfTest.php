@@ -7,8 +7,11 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 namespace bovigo\assert\predicate;
+
 use bovigo\assert\AssertionFailure;
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
+use stdClass;
 
 use function bovigo\assert\assertFalse;
 use function bovigo\assert\assertThat;
@@ -26,8 +29,8 @@ class IsInstanceOfTest extends TestCase
      */
     public function throwsInvalidArgumentExceptionWhenGivenExpectedTypeIsUnknown(): void
     {
-        expect(function() { isInstanceOf('DoesNotExist'); })
-                ->throws(\InvalidArgumentException::class);
+        expect(fn() => isInstanceOf('DoesNotExist'))
+            ->throws(InvalidArgumentException::class);
     }
 
     /**
@@ -43,7 +46,7 @@ class IsInstanceOfTest extends TestCase
      */
     public function evaluatesToFalseIfGivenValueIsNotInstanceOfExpectedType(): void
     {
-        assertFalse(isInstanceOf('\stdClass')->test($this));
+        assertFalse(isInstanceOf(stdClass::class)->test($this));
     }
 
     /**
@@ -52,11 +55,11 @@ class IsInstanceOfTest extends TestCase
     public function assertionFailureContainsMeaningfulInformation(): void
     {
 
-        expect(function() { assertThat([], isInstanceOf('\stdClass')); })
-                ->throws(AssertionFailure::class)
-                ->withMessage(
-                        'Failed asserting that an array is an instance of class "\stdClass".'
-        );
+        expect(fn() => assertThat([], isInstanceOf('\stdClass')))
+            ->throws(AssertionFailure::class)
+            ->withMessage(
+                'Failed asserting that an array is an instance of class "\stdClass".'
+            );
     }
 
     /**
@@ -64,11 +67,11 @@ class IsInstanceOfTest extends TestCase
      */
     public function assertionFailureWithObjectsContainsMeaningfulInformation(): void
     {
-        expect(function() { assertThat(new self(), isInstanceOf('\stdClass')); })
-                ->throws(AssertionFailure::class)
-                ->withMessage(
-                        'Failed asserting that ' . IsInstanceOfTest::class
-                        . ' Object (...) is an instance of class "\stdClass".'
-        );
+        expect(fn() => assertThat(new self(), isInstanceOf(stdClass::class)))
+            ->throws(AssertionFailure::class)
+            ->withMessage(
+                'Failed asserting that ' . IsInstanceOfTest::class
+                . ' Object (...) is an instance of class "stdClass".'
+            );
     }
 }

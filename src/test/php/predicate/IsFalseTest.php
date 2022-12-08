@@ -7,7 +7,9 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 namespace bovigo\assert\predicate;
+
 use bovigo\assert\AssertionFailure;
+use Generator;
 use PHPUnit\Framework\TestCase;
 
 use function bovigo\assert\assertFalse;
@@ -28,26 +30,20 @@ class IsFalseTest extends TestCase
         assertThat(isFalse()->test(false), isSameAs(true));
     }
 
-    /**
-     * @return  array<string,array<mixed>>
-     */
-    public function trueValues(): array
+    public function trueValues(): Generator
     {
-        return [
-          'boolean true'     => [true],
-          'non-empty string' => ['foo'],
-          'empty string'     => [''],
-          'empty array'      => [[]],
-          'non-empty array'  => [[1]]
-        ];
+        yield 'boolean true'     => [true];
+        yield 'non-empty string' => ['foo'];
+        yield 'empty string'     => [''];
+        yield 'empty array'      => [[]];
+        yield 'non-empty array'  => [[1]];
     }
 
     /**
-     * @param  mixed  $true
      * @test
      * @dataProvider  trueValues
      */
-    public function evaluatesToFalseIfGivenValueIsFalse($true): void
+    public function evaluatesToFalseIfGivenValueIsFalse(mixed $true): void
     {
         assertThat(isFalse()->test($true), isSameAs(false));
     }
@@ -57,8 +53,8 @@ class IsFalseTest extends TestCase
      */
     public function assertionFailureContainsMeaningfulInformation(): void
     {
-        expect(function() { assertFalse(1); })
-                ->throws(AssertionFailure::class)
-                ->withMessage("Failed asserting that 1 is false.");
+        expect(fn() => assertFalse(1))
+            ->throws(AssertionFailure::class)
+            ->withMessage("Failed asserting that 1 is false.");
     }
 }

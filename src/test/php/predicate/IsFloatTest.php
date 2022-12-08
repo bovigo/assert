@@ -7,14 +7,15 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 namespace bovigo\assert\predicate;
+
 use bovigo\assert\AssertionFailure;
+use Generator;
 use PHPUnit\Framework\TestCase;
 
 use function bovigo\assert\assertThat;
 use function bovigo\assert\expect;
 use function bovigo\assert\predicate\isFloat;
 use function bovigo\assert\predicate\isNotFloat;
-
 /**
  * Test for bovigo\assert\assert\predicate\isFloat() and bovigo\assert\assert\predicate\isNotFloat().
  *
@@ -22,32 +23,21 @@ use function bovigo\assert\predicate\isNotFloat;
  */
 class IsFloatTest extends TestCase
 {
-    /**
-     * @return  array<string,array<float>>
-     */
-    public function validFloats(): array
+    public function validFloats(): Generator
     {
-        return [
-            'zero float'     => [0.0],
-            'positive float' => [30.3],
-            'negative float' => [-31.3]
-        ];
+        yield 'zero float'     => [0.0];
+        yield 'positive float' => [30.3];
+        yield 'negative float' => [-31.3];
+    }
+
+    public function invalidFloats(): Generator
+    {
+        yield 'string' => ['foo'];
+        yield 'int'    => [303];
+        yield 'object' => [new \stdClass()];
     }
 
     /**
-     * @return  array<string,array<mixed>>
-     */
-    public function invalidFloats(): array
-    {
-        return [
-            'string' => ['foo'],
-            'int'    => [303],
-            'object' => [new \stdClass()]
-        ];
-    }
-
-    /**
-     * @param  float  $value
      * @test
      * @dataProvider  validFloats
      */
@@ -57,34 +47,31 @@ class IsFloatTest extends TestCase
     }
 
     /**
-     * @param  mixed  $value
      * @test
      * @dataProvider  invalidFloats
      */
-    public function invalidFloatsAreRejected($value): void
+    public function invalidFloatsAreRejected(mixed $value): void
     {
-        expect(function() use($value) { assertThat($value, isFloat()); })
+        expect(fn() => assertThat($value, isFloat()))
             ->throws(AssertionFailure::class);
     }
 
     /**
-     * @param  mixed  $value
      * @test
      * @dataProvider  invalidFloats
      */
-    public function invalidAFloatsAreRecognizedOnNegation($value): void
+    public function invalidAFloatsAreRecognizedOnNegation(mixed $value): void
     {
         assertThat($value, isNotFloat());
     }
 
     /**
-     * @param  float  $value
      * @test
      * @dataProvider  validFloats
      */
     public function validFloatsAreRejectedOnNegation(float $value): void
     {
-        expect(function() use($value) { assertThat($value, isNotFloat()); })
+        expect(fn() => assertThat($value, isNotFloat()))
             ->throws(AssertionFailure::class);
     }
 }

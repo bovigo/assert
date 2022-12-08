@@ -7,7 +7,10 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 namespace bovigo\assert\phpunit;
+
 use bovigo\assert\AssertionFailure;
+use PHPUnit\Framework\Constraint\IsEqual;
+use stdClass;
 
 use function bovigo\assert\expect;
 use function bovigo\assert\fail;
@@ -33,9 +36,9 @@ class CompatibilityTest extends TestCase
      */
     public function testAssertArrayHasKeyFailure(): void
     {
-        expect(function() { $this->assertArrayHasKey('bar', ['foo' => 303]); })
-                ->throws(AssertionFailure::class)
-                ->withMessage("Failed asserting that an array has the key 'bar'.");
+        expect(fn() => $this->assertArrayHasKey('bar', ['foo' => 303]))
+            ->throws(AssertionFailure::class)
+            ->withMessage("Failed asserting that an array has the key 'bar'.");
     }
 
     /**
@@ -51,11 +54,9 @@ class CompatibilityTest extends TestCase
      */
     public function testAssertArrayNotHasKeyFailure(): void
     {
-        expect(function() {
-            $this->assertArrayNotHasKey('foo', ['foo' => 303]);
-        })
-        ->throws(AssertionFailure::class)
-        ->withMessage("Failed asserting that an array does not have the key 'foo'.");
+        expect(fn() => $this->assertArrayNotHasKey('foo', ['foo' => 303]))
+            ->throws(AssertionFailure::class)
+            ->withMessage("Failed asserting that an array does not have the key 'foo'.");
     }
 
     /**
@@ -71,9 +72,9 @@ class CompatibilityTest extends TestCase
      */
     public function testAssertContainsFailure(): void
     {
-        expect(function() { $this->assertContains(313, ['foo' => 303]); })
-                ->throws(AssertionFailure::class)
-                ->withMessage("Failed asserting that an array contains 313.");
+        expect(fn() => $this->assertContains(313, ['foo' => 303]))
+            ->throws(AssertionFailure::class)
+            ->withMessage("Failed asserting that an array contains 313.");
     }
 
     /**
@@ -89,9 +90,9 @@ class CompatibilityTest extends TestCase
      */
     public function testAssertNotContainsFailure(): void
     {
-        expect(function() { $this->assertNotContains(303, ['foo' => 303]); })
-                ->throws(AssertionFailure::class)
-                ->withMessage("Failed asserting that an array does not contain 303.");
+        expect(fn() => $this->assertNotContains(303, ['foo' => 303]))
+            ->throws(AssertionFailure::class)
+            ->withMessage("Failed asserting that an array does not contain 303.");
     }
 
     /**
@@ -110,8 +111,8 @@ class CompatibilityTest extends TestCase
     public function testAssertContainsOnlySuccessForNonNativeTypes(): void
     {
         $this->assertContainsOnly(
-                'stdClass',
-                [new \stdClass(), new \stdClass()]
+            'stdClass',
+            [new stdClass(), new stdClass()]
         );
     }
 
@@ -121,14 +122,14 @@ class CompatibilityTest extends TestCase
      */
     public function testAssertContainsOnlyFailure(): void
     {
-        expect(function() { $this->assertContainsOnly('int', [303, 'foo']); })
-                ->throws(AssertionFailure::class)
-                ->withMessage(
-                        'Failed asserting that element \'foo\' at key 1 in Array &0 (
+        expect(fn() => $this->assertContainsOnly('int', [303, 'foo']))
+            ->throws(AssertionFailure::class)
+            ->withMessage(
+                'Failed asserting that element \'foo\' at key 1 in Array &0 (
     0 => 303
     1 => \'foo\'
 ) is of type "int".'
-        );
+            );
     }
 
     /**
@@ -138,8 +139,8 @@ class CompatibilityTest extends TestCase
     public function testAssertContainsOnlyInstancesOfSuccess(): void
     {
         $this->assertContainsOnlyInstancesOf(
-                'stdClass',
-                [new \stdClass(), new \stdClass()]
+            'stdClass',
+            [new stdClass(), new stdClass()]
         );
     }
 
@@ -149,16 +150,14 @@ class CompatibilityTest extends TestCase
      */
     public function testAssertContainsOnlyInstancesOfFailure(): void
     {
-        expect(function() {
-                $this->assertContainsOnlyInstancesOf('stdClass', [303, 'foo']);
-        })
-        ->throws(AssertionFailure::class)
-        ->withMessage(
+        expect(fn() => $this->assertContainsOnlyInstancesOf('stdClass', [303, 'foo']))
+            ->throws(AssertionFailure::class)
+            ->withMessage(
                 'Failed asserting that element 303 at key 0 in Array &0 (
     0 => 303
     1 => \'foo\'
 ) is an instance of class "stdClass".'
-        );
+            );
     }
 
     /**
@@ -185,16 +184,14 @@ class CompatibilityTest extends TestCase
      */
     public function testAssertNotContainsOnlyFailure(): void
     {
-        expect(function() {
-                $this->assertNotContainsOnly('int', [303, 'foo']);
-        })
-        ->throws(AssertionFailure::class)
-        ->withMessage(
+        expect(fn() => $this->assertNotContainsOnly('int', [303, 'foo']))
+            ->throws(AssertionFailure::class)
+            ->withMessage(
                 'Failed asserting that element 303 at key 0 in Array &0 (
     0 => 303
     1 => \'foo\'
 ) is not of type "int".'
-        );
+            );
     }
 
     /**
@@ -210,11 +207,11 @@ class CompatibilityTest extends TestCase
      */
     public function testAssertCountFailure(): void
     {
-        expect(function() { $this->assertCount(2, ['foo' => 303]); })
-                ->throws(AssertionFailure::class)
-                ->withMessage(
-                        'Failed asserting that array with actual size 1 matches expected size 2.'
-        );
+        expect(fn() => $this->assertCount(2, ['foo' => 303]))
+            ->throws(AssertionFailure::class)
+            ->withMessage(
+                'Failed asserting that array with actual size 1 matches expected size 2.'
+            );
     }
 
     /**
@@ -230,11 +227,11 @@ class CompatibilityTest extends TestCase
      */
     public function testAssertNotCountFailure(): void
     {
-        expect(function() { $this->assertNotCount(1, ['foo' => 303]); })
-                ->throws(AssertionFailure::class)
-                ->withMessage(
-                        'Failed asserting that array with actual size 1 does not match expected size 1.'
-        );
+        expect(fn() => $this->assertNotCount(1, ['foo' => 303]))
+            ->throws(AssertionFailure::class)
+            ->withMessage(
+                'Failed asserting that array with actual size 1 does not match expected size 1.'
+            );
     }
 
     /**
@@ -250,9 +247,9 @@ class CompatibilityTest extends TestCase
      */
     public function testAssertEqualsFailure(): void
     {
-        expect(function() { $this->assertEquals(313, 303); })
-                ->throws(AssertionFailure::class)
-                ->withMessage('Failed asserting that 303 is equal to 313.');
+        expect(fn() => $this->assertEquals(313, 303))
+            ->throws(AssertionFailure::class)
+            ->withMessage('Failed asserting that 303 is equal to 313.');
     }
 
     /**
@@ -268,9 +265,9 @@ class CompatibilityTest extends TestCase
      */
     public function testAssertNotEqualsFailure(): void
     {
-        expect(function() { $this->assertNotEquals(303, 303); })
-                ->throws(AssertionFailure::class)
-                ->withMessage('Failed asserting that 303 is not equal to 303.');
+        expect(fn() => $this->assertNotEquals(303, 303))
+            ->throws(AssertionFailure::class)
+            ->withMessage('Failed asserting that 303 is not equal to 303.');
     }
 
     /**
@@ -286,9 +283,9 @@ class CompatibilityTest extends TestCase
      */
     public function testAssertEmptyFailure(): void
     {
-        expect(function() { $this->assertEmpty('not empty'); })
-                ->throws(AssertionFailure::class)
-                ->withMessage("Failed asserting that 'not empty' is empty.");
+        expect(fn() => $this->assertEmpty('not empty'))
+            ->throws(AssertionFailure::class)
+            ->withMessage("Failed asserting that 'not empty' is empty.");
     }
 
     /**
@@ -304,9 +301,9 @@ class CompatibilityTest extends TestCase
      */
     public function testAssertNotEmptyFailure(): void
     {
-        expect(function() { $this->assertNotEmpty(''); })
-                ->throws(AssertionFailure::class)
-                ->withMessage("Failed asserting that '' is not empty.");
+        expect(fn() => $this->assertNotEmpty(''))
+            ->throws(AssertionFailure::class)
+            ->withMessage("Failed asserting that '' is not empty.");
     }
 
     /**
@@ -322,9 +319,9 @@ class CompatibilityTest extends TestCase
      */
     public function testAssertGreaterThanFailure(): void
     {
-        expect(function() { $this->assertGreaterThan(3, 2); })
-                ->throws(AssertionFailure::class)
-                ->withMessage("Failed asserting that 2 is greater than 3.");
+        expect(fn() => $this->assertGreaterThan(3, 2))
+            ->throws(AssertionFailure::class)
+            ->withMessage("Failed asserting that 2 is greater than 3.");
     }
 
     /**
@@ -340,11 +337,11 @@ class CompatibilityTest extends TestCase
      */
     public function testAssertGreaterThanOrEqualFailure(): void
     {
-        expect(function() { $this->assertGreaterThanOrEqual(3, 2); })
-                ->throws(AssertionFailure::class)
-                ->withMessage(
-                        "Failed asserting that 2 is equal to 3 or is greater than 3."
-        );
+        expect(fn() => $this->assertGreaterThanOrEqual(3, 2))
+            ->throws(AssertionFailure::class)
+            ->withMessage(
+                "Failed asserting that 2 is equal to 3 or is greater than 3."
+            );
     }
 
     /**
@@ -360,9 +357,9 @@ class CompatibilityTest extends TestCase
      */
     public function testAssertLessThanFailure(): void
     {
-        expect(function() { $this->assertLessThan(2, 3); })
-                ->throws(AssertionFailure::class)
-                ->withMessage("Failed asserting that 3 is less than 2.");
+        expect(fn() => $this->assertLessThan(2, 3))
+            ->throws(AssertionFailure::class)
+            ->withMessage("Failed asserting that 3 is less than 2.");
     }
 
     /**
@@ -378,11 +375,11 @@ class CompatibilityTest extends TestCase
      */
     public function testAssertLessThanOrEqualFailure(): void
     {
-        expect(function() { $this->assertLessThanOrEqual(2, 3); })
-                ->throws(AssertionFailure::class)
-                ->withMessage(
-                        "Failed asserting that 3 is equal to 2 or is less than 2."
-        );
+        expect(fn() => $this->assertLessThanOrEqual(2, 3))
+            ->throws(AssertionFailure::class)
+            ->withMessage(
+                "Failed asserting that 3 is equal to 2 or is less than 2."
+            );
     }
 
     /**
@@ -398,9 +395,9 @@ class CompatibilityTest extends TestCase
      */
     public function testAssertFileExistsFailure(): void
     {
-        expect(function() { $this->assertFileExists(__FILE__ . '.bak'); })
-                ->throws(AssertionFailure::class)
-                ->message(contains("is a existing file"));
+        expect(fn() => $this->assertFileExists(__FILE__ . '.bak'))
+            ->throws(AssertionFailure::class)
+            ->message(contains("is a existing file"));
     }
 
     /**
@@ -416,9 +413,9 @@ class CompatibilityTest extends TestCase
      */
     public function testAssertFileNotExistsFailure(): void
     {
-        expect(function() { $this->assertFileNotExists(__FILE__); })
-                ->throws(AssertionFailure::class)
-                ->Message(contains("is not a existing file"));
+        expect(fn() => $this->assertFileNotExists(__FILE__))
+            ->throws(AssertionFailure::class)
+            ->Message(contains("is not a existing file"));
     }
 
     /**
@@ -434,9 +431,9 @@ class CompatibilityTest extends TestCase
      */
     public function testAssertTrueFailure(): void
     {
-        expect(function() { $this->assertTrue(false); })
-                ->throws(AssertionFailure::class)
-                ->withMessage("Failed asserting that false is true.");
+        expect(fn() => $this->assertTrue(false))
+            ->throws(AssertionFailure::class)
+            ->withMessage("Failed asserting that false is true.");
     }
 
     /**
@@ -452,9 +449,9 @@ class CompatibilityTest extends TestCase
      */
     public function testAssertFalseFailure(): void
     {
-        expect(function() { $this->assertFalse(true); })
-                ->throws(AssertionFailure::class)
-                ->withMessage("Failed asserting that true is false.");
+        expect(fn() => $this->assertFalse(true))
+            ->throws(AssertionFailure::class)
+            ->withMessage("Failed asserting that true is false.");
     }
 
     /**
@@ -470,9 +467,9 @@ class CompatibilityTest extends TestCase
      */
     public function testAssertNotNullFailure(): void
     {
-        expect(function() { $this->assertNotNull(null); })
-                ->throws(AssertionFailure::class)
-                ->withMessage("Failed asserting that null is not null.");
+        expect(fn() => $this->assertNotNull(null))
+            ->throws(AssertionFailure::class)
+            ->withMessage("Failed asserting that null is not null.");
     }
 
     /**
@@ -488,9 +485,9 @@ class CompatibilityTest extends TestCase
      */
     public function testAssertNullFailure(): void
     {
-        expect(function() { $this->assertNull(303); })
-                ->throws(AssertionFailure::class)
-                ->withMessage("Failed asserting that 303 is null.");
+        expect(fn() => $this->assertNull(303))
+            ->throws(AssertionFailure::class)
+            ->withMessage("Failed asserting that 303 is null.");
     }
 
     /**
@@ -508,9 +505,9 @@ class CompatibilityTest extends TestCase
      */
     public function testAssertFiniteFailure(): void
     {
-        expect(function() { $this->assertFinite(INF); })
-                ->throws(AssertionFailure::class)
-                ->message(contains("satisfies is_finite()."));
+        expect(fn() => $this->assertFinite(INF))
+            ->throws(AssertionFailure::class)
+            ->message(contains("satisfies is_finite()."));
     }
 
     /**
@@ -528,9 +525,9 @@ class CompatibilityTest extends TestCase
      */
     public function testAssertInfiniteFailure(): void
     {
-        expect(function() { $this->assertInfinite(1.0); })
-                ->throws(AssertionFailure::class)
-                ->withMessage("Failed asserting that 1.0 satisfies is_infinite().");
+        expect(fn() => $this->assertInfinite(1.0))
+            ->throws(AssertionFailure::class)
+            ->withMessage("Failed asserting that 1.0 satisfies is_infinite().");
     }
 
     /**
@@ -548,9 +545,9 @@ class CompatibilityTest extends TestCase
      */
     public function testAssertNanFailure(): void
     {
-        expect(function() { $this->assertNan(1.0); })
-                ->throws(AssertionFailure::class)
-                ->withMessage("Failed asserting that 1.0 satisfies is_nan().");
+        expect(fn() => $this->assertNan(1.0))
+            ->throws(AssertionFailure::class)
+            ->withMessage("Failed asserting that 1.0 satisfies is_nan().");
     }
 
     /**
@@ -558,7 +555,7 @@ class CompatibilityTest extends TestCase
      */
     public function testAssertSameSuccess(): void
     {
-        $foo = new \stdClass();
+        $foo = new stdClass();
         $this->assertSame($foo, $foo);
     }
 
@@ -567,13 +564,11 @@ class CompatibilityTest extends TestCase
      */
     public function testAssertSameFailure(): void
     {
-        expect(function() {
-            $this->assertSame(new \stdClass(), new \stdClass());
-        })
-        ->throws(AssertionFailure::class)
-        ->withMessage(
+        expect(fn() => $this->assertSame(new stdClass(), new stdClass()))
+            ->throws(AssertionFailure::class)
+            ->withMessage(
                 'Failed asserting that object of type "stdClass" is identical to object of type "stdClass".'
-        );
+            );
     }
 
     /**
@@ -581,7 +576,7 @@ class CompatibilityTest extends TestCase
      */
     public function testAssertNotSameSuccess(): void
     {
-        $this->assertNotSame(new \stdClass(), new \stdClass());
+        $this->assertNotSame(new stdClass(), new stdClass());
     }
 
     /**
@@ -589,14 +584,12 @@ class CompatibilityTest extends TestCase
      */
     public function testAssertNotSameFailure(): void
     {
-        expect(function() {
-                $foo = new \stdClass();
-                $this->assertNotSame($foo, $foo);
-        })
-        ->throws(AssertionFailure::class)
-        ->withMessage(
+        $foo = new stdClass();
+        expect(fn() => $this->assertNotSame($foo, $foo))
+            ->throws(AssertionFailure::class)
+            ->withMessage(
                 'Failed asserting that object of type "stdClass" is not identical to object of type "stdClass".'
-        );
+            );
     }
 
     /**
@@ -604,7 +597,7 @@ class CompatibilityTest extends TestCase
      */
     public function testAssertInstanceOfSuccess(): void
     {
-        $this->assertInstanceOf(\stdClass::class, new \stdClass());
+        $this->assertInstanceOf(\stdClass::class, new stdClass());
     }
 
     /**
@@ -612,13 +605,11 @@ class CompatibilityTest extends TestCase
      */
     public function testAsserInstanceOfFailure(): void
     {
-        expect(function() {
-            $this->assertInstanceOf(__CLASS__, new \stdClass());
-        })
-        ->throws(AssertionFailure::class)
-        ->withMessage(
+        expect(fn() => $this->assertInstanceOf(__CLASS__, new stdClass()))
+            ->throws(AssertionFailure::class)
+            ->withMessage(
                 'Failed asserting that stdClass Object () is an instance of class "' . __CLASS__ . '".'
-        );
+            );
     }
 
     /**
@@ -626,7 +617,7 @@ class CompatibilityTest extends TestCase
      */
     public function testAssertNotInstanceOfSuccess(): void
     {
-        $this->assertNotInstanceOf(__CLASS__, new \stdClass());
+        $this->assertNotInstanceOf(__CLASS__, new stdClass());
     }
 
     /**
@@ -634,13 +625,11 @@ class CompatibilityTest extends TestCase
      */
     public function testAssertNotInstanceOfFailure(): void
     {
-        expect(function() {
-            $this->assertNotInstanceOf(\stdClass::class, new \stdClass());
-        })
-        ->throws(AssertionFailure::class)
-        ->withMessage(
+        expect(fn() => $this->assertNotInstanceOf(\stdClass::class, new stdClass()))
+            ->throws(AssertionFailure::class)
+            ->withMessage(
                 'Failed asserting that stdClass Object () is not an instance of class "stdClass".'
-        );
+            );
     }
 
     /**
@@ -656,11 +645,11 @@ class CompatibilityTest extends TestCase
      */
     public function testAssertRegExpFailure(): void
     {
-        expect(function() { $this->assertRegExp('/^([a-z]{3})$/', 'dummy'); })
-                ->throws(AssertionFailure::class)
-                ->withMessage(
-                        'Failed asserting that \'dummy\' matches regular expression "/^([a-z]{3})$/".'
-        );
+        expect(fn() => $this->assertRegExp('/^([a-z]{3})$/', 'dummy'))
+            ->throws(AssertionFailure::class)
+            ->withMessage(
+                'Failed asserting that \'dummy\' matches regular expression "/^([a-z]{3})$/".'
+            );
     }
 
     /**
@@ -676,11 +665,11 @@ class CompatibilityTest extends TestCase
      */
     public function testAssertNotRegExNotpFailure(): void
     {
-        expect(function() { $this->assertNotRegExp('/^([a-z]{3})$/', 'foo'); })
-                ->throws(AssertionFailure::class)
-                ->withMessage(
-                        'Failed asserting that \'foo\' does not match regular expression "/^([a-z]{3})$/".'
-        );
+        expect(fn() => $this->assertNotRegExp('/^([a-z]{3})$/', 'foo'))
+            ->throws(AssertionFailure::class)
+            ->withMessage(
+                'Failed asserting that \'foo\' does not match regular expression "/^([a-z]{3})$/".'
+            );
     }
 
     /**
@@ -698,11 +687,11 @@ class CompatibilityTest extends TestCase
      */
     public function testAssertStringStartsWithFailure(): void
     {
-        expect(function() { $this->assertStringStartsWith('foo', 'barbazfoo');})
-                ->throws(AssertionFailure::class)
-                ->withMessage(
-                        "Failed asserting that 'barbazfoo' starts with 'foo'."
-        );
+        expect(fn() => $this->assertStringStartsWith('foo', 'barbazfoo'))
+            ->throws(AssertionFailure::class)
+            ->withMessage(
+                "Failed asserting that 'barbazfoo' starts with 'foo'."
+            );
     }
 
     /**
@@ -720,13 +709,11 @@ class CompatibilityTest extends TestCase
      */
     public function testAssertStringStartsNotWithFailure(): void
     {
-        expect(function() {
-            $this->assertStringStartsNotWith('foo', 'foobarbaz');
-        })
-        ->throws(AssertionFailure::class)
-        ->withMessage(
+        expect(fn() => $this->assertStringStartsNotWith('foo', 'foobarbaz'))
+            ->throws(AssertionFailure::class)
+            ->withMessage(
                 "Failed asserting that 'foobarbaz' does not start with 'foo'."
-        );
+            );
     }
 
     /**
@@ -744,9 +731,9 @@ class CompatibilityTest extends TestCase
      */
     public function testAssertStringEndsWithFailure(): void
     {
-        expect(function() { $this->assertStringEndsWith('foo', 'foobarbaz'); })
-                ->throws(AssertionFailure::class)
-                ->withMessage("Failed asserting that 'foobarbaz' ends with 'foo'.");
+        expect(fn() => $this->assertStringEndsWith('foo', 'foobarbaz'))
+            ->throws(AssertionFailure::class)
+            ->withMessage("Failed asserting that 'foobarbaz' ends with 'foo'.");
     }
 
     /**
@@ -764,11 +751,11 @@ class CompatibilityTest extends TestCase
      */
     public function testAssertStringEndsNotWithFailure(): void
     {
-        expect(function() { $this->assertStringEndsNotWith('foo', 'barbazfoo'); })
-                ->throws(AssertionFailure::class)
-                ->withMessage(
-                        "Failed asserting that 'barbazfoo' does not end with 'foo'."
-        );
+        expect(fn() => $this->assertStringEndsNotWith('foo', 'barbazfoo'))
+            ->throws(AssertionFailure::class)
+            ->withMessage(
+                "Failed asserting that 'barbazfoo' does not end with 'foo'."
+            );
     }
 
     /**
@@ -786,11 +773,11 @@ class CompatibilityTest extends TestCase
      */
     public function testAssertIsArrayWithFailure(): void
     {
-        expect(function() { $this->assertIsArray('foo'); })
-                ->throws(AssertionFailure::class)
-                ->withMessage(
-                        "Failed asserting that 'foo' is of type \"array\"."
-        );
+        expect(fn() => $this->assertIsArray('foo'))
+            ->throws(AssertionFailure::class)
+            ->withMessage(
+                "Failed asserting that 'foo' is of type \"array\"."
+            );
     }
 
     /**
@@ -808,11 +795,11 @@ class CompatibilityTest extends TestCase
      */
     public function testAssertIsBoolWithFailure(): void
     {
-        expect(function() { $this->assertIsBool('foo'); })
-                ->throws(AssertionFailure::class)
-                ->withMessage(
-                        "Failed asserting that 'foo' is of type \"bool\"."
-        );
+        expect(fn() => $this->assertIsBool('foo'))
+            ->throws(AssertionFailure::class)
+            ->withMessage(
+                "Failed asserting that 'foo' is of type \"bool\"."
+            );
     }
 
     /**
@@ -830,11 +817,11 @@ class CompatibilityTest extends TestCase
      */
     public function testAssertIsFloatWithFailure(): void
     {
-        expect(function() { $this->assertIsFloat('foo'); })
-                ->throws(AssertionFailure::class)
-                ->withMessage(
-                        "Failed asserting that 'foo' is of type \"float\"."
-        );
+        expect(fn() => $this->assertIsFloat('foo'))
+            ->throws(AssertionFailure::class)
+            ->withMessage(
+                "Failed asserting that 'foo' is of type \"float\"."
+            );
     }
 
     /**
@@ -852,11 +839,11 @@ class CompatibilityTest extends TestCase
      */
     public function testAssertIsIntWithFailure(): void
     {
-        expect(function() { $this->assertIsInt('foo'); })
-                ->throws(AssertionFailure::class)
-                ->withMessage(
-                        "Failed asserting that 'foo' is of type \"int\"."
-        );
+        expect(fn() => $this->assertIsInt('foo'))
+            ->throws(AssertionFailure::class)
+            ->withMessage(
+                "Failed asserting that 'foo' is of type \"int\"."
+            );
     }
 
     /**
@@ -874,11 +861,11 @@ class CompatibilityTest extends TestCase
      */
     public function testAssertIsNumericWithFailure(): void
     {
-        expect(function() { $this->assertIsNumeric('foo'); })
-                ->throws(AssertionFailure::class)
-                ->withMessage(
-                        "Failed asserting that 'foo' is of type \"numeric\"."
-        );
+        expect(fn() => $this->assertIsNumeric('foo'))
+            ->throws(AssertionFailure::class)
+            ->withMessage(
+                "Failed asserting that 'foo' is of type \"numeric\"."
+            );
     }
 
     /**
@@ -887,7 +874,7 @@ class CompatibilityTest extends TestCase
      */
     public function testAssertIsObjectSuccess(): void
     {
-        $this->assertIsObject(new \stdClass());
+        $this->assertIsObject(new stdClass());
     }
 
     /**
@@ -896,11 +883,11 @@ class CompatibilityTest extends TestCase
      */
     public function testAssertIsObjectWithFailure(): void
     {
-        expect(function() { $this->assertIsObject('foo'); })
-                ->throws(AssertionFailure::class)
-                ->withMessage(
-                        "Failed asserting that 'foo' is of type \"object\"."
-        );
+        expect(fn() => $this->assertIsObject('foo'))
+            ->throws(AssertionFailure::class)
+            ->withMessage(
+                "Failed asserting that 'foo' is of type \"object\"."
+            );
     }
 
     /**
@@ -927,11 +914,11 @@ class CompatibilityTest extends TestCase
      */
     public function testAssertIsResourceWithFailure(): void
     {
-        expect(function() { $this->assertIsResource('foo'); })
-                ->throws(AssertionFailure::class)
-                ->withMessage(
-                        "Failed asserting that 'foo' is of type \"resource\"."
-        );
+        expect(fn() => $this->assertIsResource('foo'))
+            ->throws(AssertionFailure::class)
+            ->withMessage(
+                "Failed asserting that 'foo' is of type \"resource\"."
+            );
     }
 
     /**
@@ -949,11 +936,11 @@ class CompatibilityTest extends TestCase
      */
     public function testAssertIsStringWithFailure(): void
     {
-        expect(function() { $this->assertIsString(false); })
-                ->throws(AssertionFailure::class)
-                ->withMessage(
-                        "Failed asserting that false is of type \"string\"."
-        );
+        expect(fn() => $this->assertIsString(false))
+            ->throws(AssertionFailure::class)
+            ->withMessage(
+                "Failed asserting that false is of type \"string\"."
+            );
     }
 
     /**
@@ -971,11 +958,11 @@ class CompatibilityTest extends TestCase
      */
     public function testAssertIsScalarWithFailure(): void
     {
-        expect(function() { $this->assertIsScalar(['foo']); })
-                ->throws(AssertionFailure::class)
-                ->withMessage(
-                        "Failed asserting that an array is of type \"scalar\"."
-        );
+        expect(fn() => $this->assertIsScalar(['foo']))
+            ->throws(AssertionFailure::class)
+            ->withMessage(
+                "Failed asserting that an array is of type \"scalar\"."
+            );
     }
 
     /**
@@ -993,11 +980,11 @@ class CompatibilityTest extends TestCase
      */
     public function testAssertIsCallableWithFailure(): void
     {
-        expect(function() { $this->assertIsCallable(['foo']); })
-                ->throws(AssertionFailure::class)
-                ->withMessage(
-                        "Failed asserting that an array is of type \"callable\"."
-        );
+        expect(fn() => $this->assertIsCallable(['foo']))
+            ->throws(AssertionFailure::class)
+            ->withMessage(
+                "Failed asserting that an array is of type \"callable\"."
+            );
     }
 
     /**
@@ -1015,11 +1002,11 @@ class CompatibilityTest extends TestCase
      */
     public function testAssertIsIterableWithFailure(): void
     {
-        expect(function() { $this->assertIsIterable('foo'); })
-                ->throws(AssertionFailure::class)
-                ->withMessage(
-                        "Failed asserting that 'foo' is of type \"iterable\"."
-        );
+        expect(fn() => $this->assertIsIterable('foo'))
+            ->throws(AssertionFailure::class)
+            ->withMessage(
+                "Failed asserting that 'foo' is of type \"iterable\"."
+            );
     }
 
     /**
@@ -1037,11 +1024,11 @@ class CompatibilityTest extends TestCase
      */
     public function testAssertIsNotArrayWithFailure(): void
     {
-        expect(function() { $this->assertIsNotArray(['foo']); })
-                ->throws(AssertionFailure::class)
-                ->withMessage(
-                        "Failed asserting that an array is not of type \"array\"."
-        );
+        expect(fn() =>  $this->assertIsNotArray(['foo']))
+            ->throws(AssertionFailure::class)
+            ->withMessage(
+                "Failed asserting that an array is not of type \"array\"."
+            );
     }
 
     /**
@@ -1059,11 +1046,11 @@ class CompatibilityTest extends TestCase
      */
     public function testAssertIsNotBoolWithFailure(): void
     {
-        expect(function() { $this->assertIsNotBool(true); })
-                ->throws(AssertionFailure::class)
-                ->withMessage(
-                        "Failed asserting that true is not of type \"bool\"."
-        );
+        expect(fn() => $this->assertIsNotBool(true))
+            ->throws(AssertionFailure::class)
+            ->withMessage(
+                "Failed asserting that true is not of type \"bool\"."
+            );
     }
 
     /**
@@ -1081,11 +1068,11 @@ class CompatibilityTest extends TestCase
      */
     public function testAssertIsNotFloatWithFailure(): void
     {
-        expect(function() { $this->assertIsNotFloat(1.1); })
-                ->throws(AssertionFailure::class)
-                ->withMessage(
-                        "Failed asserting that 1.1 is not of type \"float\"."
-        );
+        expect(fn() => $this->assertIsNotFloat(1.1))
+            ->throws(AssertionFailure::class)
+            ->withMessage(
+                "Failed asserting that 1.1 is not of type \"float\"."
+            );
     }
 
     /**
@@ -1103,11 +1090,11 @@ class CompatibilityTest extends TestCase
      */
     public function testAssertIsNotIntWithFailure(): void
     {
-        expect(function() { $this->assertIsNotInt(1); })
-                ->throws(AssertionFailure::class)
-                ->withMessage(
-                        "Failed asserting that 1 is not of type \"int\"."
-        );
+        expect(fn() => $this->assertIsNotInt(1))
+            ->throws(AssertionFailure::class)
+            ->withMessage(
+                "Failed asserting that 1 is not of type \"int\"."
+            );
     }
 
     /**
@@ -1125,11 +1112,11 @@ class CompatibilityTest extends TestCase
      */
     public function testAssertIsNotNumericWithFailure(): void
     {
-        expect(function() { $this->assertIsNotNumeric(1); })
-                ->throws(AssertionFailure::class)
-                ->withMessage(
-                        "Failed asserting that 1 is not of type \"numeric\"."
-        );
+        expect(fn() => $this->assertIsNotNumeric(1))
+            ->throws(AssertionFailure::class)
+            ->withMessage(
+                "Failed asserting that 1 is not of type \"numeric\"."
+            );
     }
 
     /**
@@ -1147,9 +1134,9 @@ class CompatibilityTest extends TestCase
      */
     public function testAssertIsNotObjectWithFailure(): void
     {
-        expect(function() { $this->assertIsNotObject(new \stdClass()); })
-                ->throws(AssertionFailure::class)
-                ->message(endsWith("is not of type \"object\"."));
+        expect(fn() => $this->assertIsNotObject(new stdClass()))
+            ->throws(AssertionFailure::class)
+            ->message(endsWith("is not of type \"object\"."));
     }
 
     /**
@@ -1180,8 +1167,8 @@ class CompatibilityTest extends TestCase
               fclose($fd);
             }
         })
-                ->throws(AssertionFailure::class)
-                ->message(endsWith("is not of type \"resource\"."));
+            ->throws(AssertionFailure::class)
+            ->message(endsWith("is not of type \"resource\"."));
     }
 
     /**
@@ -1199,11 +1186,11 @@ class CompatibilityTest extends TestCase
      */
     public function testAssertIsNotStringWithFailure(): void
     {
-        expect(function() { $this->assertIsNotString('example'); })
-                ->throws(AssertionFailure::class)
-                ->withMessage(
-                        "Failed asserting that 'example' is not of type \"string\"."
-        );
+        expect(fn() => $this->assertIsNotString('example'))
+            ->throws(AssertionFailure::class)
+            ->withMessage(
+                "Failed asserting that 'example' is not of type \"string\"."
+            );
     }
 
     /**
@@ -1221,11 +1208,11 @@ class CompatibilityTest extends TestCase
      */
     public function testAssertIsNotScalarWithFailure(): void
     {
-        expect(function() { $this->assertIsNotScalar('foo'); })
-                ->throws(AssertionFailure::class)
-                ->withMessage(
-                        "Failed asserting that 'foo' is not of type \"scalar\"."
-        );
+        expect(fn() => $this->assertIsNotScalar('foo'))
+            ->throws(AssertionFailure::class)
+            ->withMessage(
+                "Failed asserting that 'foo' is not of type \"scalar\"."
+            );
     }
 
     /**
@@ -1243,9 +1230,9 @@ class CompatibilityTest extends TestCase
      */
     public function testAssertIsNotCallableWithFailure(): void
     {
-        expect(function() { $this->assertIsNotCallable(function() {}); })
-                ->throws(AssertionFailure::class)
-                ->message(endsWith("is not of type \"callable\"."));
+        expect(fn() => $this->assertIsNotCallable(function() {}))
+            ->throws(AssertionFailure::class)
+            ->message(endsWith("is not of type \"callable\"."));
     }
 
     /**
@@ -1263,11 +1250,11 @@ class CompatibilityTest extends TestCase
      */
     public function testAssertIsNotIterableWithFailure(): void
     {
-        expect(function() { $this->assertIsNotIterable(['foo']); })
-                ->throws(AssertionFailure::class)
-                ->withMessage(
-                        "Failed asserting that an array is not of type \"iterable\"."
-        );
+        expect(fn() => $this->assertIsNotIterable(['foo']))
+            ->throws(AssertionFailure::class)
+            ->withMessage(
+                "Failed asserting that an array is not of type \"iterable\"."
+            );
     }
 
     /**
@@ -1276,7 +1263,7 @@ class CompatibilityTest extends TestCase
      */
     public function testAssertThat(): void
     {
-        $this->assertThat('foo', new \PHPUnit\Framework\Constraint\IsEqual('foo'));
+        $this->assertThat('foo', new IsEqual('foo'));
     }
 
     /**
@@ -1285,8 +1272,7 @@ class CompatibilityTest extends TestCase
      */
     public function testAssertThatWithFailure(): void
     {
-        expect(function() {
-                $this->assertThat('foo', new \PHPUnit\Framework\Constraint\IsEqual('bar'));
-        })->throws(AssertionFailure::class);
+        expect(fn() => $this->assertThat('foo', new IsEqual('bar')))
+            ->throws(AssertionFailure::class);
     }
 }

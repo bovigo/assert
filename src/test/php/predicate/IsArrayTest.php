@@ -7,6 +7,7 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 namespace bovigo\assert\predicate;
+
 use bovigo\assert\AssertionFailure;
 use PHPUnit\Framework\TestCase;
 
@@ -14,7 +15,6 @@ use function bovigo\assert\assertThat;
 use function bovigo\assert\expect;
 use function bovigo\assert\predicate\isArray;
 use function bovigo\assert\predicate\isNotAnArray;
-
 /**
  * Test for bovigo\assert\assert\predicate\isArray() and bovigo\assert\assert\predicate\isNotAnArray().
  *
@@ -57,22 +57,20 @@ class IsArrayTest extends TestCase
     }
 
     /**
-     * @param  mixed  $value
      * @test
      * @dataProvider  invalidArrays
      */
-    public function invalidArraysAreRejected($value): void
+    public function invalidArraysAreRejected(mixed $value): void
     {
-        expect(function() use($value) { assertThat($value, isArray()); })
+        expect(fn() => assertThat($value, isArray()))
             ->throws(AssertionFailure::class);
     }
 
     /**
-     * @param  mixed  $value
      * @test
      * @dataProvider  invalidArrays
      */
-    public function invalidArraysAreRecognizedOnNegation($value): void
+    public function invalidArraysAreRecognizedOnNegation(mixed $value): void
     {
         assertThat($value, isNotAnArray());
     }
@@ -84,7 +82,7 @@ class IsArrayTest extends TestCase
      */
     public function validArraysAreRejectedOnNegation(array $value): void
     {
-        expect(function() use($value) { assertThat($value, isNotAnArray()); })
+        expect(fn() => assertThat($value, isNotAnArray()))
             ->throws(AssertionFailure::class);
     }
 }

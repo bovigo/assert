@@ -7,13 +7,16 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 namespace bovigo\assert\predicate;
+
+use InvalidArgumentException;
+
 /**
  * Helper class for the test.
  */
 class PredicateThrowingExample extends PredicateFooExample
 {
-    public function test($value): bool
+    public function test(mixed $value): bool
     {
-        throw new \InvalidArgumentException('exception message');
+        throw new InvalidArgumentException('exception message');
     }
 }

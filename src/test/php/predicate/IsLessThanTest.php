@@ -7,6 +7,7 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 namespace bovigo\assert\predicate;
+
 use bovigo\assert\AssertionFailure;
 use PHPUnit\Framework\TestCase;
 
@@ -74,9 +75,9 @@ class IsLessThanTest extends TestCase
      */
     public function assertionFailureContainsMeaningfulInformation(): void
     {
-        expect(function() { assertThat(3, isLessThan(2)); })
-                ->throws(AssertionFailure::class)
-                ->withMessage("Failed asserting that 3 is less than 2.");
+        expect(fn() => assertThat(3, isLessThan(2)))
+            ->throws(AssertionFailure::class)
+            ->withMessage("Failed asserting that 3 is less than 2.");
     }
 
     /**
@@ -84,10 +85,10 @@ class IsLessThanTest extends TestCase
      */
     public function assertionFailureWhenCombinedWithEqualsContainsMeaningfulInformation(): void
     {
-        expect(function() { assertThat(3, isLessThanOrEqualTo(2)); })
-                ->throws(AssertionFailure::class)
-                ->withMessage(
-                        "Failed asserting that 3 is equal to 2 or is less than 2."
-        );
+        expect(fn() => assertThat(3, isLessThanOrEqualTo(2)))
+            ->throws(AssertionFailure::class)
+            ->withMessage(
+                "Failed asserting that 3 is equal to 2 or is less than 2."
+            );
     }
 }

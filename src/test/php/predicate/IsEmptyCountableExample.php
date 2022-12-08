@@ -12,13 +12,7 @@ namespace bovigo\assert\predicate;
  */
 class IsEmptyCountableExample implements \Countable
 {
-    private $count;
-    public function __construct(int $count)
-    {
-        $this->count = $count;
-    }
-    public function count(): int
-    {
-        return $this->count;
-    }
+    public function __construct(private int $count) { }
+
+    public function count(): int { return $this->count; }
 }

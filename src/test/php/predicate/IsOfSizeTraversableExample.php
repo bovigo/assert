@@ -9,7 +9,6 @@ declare(strict_types=1);
 namespace bovigo\assert\predicate;
 
 use Iterator;
-
 /**
  * Helper class for the test.
  *

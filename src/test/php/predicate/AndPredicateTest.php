@@ -7,6 +7,7 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 namespace bovigo\assert\predicate;
+
 use PHPUnit\Framework\TestCase;
 
 use function bovigo\assert\assertFalse;
@@ -24,14 +25,11 @@ class AndPredicateTest extends TestCase
      */
     private $andPredicate;
 
-    /**
-     * set up test environment
-     */
     protected function setUp(): void
     {
         $this->andPredicate = new AndPredicate(
-                function($value) { return 'foo' === $value; },
-                function($value) { return 'foo' === $value; }
+            fn($value) => 'foo' === $value,
+            fn($value) => 'foo' === $value
         );
     }
 
@@ -57,8 +55,8 @@ class AndPredicateTest extends TestCase
     public function hasStringRepresentation(): void
     {
         assertThat(
-                $this->andPredicate,
-                equals('satisfies a lambda function and satisfies a lambda function')
+            $this->andPredicate,
+            equals('satisfies a lambda function and satisfies a lambda function')
         );
     }
 
@@ -68,14 +66,14 @@ class AndPredicateTest extends TestCase
     public function countEqualsSumOfCountOfBothPredicates(): void
     {
         assertThat(
-                count(new AndPredicate(
-                        new AndPredicate(
-                            function($value) { return 'foo' === $value; },
-                            function($value) { return 'foo' === $value; }
-                        ),
-                        function($value) { return 'foo' === $value; }
-                )),
-                equals(3)
+            count(new AndPredicate(
+                new AndPredicate(
+                    fn($value) => 'foo' === $value,
+                    fn($value) => 'foo' === $value
+                ),
+                fn($value) => 'foo' === $value
+            )),
+            equals(3)
         );
     }
 }

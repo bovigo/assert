@@ -7,14 +7,17 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 namespace bovigo\assert\predicate;
+
+use ArrayIterator;
 use bovigo\assert\AssertionFailure;
+use Generator;
 use PHPUnit\Framework\TestCase;
+use stdClass;
 
 use function bovigo\assert\assertThat;
 use function bovigo\assert\expect;
 use function bovigo\assert\predicate\isIterable;
 use function bovigo\assert\predicate\isNotIterable;
-
 /**
  * Test for bovigo\assert\assert\predicate\isIterable() and bovigo\assert\assert\predicate\isNotIterable().
  *
@@ -22,34 +25,23 @@ use function bovigo\assert\predicate\isNotIterable;
  */
 class IsIterableTest extends TestCase
 {
-    /**
-     * @return  array<string,array<iterable>>
-     */
-    public function validIterables(): array
+    public function validIterables(): Generator
     {
-        $generator = function() { yield true; };
-        return [
-            'empty array'  => [[]],
-            'filled array' => [[1, 2, 3]],
-            'iterator'     => [new \ArrayIterator([])],
-            'generator'    => [$generator()]
-        ];
+        yield 'empty array'  => [[]];
+        yield 'filled array' => [[1, 2, 3]];
+        yield 'iterator'     => [new ArrayIterator([])];
+        $generator = fn() => yield true;
+        yield 'generator'    => [$generator()];
+    }
+
+    public function invalidIterables(): Generator
+    {
+        yield 'string' => ['foo'];
+        yield 'float'  => [30.3];
+        yield 'object' => [new stdClass()];
     }
 
     /**
-     * @return  array<string,array<mixed>>
-     */
-    public function invalidIterables(): array
-    {
-        return [
-            'string' => ['foo'],
-            'float'  => [30.3],
-            'object' => [new \stdClass()]
-        ];
-    }
-
-    /**
-     * @param  iterable<mixed>  $value
      * @test
      * @dataProvider  validIterables
      */
@@ -59,22 +51,20 @@ class IsIterableTest extends TestCase
     }
 
     /**
-     * @param  mixed  $value
      * @test
      * @dataProvider  invalidIterables
      */
-    public function invalidIterablesAreRejected($value): void
+    public function invalidIterablesAreRejected(mixed $value): void
     {
-        expect(function() use($value) { assertThat($value, isIterable()); })
+        expect(fn() => assertThat($value, isIterable()))
             ->throws(AssertionFailure::class);
     }
 
     /**
-     * @param  mixed  $value
      * @test
      * @dataProvider  invalidIterables
      */
-    public function invalidIterablesAreRecognizedOnNegation($value): void
+    public function invalidIterablesAreRecognizedOnNegation(mixed $value): void
     {
         assertThat($value, isNotIterable());
     }
@@ -86,7 +76,7 @@ class IsIterableTest extends TestCase
      */
     public function validIterablesAreRejectedOnNegation(iterable $value): void
     {
-        expect(function() use($value) { assertThat($value, isNotIterable()); })
+        expect(fn() => assertThat($value, isNotIterable()))
             ->throws(AssertionFailure::class);
     }
 }

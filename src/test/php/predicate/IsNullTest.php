@@ -7,7 +7,9 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 namespace bovigo\assert\predicate;
+
 use bovigo\assert\AssertionFailure;
+use Generator;
 use PHPUnit\Framework\TestCase;
 
 use function bovigo\assert\{
@@ -32,29 +34,23 @@ class IsNullTest extends TestCase
         assertTrue(isNull()->test(null));
     }
 
-    /**
-     * @return  array<string,array<mixed>>
-     */
-    public function nonNullValues(): array
+    public function nonNullValues(): Generator
     {
-        return [
-          'boolean true'     => [true],
-          'boolean false'    => [false],
-          'non-empty string' => ['foo'],
-          'empty string'     => [''],
-          'empty array'      => [[]],
-          'non-empty array'  => [[1]],
-          'int 0'            => [0],
-          'int non-0'        => [303]
-        ];
+        yield 'boolean true'     => [true];
+        yield 'boolean false'    => [false];
+        yield 'non-empty string' => ['foo'];
+        yield 'empty string'     => [''];
+        yield 'empty array'      => [[]];
+        yield 'non-empty array'  => [[1]];
+        yield 'int 0'            => [0];
+        yield 'int non-0'        => [303];
     }
 
     /**
-     * @param  mixed  $nonNullValue
      * @test
      * @dataProvider  nonNullValues
      */
-    public function evaluatesToFalseIfGivenValueIsNotNull($nonNullValue): void
+    public function evaluatesToFalseIfGivenValueIsNotNull(mixed $nonNullValue): void
     {
         assertFalse(isNull()->test($nonNullValue));
     }
@@ -64,9 +60,9 @@ class IsNullTest extends TestCase
      */
     public function assertionFailureContainsMeaningfulInformation(): void
     {
-        expect(function() { assertNull([]); })
-                ->throws(AssertionFailure::class)
-                ->withMessage("Failed asserting that an array is null.");
+        expect(fn() => assertNull([]))
+            ->throws(AssertionFailure::class)
+            ->withMessage("Failed asserting that an array is null.");
     }
 
     /**

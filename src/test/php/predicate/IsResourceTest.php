@@ -7,15 +7,17 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 namespace bovigo\assert\predicate;
+
 use bovigo\assert\AssertionFailure;
+use Generator;
 use PHPUnit\Framework\TestCase;
+use stdClass;
 
 use function bovigo\assert\assertThat;
 use function bovigo\assert\expect;
 use function bovigo\assert\fail;
 use function bovigo\assert\predicate\isResource;
 use function bovigo\assert\predicate\isNotAResource;
-
 /**
  * Test for bovigo\assert\assert\predicate\isResource() and bovigo\assert\assert\predicate\isNotAResource().
  *
@@ -43,16 +45,11 @@ class IsResourceTest extends TestCase
         fclose($this->resource);
     }
 
-    /**
-     * @return  array<string,array<mixed>>
-     */
-    public function invalidResources(): array
+    public function invalidResources(): Generator
     {
-        return [
-            'string' => ['foo'],
-            'float'  => [30.3],
-            'object' => [new \stdClass()]
-        ];
+        yield 'string' => ['foo'];
+        yield 'float'  => [30.3];
+        yield 'object' => [new stdClass()];
     }
 
     /**
@@ -64,22 +61,20 @@ class IsResourceTest extends TestCase
     }
 
     /**
-     * @param  mixed  $value
      * @test
      * @dataProvider  invalidResources
      */
-    public function invalidResourcesAreRejected($value): void
+    public function invalidResourcesAreRejected(mixed $value): void
     {
-        expect(function() use($value) { assertThat($value, isResource()); })
+        expect(fn() => assertThat($value, isResource()))
             ->throws(AssertionFailure::class);
     }
 
     /**
-     * @param  mixed  $value
      * @test
      * @dataProvider  invalidResources
      */
-    public function invalidResourcesAreRecognizedOnNegation($value): void
+    public function invalidResourcesAreRecognizedOnNegation(mixed $value): void
     {
         assertThat($value, isNotAResource());
     }
@@ -89,7 +84,7 @@ class IsResourceTest extends TestCase
      */
     public function validObjectsAreRejectedOnNegation(): void
     {
-        expect(function() { assertThat($this->resource, isNotAResource()); })
+        expect(fn() => assertThat($this->resource, isNotAResource()))
             ->throws(AssertionFailure::class);
     }
 }

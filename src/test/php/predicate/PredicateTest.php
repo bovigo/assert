@@ -7,6 +7,7 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 namespace bovigo\assert\predicate;
+
 use bovigo\assert\AssertionFailure;
 use PHPUnit\Framework\TestCase;
 
@@ -35,8 +36,8 @@ class PredicateTest extends TestCase
     public function castFromWithCallableReturnsCallablePredicate(): void
     {
         assertThat(
-                Predicate::castFrom(function($value) { return 'foo' === $value; }),
-                isInstanceOf(CallablePredicate::class)
+            Predicate::castFrom(function($value) { return 'foo' === $value; }),
+            isInstanceOf(CallablePredicate::class)
         );
     }
 
@@ -56,8 +57,8 @@ class PredicateTest extends TestCase
     {
         $predicate = new PredicateFooExample();
         assertThat(
-                $predicate->and(function($value) { return 'foo' === $value; }),
-                isInstanceOf(AndPredicate::class)
+            $predicate->and(function($value) { return 'foo' === $value; }),
+            isInstanceOf(AndPredicate::class)
         );
     }
 
@@ -68,8 +69,8 @@ class PredicateTest extends TestCase
     {
         $predicate = new PredicateFooExample();
         assertThat(
-                $predicate->or(function($value) { return 'foo' === $value; }),
-                isInstanceOf(OrPredicate::class)
+            $predicate->or(function($value) { return 'foo' === $value; }),
+            isInstanceOf(OrPredicate::class)
         );
     }
 
@@ -96,9 +97,9 @@ class PredicateTest extends TestCase
      */
     public function assertionFailureContainsMeaningfulInformation(): void
     {
-        expect(function() { assertThat([], new PredicateFooExample()); })
-                ->throws(AssertionFailure::class)
-                ->withMessage("Failed asserting that an array is foo.");
+        expect(fn() => assertThat([], new PredicateFooExample()))
+            ->throws(AssertionFailure::class)
+            ->withMessage("Failed asserting that an array is foo.");
     }
 
     /**
@@ -106,9 +107,9 @@ class PredicateTest extends TestCase
      */
     public function assertionFailureNegatedContainsMeaningfulInformation(): void
     {
-        expect(function() { assertThat('foo', not(new PredicateFooExample())); })
-                ->throws(AssertionFailure::class)
-                ->withMessage("Failed asserting that 'foo' is not foo.");
+        expect(fn() => assertThat('foo', not(new PredicateFooExample())))
+            ->throws(AssertionFailure::class)
+            ->withMessage("Failed asserting that 'foo' is not foo.");
     }
 
     /**
@@ -116,14 +117,12 @@ class PredicateTest extends TestCase
      */
     public function assertionFailureNegatedContainsMeaningfulInformationWithDescription(): void
     {
-        expect(function() {
-                assertThat([], new PredicateFooExample(), 'some useful description');
-        })
-        ->throws(AssertionFailure::class)
-        ->withMessage(
+        expect(fn() => assertThat([], new PredicateFooExample(), 'some useful description'))
+            ->throws(AssertionFailure::class)
+            ->withMessage(
                 'Failed asserting that an array is foo.
 some useful description'
-        );
+            );
     }
 
     /**
@@ -131,15 +130,13 @@ some useful description'
      */
     public function assertionFailureNegatedContainsMeaningfulInformationWithDescriptionAndExceptionMessage(): void
     {
-        expect(function() {
-                assertThat([], new PredicateThrowingExample(), 'some useful description');
-        })
-        ->throws(AssertionFailure::class)
-        ->withMessage(
+        expect(fn() => assertThat([], new PredicateThrowingExample(), 'some useful description'))
+            ->throws(AssertionFailure::class)
+            ->withMessage(
                 'Failed asserting that an array is foo.
 some useful description
 exception message'
-        );
+            );
     }
 
     /**
@@ -149,6 +146,6 @@ exception message'
     public function callToUndefinedMethodThrowsBadMethodCallException(): void
     {
         expect([new PredicateFooExample(), 'noWay'])
-                ->throws(\BadMethodCallException::class);
+            ->throws(\BadMethodCallException::class);
     }
 }

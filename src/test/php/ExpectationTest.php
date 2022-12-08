@@ -7,9 +7,16 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 namespace bovigo\assert;
+
+use BadFunctionCallException;
 use bovigo\assert\predicate\ExpectedError;
 use bovigo\assert\predicate\ExpectedException;
+use Error;
+use Exception;
+use Generator;
 use PHPUnit\Framework\TestCase;
+use Throwable;
+use TypeError;
 
 use function bovigo\assert\predicate\{
     isFalse,
@@ -24,15 +31,23 @@ use function bovigo\assert\predicate\{
  */
 class ExpectationTest extends TestCase
 {
-    /**
-     * @return  array<string,array<mixed>>
-     */
-    public static function throwables(): array
+    public static function throwables(): Generator
     {
-        return ['exception against exception' => [new \Exception('not catched', 2), \BadFunctionCallException::class],
-                'exception against error'     => [new \Exception('not catched', 2), \TypeError::class],
-                'error against error'         => [new \Error('not catched', 2), \TypeError::class],
-                'error against exception'     => [new \Error('not catched', 2), \BadFunctionCallException::class]
+        yield 'exception against exception' => [
+            new Exception('not catched', 2),
+            BadFunctionCallException::class
+        ];
+        yield 'exception against error' => [
+            new Exception('not catched', 2),
+            TypeError::class
+        ];
+        yield 'error against error' => [
+            new Error('not catched', 2),
+            TypeError::class
+        ];
+        yield 'error against exception' => [
+            new Error('not catched', 2),
+            BadFunctionCallException::class
         ];
     }
 
@@ -40,11 +55,12 @@ class ExpectationTest extends TestCase
      * @test
      * @dataProvider  throwables
      */
-    public function expectationReturnsCatchedExceptionWhenThrowsSucceeds(\Throwable $throwable): void
-    {
+    public function expectationReturnsCatchedExceptionWhenThrowsSucceeds(
+        Throwable $throwable
+    ): void {
         assertThat(
-                expect(function() use($throwable) { throw $throwable; })->throws(),
-                isInstanceOf(CatchedException::class)
+            expect(fn() => throw $throwable)->throws(),
+            isInstanceOf(CatchedException::class)
         );
     }
 
@@ -56,8 +72,8 @@ class ExpectationTest extends TestCase
     public function expectationReturnsCatchedErrorWhenTriggersSucceeds(): void
     {
         assertThat(
-                expect(function() { trigger_error('error'); })->triggers(),
-                isInstanceOf(CatchedError::class)
+            expect(fn() => trigger_error('error'))->triggers(),
+            isInstanceOf(CatchedError::class)
         );
     }
 
@@ -68,11 +84,9 @@ class ExpectationTest extends TestCase
      */
     public function expectationThrowsInvalidArgumentExceptionWhenExpectingUnknownErrorLevel(): void
     {
-        expect(function() {
-                expect(function() { /* doesn't matter */ })->triggers(303);
-        })
-        ->throws(\InvalidArgumentException::class)
-        ->withMessage('Unknown error level 303');
+        expect(fn() => expect(function() { /* doesn't matter */ })->triggers(303))
+            ->throws(\InvalidArgumentException::class)
+            ->withMessage('Unknown error level 303');
     }
 
     /**
@@ -89,11 +103,9 @@ class ExpectationTest extends TestCase
      */
     public function expectationThrowsAssertionFailureWhenCodeDoesNotThrowAnyExpectedException(): void
     {
-        expect(function() {
-                expect(function() { /* intentionally empty */ })->throws();
-        })
-        ->throws(AssertionFailure::class)
-        ->withMessage('Failed asserting that an exception is thrown.');
+        expect(fn() => expect(function() { /* intentionally empty */ })->throws())
+            ->throws(AssertionFailure::class)
+            ->withMessage('Failed asserting that an exception is thrown.');
     }
 
     /**
@@ -103,45 +115,39 @@ class ExpectationTest extends TestCase
      */
     public function expectationThrowsAssertionFailureWhenCodeDoesNotTriggerAnyExpectedError(): void
     {
-        expect(function() {
-                expect(function() { /* intentionally empty */ })->triggers();
-        })
-        ->throws(AssertionFailure::class)
-        ->withMessage('Failed asserting that an error is triggered.');
+        expect(fn() => expect(function() { /* intentionally empty */ })->triggers())
+            ->throws(AssertionFailure::class)
+            ->withMessage('Failed asserting that an error is triggered.');
     }
 
     /**
      * @test
      * @dataProvider  throwables
      */
-    public function expectationThrowsAssertionFailureWhenCodeDoesNotThrowExpectedExceptionType(\Throwable $throwable): void
-    {
-        expect(function() use($throwable) {
-                expect(function() { /* intentionally empty */ })
-                        ->throws(get_class($throwable));
-        })
-        ->throws(AssertionFailure::class)
-        ->withMessage(
+    public function expectationThrowsAssertionFailureWhenCodeDoesNotThrowExpectedExceptionType(
+        Throwable $throwable
+    ): void {
+        expect(fn() => expect(function() { /* intentionally empty */ })->throws(get_class($throwable)))
+            ->throws(AssertionFailure::class)
+            ->withMessage(
                 'Failed asserting that exception of type "'
                 . get_class($throwable) . '" is thrown.'
-        );
+            );
     }
 
     /**
      * @test
      * @dataProvider  throwables
      */
-    public function expectationThrowsAssertionFailureWhenCodeDoesNotThrowExpectedException(\Throwable $throwable): void
-    {
-        expect(function() use($throwable) {
-                expect(function() { /* intentionally empty */ })
-                        ->throws($throwable);
-        })
-        ->throws(AssertionFailure::class)
-        ->withMessage(
+    public function expectationThrowsAssertionFailureWhenCodeDoesNotThrowExpectedException(
+        Throwable $throwable
+    ): void {
+        expect(fn() => expect(function() { /* intentionally empty */ })->throws($throwable))
+            ->throws(AssertionFailure::class)
+            ->withMessage(
                 'Failed asserting that exception of type "'
                 . get_class($throwable) . '" is thrown.'
-        );
+            );
     }
 
     /**
@@ -151,40 +157,33 @@ class ExpectationTest extends TestCase
      */
     public function expectationThrowsAssertionFailureWhenCodeDoesNotTriggerExpectedErrorLevel(): void
     {
-        expect(function() {
-                expect(function() { /* intentionally empty */ })
-                        ->triggers(E_USER_WARNING);
-        })
-        ->throws(AssertionFailure::class)
-        ->withMessage(
+        expect(fn() => expect(function() { /* intentionally empty */ })->triggers(E_USER_WARNING))
+            ->throws(AssertionFailure::class)
+            ->withMessage(
                 'Failed asserting that error of type "E_USER_WARNING" is triggered.'
-        );
+            );
     }
 
     /**
      * @test
      * @dataProvider  throwables
      */
-    public function expectationDoesNotThrowAssertionFailureWhenCodeThrowsAnyExpectedException(\Throwable $throwable): void
-    {
-        expect(function() use($throwable) {
-                expect(function() use($throwable) { throw $throwable; })
-                        ->throws();
-        })
-        ->doesNotThrow();
+    public function expectationDoesNotThrowAssertionFailureWhenCodeThrowsAnyExpectedException(
+        Throwable $throwable
+    ): void {
+        expect(fn() => expect(fn() => throw $throwable)->throws())
+            ->doesNotThrow();
     }
 
     /**
      * @test
      * @dataProvider  throwables
      */
-    public function expectationDoesNotThrowAssertionFailureWhenCodeThrowsExpectedExceptionType(\Throwable $throwable): void
-    {
-        expect(function() use($throwable) {
-                expect(function() use($throwable) { throw $throwable; })
-                        ->throws(get_class($throwable));
-        })
-        ->doesNotThrow();
+    public function expectationDoesNotThrowAssertionFailureWhenCodeThrowsExpectedExceptionType(
+        Throwable $throwable
+    ): void {
+        expect(fn() => expect(fn() => throw $throwable)->throws(get_class($throwable)))
+            ->doesNotThrow();
     }
 
     /**
@@ -194,10 +193,8 @@ class ExpectationTest extends TestCase
      */
     public function expectationDoesNotThrowAssertionFailureWhenCodeTriggersAnyExpectedError(): void
     {
-        expect(function() {
-                expect(function() { trigger_error('error'); })->triggers();
-        })
-        ->doesNotThrow();
+        expect(fn() => expect(fn() => trigger_error('error'))->triggers())
+            ->doesNotThrow();
     }
 
     /**
@@ -207,11 +204,8 @@ class ExpectationTest extends TestCase
      */
     public function expectationDoesNotThrowAssertionFailureWhenCodeTriggersExpectedErrorLevel(): void
     {
-        expect(function() {
-                expect(function() { trigger_error('error', E_USER_WARNING); })
-                        ->triggers(E_USER_WARNING);
-        })
-        ->doesNotThrow();
+        expect(fn() => expect(fn() => trigger_error('error', E_USER_WARNING))->triggers(E_USER_WARNING))
+            ->doesNotThrow();
     }
 
     /**
@@ -219,73 +213,65 @@ class ExpectationTest extends TestCase
      */
     public function expectationDoesNotThrowAssertionFailureIfCodeDoesNotThrowAnyException(): void
     {
-        expect(function() {
-                expect(function() { /* intentionally empty */ })->doesNotThrow();
-        })
-        ->doesNotThrow();
+        expect(fn() =>  expect(function() { /* intentionally empty */ })->doesNotThrow())
+            ->doesNotThrow();
     }
 
     /**
      * @test
      * @dataProvider  throwables
      */
-    public function expectationDoesNotThrowAssertionFailureIfCodeDoesNotThrowExpectedExceptionType(\Throwable $throwable): void
-    {
-        expect(function() use($throwable) {
-            expect(function() { /* intentionally empty */ })
-                    ->doesNotThrow(get_class($throwable));
-        })
-        ->doesNotThrow();
+    public function expectationDoesNotThrowAssertionFailureIfCodeDoesNotThrowExpectedExceptionType(
+        Throwable $throwable
+    ): void {
+        expect(fn() => expect(
+            function() { /* intentionally empty */ })->doesNotThrow(get_class($throwable)
+        ))
+            ->doesNotThrow();
     }
 
     /**
      * @test
      * @dataProvider  throwables
      */
-    public function expectationDoesThrowAssertionFailureWhenCodeThrowsUnexpectedException(\Throwable $throwable): void
-    {
-        expect(function() use($throwable) {
-            expect(function() use($throwable) { throw $throwable; })
-                    ->doesNotThrow();
-        })
-        ->throws(AssertionFailure::class)
-        ->withMessage(
+    public function expectationDoesThrowAssertionFailureWhenCodeThrowsUnexpectedException(
+        Throwable $throwable
+    ): void {
+        expect(fn() => expect(fn() => throw $throwable)->doesNotThrow())
+            ->throws(AssertionFailure::class)
+            ->withMessage(
                 'Failed asserting that no exception is thrown, got '
                 . get_class($throwable) . ' with message "not catched".'
-        );
+            );
     }
 
     /**
      * @test
      * @dataProvider  throwables
      */
-    public function expectationDoesThrowAssertionFailureWhenCodeThrowsUnexpectedExceptionType(\Throwable $throwable): void
-    {
-        expect(function() use($throwable) {
-            expect(function() use($throwable) { throw $throwable; })
-                    ->doesNotThrow(get_class($throwable));
-        })
-        ->throws(AssertionFailure::class)
-        ->withMessage(
+    public function expectationDoesThrowAssertionFailureWhenCodeThrowsUnexpectedExceptionType(
+        Throwable $throwable
+    ): void {
+        expect(fn() => expect(fn() => throw $throwable)->doesNotThrow(get_class($throwable)))
+            ->throws(AssertionFailure::class)
+            ->withMessage(
                 'Failed asserting that no exception of type "'
                 . get_class($throwable)
                 . '" is thrown, got '
                 . get_class($throwable)
                 . ' with message "not catched".'
-        );
+            );
     }
 
     /**
      * @test
      * @dataProvider  throwables
      */
-    public function expectationDoesNotThrowAssertionFailureWhenCodeThrowsOtherExceptionType(\Throwable $throwable, string $other): void
-    {
-        expect(function() use($throwable, $other) {
-            expect(function()  use($throwable) { throw $throwable; })
-                    ->doesNotThrow($other);
-        })
-        ->doesNotThrow();
+    public function expectationDoesNotThrowAssertionFailureWhenCodeThrowsOtherExceptionType(
+        Throwable $throwable, string $other
+    ): void {
+        expect(fn() => expect(fn() => throw $throwable)->doesNotThrow($other))
+            ->doesNotThrow();
     }
 
     /**
@@ -293,7 +279,7 @@ class ExpectationTest extends TestCase
      */
     public function expectationReturnsItselfWhenResultCheckSucceeds(): void
     {
-        $expectation = expect(function() { return true; });
+        $expectation = expect(fn() => true);
         assertThat($expectation->result(isTrue()), isSameAs($expectation));
     }
 
@@ -302,10 +288,8 @@ class ExpectationTest extends TestCase
      */
     public function expectationDoesNotThrowAssertionFailureWhenResultFulfillsPredicate(): void
     {
-        expect(function() {
-            expect(function() { return true; })->result(isTrue());
-        })
-        ->doesNotThrow();
+        expect(fn() => expect(fn() => true)->result(isTrue()))
+            ->doesNotThrow();
     }
 
     /**
@@ -313,46 +297,40 @@ class ExpectationTest extends TestCase
      */
     public function expectationThrowsAssertionFailureWhenResultDoesNotFulfillPredicate(): void
     {
-        expect(function() {
-            expect(function() { return true; })->result(isFalse());
-        })
-        ->throws(AssertionFailure::class)
-        ->withMessage('Failed asserting that true is false.');
+        expect(fn() => expect(fn() => true)->result(isFalse()))
+            ->throws(AssertionFailure::class)
+            ->withMessage('Failed asserting that true is false.');
     }
 
     /**
      * @test
      * @dataProvider  throwables
      */
-    public function expectationThrowsAssertionFailureWhenResultNotAvailableBecauseCodeThrowsException(\Throwable $throwable): void
-    {
-        expect(function() use($throwable) {
-            expect(function() use($throwable) { throw $throwable; })
-                    ->result(isTrue());
-        })
-        ->throws(AssertionFailure::class)
-        ->withMessage(
+    public function expectationThrowsAssertionFailureWhenResultNotAvailableBecauseCodeThrowsException(
+        Throwable $throwable
+    ): void {
+        expect(fn() => expect(fn() => throw $throwable)->result(isTrue()))
+            ->throws(AssertionFailure::class)
+            ->withMessage(
                 'Failed asserting that result is true because exception of type '
                 . get_class($throwable)
                 . ' with message "not catched" was thrown.'
-        );
+            );
     }
 
     /**
      * @test
      * @dataProvider  throwables
      */
-    public function expectationThrowsAssertionFailureWhenResultNotAvailableBecauseCodeThrowsExceptionWithCallable(\Throwable $throwable): void
-    {
-        expect(function() use($throwable) {
-            expect(function() use($throwable) { throw $throwable;})
-                    ->result('is_int');
-        })
-        ->throws(AssertionFailure::class)
-        ->withMessage(
+    public function expectationThrowsAssertionFailureWhenResultNotAvailableBecauseCodeThrowsExceptionWithCallable(
+        Throwable $throwable
+    ): void {
+        expect(fn() => expect(fn() => throw $throwable)->result('is_int'))
+            ->throws(AssertionFailure::class)
+            ->withMessage(
                 'Failed asserting that result satisfies is_int() because exception of type '
                 . get_class($throwable) . ' with message "not catched" was thrown.'
-        );
+            );
     }
 
     /**
@@ -360,7 +338,7 @@ class ExpectationTest extends TestCase
      */
     public function expectationCanAssertAfterCodeExecution(): void
     {
-        $expectation = expect(function() { return false; });
+        $expectation = expect(fn() => false);
         assertThat($expectation->after(true, isTrue()), isSameAs($expectation));
     }
 
@@ -368,11 +346,9 @@ class ExpectationTest extends TestCase
      * @test
      * @dataProvider  throwables
      */
-    public function expectationCanAssertAfterCodeExecutionEvenIfExceptionThrown(\Throwable $throwable): void
+    public function expectationCanAssertAfterCodeExecutionEvenIfExceptionThrown(Throwable $throwable): void
     {
-        $expectation = expect(function() use($throwable) {
-                throw $throwable;
-        });
+        $expectation = expect(fn() => throw $throwable);
         assertThat($expectation->after(true, isTrue()), isSameAs($expectation));
     }
 
@@ -380,7 +356,7 @@ class ExpectationTest extends TestCase
      * @test
      * @dataProvider  throwables
      */
-    public function codeIsOnlyExecutedOnce(\Throwable $throwable): void
+    public function codeIsOnlyExecutedOnce(Throwable $throwable): void
     {
         $expectation = expect(function() use($throwable) {
                 static $count = 0;
@@ -391,10 +367,9 @@ class ExpectationTest extends TestCase
 
                 return true;
         });
-        expect(function() use ($expectation) {
-            $expectation->result(isTrue())->result(isTrue());
-        })
-        ->doesNotThrow();
+
+        expect(fn() => $expectation->result(isTrue())->result(isTrue()))
+            ->doesNotThrow();
     }
 
     /**
@@ -403,11 +378,11 @@ class ExpectationTest extends TestCase
     public function expectedExceptionThrowsInvalidArgumentExceptionWhenValueToTestIsNotAnException(): void
     {
         expect(function() {
-                $expectedException = new ExpectedException(\Exception::class);
-                $expectedException->test(404);
+            $expectedException = new ExpectedException(\Exception::class);
+            $expectedException->test(404);
         })
-        ->throws(\InvalidArgumentException::class)
-        ->withMessage('Given value is not an exception');
+            ->throws(\InvalidArgumentException::class)
+            ->withMessage('Given value is not an exception');
     }
 
     /**
@@ -418,11 +393,11 @@ class ExpectationTest extends TestCase
     public function expectedErrorThrowsInvalidArgumentExceptionWhenValueToTestIsNotCatchedError(): void
     {
         expect(function() {
-                $expectedException = new ExpectedError(E_NOTICE);
-                $expectedException->test(404);
+            $expectedException = new ExpectedError(E_NOTICE);
+            $expectedException->test(404);
         })
-        ->throws(\InvalidArgumentException::class)
-        ->withMessage('Given value is not an error');
+            ->throws(\InvalidArgumentException::class)
+            ->withMessage('Given value is not an error');
     }
 
     /**
@@ -431,20 +406,17 @@ class ExpectationTest extends TestCase
      * @group  issue_1
      * @since  1.6.1
      */
-    public function outputOfUnexpectedExceptionTypeIsHelpful(\Throwable $throwable, string $other): void
+    public function outputOfUnexpectedExceptionTypeIsHelpful(Throwable $throwable, string $other): void
     {
-        expect(function() use ($throwable, $other) {
-                expect(function() use ($throwable) { throw $throwable; })
-                        ->throws($other);
-        })
-        ->throws(AssertionFailure::class)
-        ->withMessage(
+        expect(fn() => expect(fn() => throw $throwable)->throws($other))
+            ->throws(AssertionFailure::class)
+            ->withMessage(
                 'Failed asserting that exception of type "'
                 . get_class($throwable)
                 . '" with message "not catched" thrown in ' . __FILE__
                 . ' on line ' . $throwable->getLine() . ' matches expected exception "'
                 . $other . '".'
-        );
+            );
     }
 
     /**
@@ -452,19 +424,16 @@ class ExpectationTest extends TestCase
      * @dataProvider  throwables
      * @since  2.1.0
      */
-    public function outputOfUnexpectedExceptionIsHelpful(\Throwable $throwable, string $other): void
+    public function outputOfUnexpectedExceptionIsHelpful(Throwable $throwable, string $other): void
     {
-        expect(function() use ($throwable, $other) {
-                expect(function() use ($throwable) { throw $throwable; })
-                        ->throws(new $other());
-        })
-        ->throws(AssertionFailure::class)
-        ->withMessage(
+        expect(fn() => expect(fn() => throw $throwable)->throws(new $other()))
+            ->throws(AssertionFailure::class)
+            ->withMessage(
                 'Failed asserting that object of type "'
                 . get_class($throwable)
                 . '" is identical to object of type "'
                 . $other . '".'
-        );
+            );
     }
 
     /**
@@ -481,11 +450,11 @@ class ExpectationTest extends TestCase
                 })
                 ->triggers(E_USER_NOTICE);
         })
-        ->throws(AssertionFailure::class)
-        ->withMessage(
+            ->throws(AssertionFailure::class)
+            ->withMessage(
                 'Failed asserting that error of level "E_USER_WARNING" with '
                 . 'message "error" triggered in ' . __FILE__
                 . ' on line ' . $line . ' matches expected error "E_USER_NOTICE".'
-        );
+            );
     }
 }

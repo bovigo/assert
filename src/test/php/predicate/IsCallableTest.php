@@ -7,14 +7,16 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 namespace bovigo\assert\predicate;
+
 use bovigo\assert\AssertionFailure;
+use Generator;
 use PHPUnit\Framework\TestCase;
+use stdClass;
 
 use function bovigo\assert\assertThat;
 use function bovigo\assert\expect;
 use function bovigo\assert\predicate\isCallable;
 use function bovigo\assert\predicate\isNotCallable;
-
 /**
  * Test for bovigo\assert\assert\predicate\isCallable() and bovigo\assert\assert\predicate\isNotCallable().
  *
@@ -25,33 +27,23 @@ class IsCallableTest extends TestCase
     public static function exampleStaticCallable(): void {}
     public function exampleCallable(): void {}
 
-    /**
-     * @return  array<string,array<callable>>
-     */
-    public function validCallables(): array
+    public function validCallables(): Generator
     {
-        return [
-            'anonymous function' => [function() {}],
-            'string callable'    => ['is_callable'],
-            'static callable'    => [[__CLASS__, 'exampleStaticCallable']],
-            'callable on object' => [[$this, 'exampleCallable']]
-        ];
+        yield 'anonymous function' => [function() {}];
+        yield 'arrow function'     => [fn() => 303];
+        yield 'string callable'    => ['is_callable'];
+        yield 'static callable'    => [[__CLASS__, 'exampleStaticCallable']];
+        yield 'callable on object' => [[$this, 'exampleCallable']];
+    }
+
+    public function invalidCallables(): Generator
+    {
+        yield 'array'  => [['foo']];
+        yield 'float'  => [30.3];
+        yield 'object' => [new stdClass()];
     }
 
     /**
-     * @return  array<string,array<mixed>>
-     */
-    public function invalidCallables(): array
-    {
-        return [
-            'array'  => [['foo']],
-            'float'  => [30.3],
-            'object' => [new \stdClass()]
-        ];
-    }
-
-    /**
-     * @param  callable  $value
      * @test
      * @dataProvider  validCallables
      */
@@ -61,34 +53,31 @@ class IsCallableTest extends TestCase
     }
 
     /**
-     * @param  mixed  $value
      * @test
      * @dataProvider  invalidCallables
      */
-    public function invalidCallablesAreRejected($value): void
+    public function invalidCallablesAreRejected(mixed $value): void
     {
-        expect(function() use($value) { assertThat($value, isCallable()); })
+        expect(fn() => assertThat($value, isCallable()))
             ->throws(AssertionFailure::class);
     }
 
     /**
-     * @param  mixed  $value
      * @test
      * @dataProvider  invalidCallables
      */
-    public function invalidCallablesAreRecognizedOnNegation($value): void
+    public function invalidCallablesAreRecognizedOnNegation(mixed $value): void
     {
         assertThat($value, isNotCallable());
     }
 
     /**
-     * @param  callable  $value
      * @test
      * @dataProvider  validCallables
      */
     public function validCallablesAreRejectedOnNegation(callable $value): void
     {
-        expect(function() use($value) { assertThat($value, isNotCallable()); })
+        expect(fn() => assertThat($value, isNotCallable()))
             ->throws(AssertionFailure::class);
     }
 }

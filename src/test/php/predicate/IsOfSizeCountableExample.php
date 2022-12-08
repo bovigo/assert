@@ -7,10 +7,12 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 namespace bovigo\assert\predicate;
+
+use Countable;
 /**
  * Helper class for the test.
  */
-class IsOfSizeCountableExample implements \Countable
+class IsOfSizeCountableExample implements Countable
 {
     public function count(): int
     {

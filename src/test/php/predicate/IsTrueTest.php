@@ -7,7 +7,9 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 namespace bovigo\assert\predicate;
+
 use bovigo\assert\AssertionFailure;
+use Generator;
 use PHPUnit\Framework\TestCase;
 
 use function bovigo\assert\assertThat;
@@ -28,18 +30,13 @@ class IsTrueTest extends TestCase
         assertThat(isTrue()->test(true), isSameAs(true));
     }
 
-    /**
-     * @return  array<string,array<mixed>>
-     */
-    public function falseValues(): array
+    public function falseValues(): Generator
     {
-        return [
-          'boolean false'    => [false],
-          'non-empty string' => ['foo'],
-          'empty string'     => [''],
-          'empty array'      => [[]],
-          'non-empty array'  => [[1]]
-        ];
+        yield 'boolean false'    => [false];
+        yield 'non-empty string' => ['foo'];
+        yield 'empty string'     => [''];
+        yield 'empty array'      => [[]];
+        yield 'non-empty array'  => [[1]];
     }
 
     /**
@@ -57,8 +54,8 @@ class IsTrueTest extends TestCase
      */
     public function assertionFailureContainsMeaningfulInformation(): void
     {
-        expect(function() { assertTrue([]); })
-                ->throws(AssertionFailure::class)
-                ->withMessage("Failed asserting that an array is true.");
+        expect(fn() => assertTrue([]))
+            ->throws(AssertionFailure::class)
+            ->withMessage("Failed asserting that an array is true.");
     }
 }

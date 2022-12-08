@@ -7,7 +7,9 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 namespace bovigo\assert\predicate;
+
 use bovigo\assert\AssertionFailure;
+use Generator;
 use org\bovigo\vfs\vfsStream;
 use PHPUnit\Framework\TestCase;
 
@@ -53,7 +55,7 @@ class IsExistingFileTest extends TestCase
     public function evaluatesToTrueIfRelativePathExists(): void
     {
         assertTrue(
-                isExistingFile(vfsStream::url('root/basic'))->test('../foo.txt')
+            isExistingFile(vfsStream::url('root/basic'))->test('../foo.txt')
         );
     }
 
@@ -63,7 +65,7 @@ class IsExistingFileTest extends TestCase
     public function evaluatesToFalseIfFileDoesNotExistRelatively(): void
     {
         assertFalse(
-                isExistingFile(vfsStream::url('root/basic'))->test('foo.txt')
+            isExistingFile(vfsStream::url('root/basic'))->test('foo.txt')
         );
     }
 
@@ -81,7 +83,7 @@ class IsExistingFileTest extends TestCase
     public function evaluatesToTrueIfFileDoesExistRelatively(): void
     {
         assertTrue(
-                isExistingFile(vfsStream::url('root/basic'))->test('bar.txt')
+            isExistingFile(vfsStream::url('root/basic'))->test('bar.txt')
         );
     }
 
@@ -109,24 +111,23 @@ class IsExistingFileTest extends TestCase
         assertFalse(isExistingFile()->test(__DIR__));
     }
 
-    /**
-     * @return  array<array<mixed>>
-     */
-    public function instances(): array
+    public function instances(): Generator
     {
-        return [
-                [new IsExistingFile(), 'is a existing file'],
-                [new IsExistingFile(vfsStream::url('root')), 'is a existing file in basepath ' . vfsStream::url('root')]
+        yield [
+            'instance' => new IsExistingFile(),
+            'message' => 'is a existing file'
+        ];
+        yield [
+            'instance' => new IsExistingFile(vfsStream::url('root')),
+            'message' => 'is a existing file in basepath ' . vfsStream::url('root')
         ];
     }
 
     /**
-     * @param  \bovigo\assert\predicate\IsExistingFile  $instance
-     * @param  string                                   $message
      * @test
      * @dataProvider  instances
      */
-    public function hasStringRepresentation(IsExistingFile $instance, $message): void
+    public function hasStringRepresentation(IsExistingFile $instance, string $message): void
     {
         assertThat((string) $instance, equals($message));
     }
@@ -136,12 +137,10 @@ class IsExistingFileTest extends TestCase
      */
     public function assertionFailureContainsMeaningfulInformation(): void
     {
-        expect(function() {
-            assertThat(vfsStream::url('root/doesNotExist.txt'), isExistingFile());
-        })
-        ->throws(AssertionFailure::class)
-        ->withMessage(
+        expect(fn() => assertThat(vfsStream::url('root/doesNotExist.txt'), isExistingFile()))
+            ->throws(AssertionFailure::class)
+            ->withMessage(
                 "Failed asserting that 'vfs://root/doesNotExist.txt' is a existing file."
-        );
+            );
     }
 }

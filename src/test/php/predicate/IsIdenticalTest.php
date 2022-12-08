@@ -7,8 +7,11 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 namespace bovigo\assert\predicate;
+
 use bovigo\assert\AssertionFailure;
+use Generator;
 use PHPUnit\Framework\TestCase;
+use stdClass;
 
 use function bovigo\assert\assertFalse;
 use function bovigo\assert\assertThat;
@@ -21,27 +24,21 @@ use function bovigo\assert\expect;
  */
 class IsIdenticalTest extends TestCase
 {
-    /**
-     * @return  array<string,array<mixed>>
-     */
-    public function identicalValues(): array
+    public function identicalValues(): Generator
     {
-        return [
-            'boolean true'  => [true],
-            'boolean false' => [false],
-            'string'        => ['foo'],
-            'number'        => [303],
-            'object'        => [new \stdClass()],
-            'float'         => [3.03]
-        ];
+        yield 'boolean true'  => [true];
+        yield 'boolean false' => [false];
+        yield 'string'        => ['foo'];
+        yield 'number'        => [303];
+        yield 'object'        => [new \stdClass()];
+        yield 'float'         => [3.03];
     }
 
     /**
-     * @param  mixed  $value
      * @test
      * @dataProvider  identicalValues
      */
-    public function evaluatesToTrueIfGivenValueIsIdentical($value): void
+    public function evaluatesToTrueIfGivenValueIsIdentical(mixed $value): void
     {
         assertTrue(isSameAs($value)->test($value));
     }
@@ -59,9 +56,9 @@ class IsIdenticalTest extends TestCase
      */
     public function assertionFailureContainsMeaningfulInformation(): void
     {
-        expect(function() { assertThat(true, isSameAs(false)); })
-                ->throws(AssertionFailure::class)
-                ->withMessage("Failed asserting that true is identical to false.");
+        expect(fn() => assertThat(true, isSameAs(false)))
+            ->throws(AssertionFailure::class)
+            ->withMessage("Failed asserting that true is identical to false.");
     }
 
     /**
@@ -69,13 +66,11 @@ class IsIdenticalTest extends TestCase
      */
     public function assertionFailureWithObjectsContainsMeaningfulInformation(): void
     {
-        expect(function() {
-            assertThat(new \stdClass(), isSameAs(new \stdClass()));
-        })
-        ->throws(AssertionFailure::class)
-        ->withMessage(
+        expect(fn() => assertThat(new \stdClass(), isSameAs(new stdClass())))
+            ->throws(AssertionFailure::class)
+            ->withMessage(
                 'Failed asserting that object of type "stdClass" is identical to object of type "stdClass".'
-        );
+            );
     }
 
     /**
@@ -83,10 +78,10 @@ class IsIdenticalTest extends TestCase
      */
     public function assertionFailureWithObjectAndOtherContainsMeaningfulInformation(): void
     {
-        expect(function() { assertThat(new \stdClass(), isSameAs('foo')); })
-                ->throws(AssertionFailure::class)
-                ->withMessage(
-                        'Failed asserting that object of type "stdClass" is identical to \'foo\'.'
-        );
+        expect(fn() => assertThat(new \stdClass(), isSameAs('foo')))
+            ->throws(AssertionFailure::class)
+            ->withMessage(
+                'Failed asserting that object of type "stdClass" is identical to \'foo\'.'
+            );
     }
 }

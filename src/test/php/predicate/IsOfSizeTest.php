@@ -7,6 +7,7 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 namespace bovigo\assert\predicate;
+
 use bovigo\assert\AssertionFailure;
 use PHPUnit\Framework\TestCase;
 
@@ -117,8 +118,8 @@ class IsOfSizeTest extends TestCase
      */
     public function throwsInvalidArgumentExceptionWhenValueIsNotTestableForSize(): void
     {
-        expect(function() { isOfSize(3)->test(true); })
-                ->throws(\InvalidArgumentException::class);
+        expect(fn() => isOfSize(3)->test(true))
+            ->throws(\InvalidArgumentException::class);
     }
 
     /**
@@ -126,11 +127,11 @@ class IsOfSizeTest extends TestCase
      */
     public function assertionFailureWithStringContainsMeaningfulInformation(): void
     {
-        expect(function() { assertThat('foo', isOfSize(4)); })
-                ->throws(AssertionFailure::class)
-                ->withMessage(
-                        "Failed asserting that string with actual size 3 matches expected size 4."
-        );
+        expect(fn() => assertThat('foo', isOfSize(4)))
+            ->throws(AssertionFailure::class)
+            ->withMessage(
+                "Failed asserting that string with actual size 3 matches expected size 4."
+            );
     }
 
     /**
@@ -138,11 +139,11 @@ class IsOfSizeTest extends TestCase
      */
     public function assertionFailureWithArrayContainsMeaningfulInformation(): void
     {
-        expect(function() { assertThat([], isOfSize(4)); })
-                ->throws(AssertionFailure::class)
-                ->withMessage(
-                        "Failed asserting that array with actual size 0 matches expected size 4."
-        );
+        expect(fn() => assertThat([], isOfSize(4)))
+            ->throws(AssertionFailure::class)
+            ->withMessage(
+                "Failed asserting that array with actual size 0 matches expected size 4."
+            );
     }
 
     /**
@@ -150,13 +151,13 @@ class IsOfSizeTest extends TestCase
      */
     public function assertionFailureWithCountableContainsMeaningfulInformation(): void
     {
-        expect(function() { assertThat(new IsOfSizeCountableExample(), isOfSize(4)); })
-                ->throws(AssertionFailure::class)
-                ->withMessage(
-                        "Failed asserting that instance of type "
-                        . IsOfSizeCountableExample::class
-                        . " with actual size 3 matches expected size 4."
-        );
+        expect(fn() => assertThat(new IsOfSizeCountableExample(), isOfSize(4)))
+            ->throws(AssertionFailure::class)
+            ->withMessage(
+                "Failed asserting that instance of type "
+                . IsOfSizeCountableExample::class
+                . " with actual size 3 matches expected size 4."
+            );
     }
 
     /**
@@ -164,13 +165,13 @@ class IsOfSizeTest extends TestCase
      */
     public function assertionFailureWithTraversableContainsMeaningfulInformation(): void
     {
-        expect(function() { assertThat(new IsOfSizeTraversableExample(), isOfSize(4)); })
-                ->throws(AssertionFailure::class)
-                ->withMessage(
-                        "Failed asserting that instance of type "
-                        . IsOfSizeTraversableExample::class
-                        . " with actual size 3 matches expected size 4."
-        );
+        expect(fn() => assertThat(new IsOfSizeTraversableExample(), isOfSize(4)))
+            ->throws(AssertionFailure::class)
+            ->withMessage(
+                "Failed asserting that instance of type "
+                . IsOfSizeTraversableExample::class
+                . " with actual size 3 matches expected size 4."
+            );
     }
 
     /**
@@ -178,14 +179,12 @@ class IsOfSizeTest extends TestCase
      */
     public function assertionFailureWithIteratorAggregateContainsMeaningfulInformation(): void
     {
-        expect(function() {
-            assertThat(new IsOfSizeIteratorAggregateExample(), isOfSize(4));
-        })
-        ->throws(AssertionFailure::class)
-        ->withMessage(
+        expect(fn() => assertThat(new IsOfSizeIteratorAggregateExample(), isOfSize(4)))
+            ->throws(AssertionFailure::class)
+            ->withMessage(
                 "Failed asserting that instance of type "
                 . IsOfSizeIteratorAggregateExample::class
                 . " with actual size 3 matches expected size 4."
-        );
+            );
     }
 }

@@ -7,7 +7,10 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 namespace bovigo\assert\predicate;
+
 use bovigo\assert\AssertionFailure;
+use Generator;
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 
 use function bovigo\assert\assertFalse;
@@ -27,48 +30,36 @@ class StringStartsWithTest extends TestCase
      */
     public function nonStringValuesThrowInvalidArgumentException(): void
     {
-        expect(function() { startsWith('foo')->test(303); })
-                ->throws(\InvalidArgumentException::class);
+        expect(fn() => startsWith('foo')->test(303))
+                ->throws(InvalidArgumentException::class);
     }
 
-    /**
-     * @return  array<string,array<string>>
-     */
-    public function trueValues(): array
+    public function trueValues(): Generator
     {
-        return [
-          'string which starts with and contains foo' => ['foobarfoobaz'],
-          'string which starts with foo'              => ['foobarbaz']
-        ];
+        yield 'string which starts with and contains foo' => ['foobarfoobaz'];
+        yield'string which starts with foo'              => ['foobarbaz'];
     }
 
     /**
-     * @param  string  $value
      * @test
      * @dataProvider  trueValues
      */
-    public function evaluatesToTrueIfStringStartsWithPrefix($value): void
+    public function evaluatesToTrueIfStringStartsWithPrefix(string $value): void
     {
         assertTrue(startsWith('foo')->test($value));
     }
 
-    /**
-     * @return  array<string,array<string>>
-     */
-    public function falseValues(): array
+    public function falseValues(): Generator
     {
-        return [
-          'string which contains foo'  => ['barfoobaz'],
-          'string which ends with foo' => ['barbazfoo']
-        ];
+        yield'string which contains foo'  => ['barfoobaz'];
+        yield'string which ends with foo' => ['barbazfoo'];
     }
 
     /**
-     * @param  mixed  $value
      * @test
      * @dataProvider  falseValues
      */
-    public function evaluatesToFalseIfGivenValueIsFalse($value): void
+    public function evaluatesToFalseIfGivenValueIsFalse(string $value): void
     {
         assertFalse(startsWith('foo')->test($value));
     }
@@ -78,8 +69,8 @@ class StringStartsWithTest extends TestCase
      */
     public function assertionFailureContainsMeaningfulInformation(): void
     {
-        expect(function() { assertThat('bar', startsWith('foo')); })
-                ->throws(AssertionFailure::class)
-                ->withMessage("Failed asserting that 'bar' starts with 'foo'.");
+        expect(fn() => assertThat('bar', startsWith('foo')))
+            ->throws(AssertionFailure::class)
+            ->withMessage("Failed asserting that 'bar' starts with 'foo'.");
     }
 }

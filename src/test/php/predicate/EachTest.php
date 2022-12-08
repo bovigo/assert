@@ -7,7 +7,10 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 namespace bovigo\assert\predicate;
+
+use ArrayIterator;
 use bovigo\assert\AssertionFailure;
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 
 use function bovigo\assert\assertFalse;
@@ -27,9 +30,8 @@ class EachTest extends TestCase
      */
     public function testNonIterableValueThrowsInvalidArgumentException(): void
     {
-        expect(function() { each(isNull())->test(303); })
-                ->throws(\InvalidArgumentException::class);
-
+        expect(fn() => each(isNull())->test(303))
+            ->throws(InvalidArgumentException::class);
     }
 
     /**
@@ -53,7 +55,7 @@ class EachTest extends TestCase
      */
     public function evaluatesToTrueIfTraversableIsEmpty(): void
     {
-        assertTrue(each(isNotNull())->test(new \ArrayIterator([])));
+        assertTrue(each(isNotNull())->test(new ArrayIterator([])));
     }
 
     /**
@@ -69,7 +71,7 @@ class EachTest extends TestCase
      */
     public function evaluatesToTrueIfEachValueInTraversableFulfillsPredicate(): void
     {
-        assertTrue(each(isNotNull())->test(new \ArrayIterator([303, 'foo'])));
+        assertTrue(each(isNotNull())->test(new ArrayIterator([303, 'foo'])));
     }
 
     /**
@@ -85,7 +87,7 @@ class EachTest extends TestCase
      */
     public function evaluatesToFalseIfSingleValueInTraversableDoesNotFulfillPredicate(): void
     {
-        assertFalse(each(isNotNull())->test(new \ArrayIterator([303, null, 'foo'])));
+        assertFalse(each(isNotNull())->test(new ArrayIterator([303, null, 'foo'])));
     }
 
     /**
@@ -104,7 +106,7 @@ class EachTest extends TestCase
      */
     public function doesNotMovePointerOfPassedTraversable(): void
     {
-        $traversable = new \ArrayIterator([303, 313, 'foo']);
+        $traversable = new ArrayIterator([303, 313, 'foo']);
         $traversable->next();
         each(isNotNull())->test($traversable);
         assertThat($traversable->current(), equals(313));
@@ -134,13 +136,13 @@ class EachTest extends TestCase
      */
     public function assertionFailureContainsMeaningfulInformation(): void
     {
-        expect(function() { assertThat(['foo'], each(isNull())); })
-                ->throws(AssertionFailure::class)
-                ->withMessage(
-                        'Failed asserting that element \'foo\' at key 0 in Array &0 (
+        expect(fn() => assertThat(['foo'], each(isNull())))
+            ->throws(AssertionFailure::class)
+            ->withMessage(
+                'Failed asserting that element \'foo\' at key 0 in Array &0 (
     0 => \'foo\'
 ) is null.'
-        );
+            );
     }
 
     /**
@@ -148,13 +150,11 @@ class EachTest extends TestCase
      */
     public function assertionFailureContainsMeaningfulInformationWhenCombined(): void
     {
-        expect(function() {
-            assertThat([], isNotEmpty()->and(each(isNotNull())));
-        })
-        ->throws(AssertionFailure::class)
-        ->withMessage(
+        expect(fn() => assertThat([], isNotEmpty()->and(each(isNotNull()))))
+            ->throws(AssertionFailure::class)
+            ->withMessage(
                 'Failed asserting that an array is not empty and each value is not null.'
-        );
+            );
     }
 
     /**
@@ -162,15 +162,15 @@ class EachTest extends TestCase
      */
     public function assertionFailureContainsMeaningfulInformationOnWhichElementFailed(): void
     {
-        expect(function() { assertThat(['foo', 'bar', null, 'baz'], each(isNotNull())); })
-                ->throws(AssertionFailure::class)
-                ->withMessage(
-                        'Failed asserting that element null at key 2 in Array &0 (
+        expect(fn() => assertThat(['foo', 'bar', null, 'baz'], each(isNotNull())))
+            ->throws(AssertionFailure::class)
+            ->withMessage(
+                'Failed asserting that element null at key 2 in Array &0 (
     0 => \'foo\'
     1 => \'bar\'
     2 => null
     3 => \'baz\'
 ) is not null.'
-        );
+            );
     }
 }

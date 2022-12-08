@@ -7,6 +7,7 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 namespace bovigo\assert\predicate;
+
 use PHPUnit\Framework\TestCase;
 
 use function bovigo\assert\assertFalse;

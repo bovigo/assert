@@ -7,15 +7,19 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 namespace bovigo\assert\predicate;
+
+use ArrayIterator;
+use IteratorAggregate;
+use Traversable;
 /**
  * Helper class for the test.
  *
  * @implements \IteratorAggregate<int,int>
  */
-class IsOfSizeIteratorAggregateExample implements \IteratorAggregate
+class IsOfSizeIteratorAggregateExample implements IteratorAggregate
 {
-    public function getIterator(): \Traversable
+    public function getIterator(): Traversable
     {
-        return new \ArrayIterator([1, 2, 3]);
+        return new ArrayIterator([1, 2, 3]);
     }
 }

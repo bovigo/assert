@@ -7,6 +7,7 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 namespace bovigo\assert\predicate;
+
 use bovigo\assert\AssertionFailure;
 use PHPUnit\Framework\TestCase;
 
@@ -21,8 +22,6 @@ class CallablePredicateTest extends TestCase
 {
     /**
      * helper method for the test
-     *
-     * @return  bool
      */
     public static function isGood(): bool
     {
@@ -34,12 +33,12 @@ class CallablePredicateTest extends TestCase
      */
     public function assertionFailureContainsMeaningfulInformationWithClassCallable(): void
     {
-        expect(function() { assertThat('bar', [__CLASS__, 'isGood']); })
-                ->throws(AssertionFailure::class)
-                ->withMessage(
-                        "Failed asserting that 'bar' satisfies "
-                        . __CLASS__ . "::isGood()."
-        );
+        expect(fn() => assertThat('bar', [__CLASS__, 'isGood']))
+            ->throws(AssertionFailure::class)
+            ->withMessage(
+                "Failed asserting that 'bar' satisfies "
+                . __CLASS__ . "::isGood()."
+            );
     }
 
     public function isGoodEnough(): bool
@@ -52,12 +51,12 @@ class CallablePredicateTest extends TestCase
      */
     public function assertionFailureContainsMeaningfulInformationWithObjectCallable(): void
     {
-        expect(function() { assertThat('bar', [$this, 'isGoodEnough']); })
-                ->throws(AssertionFailure::class)
-                ->withMessage(
-                        "Failed asserting that 'bar' satisfies "
-                        . __CLASS__ . "->isGoodEnough()."
-        );
+        expect(fn() => assertThat('bar', [$this, 'isGoodEnough']))
+            ->throws(AssertionFailure::class)
+            ->withMessage(
+                "Failed asserting that 'bar' satisfies "
+                . __CLASS__ . "->isGoodEnough()."
+            );
     }
 
     /**
@@ -65,9 +64,9 @@ class CallablePredicateTest extends TestCase
      */
     public function assertionFailureContainsMeaningfulInformationWithStringCallable(): void
     {
-        expect(function() { assertThat('bar', 'is_int'); })
-                ->throws(AssertionFailure::class)
-                ->withMessage("Failed asserting that 'bar' satisfies is_int().");
+        expect(fn() => assertThat('bar', 'is_int'))
+            ->throws(AssertionFailure::class)
+            ->withMessage("Failed asserting that 'bar' satisfies is_int().");
     }
 
     /**
@@ -76,16 +75,16 @@ class CallablePredicateTest extends TestCase
      */
     public function assertionFailureContainsNonDefaultDescriptionWhenPassed(): void
     {
-        expect(function() {
+        expect(fn() => 
             assertThat(
-                    'bar',
-                    new CallablePredicate(
-                            [$this, 'isGoodEnough'],
-                            'is good enough for us'
-                    )
-            );
-        })
-        ->throws(AssertionFailure::class)
-        ->withMessage("Failed asserting that 'bar' is good enough for us.");
+                'bar',
+                new CallablePredicate(
+                    [$this, 'isGoodEnough'],
+                    'is good enough for us'
+                )
+            )
+        )
+            ->throws(AssertionFailure::class)
+            ->withMessage("Failed asserting that 'bar' is good enough for us.");
     }
 }

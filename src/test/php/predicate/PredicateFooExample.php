@@ -14,19 +14,14 @@ class PredicateFooExample extends Predicate
 {
     /**
      * evaluates predicate against given value
-     *
-     * @param   mixed  $value
-     * @return  bool
      */
-    public function test($value): bool
+    public function test(mixed $value): bool
     {
         return 'foo' === $value;
     }
 
     /**
      * returns string representation of predicate
-     *
-     * @return  string
      */
     public function __toString(): string
     {

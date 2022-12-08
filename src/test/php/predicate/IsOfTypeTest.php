@@ -7,8 +7,11 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 namespace bovigo\assert\predicate;
+
 use bovigo\assert\AssertionFailure;
+use Generator;
 use PHPUnit\Framework\TestCase;
+use stdClass;
 
 use function bovigo\assert\assertFalse;
 use function bovigo\assert\assertThat;
@@ -27,55 +30,51 @@ class IsOfTypeTest extends TestCase
     public function throwsInvalidArgumentExceptionWhenCreatedWithUnknownType(): void
     {
 
-        expect(function() { isOfType('nope'); })
-                ->throws(\InvalidArgumentException::class);
+        expect(fn() => isOfType('nope'))
+            ->throws(\InvalidArgumentException::class);
     }
 
     /** only here for test purpose */
     public static function dummy(): void {}
 
-    /**
-     * @return  array<string,array<mixed>>
-     */
-    public function validValuesAndTypes(): array
+    public function validValuesAndTypes(): Generator
     {
-        return [
-            'array'                  => ['array', []],
-            'boolean true'           => ['boolean', true],
-            'boolean false'          => ['boolean', false],
-            'bool true'              => ['bool', true],
-            'bool false'             => ['bool', false],
-            'double'                 => ['double', 3.03],
-            'float'                  => ['float', 3.03],
-            'integer'                => ['integer', 303],
-            'int'                    => ['int', 303],
-            'numeric int'            => ['numeric', 303],
-            'numeric string'         => ['numeric', '303'],
-            'numeric float'          => ['numeric', 3.03],
-            'object'                 => ['object', new \stdClass()],
-            'resource'               => ['resource', fopen(__FILE__, 'rb')],
-            'string'                 => ['string', 'foo'],
-            'scalar true'            => ['scalar', true],
-            'scalar false'           => ['scalar', false],
-            'scalar float'           => ['scalar', 3.03],
-            'scalar int'             => ['scalar', 303],
-            'scalar string'          => ['scalar', 'foo'],
-            'callable closure'       => ['callable', function() {}],
-            'callable function name' => ['callable', 'strlen'],
-            'callable class method'  => ['callable', [$this, 'validValuesAndTypes']],
-            'callable static class method'  => ['callable', [__CLASS__, 'dummy']],
-            'iterable'               => ['iterable', [1, 2, 3]]
-        ];
+        yield 'array'                   => ['array', []];
+        yield 'boolean true'            => ['boolean', true];
+        yield 'boolean false'           => ['boolean', false];
+        yield 'bool true'               => ['bool', true];
+        yield 'bool false'              => ['bool', false];
+        yield 'double'                  => ['double', 3.03];
+        yield 'float'                   => ['float', 3.03];
+        yield 'integer'                 => ['integer', 303];
+        yield 'int'                     => ['int', 303];
+        yield 'numeric int'             => ['numeric', 303];
+        yield 'numeric string'          => ['numeric', '303'];
+        yield 'numeric float'           => ['numeric', 3.03];
+        yield 'object'                  => ['object', new stdClass()];
+        yield 'resource'                => ['resource', fopen(__FILE__, 'rb')];
+        yield 'string'                  => ['string', 'foo'];
+        yield 'scalar true'             => ['scalar', true];
+        yield 'scalar false'            => ['scalar', false];
+        yield 'scalar float'            => ['scalar', 3.03];
+        yield 'scalar int'              => ['scalar', 303];
+        yield 'scalar string'           => ['scalar', 'foo'];
+        yield 'callable closure'        => ['callable', function() {}];
+        yield 'callable arrow function' => ['callable', fn() => 303];
+        yield 'callable function name'  => ['callable', 'strlen'];
+        yield 'callable class method'   => ['callable', [$this, 'validValuesAndTypes']];
+        yield 'callable static class method'  => ['callable', [__CLASS__, 'dummy']];
+        yield 'iterable'                => ['iterable', [1, 2, 3]];
     }
 
     /**
-     * @param  string  $expectedType
-     * @param  mixed   $value
      * @test
      * @dataProvider  validValuesAndTypes
      */
-    public function evaluatesToTrueIfTypeOfValueEqualsExpectedType($expectedType, $value): void
-    {
+    public function evaluatesToTrueIfTypeOfValueEqualsExpectedType(
+        string $expectedType,
+        mixed $value
+    ): void {
         assertTrue(isOfType($expectedType)->test($value));
     }
 
@@ -92,8 +91,8 @@ class IsOfTypeTest extends TestCase
      */
     public function assertionFailureContainsMeaningfulInformation(): void
     {
-        expect(function() { assertThat([], isOfType('int')); })
-                ->throws(AssertionFailure::class)
-                ->withMessage('Failed asserting that an array is of type "int".');
+        expect(fn() => assertThat([], isOfType('int')))
+            ->throws(AssertionFailure::class)
+            ->withMessage('Failed asserting that an array is of type "int".');
     }
 }

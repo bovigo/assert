@@ -7,6 +7,7 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 namespace bovigo\assert;
+
 use PHPUnit\Framework\TestCase;
 
 use function bovigo\assert\predicate\equals;
@@ -26,7 +27,7 @@ class AssertTest extends TestCase
      */
     public function assertSucceedsWhenPredicateReturnsTrue(): void
     {
-        assertThat(assertThat('some value', function() { return true; }), isTrue());
+        assertThat(assertThat('some value', fn() => true ), isTrue());
     }
 
     /**
@@ -34,13 +35,11 @@ class AssertTest extends TestCase
      */
     public function assertFailsWhenPredicateReturnsFalse(): void
     {
-        expect(function() {
-            assertThat('some value', function() { return false; });
-        })
-        ->throws(AssertionFailure::class)
-        ->withMessage(
-                "Failed asserting that 'some value' satisfies a lambda function."
-        );
+        expect(fn() => assertThat('some value', fn() => false ))
+            ->throws(AssertionFailure::class)
+            ->withMessage(
+                    "Failed asserting that 'some value' satisfies a lambda function."
+            );
     }
 
     /**
@@ -48,18 +47,12 @@ class AssertTest extends TestCase
      */
     public function assertionFailureContainsAdditionalDescription(): void
     {
-        expect(function() {
-                assertThat(
-                        'some value',
-                        function() { return false; },
-                        'some more info'
-                );
-        })
-        ->throws(AssertionFailure::class)
-        ->withMessage(
-                    'Failed asserting that \'some value\' satisfies a lambda function.
+        expect(fn() => assertThat('some value', fn() => false, 'some more info'))
+            ->throws(AssertionFailure::class)
+            ->withMessage(
+                'Failed asserting that \'some value\' satisfies a lambda function.
 some more info'
-        );
+            );
     }
 
     /**
@@ -67,11 +60,9 @@ some more info'
      */
     public function failThrowsAssertionFailure(): void
     {
-        expect(function() {
-            fail('Fail test hard.');
-        })
-        ->throws(AssertionFailure::class)
-        ->withMessage('Fail test hard.');
+        expect(fn() => fail('Fail test hard.'))
+            ->throws(AssertionFailure::class)
+            ->withMessage('Fail test hard.');
     }
 
     /**
@@ -92,10 +83,10 @@ some more info'
         }
 
         $countBeforeAssertion = \PHPUnit\Framework\Assert::getCount();
-        assertThat('some value', function() { return true; });
+        assertThat('some value', fn() => true );
         assertThat(
-                \PHPUnit\Framework\Assert::getCount(),
-                equals($countBeforeAssertion + 1)
+            \PHPUnit\Framework\Assert::getCount(),
+            equals($countBeforeAssertion + 1)
         );
     }
 
@@ -109,14 +100,12 @@ some more info'
         }
 
         $countBeforeAssertion = \PHPUnit\Framework\Assert::getCount();
-        expect(function() {
-            assertThat('some value', function() { return false; }, 'some more info');
-        })
-        ->throws(AssertionFailure::class)
-        ->after(
+        expect(fn() => assertThat('some value', fn() => false, 'some more info'))
+            ->throws(AssertionFailure::class)
+            ->after(
                 \PHPUnit\Framework\Assert::getCount(),
                 equals($countBeforeAssertion + 2) // one for assertThat(), one for throws()
-        );
+            );
     }
 
     /**
@@ -133,17 +122,17 @@ some more info'
      */
     public function assertEmptyStringFailsWhenValueIsNotEmptyString(): void
     {
-        expect(function() { assertEmptyString('foo'); })
-                ->throws(AssertionFailure::class)
-                ->withMessage(
-                        "Failed asserting that 'foo' is an empty string.
+        expect(fn() => assertEmptyString('foo'))
+            ->throws(AssertionFailure::class)
+            ->withMessage(
+                "Failed asserting that 'foo' is an empty string.
 --- Expected
 +++ Actual
 @@ @@
 -''
 +'foo'
 "
-                );
+            );
     }
 
     /**
@@ -161,17 +150,17 @@ some more info'
      */
     public function assertEmptyArrayFailsWhenValueIsNotEmptyArray(): void
     {
-        expect(function() { assertEmptyArray(['foo']); })
-                ->throws(AssertionFailure::class)
-                ->message(startsWith(
-                        'Failed asserting that an array is an empty array.
+        expect(fn() => assertEmptyArray(['foo']))
+            ->throws(AssertionFailure::class)
+            ->message(startsWith(
+                'Failed asserting that an array is an empty array.
 --- Expected
 +++ Actual
 @@ @@
  Array (
 +    0 => \'foo\'
 '
-        ));
+            ));
     }
 
     /**
@@ -182,10 +171,10 @@ some more info'
     public function outputOfReturnsTrueOnSuccess(): void
     {
         assertTrue(
-                outputOf(
-                        function() { echo 'Hello world!'; },
-                        equals('Hello world!')
-                )
+            outputOf(
+                fn() => print 'Hello world!',
+                equals('Hello world!')
+            )
         );
     }
 
@@ -196,15 +185,13 @@ some more info'
      */
     public function outputOfThrowsAssertionFailureWhenOutputDoesSatisfyPredicate(): void
     {
-        expect(function() {
-                outputOf(
-                        function() { echo 'Hello you!'; },
-                        equals('Hello world!'),
-                        'So be it'
-                );
-        })
-        ->throws(AssertionFailure::class)
-        ->withMessage(
+        expect(fn() => outputOf(
+            fn() => print 'Hello you!',
+            equals('Hello world!'),
+            'So be it'
+        ))
+            ->throws(AssertionFailure::class)
+            ->withMessage(
                 "Failed asserting that 'Hello you!' is equal to <string:Hello world!>.
 --- Expected
 +++ Actual
@@ -213,6 +200,6 @@ some more info'
 +'Hello you!'
 
 So be it"
-        );
+            );
     }
 }

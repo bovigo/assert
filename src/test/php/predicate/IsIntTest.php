@@ -7,14 +7,16 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 namespace bovigo\assert\predicate;
+
 use bovigo\assert\AssertionFailure;
+use Generator;
 use PHPUnit\Framework\TestCase;
+use stdClass;
 
 use function bovigo\assert\assertThat;
 use function bovigo\assert\expect;
 use function bovigo\assert\predicate\isInt;
 use function bovigo\assert\predicate\isNotInt;
-
 /**
  * Test for bovigo\assert\assert\predicate\isInt() and bovigo\assert\assert\predicate\isNotInt().
  *
@@ -22,32 +24,21 @@ use function bovigo\assert\predicate\isNotInt;
  */
 class IsIntTest extends TestCase
 {
-    /**
-     * @return  array<string,array<int>>
-     */
-    public function validInts(): array
+    public function validInts(): Generator
     {
-        return [
-            'default int'  => [0],
-            'normal int'   => [303],
-            'negative int' => [-313]
-        ];
+        yield 'default int'  => [0];
+        yield 'normal int'   => [303];
+        yield 'negative int' => [-313];
+    }
+
+    public function invalidInts(): Generator
+    {
+        yield 'string' => ['foo'];
+        yield 'float'  => [30.3];
+        yield 'object' => [new stdClass()];
     }
 
     /**
-     * @return  array<string,array<mixed>>
-     */
-    public function invalidInts(): array
-    {
-        return [
-            'string' => ['foo'],
-            'float'  => [30.3],
-            'object' => [new \stdClass()]
-        ];
-    }
-
-    /**
-     * @param  int  $value
      * @test
      * @dataProvider  validInts
      */
@@ -57,22 +48,20 @@ class IsIntTest extends TestCase
     }
 
     /**
-     * @param  mixed  $value
      * @test
      * @dataProvider  invalidInts
      */
-    public function invalidIntsAreRejected($value): void
+    public function invalidIntsAreRejected(mixed $value): void
     {
-        expect(function() use($value) { assertThat($value, isInt()); })
+        expect(fn() => assertThat($value, isInt()))
             ->throws(AssertionFailure::class);
     }
 
     /**
-     * @param  mixed  $value
      * @test
      * @dataProvider  invalidInts
      */
-    public function invalidIntsAreRecognizedOnNegation($value): void
+    public function invalidIntsAreRecognizedOnNegation(mixed $value): void
     {
         assertThat($value, isNotInt());
     }
@@ -84,7 +73,7 @@ class IsIntTest extends TestCase
      */
     public function validIntsAreRejectedOnNegation(int $value): void
     {
-        expect(function() use($value) { assertThat($value, isNotInt()); })
+        expect(fn() => assertThat($value, isNotInt()))
             ->throws(AssertionFailure::class);
     }
 }

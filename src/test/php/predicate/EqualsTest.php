@@ -7,6 +7,7 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 namespace bovigo\assert\predicate;
+
 use bovigo\assert\AssertionFailure;
 use PHPUnit\Framework\TestCase;
 
@@ -43,7 +44,7 @@ class EqualsTest extends TestCase
      * @test
      * @dataProvider  tuplesEvaluatingToTrue
      */
-    public function evaluatesToTrue($expected, $value): void
+    public function evaluatesToTrue(mixed $expected, mixed $value): void
     {
         assertTrue(equals($expected)->test($value));
     }
@@ -71,7 +72,7 @@ class EqualsTest extends TestCase
      * @test
      * @dataProvider  tuplesEvaluatingToFalse
      */
-    public function evaluatesToFalse($expected, $value): void
+    public function evaluatesToFalse(mixed $expected, mixed $value): void
     {
         assertFalse(equals($expected)->test($value));
     }
@@ -81,10 +82,10 @@ class EqualsTest extends TestCase
      */
     public function assertionFailureContainsMeaningfulInformation(): void
     {
-        expect(function() { assertThat('bar', equals('foo'), 'additional info'); })
-                ->throws(AssertionFailure::class)
-                ->withMessage(
-                        "Failed asserting that 'bar' is equal to <string:foo>.
+        expect(fn() => assertThat('bar', equals('foo'), 'additional info'))
+            ->throws(AssertionFailure::class)
+            ->withMessage(
+                "Failed asserting that 'bar' is equal to <string:foo>.
 --- Expected
 +++ Actual
 @@ @@
@@ -92,7 +93,7 @@ class EqualsTest extends TestCase
 +'bar'
 
 additional info"
-        );
+            );
     }
 
     /**
@@ -100,10 +101,10 @@ additional info"
      */
     public function assertionFailureDoesNotReferenceStringWithLinebreaksInMessage(): void
     {
-        expect(function() { assertThat('bar', equals("foo\n"), 'additional info'); })
-                ->throws(AssertionFailure::class)
-                ->withMessage(
-                        "Failed asserting that 'bar' is equal to <text>.
+        expect(fn() => assertThat('bar', equals("foo\n"), 'additional info'))
+            ->throws(AssertionFailure::class)
+            ->withMessage(
+                "Failed asserting that 'bar' is equal to <text>.
 --- Expected
 +++ Actual
 @@ @@
@@ -112,7 +113,7 @@ additional info"
 +'bar'
 
 additional info"
-        );
+            );
     }
 
     /**

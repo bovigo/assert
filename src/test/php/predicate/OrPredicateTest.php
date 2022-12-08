@@ -7,6 +7,7 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 namespace bovigo\assert\predicate;
+
 use bovigo\assert\AssertionFailure;
 use PHPUnit\Framework\TestCase;
 
@@ -31,8 +32,8 @@ class OrPredicateTest extends TestCase
     protected function setUp(): void
     {
         $this->orPredicate = new OrPredicate(
-                function($value) { return 'bar' === $value; },
-                function($value) { return 'foo' === $value; }
+                fn($value) => 'bar' === $value,
+                fn($value) => 'foo' === $value
         );
     }
 
@@ -65,14 +66,12 @@ class OrPredicateTest extends TestCase
      */
     public function doesNotSwallowExceptionFromFirstPredicateIfOtherFails(): void
     {
-        expect(function() {
-                assertThat(303, matches('/^([a-z]{3})$/')->or(isNull()));
-        })
-        ->throws(AssertionFailure::class)
-        ->withMessage(
+        expect(fn() => assertThat(303, matches('/^([a-z]{3})$/')->or(isNull())))
+            ->throws(AssertionFailure::class)
+            ->withMessage(
                 'Failed asserting that 303 matches regular expression "/^([a-z]{3})$/" or is null.
 Given value of type "integer" can not be matched against a regular expression.'
-        );
+            );
     }
 
     /**
@@ -80,14 +79,12 @@ Given value of type "integer" can not be matched against a regular expression.'
      */
     public function doesNotSwallowExceptionFromSecondPredicateIfFirstFails(): void
     {
-        expect(function() {
-                assertThat(303, isNull()->or(matches('/^([a-z]{3})$/')));
-        })
-        ->throws(AssertionFailure::class)
-        ->withMessage(
+        expect(fn() => assertThat(303, isNull()->or(matches('/^([a-z]{3})$/'))))
+            ->throws(AssertionFailure::class)
+            ->withMessage(
                 'Failed asserting that 303 is null or matches regular expression "/^([a-z]{3})$/".
 Given value of type "integer" can not be matched against a regular expression.'
-        );
+            );
     }
 
     /**
@@ -95,15 +92,13 @@ Given value of type "integer" can not be matched against a regular expression.'
      */
     public function doesNotSwallowBothExceptionsWhenBothPredicatesFail(): void
     {
-        expect(function() {
-                assertThat(303, matches('/^([a-z]{3})$/')->or(contains('dummy')));
-        })
-        ->throws(AssertionFailure::class)
-        ->withMessage(
+        expect(fn() => assertThat(303, matches('/^([a-z]{3})$/')->or(contains('dummy'))))
+            ->throws(AssertionFailure::class)
+            ->withMessage(
                 'Failed asserting that 303 matches regular expression "/^([a-z]{3})$/" or contains \'dummy\'.
 Given value of type "integer" can not be matched against a regular expression.
 Given value of type "integer" can not contain something.'
-        );
+            );
     }
 
     /**
@@ -112,8 +107,8 @@ Given value of type "integer" can not contain something.'
     public function hasStringRepresentation(): void
     {
         assertThat(
-                $this->orPredicate,
-                equals('satisfies a lambda function or satisfies a lambda function')
+            $this->orPredicate,
+            equals('satisfies a lambda function or satisfies a lambda function')
         );
     }
 
@@ -123,14 +118,14 @@ Given value of type "integer" can not contain something.'
     public function countEqualsSumOfCountOfBothPredicates(): void
     {
         assertThat(
-                count(new OrPredicate(
-                        new AndPredicate(
-                            function($value) { return 'foo' === $value; },
-                            function($value) { return 'foo' === $value; }
-                        ),
-                        function($value) { return 'bar' === $value; }
-                )),
-                equals(3)
+            count(new OrPredicate(
+                new AndPredicate(
+                    fn($value) => 'foo' === $value,
+                    fn($value) => 'foo' === $value
+                ),
+                fn($value) => 'bar' === $value
+            )),
+            equals(3)
         );
     }
 }

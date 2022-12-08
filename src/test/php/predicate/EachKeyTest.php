@@ -7,7 +7,10 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 namespace bovigo\assert\predicate;
+
+use ArrayIterator;
 use bovigo\assert\AssertionFailure;
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 
 use function bovigo\assert\{
@@ -29,8 +32,8 @@ class EachKeyTest extends TestCase
      */
     public function testNonIterableValueThrowsInvalidArgumentException(): void
     {
-        expect(function() { eachKey(isNotOfType('int'))->test(303); })
-                ->throws(\InvalidArgumentException::class);
+        expect(fn() => eachKey(isNotOfType('int'))->test(303))
+            ->throws(InvalidArgumentException::class);
     }
 
     /**
@@ -54,7 +57,7 @@ class EachKeyTest extends TestCase
      */
     public function evaluatesToTrueIfTraversableIsEmpty(): void
     {
-        assertTrue(eachKey(isNotOfType('int'))->test(new \ArrayIterator([])));
+        assertTrue(eachKey(isNotOfType('int'))->test(new ArrayIterator([])));
     }
 
     /**
@@ -71,8 +74,8 @@ class EachKeyTest extends TestCase
     public function evaluatesToTrueIfEachKeyInTraversableFulfillsPredicate(): void
     {
         assertTrue(
-                eachKey(isNotOfType('int'))
-                        ->test(new \ArrayIterator(['a' => 303, 'b' => 'foo']))
+            eachKey(isNotOfType('int'))
+                ->test(new ArrayIterator(['a' => 303, 'b' => 'foo']))
         );
     }
 
@@ -90,8 +93,8 @@ class EachKeyTest extends TestCase
     public function evaluatesToFalseIfSingleValueInTraversableDoesNotFulfillPredicate(): void
     {
         assertFalse(
-                eachKey(isNotOfType('int'))
-                        ->test(new \ArrayIterator(['a' =>303, 'foo']))
+            eachKey(isNotOfType('int'))
+                ->test(new \ArrayIterator(['a' =>303, 'foo']))
         );
     }
 
@@ -111,7 +114,7 @@ class EachKeyTest extends TestCase
      */
     public function doesNotMovePointerOfPassedTraversable(): void
     {
-        $traversable = new \ArrayIterator([303, 313, 'foo']);
+        $traversable = new ArrayIterator([303, 313, 'foo']);
         $traversable->next();
         eachKey(isOfType('int'))->test($traversable);
         assertThat($traversable->current(), equals(313));
@@ -141,13 +144,13 @@ class EachKeyTest extends TestCase
      */
     public function assertionFailureContainsMeaningfulInformation(): void
     {
-        expect(function() { assertThat(['foo'], eachKey(isNotOfType('int'))); })
-                ->throws(AssertionFailure::class)
-                ->withMessage(
-                        'Failed asserting that key 0 in Array &0 (
+        expect(fn() => assertThat(['foo'], eachKey(isNotOfType('int'))))
+            ->throws(AssertionFailure::class)
+            ->withMessage(
+                'Failed asserting that key 0 in Array &0 (
     0 => \'foo\'
 ) is not of type "int".'
-        );
+            );
     }
 
     /**
@@ -155,12 +158,10 @@ class EachKeyTest extends TestCase
      */
     public function assertionFailureContainsMeaningfulInformationWhenCombined(): void
     {
-        expect(function() {
-            assertThat([], isNotEmpty()->and(eachKey(isNotOfType('int'))));
-        })
-        ->throws(AssertionFailure::class)
-        ->withMessage(
+        expect(fn() => assertThat([], isNotEmpty()->and(eachKey(isNotOfType('int')))))
+            ->throws(AssertionFailure::class)
+            ->withMessage(
                 'Failed asserting that an array is not empty and each key is not of type "int".'
-        );
+            );
     }
 }

@@ -7,6 +7,8 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 namespace bovigo\assert\predicate;
+
+use Generator;
 use PHPUnit\Framework\TestCase;
 
 use function bovigo\assert\assertThat;
@@ -19,16 +21,13 @@ use function bovigo\assert\assertTrue;
 class NegatePredicateTest extends TestCase
 {
     /**
-     *
-     * @var  \bovigo\assert\predicate\NegatePredicate
+     * @var  NegatePredicate
      */
     private $negatePredicate;
 
     protected function setUp(): void
     {
-        $this->negatePredicate = not(
-                function($value) { return 'foo' === $value; }
-        );
+        $this->negatePredicate = not(fn($value) => 'foo' === $value);
     }
     /**
      * @test
@@ -38,17 +37,12 @@ class NegatePredicateTest extends TestCase
         assertTrue($this->negatePredicate->test('bar'));
     }
 
-    /**
-     * @return  array<array<mixed>>
-     */
-    public function predicates(): array
+    public function predicates(): Generator
     {
-        return [
-            [not(function($value) { return 'foo' === $value; }), 'does not satisfy a lambda function'],
-            [not(equals(5)->or(isLessThan(5))), 'not (is equal to 5 or is less than 5)'],
-            [not(equals(5)->and(isLessThan(5))), 'not (is equal to 5 and is less than 5)'],
-            [not(not(equals(5))), 'not (is not equal to 5)']
-        ];
+        yield [not(fn($value) => 'foo' === $value), 'does not satisfy a lambda function'];
+        yield [not(equals(5)->or(isLessThan(5))), 'not (is equal to 5 or is less than 5)'];
+        yield [not(equals(5)->and(isLessThan(5))), 'not (is equal to 5 and is less than 5)'];
+        yield [not(not(equals(5))), 'not (is not equal to 5)'];
     }
 
     /**
@@ -66,8 +60,8 @@ class NegatePredicateTest extends TestCase
     public function countEqualsCountOfNegatedPredicate(): void
     {
         assertThat(
-                count(not(new AndPredicate(function() {}, function() {}))),
-                equals(2)
+            count(not(new AndPredicate(function() {}, function() {}))),
+            equals(2)
         );
     }
 }

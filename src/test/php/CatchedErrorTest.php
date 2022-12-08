@@ -7,6 +7,7 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 namespace bovigo\assert;
+
 use PHPUnit\Framework\TestCase;
 
 use function bovigo\assert\predicate\{
@@ -37,8 +38,8 @@ class CatchedErrorTest extends TestCase
     public function withMessageComparesUsingEquals(): void
     {
         assertThat(
-                $this->catchedError->withMessage('error'),
-                isInstanceOf(CatchedError::class)
+            $this->catchedError->withMessage('error'),
+            isInstanceOf(CatchedError::class)
         );
     }
 
@@ -47,11 +48,9 @@ class CatchedErrorTest extends TestCase
      */
     public function withMessageFailsThrowsAssertionFailure(): void
     {
-        expect(function() {
-                $this->catchedError->withMessage('failure');
-        })
-        ->throws(AssertionFailure::class)
-        ->withMessage(
+        expect(fn() => $this->catchedError->withMessage('failure'))
+            ->throws(AssertionFailure::class)
+            ->withMessage(
                 "Failed asserting that error message 'error' is equal to <string:failure>.
 --- Expected
 +++ Actual
@@ -68,8 +67,8 @@ class CatchedErrorTest extends TestCase
     public function messageAssertsWithGivenPredicate(): void
     {
         assertThat(
-                $this->catchedError->message(contains('err')),
-                isInstanceOf(CatchedError::class)
+            $this->catchedError->message(contains('err')),
+            isInstanceOf(CatchedError::class)
         );
     }
 
@@ -80,8 +79,8 @@ class CatchedErrorTest extends TestCase
     public function messageAssertsWithGivenCallable(): void
     {
         assertThat(
-                $this->catchedError->message('is_string'),
-                isInstanceOf(CatchedError::class)
+            $this->catchedError->message('is_string'),
+            isInstanceOf(CatchedError::class)
         );
     }
 
@@ -90,13 +89,11 @@ class CatchedErrorTest extends TestCase
      */
     public function messageAssertsWithGivenPredicateThrowsAssertionFailureWhenPredicateFails(): void
     {
-        expect(function() {
-                $this->catchedError->message(contains('fail'));
-        })
-        ->throws(AssertionFailure::class)
-        ->withMessage(
+        expect(fn() => $this->catchedError->message(contains('fail')))
+            ->throws(AssertionFailure::class)
+            ->withMessage(
                 "Failed asserting that error message 'error' contains 'fail'."
-        );
+            );
     }
 
     /**
@@ -104,9 +101,6 @@ class CatchedErrorTest extends TestCase
      */
     public function afterExecutesGivenPredicateWithGivenValue(): void
     {
-        $this->catchedError->after(
-                $this->catchedError,
-                isSameAs($this->catchedError)
-        );
+        $this->catchedError->after($this->catchedError, isSameAs($this->catchedError));
     }
 }

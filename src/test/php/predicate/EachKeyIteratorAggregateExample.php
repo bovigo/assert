@@ -7,6 +7,9 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 namespace bovigo\assert\predicate;
+
+use ArrayIterator;
+use Iterator;
 /**
  * Helper class for the test.
  *
@@ -14,17 +17,17 @@ namespace bovigo\assert\predicate;
  */
 class EachKeyIteratorAggregateExample implements \IteratorAggregate
 {
-    private $iterator;
+    private Iterator $iterator;
 
     public function __construct()
     {
-        $this->iterator = new \ArrayIterator([303, 313, 'foo']);
+        $this->iterator = new ArrayIterator([303, 313, 'foo']);
     }
 
     /**
-     * @return  \Iterator<int,int|string>
+     * @return  Iterator<int,int|string>
      */
-    public function getIterator(): \Iterator
+    public function getIterator(): Iterator
     {
         return $this->iterator;
     }

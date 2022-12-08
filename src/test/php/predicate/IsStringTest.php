@@ -7,14 +7,16 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 namespace bovigo\assert\predicate;
+
 use bovigo\assert\AssertionFailure;
+use Generator;
 use PHPUnit\Framework\TestCase;
+use stdClass;
 
 use function bovigo\assert\assertThat;
 use function bovigo\assert\expect;
 use function bovigo\assert\predicate\isString;
 use function bovigo\assert\predicate\isNotAString;
-
 /**
  * Test for bovigo\assert\assert\predicate\isString() and bovigo\assert\assert\predicate\isNotAString().
  *
@@ -22,31 +24,20 @@ use function bovigo\assert\predicate\isNotAString;
  */
 class IsStringTest extends TestCase
 {
-    /**
-     * @return  array<string,array<string>>
-     */
-    public function validStrings(): array
+    public function validStrings(): Generator
     {
-        return [
-            'empty string'  => [''],
-            'normal string' => ['example']
-        ];
+        yield 'empty string'  => [''];
+        yield 'normal string' => ['example'];
+    }
+
+    public function invalidStrings(): Generator
+    {
+        yield 'array'  => [['foo']];
+        yield 'float'  => [30.3];
+        yield 'object' => [new stdClass()];
     }
 
     /**
-     * @return  array<string,array<mixed>>
-     */
-    public function invalidStrings(): array
-    {
-        return [
-            'array'  => [['foo']],
-            'float'  => [30.3],
-            'object' => [new \stdClass()]
-        ];
-    }
-
-    /**
-     * @param  string  $value
      * @test
      * @dataProvider  validStrings
      */
@@ -56,22 +47,20 @@ class IsStringTest extends TestCase
     }
 
     /**
-     * @param  mixed  $value
      * @test
      * @dataProvider  invalidStrings
      */
-    public function invalidStringsAreRejected($value): void
+    public function invalidStringsAreRejected(mixed $value): void
     {
-        expect(function() use($value) { assertThat($value, isString()); })
+        expect(fn() => assertThat($value, isString()))
             ->throws(AssertionFailure::class);
     }
 
     /**
-     * @param  mixed  $value
      * @test
      * @dataProvider  invalidStrings
      */
-    public function invalidStringsAreRecognizedOnNegation($value): void
+    public function invalidStringsAreRecognizedOnNegation(mixed $value): void
     {
         assertThat($value, isNotAString());
     }
@@ -83,7 +72,7 @@ class IsStringTest extends TestCase
      */
     public function validStringsAreRejectedOnNegation(string $value): void
     {
-        expect(function() use($value) { assertThat($value, isNotAString()); })
+        expect(fn() => assertThat($value, isNotAString()))
             ->throws(AssertionFailure::class);
     }
 }

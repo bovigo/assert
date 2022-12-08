@@ -7,8 +7,10 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 namespace bovigo\assert\predicate;
+
 use bovigo\assert\AssertionFailure;
 use PHPUnit\Framework\TestCase;
+use Traversable;
 
 use function bovigo\assert\assertFalse;
 use function bovigo\assert\assertThat;
@@ -38,12 +40,12 @@ class ContainsTest extends TestCase
     }
 
     /**
-     * @param  mixed                      $needle
-     * @param  string|array<mixed>|\Traversable<mixed>  $haystack
+     * @param  mixed                                        $needle
+     * @param  string|array<mixed>|Traversable<mixed>|null  $haystack
      * @test
      * @dataProvider  tuplesEvaluatingToTrue
      */
-    public function evaluatesToTrue($needle, $haystack): void
+    public function evaluatesToTrue(mixed $needle, string|array|Traversable|null $haystack): void
     {
         assertTrue(contains($needle)->test($haystack));
     }
@@ -62,12 +64,12 @@ class ContainsTest extends TestCase
     }
 
     /**
-     * @param  mixed                      $needle
-     * @param  string|array<mixed>|\Traversable<mixed>  $haystack
+     * @param  mixed                                   $needle
+     * @param  string|array<mixed>|Traversable<mixed>  $haystack
      * @test
      * @dataProvider  tuplesEvaluatingToFalse
      */
-    public function evaluatesToFalse($needle, $haystack): void
+    public function evaluatesToFalse(mixed $needle, string|array|Traversable $haystack): void
     {
         assertFalse(contains($needle)->test($haystack));
     }
@@ -77,9 +79,9 @@ class ContainsTest extends TestCase
      */
     public function throwsInvalidArgumentExceptionWhenValueCanNotContainAnything(): void
     {
-        expect(function() { contains('foo')->test(303); })
-                ->throws(\InvalidArgumentException::class)
-                ->withMessage('Given value of type "integer" can not contain something.');
+        expect(fn() => contains('foo')->test(303))
+            ->throws(\InvalidArgumentException::class)
+            ->withMessage('Given value of type "integer" can not contain something.');
     }
 
     /**
@@ -87,8 +89,8 @@ class ContainsTest extends TestCase
      */
     public function assertionFailureContainsMeaningfulInformation(): void
     {
-        expect(function() { assertThat([], contains('foo')); })
-                ->throws(AssertionFailure::class)
-                ->withMessage("Failed asserting that an array contains 'foo'.");
+        expect(fn() => assertThat([], contains('foo')))
+            ->throws(AssertionFailure::class)
+            ->withMessage("Failed asserting that an array contains 'foo'.");
     }
 }

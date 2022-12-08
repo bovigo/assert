@@ -7,14 +7,16 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 namespace bovigo\assert\predicate;
+
 use bovigo\assert\AssertionFailure;
+use Generator;
 use PHPUnit\Framework\TestCase;
+use stdClass;
 
 use function bovigo\assert\assertThat;
 use function bovigo\assert\expect;
 use function bovigo\assert\predicate\isObject;
 use function bovigo\assert\predicate\isNotAnObject;
-
 /**
  * Test for bovigo\assert\assert\predicate\isObject() and bovigo\assert\assert\predicate\isNotAnObject().
  *
@@ -22,32 +24,21 @@ use function bovigo\assert\predicate\isNotAnObject;
  */
 class IsObjectTest extends TestCase
 {
-    /**
-     * @return  array<string,array<object>>
-     */
-    public function validObjects(): array
+    public function validObjects(): Generator
     {
         $a = new class() {};
-        return [
-            'stdclass'        => [new \stdClass()],
-            'anonymous class' => [$a]
-        ];
+        yield 'stdclass'        => [new stdClass()];
+        yield'anonymous class' => [$a];
     }
 
-    /**
-     * @return  array<string,array<mixed>>
-     */
-    public function invalidObjects(): array
+    public function invalidObjects(): Generator
     {
-        return [
-            'string' => ['foo'],
-            'float'  => [30.3],
-            'array'  => [[new \stdClass()]]
-        ];
+        yield'string' => ['foo'];
+        yield'float'  => [30.3];
+        yield'array'  => [[new stdClass()]];
     }
 
     /**
-     * @param  object  $value
      * @test
      * @dataProvider  validObjects
      */
@@ -57,34 +48,31 @@ class IsObjectTest extends TestCase
     }
 
     /**
-     * @param  mixed  $value
      * @test
      * @dataProvider  invalidObjects
      */
-    public function invalidObjectsAreRejected($value): void
+    public function invalidObjectsAreRejected(mixed $value): void
     {
-        expect(function() use($value) { assertThat($value, isObject()); })
+        expect(fn() => assertThat($value, isObject()))
             ->throws(AssertionFailure::class);
     }
 
     /**
-     * @param  mixed  $value
      * @test
      * @dataProvider  invalidObjects
      */
-    public function invalidObjectsAreRecognizedOnNegation($value): void
+    public function invalidObjectsAreRecognizedOnNegation(mixed $value): void
     {
         assertThat($value, isNotAnObject());
     }
 
     /**
-     * @param  object  $value
      * @test
      * @dataProvider  validObjects
      */
     public function validObjectsAreRejectedOnNegation(object $value): void
     {
-        expect(function() use($value) { assertThat($value, isNotAnObject()); })
+        expect(fn() => assertThat($value, isNotAnObject()))
             ->throws(AssertionFailure::class);
     }
 }

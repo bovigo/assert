@@ -7,14 +7,16 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 namespace bovigo\assert\predicate;
+
 use bovigo\assert\AssertionFailure;
+use Generator;
 use PHPUnit\Framework\TestCase;
+use stdClass;
 
 use function bovigo\assert\assertThat;
 use function bovigo\assert\expect;
 use function bovigo\assert\predicate\isNumeric;
 use function bovigo\assert\predicate\isNotNumeric;
-
 /**
  * Test for bovigo\assert\assert\predicate\isNumeric() and bovigo\assert\assert\predicate\isNotNumeric().
  *
@@ -22,33 +24,23 @@ use function bovigo\assert\predicate\isNotNumeric;
  */
 class IsNumericTest extends TestCase
 {
-    /**
-     * @return  array<string,array<int|float|string>>
-     */
-    public function validNumerics(): array
+    public function validNumerics(): Generator
     {
-        return [
-            'default int'             => [0],
-            'normal int'              => [303],
-            'negative int'            => [-313],
-            'default float'           => [0.0],
-            'normal float'            => [30.3],
-            'negative float'          => [-3.13],
-            'numeric string'          => ['42'],
-            'negative numeric string' => ['-42']
-        ];
+        yield 'default int'             => [0];
+        yield 'normal int'              => [303];
+        yield 'negative int'            => [-313];
+        yield 'default float'           => [0.0];
+        yield 'normal float'            => [30.3];
+        yield 'negative float'          => [-3.13];
+        yield 'numeric string'          => ['42'];
+        yield 'negative numeric string' => ['-42'];
     }
 
-    /**
-     * @return  array<string,array<mixed>>
-     */
-    public function invalidNumerics(): array
+    public function invalidNumerics(): Generator
     {
-        return [
-            'string' => ['foo'],
-            'array'  => [[30.3]],
-            'object' => [new \stdClass()]
-        ];
+        yield 'string' => ['foo'];
+        yield 'array'  => [[30.3]];
+        yield 'object' => [new stdClass()];
     }
 
     /**
@@ -68,7 +60,7 @@ class IsNumericTest extends TestCase
      */
     public function invalidNumericsAreRejected($value): void
     {
-        expect(function() use($value) { assertThat($value, isNumeric()); })
+        expect(fn() => assertThat($value, isNumeric()))
             ->throws(AssertionFailure::class);
     }
 
@@ -89,7 +81,7 @@ class IsNumericTest extends TestCase
      */
     public function validNumericsAreRejectedOnNegation($value): void
     {
-        expect(function() use($value) { assertThat($value, isNotNumeric()); })
+        expect(fn() => assertThat($value, isNotNumeric()))
             ->throws(AssertionFailure::class);
     }
 }

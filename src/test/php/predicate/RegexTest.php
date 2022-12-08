@@ -7,7 +7,10 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 namespace bovigo\assert\predicate;
+
 use bovigo\assert\AssertionFailure;
+use Generator;
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 
 use function bovigo\assert\assertFalse;
@@ -21,24 +24,18 @@ use function bovigo\assert\expect;
  */
 class RegexTest extends TestCase
 {
-    /**
-     * @return  array<array<string>>
-     */
-    public function validValues(): array
+    public function validValues(): Generator
     {
-        return [['/^([a-z]{3})$/', 'foo'],
-                ['/^([a-z]{3})$/i', 'foo'],
-                ['/^([a-z]{3})$/i', 'Bar']
-        ];
+        yield ['/^([a-z]{3})$/', 'foo'];
+        yield ['/^([a-z]{3})$/i', 'foo'];
+        yield ['/^([a-z]{3})$/i', 'Bar'];
     }
 
     /**
-     * @param  string  $pattern
-     * @param  string  $value
      * @test
      * @dataProvider  validValues
      */
-    public function validValueEvaluatesToTrue($pattern, $value): void
+    public function validValueEvaluatesToTrue(string $pattern, string $value): void
     {
         assertTrue(matches($pattern)->test($value));
     }
@@ -46,21 +43,18 @@ class RegexTest extends TestCase
     /**
      * @return  array<array<string>>
      */
-    public function invalidValues(): array
+    public function invalidValues(): Generator
     {
-        return [['/^([a-z]{3})$/', 'Bar'],
-                ['/^([a-z]{3})$/', 'baz0123'],
-                ['/^([a-z]{3})$/i', 'baz0123']
-        ];
+        yield ['/^([a-z]{3})$/', 'Bar'];
+        yield ['/^([a-z]{3})$/', 'baz0123'];
+        yield ['/^([a-z]{3})$/i', 'baz0123'];
     }
 
     /**
-     * @param  string  $pattern
-     * @param  string  $value
      * @test
      * @dataProvider  invalidValues
      */
-    public function invalidValueEvaluatesToFalse($pattern, $value): void
+    public function invalidValueEvaluatesToFalse(string $pattern, string $value): void
     {
         assertFalse(matches($pattern)->test($value));
     }
@@ -70,11 +64,11 @@ class RegexTest extends TestCase
      */
     public function nonStringsThrowInvalidArgumentException(): void
     {
-        expect(function() { matches('/^([a-z]{3})$/')->test(303); })
-                ->throws(\InvalidArgumentException::class)
-                ->withMessage(
-                        'Given value of type "integer" can not be matched against a regular expression.'
-        );
+        expect(fn() => matches('/^([a-z]{3})$/')->test(303))
+            ->throws(InvalidArgumentException::class)
+            ->withMessage(
+                'Given value of type "integer" can not be matched against a regular expression.'
+            );
     }
 
     /**
@@ -82,11 +76,11 @@ class RegexTest extends TestCase
      */
     public function nullThrowInvalidArgumentException(): void
     {
-        expect(function() { matches('/^([a-z]{3})$/')->test(null); })
-                ->throws(\InvalidArgumentException::class)
-                ->withMessage(
-                        'Given value of type "NULL" can not be matched against a regular expression.'
-        );
+        expect(fn() => matches('/^([a-z]{3})$/')->test(null))
+            ->throws(InvalidArgumentException::class)
+            ->withMessage(
+                'Given value of type "NULL" can not be matched against a regular expression.'
+            );
     }
 
     /**
@@ -94,21 +88,12 @@ class RegexTest extends TestCase
      */
     public function invalidRegexThrowsRuntimeExceptionOnEvaluation(): void
     {
-        $expect = expect(function() {
-            $regex = new Regex('^([a-z]{3})$');
-            $regex('foo');
-        })
-        ->throws(\RuntimeException::class);
-        if (version_compare(PHP_VERSION, '7.2.0', '<')) {
-            $expect->withMessage(
-                    'Failure while matching "^([a-z]{3})$", reason: invalid regular expression.'
+        $regex = new Regex('^([a-z]{3})$');
+        expect(fn() => $regex('foo'))
+            ->throws(\RuntimeException::class)
+            ->withMessage(
+                'Failure while matching "^([a-z]{3})$", reason: internal PCRE error.'
             );
-        } else {
-            $expect->withMessage(
-                    'Failure while matching "^([a-z]{3})$", reason: internal PCRE error.'
-            );
-        }
-
     }
 
     /**
@@ -117,8 +102,8 @@ class RegexTest extends TestCase
     public function stringRepresentationContainsRegex(): void
     {
         assertThat(
-                (string) new Regex('/^([a-z]{3})$/'),
-                equals('matches regular expression "/^([a-z]{3})$/"')
+            (string) new Regex('/^([a-z]{3})$/'),
+            equals('matches regular expression "/^([a-z]{3})$/"')
         );
     }
 
@@ -127,10 +112,10 @@ class RegexTest extends TestCase
      */
     public function assertionFailureContainsMeaningfulInformation(): void
     {
-        expect(function() { assertThat('f', matches('/^([a-z]{3})$/')); })
-                ->throws(AssertionFailure::class)
-                ->withMessage(
-                        "Failed asserting that 'f' matches regular expression \"/^([a-z]{3})$/\"."
-        );
+        expect(fn() => assertThat('f', matches('/^([a-z]{3})$/')))
+            ->throws(AssertionFailure::class)
+            ->withMessage(
+                "Failed asserting that 'f' matches regular expression \"/^([a-z]{3})$/\"."
+            );
     }
 }

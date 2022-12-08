@@ -7,14 +7,16 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 namespace bovigo\assert\predicate;
+
 use bovigo\assert\AssertionFailure;
+use Generator;
 use PHPUnit\Framework\TestCase;
+use stdClass;
 
 use function bovigo\assert\assertThat;
 use function bovigo\assert\expect;
 use function bovigo\assert\predicate\isScalar;
 use function bovigo\assert\predicate\isNotScalar;
-
 /**
  * Test for bovigo\assert\assert\predicate\isScalar() and bovigo\assert\assert\predicate\isNotScalar().
  *
@@ -22,57 +24,44 @@ use function bovigo\assert\predicate\isNotScalar;
  */
 class IsScalarTest extends TestCase
 {
-    /**
-     * @return  array<string,array<scalar>>
-     */
-    public function validScalars(): array
+    public function validScalars(): Generator
     {
-        return [
-            'empty string'  => [''],
-            'normal string' => ['example'],
-            'int'           => [303],
-            'float'         => [3.13]
-        ];
+        yield 'empty string'  => [''];
+        yield 'normal string' => ['example'];
+        yield 'int'           => [303];
+        yield 'float'         => [3.13];
+    }
+
+    public function invalidScalars(): Generator
+    {
+        yield 'array'  => [['foo']];
+        yield 'object' => [new stdClass()];
     }
 
     /**
-     * @return  array<string,array<mixed>>
-     */
-    public function invalidScalars(): array
-    {
-        return [
-            'array'  => [['foo']],
-            'object' => [new \stdClass()]
-        ];
-    }
-
-    /**
-     * @param  scalar  $value
      * @test
      * @dataProvider  validScalars
      */
-    public function validScalarsAreRecognized($value): void
+    public function validScalarsAreRecognized(mixed $value): void
     {
         assertThat($value, isScalar());
     }
 
     /**
-     * @param  mixed  $value
      * @test
      * @dataProvider  invalidScalars
      */
-    public function invalidScalarsAreRejected($value): void
+    public function invalidScalarsAreRejected(mixed $value): void
     {
-        expect(function() use($value) { assertThat($value, isScalar()); })
+        expect(fn() => assertThat($value, isScalar()))
             ->throws(AssertionFailure::class);
     }
 
     /**
-     * @param  mixed  $value
      * @test
      * @dataProvider  invalidScalars
      */
-    public function invalidScalarsAreRecognizedOnNegation($value): void
+    public function invalidScalarsAreRecognizedOnNegation(mixed $value): void
     {
         assertThat($value, isNotScalar());
     }
@@ -84,7 +73,7 @@ class IsScalarTest extends TestCase
      */
     public function validScalarsAreRejectedOnNegation($value): void
     {
-        expect(function() use($value) { assertThat($value, isNotScalar()); })
+        expect(fn() => assertThat($value, isNotScalar()))
             ->throws(AssertionFailure::class);
     }
 }

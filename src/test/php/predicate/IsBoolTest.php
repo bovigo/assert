@@ -7,14 +7,15 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 namespace bovigo\assert\predicate;
+
 use bovigo\assert\AssertionFailure;
+use Generator;
 use PHPUnit\Framework\TestCase;
 
 use function bovigo\assert\assertThat;
 use function bovigo\assert\expect;
 use function bovigo\assert\predicate\isBool;
 use function bovigo\assert\predicate\isNotBool;
-
 /**
  * Test for bovigo\assert\assert\predicate\isBool() and bovigo\assert\assert\predicate\isNotBool().
  *
@@ -22,31 +23,20 @@ use function bovigo\assert\predicate\isNotBool;
  */
 class IsBoolTest extends TestCase
 {
-    /**
-     * @return  array<string,array<bool>>
-     */
-    public function validBooleans(): array
+    public function validBooleans(): Generator
     {
-        return [
-            'true'  => [true],
-            'false' => [false]
-        ];
+        yield 'true'  => [true];
+        yield 'false' => [false];
+    }
+
+    public function invalidBooleans(): Generator
+    {
+        yield 'string' => ['foo'];
+        yield 'number' => [303];
+        yield 'object' => [new \stdClass()];
     }
 
     /**
-     * @return  array<string,array<mixed>>
-     */
-    public function invalidBooleans(): array
-    {
-        return [
-            'string' => ['foo'],
-            'number' => [303],
-            'object' => [new \stdClass()]
-        ];
-    }
-
-    /**
-     * @param  bool  $value
      * @test
      * @dataProvider  validBooleans
      */
@@ -56,13 +46,12 @@ class IsBoolTest extends TestCase
     }
 
     /**
-     * @param  mixed  $value
      * @test
      * @dataProvider  invalidBooleans
      */
-    public function invalidBooleansAreRejected($value): void
+    public function invalidBooleansAreRejected(mixed $value): void
     {
-        expect(function() use($value) { assertThat($value, isBool()); })
+        expect(fn() => assertThat($value, isBool()))
             ->throws(AssertionFailure::class);
     }
 
@@ -83,7 +72,7 @@ class IsBoolTest extends TestCase
      */
     public function validBooleansAreRejectedOnNegation(bool $value): void
     {
-        expect(function() use($value) { assertThat($value, isNotBool()); })
+        expect(fn() => assertThat($value, isNotBool()))
             ->throws(AssertionFailure::class);
     }
 }
