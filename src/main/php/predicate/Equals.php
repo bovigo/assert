@@ -26,23 +26,10 @@ class Equals extends Predicate implements Delta
      */
     private $lastFailureDiff;
 
-    /**
-     * constructor
-     *
-     * @deprecated  param  $delta is deprecated, use withDelta() on instance instead, will be removed with 7.0
-     * @param  mixed  $expected  value to which test values must be equal
-     * @param  float  $delta     allowed numerical distance between two values to consider them equal
-     */
-    public function __construct(private mixed $expected, float $delta = 0.0)
-    {
-        $this->delta    = $delta;
-    }
+    public function __construct(private mixed $expected) { }
 
     /**
      * sets delta which is allowed between expected and actual value
-     *
-     * @param   float  $delta
-     * @return  Predicate
      */
     public function withDelta(float $delta): Predicate
     {

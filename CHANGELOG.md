@@ -1,5 +1,10 @@
 # Changelog
 
+## 7.0.0 (2022-??-??)
+
+* Raised minimum required PHP version to 8.0.0
+* Removed deprecated parameter `$delta` from `bovigo\assert\predicate\equals()` and `bovigo\assert\predicate\isNotEqualTo()`, use new method `withDelta()` on returned instance
+
 ## 6.2.0 (2021-03-07)
 
 * Added support for `containsSubset` (@lyrixx)
