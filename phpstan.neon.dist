@@ -2,50 +2,14 @@ includes:
   - src/main/resources/phpstan/bovigo-assert.neon
 parameters:
   inferPrivatePropertyTypeFromConstructor: true
-  level: 8
+  level: 9
   paths:
-      - ./src
+      - src/main/php/
+      - src/test/php/
   excludePaths:
       - src/main/php/phpunit/TestCase.php
-  ignoreErrors:
-      # False positives
-      -
-          message: '#Parameter (.)+ of method bovigo\\assert\\Expectation::throws\(\) expects (.)+, int given#'
-          path: src/test/php/ExpectationTest.php
-      -
-          message: '#function bovigo\\assert\\predicate\\hasKey expects int\|string, array given#'
-          path: src/test/php/predicate/HasKeyTest.php
-      -
-          message: '#method bovigo\\assert\\predicate\\IsOfSize::traversable\(\) expects Iterator\|IteratorAggregate, Traversable<mixed, mixed> given#'
-          path: src/main/php/predicate/IsOfSize.php
-      -
-          message: '#Method bovigo\\assert\\predicate\\IteratingPredicate::traversable\(\) should return array\|Iterator but returns iterable#'
-          path: src/main/php/predicate/IteratingPredicate.php
-      -
-          message: '#of class bovigo\\assert\\predicate\\CallablePredicate constructor expects callable\(\): mixed, string given#'
-          path: src/main/php/predicate/predicates.php
-      -
-          message: '#of function bovigo\\assert\\expect expects callable\(\): mixed, array\(bovigo\\assert\\predicate\\PredicateFooExample, .+\) given#'
-          path: src/test/php/predicate/PredicateTest.php
-      -
-          message: '#Result of && is always false#'
-          path: src/main/php/predicate/HasKey.php
-      -
-          message: '#Method bovigo\\assert\\predicate\\IsOfSize::sizeOf\(\) has parameter \$value with no value type specified in iterable type#'
-          path: src/main/php/predicate/IsOfSize.php
-      -
-          message: '#Method bovigo\\assert\\predicate\\IsOfSize::traversable\(\) has parameter \$traversable with no value type specified in iterable type#'
-          path: src/main/php/predicate/IsOfSize.php
-      -
-          message: '#Method bovigo\\assert\\predicate\\IsOfSize::traversable\(\) return type has no value type specified in iterable type Iterator#'
-          path: src/main/php/predicate/IsOfSize.php
-      -
-          message: '#Method bovigo\\assert\\predicate\\IteratingPredicate(.)+ has parameter (.)+ with no value type specified in iterable type#'
-          path: src/main/php/predicate/IteratingPredicate.php
-      -
-          message: '#Method bovigo\\assert\\predicate\\IteratingPredicate::traversable\(\) return type has no value type specified in iterable type#'
-          path: src/main/php/predicate/IteratingPredicate.php
-      # called method will return bool with third parameter set to true
-      -
-          message: '#Method bovigo\\assert\\phpunit\\ConstraintAdapter::test\(\) should return bool but returns bool\|null#'
-          path: src/main/php/phpunit/ConstraintAdapter.php
+      # predicates cause some kind of problem for phpstan
+      # Scanning the files each on their own doesn't reveal any problem,
+      # but scanning the whole folder does. Ignoring for now.
+      - src/main/php/predicate
+      - src/test/php/predicate
