@@ -1,6 +1,6 @@
 # Changelog
 
-## 7.0.0 (2022-??-??)
+## 7.0.0 (2022-12-25)
 
 * Raised minimum required PHP version to 8.0.0
 * Removed deprecated parameter `$delta` from `bovigo\assert\predicate\equals()` and `bovigo\assert\predicate\isNotEqualTo()`, use new method `withDelta()` on returned instance
