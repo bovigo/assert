@@ -1,5 +1,9 @@
 # Changelog
 
+## 7.0.1 (2022-12-26)
+
+* fixed bug with incorrectly initialized delta in `bovigo\assert\predicate\equals()`
+
 ## 7.0.0 (2022-12-25)
 
 * Raised minimum required PHP version to 8.0.0

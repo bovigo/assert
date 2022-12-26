@@ -9,7 +9,9 @@ declare(strict_types=1);
 namespace bovigo\assert\predicate;
 
 use bovigo\assert\AssertionFailure;
+use DateTime;
 use PHPUnit\Framework\TestCase;
+use TypeError;
 
 use function bovigo\assert\assertFalse;
 use function bovigo\assert\assertThat;
@@ -150,5 +152,18 @@ additional info"
     public function notEqualsWithFailingDelta(): void
     {
         assertFalse(isNotEqualTo(5)->withDelta(0.1)->test(4.9));
+    }
+
+    /**
+     * @test
+     * @since 7.0.1
+     * @group delta_initialized_incorrectly
+     */
+    public function deltaMustNotBeNull(): void
+    {
+        $d1 = new DateTime('1980-05-28 06:30:00 Europe/Berlin');
+        $d2 = new DateTime('@328336200');
+        expect(fn() => assertThat($d1, equals($d2)))
+            ->doesNotThrow(TypeError::class);
     }
 }

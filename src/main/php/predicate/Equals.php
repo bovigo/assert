@@ -17,14 +17,8 @@ use function bovigo\assert\export;
  */
 class Equals extends Predicate implements Delta
 {
-    /**
-     * @var  double
-     */
-    private $delta;
-    /**
-     * @var  string
-     */
-    private $lastFailureDiff;
+    private float $delta = 0.0;
+    private string $lastFailureDiff = '';
 
     public function __construct(private mixed $expected) { }
 
@@ -96,7 +90,7 @@ class Equals extends Predicate implements Delta
     /**
      * checks if a diff is available for the last failure
      *
-     * @since   1.7.0
+     * @since 1.7.0
      */
     public function hasDiffForLastFailure(): bool
     {
@@ -106,7 +100,7 @@ class Equals extends Predicate implements Delta
     /**
      * returns diff for last failure
      *
-     * @since   1.7.0
+     * @since 1.7.0
      */
     public function diffForLastFailure(): string
     {
