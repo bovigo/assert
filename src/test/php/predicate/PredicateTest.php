@@ -9,6 +9,7 @@ declare(strict_types=1);
 namespace bovigo\assert\predicate;
 
 use bovigo\assert\AssertionFailure;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 use function bovigo\assert\assertThat;
@@ -17,22 +18,18 @@ use function bovigo\assert\expect;
 /**
  * Test for bovigo\assert\predicate\Predicate.
  *
- * @group  predicate
+ * @group predicate
  */
 class PredicateTest extends TestCase
 {
-    /**
-     * @test
-     */
+    #[Test]
     public function castFromWithPredicateReturnsInstance(): void
     {
         $predicate = new PredicateFooExample();
         assertThat($predicate, isSameAs(Predicate::castFrom($predicate)));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function castFromWithCallableReturnsCallablePredicate(): void
     {
         assertThat(
@@ -41,18 +38,14 @@ class PredicateTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function predicateIsCallable(): void
     {
         $predicate = new PredicateFooExample();
         assertTrue($predicate('foo'));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function andReturnsAndPredicate(): void
     {
         $predicate = new PredicateFooExample();
@@ -62,9 +55,7 @@ class PredicateTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function orReturnsOrPredicate(): void
     {
         $predicate = new PredicateFooExample();
@@ -75,26 +66,22 @@ class PredicateTest extends TestCase
     }
 
     /**
-     * @test
-     * @since  1.4.0
+     * @since 1.4.0
      */
+    #[Test]
     public function everyPredicateCanBeNegated(): void
     {
         $isNotFoo = not(new PredicateFooExample());
         assertThat('bar', $isNotFoo);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function defaultCountOfPredicateIs1(): void
     {
         assertThat(count(new PredicateFooExample()), equals(1));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function assertionFailureContainsMeaningfulInformation(): void
     {
         expect(fn() => assertThat([], new PredicateFooExample()))
@@ -102,9 +89,7 @@ class PredicateTest extends TestCase
             ->withMessage("Failed asserting that an array is foo.");
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function assertionFailureNegatedContainsMeaningfulInformation(): void
     {
         expect(fn() => assertThat('foo', not(new PredicateFooExample())))
@@ -112,9 +97,7 @@ class PredicateTest extends TestCase
             ->withMessage("Failed asserting that 'foo' is not foo.");
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function assertionFailureNegatedContainsMeaningfulInformationWithDescription(): void
     {
         expect(fn() => assertThat([], new PredicateFooExample(), 'some useful description'))
@@ -125,9 +108,7 @@ some useful description'
             );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function assertionFailureNegatedContainsMeaningfulInformationWithDescriptionAndExceptionMessage(): void
     {
         expect(fn() => assertThat([], new PredicateThrowingExample(), 'some useful description'))
@@ -140,9 +121,9 @@ exception message'
     }
 
     /**
-     * @test
-     * @since  1.4.0
+     * @since 1.4.0
      */
+    #[Test]
     public function callToUndefinedMethodThrowsBadMethodCallException(): void
     {
         expect([new PredicateFooExample(), 'noWay'])

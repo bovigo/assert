@@ -10,7 +10,12 @@ namespace bovigo\assert\predicate;
 
 use bovigo\assert\AssertionFailure;
 use DateTime;
+use Generator;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
+use stdClass;
 use TypeError;
 
 use function bovigo\assert\assertFalse;
@@ -19,69 +24,50 @@ use function bovigo\assert\assertTrue;
 use function bovigo\assert\expect;
 /**
  * Tests for bovigo\assert\predicate\Equals.
- *
- * @group  predicate
  */
+#[Group('predicate')]
 class EqualsTest extends TestCase
 {
-    /**
-     * @return  array<array<mixed>>
-     */
-    public function tuplesEvaluatingToTrue(): array
+    public static function tuplesEvaluatingToTrue(): Generator
     {
-        return [[true, true],
-                [false, false],
-                [5, 5],
-                [null, null],
-                ['foo', 'foo'],
-                [true, 5],
-                [false, 0],
-                [false, null]
-        ];
+        yield [true, true];
+        yield [false, false];
+        yield [5, 5];
+        yield [null, null];
+        yield ['foo', 'foo'];
+        yield [true, 5];
+        yield [false, 0];
+        yield [false, null];
     }
 
-    /**
-     * @param  scalar  $expected
-     * @param  mixed   $value
-     * @test
-     * @dataProvider  tuplesEvaluatingToTrue
-     */
+    #[Test]
+    #[DataProvider('tuplesEvaluatingToTrue')]
     public function evaluatesToTrue(mixed $expected, mixed $value): void
     {
         assertTrue(equals($expected)->test($value));
     }
 
-    /**
-     * @return  array<array<mixed>>
-     */
-    public function tuplesEvaluatingToFalse(): array
+    public static function tuplesEvaluatingToFalse(): Generator
     {
-        return [[true, false],
-                [false, true],
-                [false, new \stdClass()],
-                [5, 'foo'],
-                [5, 6],
-              //  [true, 'foo'], // TODO disabled until further investigation
-                ['foo', 'bar'],
-                [5, new \stdClass()],
-                ['foo', new \stdClass()]
-        ];
+        yield [true, false];
+        yield [false, true];
+        yield [false, new stdClass()];
+        yield [5, 'foo'];
+        yield [5, 6];
+        //yield [true, 'foo']; // TODO disabled until further investigation
+        yield ['foo', 'bar'];
+        yield [5, new stdClass()];
+        yield ['foo', new stdClass()];
     }
 
-    /**
-     * @param  scalar  $expected
-     * @param  mixed   $value
-     * @test
-     * @dataProvider  tuplesEvaluatingToFalse
-     */
+    #[Test]
+    #[DataProvider('tuplesEvaluatingToFalse')]
     public function evaluatesToFalse(mixed $expected, mixed $value): void
     {
         assertFalse(equals($expected)->test($value));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function assertionFailureContainsMeaningfulInformation(): void
     {
         expect(fn() => assertThat('bar', equals('foo'), 'additional info'))
@@ -98,9 +84,7 @@ additional info"
             );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function assertionFailureDoesNotReferenceStringWithLinebreaksInMessage(): void
     {
         expect(fn() => assertThat('bar', equals("foo\n"), 'additional info'))
@@ -119,46 +103,46 @@ additional info"
     }
 
     /**
-     * @test
-     * @since  6.0.0
+     * @since 6.0.0
      */
+    #[Test]
     public function equalsWithDelta(): void
     {
         assertTrue(equals(5)->withDelta(0.1)->test(4.9));
     }
 
     /**
-     * @test
-     * @since  6.0.0
+     * @since 6.0.0
      */
+    #[Test]
     public function equalsWithFailingDelta(): void
     {
         assertFalse(equals(5)->withDelta(0.1)->test(4.8));
     }
 
     /**
-     * @test
-     * @since  6.0.0
+     * @since 6.0.0
      */
+    #[Test]
     public function notEqualsWithDelta(): void
     {
         assertTrue(isNotEqualTo(5)->withDelta(0.1)->test(4.8));
     }
 
     /**
-     * @test
-     * @since  6.0.0
+     * @since 6.0.0
      */
+    #[Test]
     public function notEqualsWithFailingDelta(): void
     {
         assertFalse(isNotEqualTo(5)->withDelta(0.1)->test(4.9));
     }
 
     /**
-     * @test
      * @since 7.0.1
-     * @group delta_initialized_incorrectly
      */
+    #[Test]
+    #[Group('delta_initialized_incorrectly')]
     public function deltaMustNotBeNull(): void
     {
         $d1 = new DateTime('1980-05-28 06:30:00 Europe/Berlin');

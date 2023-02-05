@@ -11,6 +11,8 @@ namespace bovigo\assert\predicate;
 use ArrayIterator;
 use bovigo\assert\AssertionFailure;
 use InvalidArgumentException;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 use function bovigo\assert\{
@@ -22,55 +24,43 @@ use function bovigo\assert\{
 /**
  * Tests for bovigo\assert\predicate\EachKey.
  *
- * @group  predicate
- * @since  1.3.0
+ * @since 1.3.0
  */
+#[Group('predicate')]
 class EachKeyTest extends TestCase
 {
-    /**
-     * @test
-     */
+    #[Test]
     public function testNonIterableValueThrowsInvalidArgumentException(): void
     {
         expect(fn() => eachKey(isNotOfType('int'))->test(303))
             ->throws(InvalidArgumentException::class);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     function canBeUsedWithCallable(): void
     {
         assertThat([303, 313], eachKey('is_int'));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function evaluatesToTrueIfArrayIsEmpty(): void
     {
         assertTrue(eachKey(isNotOfType('int'))->test([]));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function evaluatesToTrueIfTraversableIsEmpty(): void
     {
         assertTrue(eachKey(isNotOfType('int'))->test(new ArrayIterator([])));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function evaluatesToTrueIfEachKeyInArrayFulfillsPredicate(): void
     {
         assertTrue(eachKey(isNotOfType('int'))->test(['a' => 303, 'b' => 'foo']));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function evaluatesToTrueIfEachKeyInTraversableFulfillsPredicate(): void
     {
         assertTrue(
@@ -79,17 +69,13 @@ class EachKeyTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function evaluatesToFalseIfSingleKeyInArrayDoesNotFulfillPredicate(): void
     {
         assertFalse(eachKey(isNotOfType('int'))->test(['a' => 303, 'foo']));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function evaluatesToFalseIfSingleValueInTraversableDoesNotFulfillPredicate(): void
     {
         assertFalse(
@@ -98,9 +84,7 @@ class EachKeyTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function doesNotMovePointerOfPassedArray(): void
     {
         $array = [303, 313, 'foo'];
@@ -109,9 +93,7 @@ class EachKeyTest extends TestCase
         assertThat(current($array), equals(313));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function doesNotMovePointerOfPassedTraversable(): void
     {
         $traversable = new ArrayIterator([303, 313, 'foo']);
@@ -120,9 +102,7 @@ class EachKeyTest extends TestCase
         assertThat($traversable->current(), equals(313));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function doesNotMovePointerOfPassedIteratorAggregate(): void
     {
         $traversable = new EachKeyIteratorAggregateExample();
@@ -131,17 +111,13 @@ class EachKeyTest extends TestCase
         assertThat($traversable->getIterator()->current(), equals(313));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function countReturnsCountOfWrappedPredicate(): void
     {
         assertThat(count(eachKey(isGreaterThanOrEqualTo(4))), equals(2));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function assertionFailureContainsMeaningfulInformation(): void
     {
         expect(fn() => assertThat(['foo'], eachKey(isNotOfType('int'))))
@@ -153,9 +129,7 @@ class EachKeyTest extends TestCase
             );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function assertionFailureContainsMeaningfulInformationWhenCombined(): void
     {
         expect(fn() => assertThat([], isNotEmpty()->and(eachKey(isNotOfType('int')))))

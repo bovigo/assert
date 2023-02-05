@@ -9,6 +9,7 @@ declare(strict_types=1);
 namespace bovigo\assert\predicate;
 
 use bovigo\assert\AssertionFailure;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 use function bovigo\assert\assertFalse;
@@ -18,16 +19,11 @@ use function bovigo\assert\expect;
 /**
  * Test for bovigo\assert\predicate\OrPredicate.
  *
- * @group  predicate
+ * @group predicate
  */
 class OrPredicateTest extends TestCase
 {
-    /**
-     * instance to test
-     *
-     * @var  OrPredicate
-     */
-    private $orPredicate;
+    private OrPredicate $orPredicate;
 
     protected function setUp(): void
     {
@@ -37,33 +33,25 @@ class OrPredicateTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function returnsTrueWhenOnePredicateReturnsTrue(): void
     {
         assertTrue($this->orPredicate->test('foo'));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function returnsFalseWhenBothPredicatesReturnsFalse(): void
     {
         assertFalse($this->orPredicate->test('baz'));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function returnsTrueWhenFirstPredicateThrowsExceptionButOtherSucceeds(): void
     {
         assertTrue(assertThat(null, matches('/^([a-z]{3})$/')->or(isNull())));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function doesNotSwallowExceptionFromFirstPredicateIfOtherFails(): void
     {
         expect(fn() => assertThat(303, matches('/^([a-z]{3})$/')->or(isNull())))
@@ -74,9 +62,7 @@ Given value of type "integer" can not be matched against a regular expression.'
             );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function doesNotSwallowExceptionFromSecondPredicateIfFirstFails(): void
     {
         expect(fn() => assertThat(303, isNull()->or(matches('/^([a-z]{3})$/'))))
@@ -87,9 +73,7 @@ Given value of type "integer" can not be matched against a regular expression.'
             );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function doesNotSwallowBothExceptionsWhenBothPredicatesFail(): void
     {
         expect(fn() => assertThat(303, matches('/^([a-z]{3})$/')->or(contains('dummy'))))
@@ -101,9 +85,7 @@ Given value of type "integer" can not contain something.'
             );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function hasStringRepresentation(): void
     {
         assertThat(
@@ -112,9 +94,7 @@ Given value of type "integer" can not contain something.'
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function countEqualsSumOfCountOfBothPredicates(): void
     {
         assertThat(

@@ -10,6 +10,8 @@ namespace bovigo\assert\predicate;
 
 use bovigo\assert\AssertionFailure;
 use Generator;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
@@ -20,56 +22,48 @@ use function bovigo\assert\predicate\isNotAnObject;
 /**
  * Test for bovigo\assert\assert\predicate\isObject() and bovigo\assert\assert\predicate\isNotAnObject().
  *
- * @group  predicate
+ * @group predicate
  */
 class IsObjectTest extends TestCase
 {
-    public function validObjects(): Generator
+    public static function validObjects(): Generator
     {
         $a = new class() {};
         yield 'stdclass'        => [new stdClass()];
         yield'anonymous class' => [$a];
     }
 
-    public function invalidObjects(): Generator
+    public static function invalidObjects(): Generator
     {
         yield'string' => ['foo'];
         yield'float'  => [30.3];
         yield'array'  => [[new stdClass()]];
     }
 
-    /**
-     * @test
-     * @dataProvider  validObjects
-     */
+    #[Test]
+    #[DataProvider('validObjects')]
     public function validObjectsAreRecognized(object $value): void
     {
         assertThat($value, isObject());
     }
 
-    /**
-     * @test
-     * @dataProvider  invalidObjects
-     */
+    #[Test]
+    #[DataProvider('invalidObjects')]
     public function invalidObjectsAreRejected(mixed $value): void
     {
         expect(fn() => assertThat($value, isObject()))
             ->throws(AssertionFailure::class);
     }
 
-    /**
-     * @test
-     * @dataProvider  invalidObjects
-     */
+    #[Test]
+    #[DataProvider('invalidObjects')]
     public function invalidObjectsAreRecognizedOnNegation(mixed $value): void
     {
         assertThat($value, isNotAnObject());
     }
 
-    /**
-     * @test
-     * @dataProvider  validObjects
-     */
+    #[Test]
+    #[DataProvider('validObjects')]
     public function validObjectsAreRejectedOnNegation(object $value): void
     {
         expect(fn() => assertThat($value, isNotAnObject()))

@@ -9,15 +9,16 @@ declare(strict_types=1);
 namespace bovigo\assert\predicate;
 
 use bovigo\assert\AssertionFailure;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 use function bovigo\assert\assertThat;
 use function bovigo\assert\expect;
 /**
  * Tests for bovigo\assert\predicate\CallablePredicate.
- *
- * @group  predicate
  */
+#[Group('predicate')]
 class CallablePredicateTest extends TestCase
 {
     /**
@@ -28,9 +29,7 @@ class CallablePredicateTest extends TestCase
         return false;
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function assertionFailureContainsMeaningfulInformationWithClassCallable(): void
     {
         expect(fn() => assertThat('bar', [__CLASS__, 'isGood']))
@@ -46,9 +45,7 @@ class CallablePredicateTest extends TestCase
         return false;
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function assertionFailureContainsMeaningfulInformationWithObjectCallable(): void
     {
         expect(fn() => assertThat('bar', [$this, 'isGoodEnough']))
@@ -59,9 +56,7 @@ class CallablePredicateTest extends TestCase
             );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function assertionFailureContainsMeaningfulInformationWithStringCallable(): void
     {
         expect(fn() => assertThat('bar', 'is_int'))
@@ -70,9 +65,9 @@ class CallablePredicateTest extends TestCase
     }
 
     /**
-     * @test
-     * @since  1.2.0
+     * @since 1.2.0
      */
+    #[Test]
     public function assertionFailureContainsNonDefaultDescriptionWhenPassed(): void
     {
         expect(fn() => 

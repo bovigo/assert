@@ -10,6 +10,8 @@ namespace bovigo\assert\predicate;
 
 use bovigo\assert\AssertionFailure;
 use Generator;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 use function bovigo\assert\{
@@ -27,7 +29,7 @@ use function bovigo\assert\{
  */
 class IsEmptyTest extends TestCase
 {
-    public function emptyValues(): Generator
+    public static function emptyValues(): Generator
     {
         yield 'null'                  => [null];
         yield 'boolean false'         => [false];
@@ -37,16 +39,14 @@ class IsEmptyTest extends TestCase
         yield 'Countable with size 0' => [new IsEmptyCountableExample(0)];
     }
 
-    /**
-     * @test
-     * @dataProvider  emptyValues
-     */
+    #[Test]
+    #[DataProvider('emptyValues')]
     public function evaluatesToTrueIfGivenValueIsEmpty(mixed $emptyValue): void
     {
         assertTrue(isEmpty()->test($emptyValue));
     }
 
-    public function nonEmptyValues(): Generator
+    public static function nonEmptyValues(): Generator
     {
         yield 'boolean true'            => [true];
         yield 'non-empty string'        => ['foo'];
@@ -54,26 +54,20 @@ class IsEmptyTest extends TestCase
         yield 'Countable with size > 0' => [new IsEmptyCountableExample(1)];
     }
 
-    /**
-     * @test
-     * @dataProvider  nonEmptyValues
-     */
+    #[Test]
+    #[DataProvider('nonEmptyValues')]
     public function evaluatesToFalseIfGivenValueIsNotEmpty(mixed $nonEmptyValue): void
     {
         assertFalse(isEmpty()->test($nonEmptyValue));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function stringRepresentation(): void
     {
         assertThat((string) new IsEmpty(), equals('is empty'));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function assertionFailureWithStringContainsMeaningfulInformation(): void
     {
         expect(fn() => assertEmpty('foo'))
@@ -81,9 +75,7 @@ class IsEmptyTest extends TestCase
             ->withMessage("Failed asserting that 'foo' is empty.");
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function assertionFailureWithIntegerContainsMeaningfulInformation(): void
     {
         expect(fn() => assertEmpty(1))
@@ -91,9 +83,7 @@ class IsEmptyTest extends TestCase
             ->withMessage("Failed asserting that 1 is empty.");
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function assertionFailureWithBooleanContainsMeaningfulInformation(): void
     {
        expect(fn() => assertEmpty(true))
@@ -101,9 +91,7 @@ class IsEmptyTest extends TestCase
             ->withMessage("Failed asserting that true is empty.");
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function assertionFailureWithArrayContainsMeaningfulInformation(): void
     {
          expect(fn() => assertEmpty(['foo']))
@@ -111,9 +99,7 @@ class IsEmptyTest extends TestCase
             ->withMessage("Failed asserting that an array is empty.");
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function assertionFailureWithCountableContainsMeaningfulInformation(): void
     {
         expect(fn() => assertEmpty(new IsEmptyCountableExample(1)))
@@ -125,9 +111,9 @@ class IsEmptyTest extends TestCase
     }
 
     /**
-     * @test
-     * @since  1.3.0
+     * @since 1.3.0
      */
+    #[Test]
     public function aliasAssertNotEmpty(): void
     {
         assertTrue(assertNotEmpty(303));

@@ -11,6 +11,8 @@ namespace bovigo\assert\predicate;
 use ArrayIterator;
 use bovigo\assert\AssertionFailure;
 use InvalidArgumentException;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 use function bovigo\assert\assertFalse;
@@ -20,79 +22,61 @@ use function bovigo\assert\expect;
 /**
  * Tests for bovigo\assert\predicate\Each.
  *
- * @group  predicate
- * @since  1.1.0
+ * @since 1.1.0
  */
+#[Group('predicate')]
 class EachTest extends TestCase
 {
-    /**
-     * @test
-     */
+    #[Test]
     public function testNonIterableValueThrowsInvalidArgumentException(): void
     {
         expect(fn() => each(isNull())->test(303))
             ->throws(InvalidArgumentException::class);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     function canBeUsedWithCallable(): void
     {
         assertThat([3.03, 3.13], each('is_finite'));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function evaluatesToTrueIfArrayIsEmpty(): void
     {
         assertTrue(each(isNotNull())->test([]));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function evaluatesToTrueIfTraversableIsEmpty(): void
     {
         assertTrue(each(isNotNull())->test(new ArrayIterator([])));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function evaluatesToTrueIfEachValueInArrayFulfillsPredicate(): void
     {
         assertTrue(each(isNotNull())->test([303, 'foo']));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function evaluatesToTrueIfEachValueInTraversableFulfillsPredicate(): void
     {
         assertTrue(each(isNotNull())->test(new ArrayIterator([303, 'foo'])));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function evaluatesToFalseIfSingleValueInArrayDoesNotFulfillPredicate(): void
     {
         assertFalse(each(isNotNull())->test([303, null, 'foo']));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function evaluatesToFalseIfSingleValueInTraversableDoesNotFulfillPredicate(): void
     {
         assertFalse(each(isNotNull())->test(new ArrayIterator([303, null, 'foo'])));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function doesNotMovePointerOfPassedArray(): void
     {
         $array = [303, 313, 'foo'];
@@ -101,9 +85,7 @@ class EachTest extends TestCase
         assertThat(current($array), equals(313));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function doesNotMovePointerOfPassedTraversable(): void
     {
         $traversable = new ArrayIterator([303, 313, 'foo']);
@@ -112,9 +94,7 @@ class EachTest extends TestCase
         assertThat($traversable->current(), equals(313));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function doesNotMovePointerOfPassedIteratorAggregate(): void
     {
         $traversable = new EachIteratorAggregateExample();
@@ -123,17 +103,13 @@ class EachTest extends TestCase
         assertThat($traversable->getIterator()->current(), equals(313));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function countReturnsCountOfWrappedPredicate(): void
     {
         assertThat(count(each(isGreaterThanOrEqualTo(4))), equals(2));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function assertionFailureContainsMeaningfulInformation(): void
     {
         expect(fn() => assertThat(['foo'], each(isNull())))
@@ -145,9 +121,7 @@ class EachTest extends TestCase
             );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function assertionFailureContainsMeaningfulInformationWhenCombined(): void
     {
         expect(fn() => assertThat([], isNotEmpty()->and(each(isNotNull()))))
@@ -157,9 +131,7 @@ class EachTest extends TestCase
             );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function assertionFailureContainsMeaningfulInformationOnWhichElementFailed(): void
     {
         expect(fn() => assertThat(['foo', 'bar', null, 'baz'], each(isNotNull())))

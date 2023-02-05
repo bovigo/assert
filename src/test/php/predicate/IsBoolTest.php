@@ -10,6 +10,8 @@ namespace bovigo\assert\predicate;
 
 use bovigo\assert\AssertionFailure;
 use Generator;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 use function bovigo\assert\assertThat;
@@ -23,53 +25,43 @@ use function bovigo\assert\predicate\isNotBool;
  */
 class IsBoolTest extends TestCase
 {
-    public function validBooleans(): Generator
+    public static function validBooleans(): Generator
     {
         yield 'true'  => [true];
         yield 'false' => [false];
     }
 
-    public function invalidBooleans(): Generator
+    public static function invalidBooleans(): Generator
     {
         yield 'string' => ['foo'];
         yield 'number' => [303];
         yield 'object' => [new \stdClass()];
     }
 
-    /**
-     * @test
-     * @dataProvider  validBooleans
-     */
+    #[Test]
+    #[DataProvider('validBooleans')]
     public function validBooleansAreRecognized(bool $value): void
     {
         assertThat($value, isBool());
     }
 
-    /**
-     * @test
-     * @dataProvider  invalidBooleans
-     */
+    #[Test]
+    #[DataProvider('invalidBooleans')]
     public function invalidBooleansAreRejected(mixed $value): void
     {
         expect(fn() => assertThat($value, isBool()))
             ->throws(AssertionFailure::class);
     }
 
-    /**
-     * @param  mixed  $value
-     * @test
-     * @dataProvider  invalidBooleans
-     */
-    public function invalidBooleansAreRecognizedOnNegation($value): void
+    #[Test]
+    #[DataProvider('invalidBooleans')]
+    public function invalidBooleansAreRecognizedOnNegation(mixed $value): void
     {
         assertThat($value, isNotBool());
     }
 
-    /**
-     * @param  bool  $value
-     * @test
-     * @dataProvider  validBooleans
-     */
+    #[Test]
+    #[DataProvider('validBooleans')]
     public function validBooleansAreRejectedOnNegation(bool $value): void
     {
         expect(fn() => assertThat($value, isNotBool()))

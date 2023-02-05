@@ -11,6 +11,8 @@ namespace bovigo\assert\predicate;
 use ArrayIterator;
 use bovigo\assert\AssertionFailure;
 use Generator;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
@@ -25,7 +27,7 @@ use function bovigo\assert\predicate\isNotIterable;
  */
 class IsIterableTest extends TestCase
 {
-    public function validIterables(): Generator
+    public static function validIterables(): Generator
     {
         yield 'empty array'  => [[]];
         yield 'filled array' => [[1, 2, 3]];
@@ -34,36 +36,30 @@ class IsIterableTest extends TestCase
         yield 'generator'    => [$generator()];
     }
 
-    public function invalidIterables(): Generator
+    public static function invalidIterables(): Generator
     {
         yield 'string' => ['foo'];
         yield 'float'  => [30.3];
         yield 'object' => [new stdClass()];
     }
 
-    /**
-     * @test
-     * @dataProvider  validIterables
-     */
+    #[Test]
+    #[DataProvider('validIterables')]
     public function validIterablesAreRecognized(iterable $value): void
     {
         assertThat($value, isIterable());
     }
 
-    /**
-     * @test
-     * @dataProvider  invalidIterables
-     */
+    #[Test]
+    #[DataProvider('invalidIterables')]
     public function invalidIterablesAreRejected(mixed $value): void
     {
         expect(fn() => assertThat($value, isIterable()))
             ->throws(AssertionFailure::class);
     }
 
-    /**
-     * @test
-     * @dataProvider  invalidIterables
-     */
+    #[Test]
+    #[DataProvider('invalidIterables')]
     public function invalidIterablesAreRecognizedOnNegation(mixed $value): void
     {
         assertThat($value, isNotIterable());
@@ -71,9 +67,9 @@ class IsIterableTest extends TestCase
 
     /**
      * @param  iterable<mixed>  $value
-     * @test
-     * @dataProvider  validIterables
      */
+    #[Test]
+    #[DataProvider('validIterables')]
     public function validIterablesAreRejectedOnNegation(iterable $value): void
     {
         expect(fn() => assertThat($value, isNotIterable()))

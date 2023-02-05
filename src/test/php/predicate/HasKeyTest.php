@@ -10,6 +10,9 @@ namespace bovigo\assert\predicate;
 
 use ArrayAccess;
 use bovigo\assert\AssertionFailure;
+use Generator;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 use function bovigo\assert\assertFalse;
@@ -19,66 +22,48 @@ use function bovigo\assert\expect;
 /**
  * Tests for bovigo\assert\predicate\HasKey.
  *
- * @group  predicate
+ * @group predicate
  */
 class HasKeyTest extends TestCase
 {
-    /**
-     * @return  array<array<mixed>>
-     */
-    public function tuplesEvaluatingToTrue(): array
+    public static function tuplesEvaluatingToTrue(): Generator
     {
-        return [
-                [0, ['foo']],
-                ['bar', ['bar' => 'foo5']],
-                [303, new HasKeyArrayAccessExample()],
-                ['foo', new HasKeyArrayAccessExample()],
-        ];
+        yield [0, ['foo']];
+        yield ['bar', ['bar' => 'foo5']];
+        yield [303, new HasKeyArrayAccessExample()];
+        yield ['foo', new HasKeyArrayAccessExample()];;
     }
 
-    /**
-     * @test
-     * @dataProvider  tuplesEvaluatingToTrue
-     */
+    #[Test]
+    #[DataProvider('tuplesEvaluatingToTrue')]
     public function evaluatesToTrue(int|string $key, array|ArrayAccess $array): void
     {
         assertTrue(hasKey($key)->test($array));
     }
 
-    /**
-     * @return  array<array<mixed>>
-     */
-    public function tuplesEvaluatingToFalse(): array
+    public static function tuplesEvaluatingToFalse(): Generator
     {
-        return [
-                [5, []],
-                ['foo', []],
-                [313, new HasKeyArrayAccessExample()],
-                ['bar', new HasKeyArrayAccessExample()]
-        ];
+        yield [5, []];
+        yield ['foo', []];
+        yield [313, new HasKeyArrayAccessExample()];
+        yield ['bar', new HasKeyArrayAccessExample()];
     }
 
-    /**
-     * @test
-     * @dataProvider  tuplesEvaluatingToFalse
-     */
+    #[Test]
+    #[DataProvider('tuplesEvaluatingToFalse')]
     public function evaluatesToFalse(int|string $key, array|ArrayAccess $array): void
     {
         assertFalse(hasKey($key)->test($array));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function throwsInvalidArgumentExceptionWhenValueCanNotHaveKey(): void
     {
         expect(fn() => hasKey('foo')->test(303))
             ->throws(\InvalidArgumentException::class);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function assertionFailureWithArrayContainsMeaningfulInformation(): void
     {
         expect(fn() => assertThat([], hasKey('bar')))
@@ -86,9 +71,7 @@ class HasKeyTest extends TestCase
             ->withMessage("Failed asserting that an array has the key 'bar'.");
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function assertionFailureWithArrayAccessContainsMeaningfulInformation(): void
     {
         expect(fn() => assertThat(new HasKeyArrayAccessExample(), hasKey('bar')))

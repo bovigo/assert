@@ -10,6 +10,8 @@ namespace bovigo\assert\predicate;
 
 use bovigo\assert\AssertionFailure;
 use Generator;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 use function bovigo\assert\assertThat;
@@ -18,19 +20,17 @@ use function bovigo\assert\expect;
 /**
  * Tests for bovigo\assert\predicate\IsTrue.
  *
- * @group  predicate
+ * @group predicate
  */
 class IsTrueTest extends TestCase
 {
-    /**
-     * @test
-     */
+    #[Test]
     public function evaluatesToTrueIfGivenValueIsTrue(): void
     {
         assertThat(isTrue()->test(true), isSameAs(true));
     }
 
-    public function falseValues(): Generator
+    public static function falseValues(): Generator
     {
         yield 'boolean false'    => [false];
         yield 'non-empty string' => ['foo'];
@@ -39,19 +39,14 @@ class IsTrueTest extends TestCase
         yield 'non-empty array'  => [[1]];
     }
 
-    /**
-     * @param  mixed  $false
-     * @test
-     * @dataProvider  falseValues
-     */
-    public function evaluatesToFalseIfGivenValueIsFalse($false): void
+    #[Test]
+    #[DataProvider('falseValues')]
+    public function evaluatesToFalseIfGivenValueIsFalse(mixed $false): void
     {
         assertThat(isTrue()->test($false), isSameAs(false));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function assertionFailureContainsMeaningfulInformation(): void
     {
         expect(fn() => assertTrue([]))

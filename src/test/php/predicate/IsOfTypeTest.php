@@ -10,6 +10,9 @@ namespace bovigo\assert\predicate;
 
 use bovigo\assert\AssertionFailure;
 use Generator;
+use InvalidArgumentException;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
@@ -20,24 +23,21 @@ use function bovigo\assert\expect;
 /**
  * Tests for bovigo\assert\predicate\IsOfType.
  *
- * @group  predicate
+ * @group predicate
  */
 class IsOfTypeTest extends TestCase
 {
-    /**
-     * @test
-     */
+    #[Test]
     public function throwsInvalidArgumentExceptionWhenCreatedWithUnknownType(): void
     {
-
         expect(fn() => isOfType('nope'))
-            ->throws(\InvalidArgumentException::class);
+            ->throws(InvalidArgumentException::class);
     }
 
-    /** only here for test purpose */
+    /** only here for test purposes */
     public static function dummy(): void {}
 
-    public function validValuesAndTypes(): Generator
+    public static function validValuesAndTypes(): Generator
     {
         yield 'array'                   => ['array', []];
         yield 'boolean true'            => ['boolean', true];
@@ -62,15 +62,16 @@ class IsOfTypeTest extends TestCase
         yield 'callable closure'        => ['callable', function() {}];
         yield 'callable arrow function' => ['callable', fn() => 303];
         yield 'callable function name'  => ['callable', 'strlen'];
-        yield 'callable class method'   => ['callable', [$this, 'validValuesAndTypes']];
+        $foo = new class() {
+            public function doSomething(): void { }
+        };
+        yield 'callable class instance method'   => ['callable', [$foo, 'doSomething']];
         yield 'callable static class method'  => ['callable', [__CLASS__, 'dummy']];
         yield 'iterable'                => ['iterable', [1, 2, 3]];
     }
 
-    /**
-     * @test
-     * @dataProvider  validValuesAndTypes
-     */
+    #[Test]
+    #[DataProvider('validValuesAndTypes')]
     public function evaluatesToTrueIfTypeOfValueEqualsExpectedType(
         string $expectedType,
         mixed $value
@@ -78,17 +79,13 @@ class IsOfTypeTest extends TestCase
         assertTrue(isOfType($expectedType)->test($value));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function evaluatesToFalseIfTypeOfValueDoesNotEqualExpectedType(): void
     {
         assertFalse(isOfType('int')->test('foo'));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function assertionFailureContainsMeaningfulInformation(): void
     {
         expect(fn() => assertThat([], isOfType('int')))

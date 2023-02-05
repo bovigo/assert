@@ -9,6 +9,8 @@ declare(strict_types=1);
 namespace bovigo\assert\predicate;
 
 use Generator;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 use function bovigo\assert\assertThat;
@@ -16,28 +18,24 @@ use function bovigo\assert\assertTrue;
 /**
  * Test for bovigo\assert\predicate\NegatePredicate.
  *
- * @group  predicate
+ * @group predicate
  */
 class NegatePredicateTest extends TestCase
 {
-    /**
-     * @var  NegatePredicate
-     */
-    private $negatePredicate;
+    private NegatePredicate $negatePredicate;
 
     protected function setUp(): void
     {
         $this->negatePredicate = not(fn($value) => 'foo' === $value);
     }
-    /**
-     * @test
-     */
+    
+    #[Test]
     public function negatesWrappedPredicate(): void
     {
         assertTrue($this->negatePredicate->test('bar'));
     }
 
-    public function predicates(): Generator
+    public static function predicates(): Generator
     {
         yield [not(fn($value) => 'foo' === $value), 'does not satisfy a lambda function'];
         yield [not(equals(5)->or(isLessThan(5))), 'not (is equal to 5 or is less than 5)'];
@@ -45,18 +43,14 @@ class NegatePredicateTest extends TestCase
         yield [not(not(equals(5))), 'not (is not equal to 5)'];
     }
 
-    /**
-     * @test
-     * @dataProvider  predicates
-     */
+    #[Test]
+    #[DataProvider('predicates')]
     public function hasStringRepresentation(NegatePredicate $negatePredicate, string $expected): void
     {
         assertThat((string) $negatePredicate, equals($expected));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function countEqualsCountOfNegatedPredicate(): void
     {
         assertThat(

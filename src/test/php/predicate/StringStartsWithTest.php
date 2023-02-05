@@ -11,6 +11,9 @@ namespace bovigo\assert\predicate;
 use bovigo\assert\AssertionFailure;
 use Generator;
 use InvalidArgumentException;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 use function bovigo\assert\assertFalse;
@@ -20,53 +23,45 @@ use function bovigo\assert\expect;
 /**
  * Tests for bovigo\assert\predicate\StringStartsWith.
  *
- * @group  predicate
- * @since  1.1.0
+ * @since 1.1.0
  */
+#[Group('predicate')]
 class StringStartsWithTest extends TestCase
 {
-    /**
-     * @test
-     */
+    #[Test]
     public function nonStringValuesThrowInvalidArgumentException(): void
     {
         expect(fn() => startsWith('foo')->test(303))
                 ->throws(InvalidArgumentException::class);
     }
 
-    public function trueValues(): Generator
+    public static function trueValues(): Generator
     {
         yield 'string which starts with and contains foo' => ['foobarfoobaz'];
         yield'string which starts with foo'              => ['foobarbaz'];
     }
 
-    /**
-     * @test
-     * @dataProvider  trueValues
-     */
+    #[Test]
+    #[DataProvider('trueValues')]
     public function evaluatesToTrueIfStringStartsWithPrefix(string $value): void
     {
         assertTrue(startsWith('foo')->test($value));
     }
 
-    public function falseValues(): Generator
+    public static function falseValues(): Generator
     {
         yield'string which contains foo'  => ['barfoobaz'];
         yield'string which ends with foo' => ['barbazfoo'];
     }
 
-    /**
-     * @test
-     * @dataProvider  falseValues
-     */
+    #[Test]
+    #[DataProvider('falseValues')]
     public function evaluatesToFalseIfGivenValueIsFalse(string $value): void
     {
         assertFalse(startsWith('foo')->test($value));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function assertionFailureContainsMeaningfulInformation(): void
     {
         expect(fn() => assertThat('bar', startsWith('foo')))

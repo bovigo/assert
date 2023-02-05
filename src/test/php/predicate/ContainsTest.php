@@ -9,6 +9,10 @@ declare(strict_types=1);
 namespace bovigo\assert\predicate;
 
 use bovigo\assert\AssertionFailure;
+use Generator;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Traversable;
 
@@ -18,65 +22,50 @@ use function bovigo\assert\assertTrue;
 use function bovigo\assert\expect;
 /**
  * Tests for bovigo\assert\predicate\Contains.
- *
- * @group  predicate
  */
+#[Group('predicate')]
 class ContainsTest extends TestCase
 {
-    /**
-     * @return  array<array<mixed>>
-     */
-    public function tuplesEvaluatingToTrue(): array
+    public static function tuplesEvaluatingToTrue(): Generator
     {
-        return [
-                [null, null],
-                [5, 'foo5'],
-                [5, 'fo5o'],
-                ['foo', 'foobar'],
-                ['foo', 'foo'],
-                ['foo', ['foo', 'bar', 'baz']],
-                [null, ['foo', null, 'baz']]
-        ];
+        yield [null, null];
+        yield [5, 'foo5'];
+        yield [5, 'fo5o'];
+        yield ['foo', 'foobar'];
+        yield ['foo', 'foo'];
+        yield ['foo', ['foo', 'bar', 'baz']];
+        yield [null, ['foo', null, 'baz']];
     }
 
     /**
-     * @param  mixed                                        $needle
-     * @param  string|array<mixed>|Traversable<mixed>|null  $haystack
-     * @test
-     * @dataProvider  tuplesEvaluatingToTrue
+     * @param string|array<mixed>|Traversable<mixed>|null $haystack
      */
+    #[Test]
+    #[DataProvider('tuplesEvaluatingToTrue')]
     public function evaluatesToTrue(mixed $needle, string|array|Traversable|null $haystack): void
     {
         assertTrue(contains($needle)->test($haystack));
     }
 
-    /**
-     * @return  array<array<mixed>>
-     */
-    public function tuplesEvaluatingToFalse(): array
+    public static function tuplesEvaluatingToFalse(): Generator
     {
-        return [
-                [5, 'foo'],
-                [true, 'blub'],
-                ['dummy', 'bar'],
-                ['nope', ['foo', 'bar', 'baz']]
-        ];
+        yield [5, 'foo'];
+        yield [true, 'blub'];
+        yield ['dummy', 'bar'];
+        yield ['nope', ['foo', 'bar', 'baz']];
     }
 
     /**
-     * @param  mixed                                   $needle
-     * @param  string|array<mixed>|Traversable<mixed>  $haystack
-     * @test
-     * @dataProvider  tuplesEvaluatingToFalse
+     * @param string|array<mixed>|Traversable<mixed> $haystack
      */
+    #[Test]
+    #[DataProvider('tuplesEvaluatingToFalse')]
     public function evaluatesToFalse(mixed $needle, string|array|Traversable $haystack): void
     {
         assertFalse(contains($needle)->test($haystack));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function throwsInvalidArgumentExceptionWhenValueCanNotContainAnything(): void
     {
         expect(fn() => contains('foo')->test(303))
@@ -84,9 +73,7 @@ class ContainsTest extends TestCase
             ->withMessage('Given value of type "integer" can not contain something.');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function assertionFailureContainsMeaningfulInformation(): void
     {
         expect(fn() => assertThat([], contains('foo')))

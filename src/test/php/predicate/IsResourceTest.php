@@ -10,6 +10,8 @@ namespace bovigo\assert\predicate;
 
 use bovigo\assert\AssertionFailure;
 use Generator;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
@@ -21,13 +23,11 @@ use function bovigo\assert\predicate\isNotAResource;
 /**
  * Test for bovigo\assert\assert\predicate\isResource() and bovigo\assert\assert\predicate\isNotAResource().
  *
- * @group  predicate
+ * @group predicate
  */
 class IsResourceTest extends TestCase
 {
-    /**
-     * @var  resource
-     */
+    /** @var  resource */
     private $resource;
 
     protected function setup(): void
@@ -45,43 +45,35 @@ class IsResourceTest extends TestCase
         fclose($this->resource);
     }
 
-    public function invalidResources(): Generator
+    #[Test]
+    public function validResourcesAreRecognized(): void
+    {
+        assertThat($this->resource, isResource());
+    }
+
+    public static function invalidResources(): Generator
     {
         yield 'string' => ['foo'];
         yield 'float'  => [30.3];
         yield 'object' => [new stdClass()];
     }
 
-    /**
-     * @test
-     */
-    public function validResourcesAreRecognized(): void
-    {
-        assertThat($this->resource, isResource());
-    }
-
-    /**
-     * @test
-     * @dataProvider  invalidResources
-     */
+    #[Test]
+    #[DataProvider('invalidResources')]
     public function invalidResourcesAreRejected(mixed $value): void
     {
         expect(fn() => assertThat($value, isResource()))
             ->throws(AssertionFailure::class);
     }
 
-    /**
-     * @test
-     * @dataProvider  invalidResources
-     */
+    #[Test]
+    #[DataProvider('invalidResources')]
     public function invalidResourcesAreRecognizedOnNegation(mixed $value): void
     {
         assertThat($value, isNotAResource());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function validObjectsAreRejectedOnNegation(): void
     {
         expect(fn() => assertThat($this->resource, isNotAResource()))

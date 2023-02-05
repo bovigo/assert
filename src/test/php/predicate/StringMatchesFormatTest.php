@@ -10,6 +10,9 @@ namespace bovigo\assert\predicate;
 
 use bovigo\assert\AssertionFailure;
 use Generator;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 use function bovigo\assert\assertFalse;
@@ -18,22 +21,19 @@ use function bovigo\assert\assertTrue;
 use function bovigo\assert\expect;
 /**
  * Tests for bovigo\assert\predicate\StringMatchesFormat.
- *
- * @group  predicate
- * @group  issue_8
  */
+#[Group('predicate')]
+#[Group('issue_8')]
 class StringMatchesFormatTest extends TestCase
 {
-    /**
-     * @test
-     * @dataProvider validValues
-     */
+    #[Test]
+    #[DataProvider('validValues')]
     public function validValueEvaluatesToTrue(string $format, string $value): void
     {
         assertTrue(matchesFormat($format)->test($value));
     }
 
-    public function validValues(): Generator
+    public static function validValues(): Generator
     {
         yield 'Simple %e' => ['%e', DIRECTORY_SEPARATOR];
         yield 'Simple %s' => ['%s', 'string'];
@@ -52,16 +52,14 @@ class StringMatchesFormatTest extends TestCase
             ];
     }
 
-    /**
-     * @test
-     * @dataProvider invalidValues
-     */
+    #[Test]
+    #[DataProvider('invalidValues')]
     public function invalidValueEvaluatesToFalse(string $format, string $value): void
     {
         assertFalse(matchesFormat($format)->test($value));
     }
 
-    public function invalidValues(): Generator
+    public static function invalidValues(): Generator
     {
         yield 'Negative %e' => ['%e', 'a'];
         yield 'Negative %s' => ['%s', "\n"];
@@ -76,9 +74,7 @@ class StringMatchesFormatTest extends TestCase
         yield 'Negative %c' => ['%c', 'abc'];
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function assertionFailureContainsMeaningfulInformation(): void
     {
         expect(fn() => assertThat('foo', matchesFormat('%w')))

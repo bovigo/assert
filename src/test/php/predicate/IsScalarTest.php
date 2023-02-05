@@ -10,6 +10,8 @@ namespace bovigo\assert\predicate;
 
 use bovigo\assert\AssertionFailure;
 use Generator;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
@@ -20,11 +22,11 @@ use function bovigo\assert\predicate\isNotScalar;
 /**
  * Test for bovigo\assert\assert\predicate\isScalar() and bovigo\assert\assert\predicate\isNotScalar().
  *
- * @group  predicate
+ * @group predicate
  */
 class IsScalarTest extends TestCase
 {
-    public function validScalars(): Generator
+    public static function validScalars(): Generator
     {
         yield 'empty string'  => [''];
         yield 'normal string' => ['example'];
@@ -32,46 +34,37 @@ class IsScalarTest extends TestCase
         yield 'float'         => [3.13];
     }
 
-    public function invalidScalars(): Generator
+    public static function invalidScalars(): Generator
     {
         yield 'array'  => [['foo']];
         yield 'object' => [new stdClass()];
     }
 
-    /**
-     * @test
-     * @dataProvider  validScalars
-     */
+    #[Test]
+    #[DataProvider('validScalars')]
     public function validScalarsAreRecognized(mixed $value): void
     {
         assertThat($value, isScalar());
     }
 
-    /**
-     * @test
-     * @dataProvider  invalidScalars
-     */
+    #[Test]
+    #[DataProvider('invalidScalars')]
     public function invalidScalarsAreRejected(mixed $value): void
     {
         expect(fn() => assertThat($value, isScalar()))
             ->throws(AssertionFailure::class);
     }
 
-    /**
-     * @test
-     * @dataProvider  invalidScalars
-     */
+    #[Test]
+    #[DataProvider('invalidScalars')]
     public function invalidScalarsAreRecognizedOnNegation(mixed $value): void
     {
         assertThat($value, isNotScalar());
     }
 
-    /**
-     * @param  scalar  $value
-     * @test
-     * @dataProvider  validScalars
-     */
-    public function validScalarsAreRejectedOnNegation($value): void
+    #[Test]
+    #[DataProvider('validScalars')]
+    public function validScalarsAreRejectedOnNegation(mixed $value): void
     {
         expect(fn() => assertThat($value, isNotScalar()))
             ->throws(AssertionFailure::class);

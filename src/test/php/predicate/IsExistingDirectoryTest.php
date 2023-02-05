@@ -11,6 +11,8 @@ namespace bovigo\assert\predicate;
 use bovigo\assert\AssertionFailure;
 use Generator;
 use org\bovigo\vfs\vfsStream;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 use function bovigo\assert\assertFalse;
@@ -20,8 +22,8 @@ use function bovigo\assert\expect;
 /**
  * Tests for bovigo\assert\predicate\IsExistingDirectory.
  *
- * @group  filesystem
- * @group  predicate
+ * @group filesystem
+ * @group predicate
  */
 class IsExistingDirectoryTest extends TestCase
 {
@@ -34,25 +36,19 @@ class IsExistingDirectoryTest extends TestCase
         vfsStream::newDirectory('bar')->at($basic);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function evaluatesToFalseForNull(): void
     {
         assertFalse(isExistingDirectory()->test(null));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function evaluatesToFalseForEmptyString(): void
     {
         assertFalse(isExistingDirectory()->test(''));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function evaluatesToTrueForRelativePath(): void
     {
         assertTrue(
@@ -61,9 +57,7 @@ class IsExistingDirectoryTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function evaluatesToFalseIfDirDoesNotExistRelatively(): void
     {
         assertFalse(
@@ -72,17 +66,13 @@ class IsExistingDirectoryTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function evaluatesToFalseIfDirDoesNotExistGlobally(): void
     {
         assertFalse(isExistingDirectory()->test(__DIR__ . '/../doesNotExist'));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function evaluatesToTrueIfDirDoesExistRelatively(): void
     {
         assertTrue(
@@ -90,17 +80,13 @@ class IsExistingDirectoryTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function evaluatesToTrueIfDirDoesExistGlobally(): void
     {
         assertTrue(isExistingDirectory()->test(__DIR__));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function evaluatesToFalseIfIsRelativeFile(): void
     {
         assertFalse(
@@ -108,15 +94,13 @@ class IsExistingDirectoryTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function evaluatesToFalseIfIsGlobalFile(): void
     {
         assertFalse(isExistingDirectory()->test(__FILE__));
     }
 
-    public function instances(): Generator
+    public static function instances(): Generator
     {
         yield [
             'instance' => new IsExistingDirectory(),
@@ -128,18 +112,14 @@ class IsExistingDirectoryTest extends TestCase
         ];
     }
 
-    /**
-     * @test
-     * @dataProvider  instances
-     */
+    #[Test]
+    #[DataProvider('instances')]
     public function hasStringRepresentation(IsExistingDirectory $instance, string $message): void
     {
         assertThat((string) $instance, equals($message));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function assertionFailureContainsMeaningfulInformation(): void
     {
         expect(fn() => assertThat(vfsStream::url('root/baz'), isExistingDirectory()))

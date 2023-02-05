@@ -11,6 +11,7 @@ namespace bovigo\assert\predicate;
 use bovigo\assert\AssertionFailure;
 use bovigo\assert\predicate\IsInstanceOf;
 use InvalidArgumentException;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
@@ -21,38 +22,30 @@ use function bovigo\assert\expect;
 /**
  * Tests for bovigo\assert\predicate\IsInstanceOf.
  *
- * @group  predicate
+ * @group predicate
  */
 class IsInstanceOfTest extends TestCase
 {
-    /**
-     * @test
-     */
+    #[Test]
     public function throwsInvalidArgumentExceptionWhenGivenExpectedTypeIsUnknown(): void
     {
         expect(fn() => isInstanceOf('DoesNotExist'))
             ->throws(InvalidArgumentException::class);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function evaluatesToTrueIfGivenValueIsInstanceOfExpectedType(): void
     {
         assertTrue(isInstanceOf(__CLASS__)->test($this));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function evaluatesToFalseIfGivenValueIsNotInstanceOfExpectedType(): void
     {
         assertFalse(isInstanceOf(stdClass::class)->test($this));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function assertionFailureContainsMeaningfulInformation(): void
     {
 
@@ -63,9 +56,7 @@ class IsInstanceOfTest extends TestCase
             );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function assertionFailureWithObjectsContainsMeaningfulInformation(): void
     {
         expect(fn() => assertThat(new IsInstanceOf(self::class), isInstanceOf(stdClass::class)))

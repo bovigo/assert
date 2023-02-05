@@ -11,6 +11,8 @@ namespace bovigo\assert\predicate;
 use bovigo\assert\AssertionFailure;
 use Generator;
 use InvalidArgumentException;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 use function bovigo\assert\assertFalse;
@@ -24,44 +26,35 @@ use function bovigo\assert\expect;
  */
 class RegexTest extends TestCase
 {
-    public function validValues(): Generator
+    public static function validValues(): Generator
     {
         yield ['/^([a-z]{3})$/', 'foo'];
         yield ['/^([a-z]{3})$/i', 'foo'];
         yield ['/^([a-z]{3})$/i', 'Bar'];
     }
 
-    /**
-     * @test
-     * @dataProvider  validValues
-     */
+    #[Test]
+    #[DataProvider('validValues')]
     public function validValueEvaluatesToTrue(string $pattern, string $value): void
     {
         assertTrue(matches($pattern)->test($value));
     }
 
-    /**
-     * @return  array<array<string>>
-     */
-    public function invalidValues(): Generator
+    public static function invalidValues(): Generator
     {
         yield ['/^([a-z]{3})$/', 'Bar'];
         yield ['/^([a-z]{3})$/', 'baz0123'];
         yield ['/^([a-z]{3})$/i', 'baz0123'];
     }
 
-    /**
-     * @test
-     * @dataProvider  invalidValues
-     */
+    #[Test]
+    #[DataProvider('invalidValues')]
     public function invalidValueEvaluatesToFalse(string $pattern, string $value): void
     {
         assertFalse(matches($pattern)->test($value));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function nonStringsThrowInvalidArgumentException(): void
     {
         expect(fn() => matches('/^([a-z]{3})$/')->test(303))
@@ -71,9 +64,7 @@ class RegexTest extends TestCase
             );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function nullThrowInvalidArgumentException(): void
     {
         expect(fn() => matches('/^([a-z]{3})$/')->test(null))
@@ -83,9 +74,7 @@ class RegexTest extends TestCase
             );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function invalidRegexThrowsRuntimeExceptionOnEvaluation(): void
     {
         $regex = new Regex('^([a-z]{3})$');
@@ -96,9 +85,7 @@ class RegexTest extends TestCase
             );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function stringRepresentationContainsRegex(): void
     {
         assertThat(
@@ -107,9 +94,7 @@ class RegexTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function assertionFailureContainsMeaningfulInformation(): void
     {
         expect(fn() => assertThat('f', matches('/^([a-z]{3})$/')))

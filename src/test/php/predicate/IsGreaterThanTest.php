@@ -9,6 +9,7 @@ declare(strict_types=1);
 namespace bovigo\assert\predicate;
 
 use bovigo\assert\AssertionFailure;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 use function bovigo\assert\assertFalse;
@@ -22,57 +23,43 @@ use function bovigo\assert\expect;
  */
 class IsGreaterThanTest extends TestCase
 {
-    /**
-     * @test
-     */
+    #[Test]
     public function evaluatesToTrueIfGivenValueIsGreater(): void
     {
         assertTrue(isGreaterThan(3)->test(4));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function evaluatesToFalseIfGivenValueIsEqual(): void
     {
         assertFalse(isGreaterThan(3)->test(3));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function evaluatesToFalseIfGivenValueIsLesser(): void
     {
         assertFalse(isGreaterThan(3)->test(2));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function evaluatesToTrueWhenCombinedWithEqualsAndGivenValueIsEqual(): void
     {
         assertTrue(isGreaterThanOrEqualTo(3)->test(3));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function evaluatesToTrueWhenCombinedWithEqualsIfGivenValueIsGreater(): void
     {
         assertTrue(isGreaterThanOrEqualTo(3)->test(4));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function evaluatesToFalseWhenCombinedWithEqualsIfGivenValueIsLesser(): void
     {
         assertFalse(isGreaterThanOrEqualTo(3)->test(2));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function assertionFailureContainsMeaningfulInformation(): void
     {
         expect(fn() => assertThat(1, isGreaterThan(2)))
@@ -80,9 +67,7 @@ class IsGreaterThanTest extends TestCase
             ->withMessage("Failed asserting that 1 is greater than 2.");
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function assertionFailureWhenCombinedWithEqualsContainsMeaningfulInformation(): void
     {
         expect(fn() => assertThat(1, isGreaterThanOrEqualTo(2)))

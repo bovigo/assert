@@ -8,6 +8,8 @@ declare(strict_types=1);
  */
 namespace bovigo\assert\predicate;
 
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 use function bovigo\assert\assertFalse;
@@ -15,15 +17,11 @@ use function bovigo\assert\assertTrue;
 use function bovigo\assert\assertThat;
 /**
  * Test for bovigo\assert\assert\predicate\AndPredicate.
- *
- * @group  predicate
  */
+#[Group('predicate')]
 class AndPredicateTest extends TestCase
 {
-    /**
-     * @var  AndPredicate
-     */
-    private $andPredicate;
+    private AndPredicate $andPredicate;
 
     protected function setUp(): void
     {
@@ -33,25 +31,19 @@ class AndPredicateTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function returnsTrueWhenBothPredicatesReturnsTrue(): void
     {
         assertTrue($this->andPredicate->test('foo'));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function returnsFalseWhenOnePredicateReturnsFalse(): void
     {
         assertFalse($this->andPredicate->test('baz'));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function hasStringRepresentation(): void
     {
         assertThat(
@@ -60,9 +52,7 @@ class AndPredicateTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function countEqualsSumOfCountOfBothPredicates(): void
     {
         assertThat(

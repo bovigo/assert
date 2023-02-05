@@ -9,6 +9,7 @@ declare(strict_types=1);
 namespace bovigo\assert\predicate;
 
 use bovigo\assert\AssertionFailure;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 use function bovigo\assert\assertFalse;
@@ -18,61 +19,47 @@ use function bovigo\assert\expect;
 /**
  * Tests for bovigo\assert\predicate\IsLessThan.
  *
- * @group  predicate
+ * @group predicate
  */
 class IsLessThanTest extends TestCase
 {
-    /**
-     * @test
-     */
+    #[Test]
     public function evaluatesToTrueIfGivenValueIsSmaller(): void
     {
         assertTrue(isLessThan(3)->test(2));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function evaluatesToFalseIfGivenValueIsEqual(): void
     {
         assertFalse(isLessThan(3)->test(3));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function evaluatesToFalseIfGivenValueIsGreater(): void
     {
         assertFalse(isLessThan(3)->test(4));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function evaluatesToTrueWhenCombinedWithEqualsIfGivenValueIsSmaller(): void
     {
         assertTrue(isLessThanOrEqualTo(3)->test(2));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function evaluatesToFalseWhenCombinedWithEqualsIfGivenValueIsEqual(): void
     {
         assertTrue(isLessThanOrEqualTo(3)->test(3));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function evaluatesToFalseWhenCombinedWithEqualsIfGivenValueIsGreater(): void
     {
         assertFalse(isLessThanOrEqualTo(3)->test(4));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function assertionFailureContainsMeaningfulInformation(): void
     {
         expect(fn() => assertThat(3, isLessThan(2)))
@@ -80,9 +67,7 @@ class IsLessThanTest extends TestCase
             ->withMessage("Failed asserting that 3 is less than 2.");
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function assertionFailureWhenCombinedWithEqualsContainsMeaningfulInformation(): void
     {
         expect(fn() => assertThat(3, isLessThanOrEqualTo(2)))

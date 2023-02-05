@@ -8,6 +8,10 @@ declare(strict_types=1);
  */
 namespace bovigo\assert\predicate;
 
+use Generator;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 use function bovigo\assert\assertFalse;
@@ -15,56 +19,46 @@ use function bovigo\assert\assertTrue;
 /**
  * Tests for bovigo\assert\predicate\containsSubset.
  *
- * @group predicate
- * @group issue_22
  * @since 6.2.0
  */
+#[Group('predicate')]
+#[Group('issue_22')]
 class ContainsSubsetTest extends TestCase
 {
-    /**
-     * @return  array<array<mixed>>
-     */
-    public function tuplesEvaluatingToTrue(): array
+    public static function tuplesEvaluatingToTrue(): Generator
     {
-        return [
-            [range('a', 'e'), range('a', 'e')],
-            [range('a', 'e'), range('a', 'c')],
-            [range('a', 'e'), []],
-            [['a' => 'b', 'c' => 'd'], ['a' => 'b', 'c' => 'd']],
-            [['a' => 'b', 'c' => 'd'], ['a' => 'b']],
-            [['a' => 'b', 'c' => 'd'], []],
-        ];
+        yield [range('a', 'e'), range('a', 'e')];
+        yield [range('a', 'e'), range('a', 'c')];
+        yield [range('a', 'e'), []];
+        yield [['a' => 'b', 'c' => 'd'], ['a' => 'b', 'c' => 'd']];
+        yield [['a' => 'b', 'c' => 'd'], ['a' => 'b']];
+        yield [['a' => 'b', 'c' => 'd'], []];
     }
 
     /**
      * @param array<mixed> $subset
      * @param array<mixed> $other
-     * @test
-     * @dataProvider  tuplesEvaluatingToTrue
      */
-    public function evaluatesToTrue($other, $subset): void
+    #[Test]
+    #[DataProvider('tuplesEvaluatingToTrue')]
+    public function evaluatesToTrue(array $other, array $subset): void
     {
         assertTrue(containsSubset($other)->test($subset));
     }
 
-    /**
-     * @return  array<array<mixed>>
-     */
-    public function tuplesEvaluatingToFalse(): array
+    public static function tuplesEvaluatingToFalse(): Generator
     {
-        return [
-            [range('a', 'e'), range('o', 't')],
-            [['a' => 'b', 'c' => 'd'], ['o' => 'p', 'q' => 'r']],
-        ];
+        yield [range('a', 'e'), range('o', 't')];
+        yield [['a' => 'b', 'c' => 'd'], ['o' => 'p', 'q' => 'r']];
     }
 
     /**
      * @param array<mixed> $subset
      * @param array<mixed> $other
-     * @test
-     * @dataProvider  tuplesEvaluatingToFalse
      */
-    public function evaluatesToFalse($other, $subset): void
+    #[Test]
+    #[DataProvider('tuplesEvaluatingToFalse')]
+    public function evaluatesToFalse(array $other, array $subset): void
     {
         assertFalse(containsSubset($other)->test($subset));
     }
