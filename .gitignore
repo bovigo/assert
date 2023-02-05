@@ -1,2 +1,3 @@
 docs/*
 vendor
+.phpunit.cache
