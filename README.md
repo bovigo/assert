@@ -927,18 +927,6 @@ predicate which will than be applied to the output. `outputOf()` takes care of
 enabling and disabling output buffering to catch the output.
 
 
-PHPUnit compatibility layer
----------------------------
-
-In case you want to check out how _bovigo/assert_ works with your tests there is
-a PHPUnit compatibility layer available. Instead of extending directly from
-`\PHPUnit\Framework\TestCase` let your tests extend
-`bovigo\assert\phpunit\TestCase`. It overlays all constraints
-from PHPUnit with predicates from _bovigo/assert_  where they are available.
-For constraints which have no equivalent predicate in _bovigo/assert_ the
-default constraints from PHPUnit are used.
-
-
 FAQ
 ---
 

@@ -3,6 +3,8 @@
 ## 8.0.0 (2023-??-??)
 
 * Raised minimum required PHP version to 8.1.0
+* Upgraded PHPUnit to 10.0
+* Due to changes (adding the malicious final keyword) in PHPUnit 10 it is not possible to provide a PHPUnit compatibility layer any more.
 
 ## 7.0.1 (2022-12-26)
 
