@@ -1,5 +1,3 @@
-includes:
-  - src/main/resources/phpstan/bovigo-assert.neon
 parameters:
   inferPrivatePropertyTypeFromConstructor: true
   level: 9

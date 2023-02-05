@@ -25,8 +25,8 @@ use function bovigo\assert\predicate\{
  * assert that a value fulfills a predicate
  *
  * @api
- * @since   3.1.0
- * @throws  AssertionFailure
+ * @since  3.1.0
+ * @throws AssertionFailure
  */
 function assertThat(mixed $value, Predicate|callable $predicate, string $description = null): bool
 {
@@ -38,10 +38,10 @@ function assertThat(mixed $value, Predicate|callable $predicate, string $descrip
  * fail a test with given message
  *
  * @api
- * @throws  AssertionFailure
- * @since   1.2.0
+ * @throws AssertionFailure
+ * @since  1.2.0
  */
-function fail(string $description): void
+function fail(string $description): never
 {
     throw new AssertionFailure($description);
 }
@@ -49,7 +49,7 @@ function fail(string $description): void
 /**
  * sets up an expectation for given code
  *
- * @since   1.6.0
+ * @since 1.6.0
  */
 function expect(callable $code): Expectation
 {
@@ -59,8 +59,8 @@ function expect(callable $code): Expectation
 /**
  * asserts that the output of given code satisfies given predicate
  *
- * @throws  AssertionFailure
- * @since   2.1.0
+ * @throws AssertionFailure
+ * @since  2.1.0
  */
 function outputOf(callable $code, Predicate|callable $predicate, string $description = null): bool
 {
@@ -75,7 +75,7 @@ function outputOf(callable $code, Predicate|callable $predicate, string $descrip
  * alias for assertThat($value, isTrue()[, $description])
  *
  * @api
- * @since   1.3.0
+ * @since 1.3.0
  */
 function assertTrue(mixed $value, string $description = null): bool
 {
@@ -86,7 +86,7 @@ function assertTrue(mixed $value, string $description = null): bool
  * alias for assertThat($value, isFalse()[, $description])
  *
  * @api
- * @since   1.3.0
+ * @since 1.3.0
  */
 function assertFalse(mixed $value, string $description = null): bool
 {
@@ -97,7 +97,7 @@ function assertFalse(mixed $value, string $description = null): bool
  * alias for assertThat($value, isNull()[, $description])
  *
  * @api
- * @since   1.3.0
+ * @since 1.3.0
  */
 function assertNull(mixed $value, string $description = null): bool
 {
@@ -108,7 +108,7 @@ function assertNull(mixed $value, string $description = null): bool
  * alias for assertThat($value, isNotNull()[, $description])
  *
  * @api
- * @since   1.3.0
+ * @since 1.3.0
  */
 function assertNotNull(mixed $value, string $description = null): bool
 {
@@ -119,7 +119,7 @@ function assertNotNull(mixed $value, string $description = null): bool
  * alias for assertThat($value, isEmpty()[, $description])
  *
  * @api
- * @since   1.3.0
+ * @since 1.3.0
  */
 function assertEmpty(mixed $value, string $description = null): bool
 {
@@ -129,7 +129,7 @@ function assertEmpty(mixed $value, string $description = null): bool
 /**
  * alias for assertThat($value, equals(''), $description)
  * @api
- * @since   1.5.0
+ * @since 1.5.0
  */
 function assertEmptyString(mixed $value, string $description = null): bool
 {
@@ -140,7 +140,7 @@ function assertEmptyString(mixed $value, string $description = null): bool
  * alias for assertThat($value, equals([]), $description)
  *
  * @api
- * @since   1.5.0
+ * @since 1.5.0
  */
 function assertEmptyArray(mixed $value, string $description = null): bool
 {
@@ -151,7 +151,7 @@ function assertEmptyArray(mixed $value, string $description = null): bool
  * alias for assertThat($value, isNotEmpty()[, $description])
  *
  * @api
- * @since   1.3.0
+ * @since 1.3.0
  */
 function assertNotEmpty(mixed $value, string $description = null): bool
 {
@@ -164,7 +164,7 @@ function assertNotEmpty(mixed $value, string $description = null): bool
  * This is definitely a hack and might break with future PHPUnit releases.
  *
  * @internal
- * @staticvar  \ReflectionProperty  $property
+ * @staticvar \ReflectionProperty $property
  */
 function increaseAssertionCounter(int $assertions): void
 {
@@ -205,7 +205,7 @@ function export(mixed $value): string
  * returns always the same exporter instance
  *
  * @internal
- * @staticvar  Exporter  $exporter
+ * @staticvar Exporter $exporter
  */
 function exporter(): Exporter
 {
