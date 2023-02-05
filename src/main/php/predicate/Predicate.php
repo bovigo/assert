@@ -55,19 +55,14 @@ abstract class Predicate implements \Countable
      */
     public function __call(string $method, $arguments): self
     {
-        switch ($method) {
-            case 'and':
-                return new AndPredicate($this, ...$arguments);
-
-            case 'or':
-                return new OrPredicate($this, ...$arguments);
-
-            default:
-                throw new BadMethodCallException(
-                        'Call to undefined method '
-                        . get_class($this) . '->' . $method . '()'
-                );
-        }
+        return match ($method) {
+            'and' => new AndPredicate($this, ...$arguments),
+            'or' => new OrPredicate($this, ...$arguments),
+            default => throw new BadMethodCallException(
+                'Call to undefined method '
+                . get_class($this) . '->' . $method . '()'
+            )
+        };
     }
 
     /**
