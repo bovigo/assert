@@ -9,6 +9,7 @@ declare(strict_types=1);
 namespace bovigo\assert\predicate;
 
 use bovigo\assert\AssertionFailure;
+use bovigo\assert\predicate\IsInstanceOf;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use stdClass;
@@ -67,10 +68,10 @@ class IsInstanceOfTest extends TestCase
      */
     public function assertionFailureWithObjectsContainsMeaningfulInformation(): void
     {
-        expect(fn() => assertThat(new self(), isInstanceOf(stdClass::class)))
+        expect(fn() => assertThat(new IsInstanceOf(self::class), isInstanceOf(stdClass::class)))
             ->throws(AssertionFailure::class)
             ->withMessage(
-                'Failed asserting that ' . IsInstanceOfTest::class
+                'Failed asserting that ' . IsInstanceOf::class
                 . ' Object (...) is an instance of class "stdClass".'
             );
     }
