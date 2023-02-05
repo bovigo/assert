@@ -15,8 +15,10 @@ trait CombinedPredicate
     private Predicate $leftPredicate;
     private Predicate $rightPredicate;
 
-    public function __construct(Predicate|callable $predicate1, Predicate|callable $predicate2)
-    {
+    public function __construct(
+        Predicate|callable $predicate1,
+        Predicate|callable $predicate2
+    ) {
         $this->leftPredicate  = Predicate::castFrom($predicate1);
         $this->rightPredicate = Predicate::castFrom($predicate2);
     }
@@ -35,8 +37,8 @@ trait CombinedPredicate
     public function __toString(): string
     {
         return $this->leftPredicate
-                . ' ' . $this->operator() . ' '
-                . $this->rightPredicate;
+            . ' ' . $this->operator() . ' '
+            . $this->rightPredicate;
     }
 
     /**

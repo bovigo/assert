@@ -12,14 +12,8 @@ namespace bovigo\assert\predicate;
  */
 class CallablePredicate extends Predicate
 {
-    /**
-     * @var  callable
-     */
+    /** @var callable */
     private $predicate;
-    /**
-     * @var  string|null
-     */
-    private $description = null;
 
     /**
      * constructor
@@ -27,19 +21,17 @@ class CallablePredicate extends Predicate
      * The description will be used instead of the default description in the
      * string representation of this predicate.
      */
-    public function __construct(callable $predicate, string $description = null)
-    {
-        $this->predicate   = $predicate;
-        $this->description = $description;
+    public function __construct(
+        callable $predicate,
+        private ?string $description = null
+    ) {
+        $this->predicate = $predicate;
     }
 
     /**
      * evaluates predicate against given value
-     *
-     * @param   mixed  $value
-     * @return  bool
      */
-    public function test($value): bool
+    public function test(mixed $value): bool
     {
         $predicate = $this->predicate;
         return $predicate($value);

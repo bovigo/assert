@@ -15,9 +15,7 @@ use function bovigo\assert\export;
  */
 class IsIdentical extends Predicate
 {
-    /**
-     * @var float
-     */
+    /** @var float */
     private const EPSILON = 0.0000000001;
 
     public function __construct(private mixed $expected) { }

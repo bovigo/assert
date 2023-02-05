@@ -14,9 +14,6 @@ interface Delta
 {
     /**
      * sets delta which is allowed between expected and actual value
-     *
-     * @param   float  $delta
-     * @return  Predicate
      */
     public function withDelta(float $delta): Predicate;
 }

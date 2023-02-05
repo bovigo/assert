@@ -25,7 +25,7 @@ class IsOfSize extends Predicate
     /**
      * test that the given value is of a certain size
      *
-     * @throws  InvalidArgumentException in case given value is not countable
+     * @throws InvalidArgumentException in case given value is not countable
      */
     public function test(mixed $value): bool
     {

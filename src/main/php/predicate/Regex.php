@@ -24,9 +24,9 @@ class Regex extends Predicate
     /**
      * map of pcre error codes and according error messages
      *
-     * @var  array<int,string>
+     * @var array<int,string>
      */
-    private static $errors = [
+    private static array $errors = [
             PREG_NO_ERROR              => 'invalid regular expression',
             PREG_INTERNAL_ERROR        => 'internal PCRE error',
             PREG_BACKTRACK_LIMIT_ERROR => 'backtrack limit exhausted',
@@ -41,8 +41,8 @@ class Regex extends Predicate
     /**
      * test that the given value complies with the regular expression
      *
-     * @throws  InvalidArgumentException  in case given value is not a string
-     * @throws  RuntimeException  in case the used regular expresion is invalid
+     * @throws InvalidArgumentException in case given value is not a string
+     * @throws RuntimeException in case the used regular expresion is invalid
      */
     public function test(mixed $value): bool
     {

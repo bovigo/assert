@@ -17,14 +17,12 @@ trait ReusablePredicate
     /**
      * reusable instance
      *
-     * @var  Predicate
+     * @var Predicate
      */
     private static $instance;
 
     /**
      * returns reusable predicate instance
-     *
-     * @return  \bovigo\assert\predicate\Predicate
      */
     public static function instance(): Predicate
     {

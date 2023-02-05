@@ -19,7 +19,7 @@ class OrPredicate extends Predicate
     /**
      * evaluates predicate against given value
      *
-     * @throws  Exception  in case one of the combined predicates throws an exception
+     * @throws Exception in case one of the combined predicates throws an exception
      */
     public function test(mixed $value): bool
     {
@@ -39,7 +39,7 @@ class OrPredicate extends Predicate
         } catch (Exception $rightE) {
             if (null !== $leftE) {
                 throw new Exception(
-                        $leftE->getMessage() . "\n" . $rightE->getMessage()
+                    $leftE->getMessage() . "\n" . $rightE->getMessage()
                 );
             }
 

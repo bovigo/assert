@@ -15,7 +15,7 @@ use Throwable;
 /**
  * Predicate to check that a piece of code throws an exception.
  *
- * @since  1.6.0
+ * @since 1.6.0
  */
 class ExpectedException extends Predicate
 {
@@ -48,12 +48,12 @@ class ExpectedException extends Predicate
      */
     public function describeValue(Exporter $exporter, mixed $value): string
     {
-        if (! $value instanceof \Throwable) {
+        if (!$value instanceof \Throwable) {
             return parent::describeValue($exporter, $value);
         }
 
         return 'exception of type "' . get_class($value)
-        . '" with message "' . $value->getMessage() . '" thrown in '
-        . $value->getFile() . ' on line ' . $value->getLine();
+            . '" with message "' . $value->getMessage() . '" thrown in '
+            . $value->getFile() . ' on line ' . $value->getLine();
     }
 }

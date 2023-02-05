@@ -16,7 +16,7 @@ use SebastianBergmann\Exporter\Exporter;
 class IsInstanceOf extends Predicate
 {
     /**
-     * @throws  InvalidArgumentException  in case given type name is not an existing class or interface
+     * @throws InvalidArgumentException in case given type name is not an existing class or interface
      */
     public function __construct(private string $expectedType)
     {

@@ -15,24 +15,19 @@ use SebastianBergmann\Exporter\Exporter;
  * Please note that an empty array or traversable will result in a successful
  * test.
  *
- * @since  1.1.0
+ * @since 1.1.0
  */
 class Each extends IteratingPredicate
 {
-    /**
-     * @var  int|string
-     */
+    /** @var int|string */
     private $violatingKey;
-    /**
-     * @var  mixed
-     */
+    /** @var mixed */
     private $violatingValue;
 
     /**
      * actually tests the value
      *
-     * @param   iterable<mixed>  $traversable
-     * @return  bool
+     * @param iterable<mixed> $traversable
      */
     protected function doTest(iterable $traversable): bool
     {
@@ -49,8 +44,6 @@ class Each extends IteratingPredicate
 
     /**
      * returns string representation of predicate
-     *
-     * @return  string
      */
     public function __toString(): string
     {

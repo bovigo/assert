@@ -17,14 +17,14 @@ use function bovigo\assert\export;
 class Contains extends Predicate
 {
     /**
-     * @param  mixed  $needle  value that must be contained
+     * @param mixed $needle value that must be contained
      */
     public function __construct(private mixed $needle) { }
 
     /**
      * tests that the given value contains expected value
      *
-     * @throws  InvalidArgumentException  in case given value can't contain another value
+     * @throws InvalidArgumentException in case given value can't contain another value
      */
     public function test(mixed $value): bool
     {
@@ -53,8 +53,6 @@ class Contains extends Predicate
 
     /**
      * returns string representation of predicate
-     *
-     * @return  string
      */
     public function __toString(): string
     {

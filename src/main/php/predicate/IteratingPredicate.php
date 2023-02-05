@@ -19,7 +19,7 @@ use Traversable;
  * Please note that an empty array or traversable will result in a successful
  * test.
  *
- * @since  1.3.0
+ * @since 1.3.0
  */
 abstract class IteratingPredicate extends Predicate
 {
@@ -33,7 +33,7 @@ abstract class IteratingPredicate extends Predicate
     /**
      * evaluates predicate against given value
      *
-     * @throws  InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     public function test($value): bool
     {

@@ -14,8 +14,8 @@ use SebastianBergmann\Exporter\Exporter;
  * Evaluates if a given value fulfills a criteria.
  *
  * @api
- * @method  Predicate  and(Predicate|callable $predicate)
- * @method  Predicate  or(Predicate|callable $predicate)
+ * @method Predicate and(Predicate|callable $predicate)
+ * @method Predicate or(Predicate|callable $predicate)
  */
 abstract class Predicate implements \Countable
 {
@@ -47,11 +47,11 @@ abstract class Predicate implements \Countable
     /**
      * provide utility methods "and" and "or" to combine predicates
      *
-     * @param   string   $method
-     * @param   mixed[]  $arguments
-     * @return  Predicate
-     * @throws  BadMethodCallException
-     * @since   1.4.0
+     * @param  string   $method
+     * @param  mixed[]  $arguments
+     * @return Predicate
+     * @throws BadMethodCallException
+     * @since  1.4.0
      */
     public function __call(string $method, $arguments): self
     {

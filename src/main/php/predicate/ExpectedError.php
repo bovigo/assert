@@ -14,7 +14,7 @@ use SebastianBergmann\Exporter\Exporter;
 /**
  * Predicate to check that a piece of code triggers an error.
  *
- * @since  2.1.0
+ * @since 2.1.0
  */
 class ExpectedError extends Predicate
 {
@@ -23,7 +23,7 @@ class ExpectedError extends Predicate
     /**
      * tests that the given value contains expected key
      *
-     * @throws  InvalidArgumentException  in case given value isn't a catched error
+     * @throws InvalidArgumentException in case given value isn't a catched error
      */
     public function test($value): bool
     {
@@ -47,12 +47,12 @@ class ExpectedError extends Predicate
      */
     public function describeValue(Exporter $exporter, mixed $value): string
     {
-        if (! $value instanceof CatchedError) {
+        if (!$value instanceof CatchedError) {
             return parent::describeValue($exporter, $value);
         }
 
         return 'error of level "' . $value->name()
-        . '" with message "' . $value->errstr() . '" triggered in '
-        . $value->file() . ' on line ' . $value->line();
+            . '" with message "' . $value->errstr() . '" triggered in '
+            . $value->file() . ' on line ' . $value->line();
     }
 }

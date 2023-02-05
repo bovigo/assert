@@ -23,7 +23,7 @@ class HasKey extends Predicate
     /**
      * tests that the given value contains expected key
      *
-     * @throws  InvalidArgumentException  in case given value can't have a key
+     * @throws InvalidArgumentException in case given value can't have a key
      */
     public function test(mixed $value): bool
     {

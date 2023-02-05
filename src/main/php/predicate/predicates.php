@@ -17,7 +17,7 @@ use InvalidArgumentException;
  * test. If it must not be empty use isNotEmpty()->and(each($predicate)).
  *
  * @api
- * @since   1.1.0
+ * @since 1.1.0
  */
 function each(Predicate|callable $predicate): Each
 {
@@ -31,7 +31,7 @@ function each(Predicate|callable $predicate): Each
  * test. If it must not be empty use isNotEmpty()->and(eachKey($predicate)).
  *
  * @api
- * @since   1.3.0
+ * @since 1.3.0
  */
 function eachKey(Predicate|callable $predicate): EachKey
 {
@@ -204,7 +204,7 @@ function isNotOfSize(int $unexpectedSize): Predicate
  * returns predicate which tests something is an array
  *
  * @api
- * @since   5.0.0
+ * @since 5.0.0
  */
 function isArray(): Predicate
 {
@@ -215,7 +215,7 @@ function isArray(): Predicate
  * returns predicate which tests something is not an array
  *
  * @api
- * @since   5.0.0
+ * @since 5.0.0
  */
 function isNotAnArray(): Predicate
 {
@@ -238,7 +238,7 @@ function containsSubset(array $other): ContainsSubset
  * returns predicate which tests something is a boolean value
  *
  * @api
- * @since   5.0.0
+ * @since 5.0.0
  */
 function isBool(): Predicate
 {
@@ -249,7 +249,7 @@ function isBool(): Predicate
  * returns predicate which tests something is not a boolean value
  *
  * @api
- * @since   5.0.0
+ * @since 5.0.0
  */
 function isNotBool(): Predicate
 {
@@ -260,7 +260,7 @@ function isNotBool(): Predicate
  * returns predicate which tests something is a float
  *
  * @api
- * @since   5.0.0
+ * @since 5.0.0
  */
 function isFloat(): Predicate
 {
@@ -271,7 +271,7 @@ function isFloat(): Predicate
  * returns predicate which tests something is not a float
  *
  * @api
- * @since   5.0.0
+ * @since 5.0.0
  */
 function isNotFloat(): Predicate
 {
@@ -282,7 +282,7 @@ function isNotFloat(): Predicate
  * returns predicate which tests something is an integer
  *
  * @api
- * @since   5.0.0
+ * @since 5.0.0
  */
 function isInt(): Predicate
 {
@@ -293,7 +293,7 @@ function isInt(): Predicate
  * returns predicate which tests something is not an integer
  *
  * @api
- * @since   5.0.0
+ * @since 5.0.0
  */
 function isNotInt(): Predicate
 {
@@ -304,7 +304,7 @@ function isNotInt(): Predicate
  * returns predicate which tests something is a numeric value
  *
  * @api
- * @since   5.0.0
+ * @since 5.0.0
  */
 function isNumeric(): Predicate
 {
@@ -315,7 +315,7 @@ function isNumeric(): Predicate
  * returns predicate which tests something is not a numeric value
  *
  * @api
- * @since   5.0.0
+ * @since 5.0.0
  */
 function isNotNumeric(): Predicate
 {
@@ -326,7 +326,7 @@ function isNotNumeric(): Predicate
  * returns predicate which tests something is an object
  *
  * @api
- * @since   5.0.0
+ * @since 5.0.0
  */
 function isObject(): Predicate
 {
@@ -337,7 +337,7 @@ function isObject(): Predicate
  * returns predicate which tests something is not an object
  *
  * @api
- * @since   5.0.0
+ * @since 5.0.0
  */
 function isNotAnObject(): Predicate
 {
@@ -348,7 +348,7 @@ function isNotAnObject(): Predicate
  * returns predicate which tests something is a resource
  *
  * @api
- * @since   5.0.0
+ * @since 5.0.0
  */
 function isResource(): Predicate
 {
@@ -359,7 +359,7 @@ function isResource(): Predicate
  * returns predicate which tests something is not a resource
  *
  * @api
- * @since   5.0.0
+ * @since 5.0.0
  */
 function isNotAResource(): Predicate
 {
@@ -370,7 +370,7 @@ function isNotAResource(): Predicate
  * returns predicate which tests something is a string
  *
  * @api
- * @since   5.0.0
+ * @since 5.0.0
  */
 function isString(): Predicate
 {
@@ -381,7 +381,7 @@ function isString(): Predicate
  * returns predicate which tests something is not a string
  *
  * @api
- * @since   5.0.0
+ * @since 5.0.0
  */
 function isNotAString(): Predicate
 {
@@ -392,7 +392,7 @@ function isNotAString(): Predicate
  * returns predicate which tests something is a scalar value
  *
  * @api
- * @since   5.0.0
+ * @since 5.0.0
  */
 function isScalar(): Predicate
 {
@@ -403,7 +403,7 @@ function isScalar(): Predicate
  * returns predicate which tests something is not a scalar value
  *
  * @api
- * @since   5.0.0
+ * @since 5.0.0
  */
 function isNotScalar(): Predicate
 {
@@ -414,7 +414,7 @@ function isNotScalar(): Predicate
  * returns predicate which tests something is a callable
  *
  * @api
- * @since   5.0.0
+ * @since 5.0.0
  */
 function isCallable(): Predicate
 {
@@ -425,7 +425,7 @@ function isCallable(): Predicate
  * returns predicate which tests something is not a callable
  *
  * @api
- * @since   5.0.0
+ * @since 5.0.0
  */
 function isNotCallable(): Predicate
 {
@@ -436,7 +436,7 @@ function isNotCallable(): Predicate
  * returns predicate which tests something is iterable
  *
  * @api
- * @since   5.0.0
+ * @since 5.0.0
  */
 function isIterable(): Predicate
 {
@@ -447,7 +447,7 @@ function isIterable(): Predicate
  * returns predicate which tests something is not iterable
  *
  * @api
- * @since   5.0.0
+ * @since 5.0.0
  */
 function isNotIterable(): Predicate
 {
@@ -458,7 +458,7 @@ function isNotIterable(): Predicate
  * returns predicate which tests something is a specific internal PHP type
  *
  * @api
- * @throws  InvalidArgumentException  in case expected type is unknown
+ * @throws InvalidArgumentException in case expected type is unknown
  */
 function isOfType(string $expectedType): Predicate
 {
@@ -621,7 +621,7 @@ function doesNotMatch(string $pattern): Predicate
  * %f: floating point number, for example: 3.142, -3.142, 3.142E-10, 3.142e+10
  * %c: single character of any sort
  *
- * @since   3.2.0
+ * @since 3.2.0
  * @api
  */
 function matchesFormat(string $format): Predicate
@@ -632,7 +632,7 @@ function matchesFormat(string $format): Predicate
 /**
  * returns predicate which tests against a string does not match a particular PHPUnit format expression
  *
- * @since   3.2.0
+ * @since 3.2.0
  * @api
  */
 function doesNotMatchFormat(string $format): Predicate
@@ -692,7 +692,7 @@ function isNonExistingDirectory(string $basePath = null): Predicate
  * returns predicate which tests that a string starts with given prefix
  *
  * @api
- * @since   1.1.0
+ * @since 1.1.0
  */
 function startsWith(string $prefix): Predicate
 {
@@ -728,7 +728,7 @@ function startsWith(string $prefix): Predicate
  * returns a predicate which tests that a string does not start with given prefix
  *
  * @api
- * @since   1.1.0
+ * @since 1.1.0
  */
 function doesNotStartWith(string $prefix): Predicate
 {
@@ -739,7 +739,7 @@ function doesNotStartWith(string $prefix): Predicate
  * returns predicate which tests that a string ends with given suffix
  *
  * @api
- * @since   1.1.0
+ * @since 1.1.0
  */
 function endsWith(string $suffix): Predicate
 {
@@ -774,7 +774,7 @@ function endsWith(string $suffix): Predicate
  * returns a predicate which tests that a string does not end  with given suffix
  *
  * @api
- * @since   1.1.0
+ * @since 1.1.0
  */
 function doesNotEndWith(string $suffix): Predicate
 {
