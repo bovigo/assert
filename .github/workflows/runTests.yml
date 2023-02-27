@@ -49,7 +49,7 @@ jobs:
 
     - name: Cache dependencies
       if: runner.os != 'Windows'
-      uses: actions/cache@v3.2.4
+      uses: actions/cache@v3.2.6
       with:
         path: ${{ steps.composer-cache.outputs.value }}
         key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
