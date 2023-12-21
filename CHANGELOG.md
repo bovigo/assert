@@ -1,9 +1,9 @@
 # Changelog
 
-## 8.0.0 (2023-??-??)
+## 8.0.0 (2023-12-21)
 
-* Raised minimum required PHP version to 8.1.0
-* Upgraded PHPUnit to 10.0
+* Raised minimum required PHP version to 8.2.0
+* Upgraded PHPUnit to 10.5
 * Due to changes (adding the malicious final keyword) in PHPUnit 10 it is not possible to provide a PHPUnit compatibility layer any more.
 * Changed return type of `bovigo\assert\fail()` to never, accordingly removed `src/main/resources/phpstan/bovigo-assert.neon` as it is not required any more
 

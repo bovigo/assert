@@ -20,7 +20,7 @@ _bovigo/assert_ is distributed as [Composer](https://getcomposer.org/) package.
 To install it as a development dependency of your package use the following
 command:
 
-    composer require --dev "bovigo/assert": "^7.0"
+    composer require --dev "bovigo/assert": "^8.0"
 
 To install it as a runtime dependency for your package use the following command:
 
@@ -30,7 +30,7 @@ To install it as a runtime dependency for your package use the following command
 Requirements
 ------------
 
-_bovigo/assert_ 7.x requires at least PHP 8.0.
+_bovigo/assert_ 8.x requires at least PHP 8.2.
 
 
 Why?
