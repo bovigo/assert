@@ -8,6 +8,7 @@ declare(strict_types=1);
  */
 namespace bovigo\assert;
 
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 use function bovigo\assert\predicate\{
@@ -32,9 +33,7 @@ class CatchedErrorTest extends TestCase
         $this->catchedError = new CatchedError(E_NOTICE , 'error', __FILE__, 303);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function withMessageComparesUsingEquals(): void
     {
         assertThat(
@@ -43,9 +42,7 @@ class CatchedErrorTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function withMessageFailsThrowsAssertionFailure(): void
     {
         expect(fn() => $this->catchedError->withMessage('failure'))
@@ -61,9 +58,7 @@ class CatchedErrorTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function messageAssertsWithGivenPredicate(): void
     {
         assertThat(
@@ -73,9 +68,9 @@ class CatchedErrorTest extends TestCase
     }
 
     /**
-     * @test
      * @since  5.0.1
      */
+    #[Test]
     public function messageAssertsWithGivenCallable(): void
     {
         assertThat(
@@ -84,9 +79,7 @@ class CatchedErrorTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function messageAssertsWithGivenPredicateThrowsAssertionFailureWhenPredicateFails(): void
     {
         expect(fn() => $this->catchedError->message(contains('fail')))
@@ -96,9 +89,7 @@ class CatchedErrorTest extends TestCase
             );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function afterExecutesGivenPredicateWithGivenValue(): void
     {
         $this->catchedError->after($this->catchedError, isSameAs($this->catchedError));

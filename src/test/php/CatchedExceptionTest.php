@@ -8,6 +8,8 @@ declare(strict_types=1);
  */
 namespace bovigo\assert;
 
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Error;
 use Exception;
@@ -41,10 +43,8 @@ class CatchedExceptionTest extends TestCase
         return new CatchedException($throwable);
     }
 
-    /**
-     * @test
-     * @dataProvider  throwables
-     */
+    #[Test]
+    #[DataProvider('throwables')]
     public function withMessageComparesUsingEquals(Throwable $throwable): void
     {
         assertThat(
@@ -53,10 +53,8 @@ class CatchedExceptionTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     * @dataProvider  throwables
-     */
+    #[Test]
+    #[DataProvider('throwables')]
     public function withMessageFailsThrowsAssertionFailure(Throwable $throwable): void
     {
         expect(fn() => $this->catchedException($throwable)->withMessage('error'))
@@ -72,10 +70,8 @@ class CatchedExceptionTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     * @dataProvider  throwables
-     */
+    #[Test]
+    #[DataProvider('throwables')]
     public function messageAssertsWithGivenPredicate(Throwable $throwable): void
     {
         assertThat(
@@ -85,10 +81,10 @@ class CatchedExceptionTest extends TestCase
     }
 
     /**
-     * @test
-     * @dataProvider  throwables
      * @since 5.0.1
      */
+    #[Test]
+    #[DataProvider('throwables')]
     public function messageAssertsWithGivenCallable(Throwable $throwable): void
     {
         assertThat(
@@ -97,10 +93,8 @@ class CatchedExceptionTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     * @dataProvider  throwables
-     */
+    #[Test]
+    #[DataProvider('throwables')]
     public function messageAssertsWithGivenPredicateThrowsAssertionFailureWhenPredicateFails(
         Throwable $throwable
     ): void {
@@ -111,10 +105,8 @@ class CatchedExceptionTest extends TestCase
             );
     }
 
-    /**
-     * @test
-     * @dataProvider  throwables
-     */
+    #[Test]
+    #[DataProvider('throwables')]
     public function withCodeComparesUsingEquals(Throwable $throwable): void
     {
         assertThat(
@@ -123,10 +115,8 @@ class CatchedExceptionTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     * @dataProvider  throwables
-     */
+    #[Test]
+    #[DataProvider('throwables')]
     public function withCodeFailsThrowsAssertionFailure(Throwable $throwable): void
     {
         expect(fn() => $this->catchedException($throwable)->withCode(3))
@@ -136,19 +126,15 @@ class CatchedExceptionTest extends TestCase
             );
     }
 
-    /**
-     * @test
-     * @dataProvider  throwables
-     */
+    #[Test]
+    #[DataProvider('throwables')]
     public function withAppliesPredicateToException(Throwable $throwable): void
     {
         $this->catchedException($throwable)->with(isSameAs($throwable));
     }
 
-    /**
-     * @test
-     * @dataProvider  throwables
-     */
+    #[Test]
+    #[DataProvider('throwables')]
     public function withReturnsSelfOnSuccess(Throwable $throwable): void
     {
         $catchedException = $this->catchedException($throwable);
@@ -158,10 +144,8 @@ class CatchedExceptionTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     * @dataProvider  throwables
-     */
+    #[Test]
+    #[DataProvider('throwables')]
     public function withThrowsAssertionFailureWhenPredicateFails(Throwable $throwable): void
     {
         expect(fn() => $this->catchedException($throwable)->with(
@@ -177,10 +161,8 @@ additional info'
         );
     }
 
-    /**
-     * @test
-     * @dataProvider  throwables
-     */
+    #[Test]
+    #[DataProvider('throwables')]
     public function afterExecutesGivenPredicateWithGivenValue(Throwable $throwable): void
     {
         $catchedException = $this->catchedException($throwable);

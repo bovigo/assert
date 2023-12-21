@@ -14,25 +14,23 @@ use function bovigo\assert\predicate\equals;
 use function bovigo\assert\predicate\isSameAs;
 use function bovigo\assert\predicate\isTrue;
 use function bovigo\assert\predicate\startsWith;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\Test;
 /**
  * Tests for bovigo\assert\*().
  *
- * @group  assert
  * @since  1.2.0
  */
+#[Group('assert')]
 class AssertTest extends TestCase
 {
-    /**
-     * @test
-     */
+    #[Test]
     public function assertSucceedsWhenPredicateReturnsTrue(): void
     {
         assertThat(assertThat('some value', fn() => true ), isTrue());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function assertFailsWhenPredicateReturnsFalse(): void
     {
         expect(fn() => assertThat('some value', fn() => false ))
@@ -42,9 +40,7 @@ class AssertTest extends TestCase
             );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function assertionFailureContainsAdditionalDescription(): void
     {
         expect(fn() => assertThat('some value', fn() => false, 'some more info'))
@@ -55,9 +51,7 @@ some more info'
             );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function failThrowsAssertionFailure(): void
     {
         expect(fn() => fail('Fail test hard.'))
@@ -65,17 +59,13 @@ some more info'
             ->withMessage('Fail test hard.');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function exporterAlwaysReturnsSameInstance(): void
     {
         assertThat(exporter(), isSameAs(exporter()));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function assertionCounterIsIncreasedByAmountOfPredicatesUsedForAssertion(): void
     {
         if (!class_exists('\PHPUnit\Framework\Assert')) {
@@ -90,9 +80,7 @@ some more info'
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function assertionCounterIsIncreasedInCaseOfFailure(): void
     {
         if (!class_exists('\PHPUnit\Framework\Assert')) {
@@ -109,17 +97,15 @@ some more info'
     }
 
     /**
-     * @test
      * @since  1.5.0
      */
+    #[Test]
     public function assertEmptyStringIsTrueWhenValueIsEmptyString(): void
     {
         assertTrue(assertEmptyString(''));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function assertEmptyStringFailsWhenValueIsNotEmptyString(): void
     {
         expect(fn() => assertEmptyString('foo'))
@@ -136,18 +122,18 @@ some more info'
     }
 
     /**
-     * @test
      * @since  1.5.0
      */
+    #[Test]
     public function assertEmptyArrayIsTrueWhenValueIsEmptyArray(): void
     {
         assertTrue(assertEmptyArray([]));
     }
 
     /**
-     * @test
      * @since  1.5.0
      */
+    #[Test]
     public function assertEmptyArrayFailsWhenValueIsNotEmptyArray(): void
     {
         expect(fn() => assertEmptyArray(['foo']))
@@ -164,10 +150,10 @@ some more info'
     }
 
     /**
-     * @test
-     * @group  issue_3
      * @since  2.1.0
      */
+    #[Test]
+    #[Group('issue_3')]
     public function outputOfReturnsTrueOnSuccess(): void
     {
         assertTrue(
@@ -179,10 +165,10 @@ some more info'
     }
 
     /**
-     * @test
-     * @group  issue_3
      * @since  2.1.0
      */
+    #[Test]
+    #[Group('issue_3')]
     public function outputOfThrowsAssertionFailureWhenOutputDoesSatisfyPredicate(): void
     {
         expect(fn() => outputOf(
