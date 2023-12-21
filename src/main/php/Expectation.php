@@ -43,11 +43,6 @@ class Expectation
      */
     private $error;
 
-    /**
-     * constructor
-     *
-     * @param  callable  $code
-     */
     public function __construct(callable $code)
     {
         $this->code = $code;
