@@ -9,7 +9,7 @@
     },
     "require-dev": {
         "mikey179/vfsstream": "^1.6.11",
-        "phpunit/phpunit": "^10.0"
+        "phpunit/phpunit": "^10.5"
     },
     "autoload": {
         "psr-4": {

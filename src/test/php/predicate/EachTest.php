@@ -115,9 +115,9 @@ class EachTest extends TestCase
         expect(fn() => assertThat(['foo'], each(isNull())))
             ->throws(AssertionFailure::class)
             ->withMessage(
-                'Failed asserting that element \'foo\' at key 0 in Array &0 (
-    0 => \'foo\'
-) is null.'
+                'Failed asserting that element \'foo\' at key 0 in Array &0 [
+    0 => \'foo\',
+] is null.'
             );
     }
 
@@ -137,12 +137,12 @@ class EachTest extends TestCase
         expect(fn() => assertThat(['foo', 'bar', null, 'baz'], each(isNotNull())))
             ->throws(AssertionFailure::class)
             ->withMessage(
-                'Failed asserting that element null at key 2 in Array &0 (
-    0 => \'foo\'
-    1 => \'bar\'
-    2 => null
-    3 => \'baz\'
-) is not null.'
+                'Failed asserting that element null at key 2 in Array &0 [
+    0 => \'foo\',
+    1 => \'bar\',
+    2 => null,
+    3 => \'baz\',
+] is not null.'
             );
     }
 }

@@ -123,9 +123,9 @@ class EachKeyTest extends TestCase
         expect(fn() => assertThat(['foo'], eachKey(isNotOfType('int'))))
             ->throws(AssertionFailure::class)
             ->withMessage(
-                'Failed asserting that key 0 in Array &0 (
-    0 => \'foo\'
-) is not of type "int".'
+                'Failed asserting that key 0 in Array &0 [
+    0 => \'foo\',
+] is not of type "int".'
             );
     }
 
