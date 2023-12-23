@@ -169,7 +169,7 @@ some more info'
      */
     #[Test]
     #[Group('issue_3')]
-    public function outputOfThrowsAssertionFailureWhenOutputDoesSatisfyPredicate(): void
+    public function outputOfThrowsAssertionFailureWhenOutputDoesNotSatisfyPredicate(): void
     {
         expect(fn() => outputOf(
             fn() => print 'Hello you!',
