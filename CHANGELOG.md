@@ -1,6 +1,6 @@
 # Changelog
 
-## 8.0.0 (2023-12-21)
+## 8.0.0 (2023-12-23)
 
 * Raised minimum required PHP version to 8.2.0
 * Upgraded PHPUnit to 10.5
