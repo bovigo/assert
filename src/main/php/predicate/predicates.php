@@ -123,7 +123,7 @@ function equals($expected): Equals
  *
  * @api
  */
-function isNotEqualTo($unexpected): Delta
+function isNotEqualTo($unexpected): Predicate&Delta
 {
     return new class(equals($unexpected)) extends NegatePredicate implements Delta
     {
