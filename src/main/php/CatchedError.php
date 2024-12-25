@@ -22,7 +22,7 @@ class CatchedError
     /**
      * map of error level numbers and their textual name
      */
-    private const LEVEL = [
+    private const array LEVEL = [
                 E_ERROR             => 'E_ERROR',
                 E_WARNING           => 'E_WARNING',
                 E_PARSE             => 'E_PARSE',
