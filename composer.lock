@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "319f899b192b7544216e1b25d01e6f29",
+    "content-hash": "fd555a7f7a1446b243fa12d4bd8d36df",
     "packages": [
         {
             "name": "sebastian/comparator",
