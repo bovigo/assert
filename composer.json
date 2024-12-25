@@ -33,8 +33,6 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "scripts": {
-        "test": "phpunit",
-        "php-coveralls": "php-coveralls",
-        "phpstan": "phpstan"
+        "test": "phpunit"
     }
 }
