@@ -8,7 +8,7 @@
         "sebastian/exporter": "^5.0"
     },
     "require-dev": {
-        "mikey179/vfsstream": "^1.6.11",
+        "mikey179/vfsstream": "^1.6.12",
         "phpunit/phpunit": "^10.5"
     },
     "autoload": {
