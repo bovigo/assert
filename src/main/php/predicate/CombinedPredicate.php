@@ -44,5 +44,5 @@ trait CombinedPredicate
     /**
      * returns combination operator as string
      */
-    protected abstract function operator(): string;
+    abstract protected function operator(): string;
 }

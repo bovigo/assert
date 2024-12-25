@@ -57,7 +57,7 @@ abstract class IteratingPredicate extends Predicate
     /**
      * actually tests the value
      */
-    protected abstract function doTest(iterable $traversable): bool;
+    abstract protected function doTest(iterable $traversable): bool;
 
     /**
      * retrieve actual iterator

@@ -34,7 +34,7 @@ abstract class Predicate implements \Countable
     /**
      * evaluates predicate against given value
      */
-    public abstract function test(mixed $value): bool;
+    abstract public function test(mixed $value): bool;
 
     /**
      * evaluates predicate against given value
@@ -76,7 +76,7 @@ abstract class Predicate implements \Countable
     /**
      * returns string representation of predicate
      */
-    public abstract function __toString(): string;
+    abstract public function __toString(): string;
 
     /**
      * returns a textual description of given value

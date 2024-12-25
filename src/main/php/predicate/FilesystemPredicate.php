@@ -45,7 +45,7 @@ abstract class FilesystemPredicate extends Predicate
     /**
      * checks if given file exists
      */
-    protected abstract function fileExists(string $path): bool;
+    abstract protected function fileExists(string $path): bool;
 
     /**
      * returns string representation of predicate
@@ -62,5 +62,5 @@ abstract class FilesystemPredicate extends Predicate
     /**
      * returns file system type which is checked
      */
-    protected abstract function type(): string;
+    abstract protected function type(): string;
 }
