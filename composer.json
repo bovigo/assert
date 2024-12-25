@@ -4,12 +4,12 @@
     "license": "BSD-3-Clause",
     "require": {
         "php": "^8.2",
-        "sebastian/comparator": "^5.0",
-        "sebastian/exporter": "^5.0"
+        "sebastian/comparator": "^6.2",
+        "sebastian/exporter": "^6.3"
     },
     "require-dev": {
         "mikey179/vfsstream": "^1.6.12",
-        "phpunit/phpunit": "^10.5"
+        "phpunit/phpunit": "^11.5"
     },
     "autoload": {
         "psr-4": {
