@@ -8,7 +8,7 @@ Package status
 --------------
 
 
-![Build Status](https://github.com/bovigo/assert/workflows/Tests/badge.svg) [![Coverage Status](https://coveralls.io/repos/github/bovigo/assert/badge.svg?branch=master)](https://coveralls.io/github/bovigo/assert?branch=master)
+![Build Status](https://github.com/bovigo/assert/workflows/Tests/badge.svg)
 
 [![Latest Stable Version](https://poser.pugx.org/bovigo/assert/version)](https://packagist.org/packages/bovigo/assert) [![Latest Unstable Version](https://poser.pugx.org/bovigo/assert/v/unstable)](https:////packagist.org/packages/bovigo/assert)
 
