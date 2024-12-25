@@ -1,5 +1,9 @@
 # Changelog
 
+## 8.1.0 (2024-12-??)
+
+* Raised minimum required PHP version to 8.3.0
+
 ## 8.0.1 (2024-01-27)
 
 * Fixed return type hint for `bovigo\assert\predicate\isNotEqualTo()` to properly reflect that the returned instance is both of type `bovigo\assert\predicate\Predicate` and `bovigo\assert\predicate\Delta`
