@@ -23,7 +23,7 @@ class Assertion
      *
      * @throws  AssertionFailure
      */
-    public function evaluate(Predicate $predicate, string $description = null): bool
+    public function evaluate(Predicate $predicate, ?string $description = null): bool
     {
         try {
             if ($predicate->test($this->value)) {
@@ -45,7 +45,7 @@ class Assertion
     /**
      * creates failure description when value failed the test with given predicate
      */
-    private function describeFailure(Predicate $predicate, string $description = null): string
+    private function describeFailure(Predicate $predicate, ?string $description = null): string
     {
         $predicateText = (string) $predicate;
         $failureDescription = sprintf(

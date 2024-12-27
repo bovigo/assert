@@ -647,7 +647,7 @@ function doesNotMatchFormat(string $format): Predicate
  *
  * @api
  */
-function isExistingFile(string $basePath = null): Predicate
+function isExistingFile(?string $basePath = null): Predicate
 {
     return new IsExistingFile($basePath);
 }
@@ -659,7 +659,7 @@ function isExistingFile(string $basePath = null): Predicate
  *
  * @api
  */
-function isNonExistingFile(string $basePath = null): Predicate
+function isNonExistingFile(?string $basePath = null): Predicate
 {
     return not(isExistingFile($basePath));
 }
@@ -671,7 +671,7 @@ function isNonExistingFile(string $basePath = null): Predicate
  *
  * @api
  */
-function isExistingDirectory(string $basePath = null): Predicate
+function isExistingDirectory(?string $basePath = null): Predicate
 {
     return new IsExistingDirectory($basePath);
 }
@@ -683,7 +683,7 @@ function isExistingDirectory(string $basePath = null): Predicate
  *
  * @api
  */
-function isNonExistingDirectory(string $basePath = null): Predicate
+function isNonExistingDirectory(?string $basePath = null): Predicate
 {
     return not(isExistingDirectory($basePath));
 }

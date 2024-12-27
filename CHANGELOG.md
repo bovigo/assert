@@ -3,6 +3,7 @@
 ## 8.1.0 (2024-12-??)
 
 * Raised minimum required PHP version to 8.3.0
+* Fixed implicitly nullable type declarations
 
 ## 8.0.1 (2024-01-27)
 

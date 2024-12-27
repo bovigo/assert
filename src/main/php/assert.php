@@ -28,7 +28,7 @@ use function bovigo\assert\predicate\{
  * @since  3.1.0
  * @throws AssertionFailure
  */
-function assertThat(mixed $value, Predicate|callable $predicate, string $description = null): bool
+function assertThat(mixed $value, Predicate|callable $predicate, ?string $description = null): bool
 {
     return (new Assertion($value, exporter()))
             ->evaluate(counting(Predicate::castFrom($predicate)), $description);
@@ -62,7 +62,7 @@ function expect(callable $code): Expectation
  * @throws AssertionFailure
  * @since  2.1.0
  */
-function outputOf(callable $code, Predicate|callable $predicate, string $description = null): bool
+function outputOf(callable $code, Predicate|callable $predicate, ?string $description = null): bool
 {
     ob_start();
     $code();
@@ -77,7 +77,7 @@ function outputOf(callable $code, Predicate|callable $predicate, string $descrip
  * @api
  * @since 1.3.0
  */
-function assertTrue(mixed $value, string $description = null): bool
+function assertTrue(mixed $value, ?string $description = null): bool
 {
     return assertThat($value, isTrue(), $description);
 }
@@ -88,7 +88,7 @@ function assertTrue(mixed $value, string $description = null): bool
  * @api
  * @since 1.3.0
  */
-function assertFalse(mixed $value, string $description = null): bool
+function assertFalse(mixed $value, ?string $description = null): bool
 {
     return assertThat($value, isFalse(), $description);
 }
@@ -99,7 +99,7 @@ function assertFalse(mixed $value, string $description = null): bool
  * @api
  * @since 1.3.0
  */
-function assertNull(mixed $value, string $description = null): bool
+function assertNull(mixed $value, ?string $description = null): bool
 {
     return assertThat($value, isNull(), $description);
 }
@@ -110,7 +110,7 @@ function assertNull(mixed $value, string $description = null): bool
  * @api
  * @since 1.3.0
  */
-function assertNotNull(mixed $value, string $description = null): bool
+function assertNotNull(mixed $value, ?string $description = null): bool
 {
     return assertThat($value, isNotNull(), $description);
 }
@@ -121,7 +121,7 @@ function assertNotNull(mixed $value, string $description = null): bool
  * @api
  * @since 1.3.0
  */
-function assertEmpty(mixed $value, string $description = null): bool
+function assertEmpty(mixed $value, ?string $description = null): bool
 {
     return assertThat($value, isEmpty(), $description);
 }
@@ -131,7 +131,7 @@ function assertEmpty(mixed $value, string $description = null): bool
  * @api
  * @since 1.5.0
  */
-function assertEmptyString(mixed $value, string $description = null): bool
+function assertEmptyString(mixed $value, ?string $description = null): bool
 {
     return assertThat($value, equals(''), $description);
 }
@@ -142,7 +142,7 @@ function assertEmptyString(mixed $value, string $description = null): bool
  * @api
  * @since 1.5.0
  */
-function assertEmptyArray(mixed $value, string $description = null): bool
+function assertEmptyArray(mixed $value, ?string $description = null): bool
 {
     return assertThat($value, equals([]), $description);
 }
@@ -153,7 +153,7 @@ function assertEmptyArray(mixed $value, string $description = null): bool
  * @api
  * @since 1.3.0
  */
-function assertNotEmpty(mixed $value, string $description = null): bool
+function assertNotEmpty(mixed $value, ?string $description = null): bool
 {
     return assertThat($value, isNotEmpty(), $description);
 }

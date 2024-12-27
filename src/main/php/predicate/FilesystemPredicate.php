@@ -13,18 +13,10 @@ namespace bovigo\assert\predicate;
 abstract class FilesystemPredicate extends Predicate
 {
     /**
-     * base path where file must reside in
-     */
-    private ?string $basePath;
-
-    /**
      * If no base path is given the test will be done against the whole
      * file system, given values can not be relative then.
      */
-    public function __construct(string $basePath = null)
-    {
-        $this->basePath = $basePath;
-    }
+    public function __construct(private ?string $basePath = null) { }
 
     /**
      * test that the given value is represents an existing path

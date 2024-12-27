@@ -140,7 +140,7 @@ class CatchedError
      *
      * @api
      */
-    public function after(mixed $value, Predicate|callable $predicate, string $description = null): self
+    public function after(mixed $value, Predicate|callable $predicate, ?string $description = null): self
     {
         assertThat($value, $predicate, $description);
         return $this;

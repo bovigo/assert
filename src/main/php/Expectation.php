@@ -77,7 +77,7 @@ class Expectation
      * @api
      * @throws  AssertionFailure
      */
-    public function throws(string|Throwable $expected = null): CatchedException
+    public function throws(string|Throwable|null $expected = null): CatchedException
     {
         $this->runCode();
         if (null === $this->exception) {
@@ -111,7 +111,7 @@ class Expectation
      * @api
      * @throws  AssertionFailure
      */
-    public function doesNotThrow(string $unexpectedType = null): self
+    public function doesNotThrow(?string $unexpectedType = null): self
     {
         increaseAssertionCounter(1);
         $this->runCode();
@@ -146,7 +146,7 @@ class Expectation
      * @throws  AssertionFailure
      * @since   2.1.0
      */
-    public function triggers(int $expectedError = null): CatchedError
+    public function triggers(?int $expectedError = null): CatchedError
     {
         if (null !== $expectedError && !CatchedError::knowsLevel($expectedError)) {
             throw new InvalidArgumentException('Unknown error level ' . $expectedError);
@@ -180,7 +180,7 @@ class Expectation
     /**
      * asserts result of executed code fulfills a predicate
      */
-    public function result(Predicate|callable $predicate, string $description = null): self
+    public function result(Predicate|callable $predicate, ?string $description = null): self
     {
         $this->runCode();
         if (null !== $this->exception) {
@@ -203,7 +203,7 @@ class Expectation
      *
      * @api
      */
-    public function after(mixed $value, Predicate|callable $predicate, string $description = null): self
+    public function after(mixed $value, Predicate|callable $predicate, ?string $description = null): self
     {
         $this->runCode();
         assertThat($value, $predicate, $description);
