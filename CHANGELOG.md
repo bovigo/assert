@@ -4,6 +4,7 @@
 
 * Raised minimum required PHP version to 8.3.0
 * Fixed implicitly nullable type declarations
+* Prevented deprecation notice about used const E_STRICT
 
 ## 8.0.1 (2024-01-27)
 

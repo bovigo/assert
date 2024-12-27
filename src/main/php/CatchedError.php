@@ -23,22 +23,24 @@ class CatchedError
      * map of error level numbers and their textual name
      */
     private const array LEVEL = [
-                E_ERROR             => 'E_ERROR',
-                E_WARNING           => 'E_WARNING',
-                E_PARSE             => 'E_PARSE',
-                E_NOTICE            => 'E_NOTICE',
-                E_CORE_ERROR        => 'E_CORE_ERROR',
-                E_CORE_WARNING      => 'E_CORE_WARNING',
-                E_COMPILE_ERROR     => 'E_COMPILE_ERROR',
-                E_COMPILE_WARNING   => 'E_COMPILE_WARNING',
-                E_USER_ERROR        => 'E_USER_ERROR',
-                E_USER_WARNING      => 'E_USER_WARNING',
-                E_USER_NOTICE       => 'E_USER_NOTICE',
-                E_STRICT            => 'E_STRICT',
-                E_RECOVERABLE_ERROR => 'E_RECOVERABLE_ERROR',
-                E_DEPRECATED        => 'E_DEPRECATED',
-                E_USER_DEPRECATED   => 'E_USER_DEPRECATED',
-                E_ALL               => 'E_ALL'
+        E_ERROR             => 'E_ERROR',
+        E_WARNING           => 'E_WARNING',
+        E_PARSE             => 'E_PARSE',
+        E_NOTICE            => 'E_NOTICE',
+        E_CORE_ERROR        => 'E_CORE_ERROR',
+        E_CORE_WARNING      => 'E_CORE_WARNING',
+        E_COMPILE_ERROR     => 'E_COMPILE_ERROR',
+        E_COMPILE_WARNING   => 'E_COMPILE_WARNING',
+        E_USER_ERROR        => 'E_USER_ERROR',
+        E_USER_WARNING      => 'E_USER_WARNING',
+        E_USER_NOTICE       => 'E_USER_NOTICE',
+        // E_STRICT deprecated with PHP 8.4, raises deprecation notice
+        // use raw value to prevent ugly deprecation notice
+        2048                => 'E_STRICT',
+        E_RECOVERABLE_ERROR => 'E_RECOVERABLE_ERROR',
+        E_DEPRECATED        => 'E_DEPRECATED',
+        E_USER_DEPRECATED   => 'E_USER_DEPRECATED',
+        E_ALL               => 'E_ALL'
     ];
 
     /**
