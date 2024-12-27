@@ -84,7 +84,7 @@ class Expectation
             throw new AssertionFailure(
                 'Failed asserting that '
                 . (null !== $expected
-                    ? 'exception of type "' . (is_string($expected) ? $expected : get_class($expected)) . '"'
+                    ? 'exception of type "' . $this->getType($expected) . '"'
                     : 'an exception'
                 )
                 . ' is thrown.'
@@ -100,6 +100,11 @@ class Expectation
         }
 
         return new CatchedException($this->exception);
+    }
+
+    private function getType(string|Throwable $expected): string
+    {
+        return is_string($expected) ? $expected : get_class($expected);
     }
 
     /**
