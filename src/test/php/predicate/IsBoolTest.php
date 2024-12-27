@@ -9,8 +9,8 @@ declare(strict_types=1);
 namespace bovigo\assert\predicate;
 
 use bovigo\assert\AssertionFailure;
-use Generator;
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
@@ -20,18 +20,17 @@ use function bovigo\assert\predicate\isBool;
 use function bovigo\assert\predicate\isNotBool;
 /**
  * Test for bovigo\assert\assert\predicate\isBool() and bovigo\assert\assert\predicate\isNotBool().
- *
- * @group  predicate
  */
+#[Group('predicate')]
 class IsBoolTest extends TestCase
 {
-    public static function validBooleans(): Generator
+    public static function provideValidBooleans(): iterable
     {
         yield 'true'  => [true];
         yield 'false' => [false];
     }
 
-    public static function invalidBooleans(): Generator
+    public static function provideInvalidBooleans(): iterable
     {
         yield 'string' => ['foo'];
         yield 'number' => [303];
@@ -39,14 +38,14 @@ class IsBoolTest extends TestCase
     }
 
     #[Test]
-    #[DataProvider('validBooleans')]
+    #[DataProvider('provideValidBooleans')]
     public function validBooleansAreRecognized(bool $value): void
     {
         assertThat($value, isBool());
     }
 
     #[Test]
-    #[DataProvider('invalidBooleans')]
+    #[DataProvider('provideInvalidBooleans')]
     public function invalidBooleansAreRejected(mixed $value): void
     {
         expect(fn() => assertThat($value, isBool()))
@@ -54,14 +53,14 @@ class IsBoolTest extends TestCase
     }
 
     #[Test]
-    #[DataProvider('invalidBooleans')]
+    #[DataProvider('provideInvalidBooleans')]
     public function invalidBooleansAreRecognizedOnNegation(mixed $value): void
     {
         assertThat($value, isNotBool());
     }
 
     #[Test]
-    #[DataProvider('validBooleans')]
+    #[DataProvider('provideValidBooleans')]
     public function validBooleansAreRejectedOnNegation(bool $value): void
     {
         expect(fn() => assertThat($value, isNotBool()))

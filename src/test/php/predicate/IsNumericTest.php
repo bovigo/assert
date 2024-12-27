@@ -9,8 +9,8 @@ declare(strict_types=1);
 namespace bovigo\assert\predicate;
 
 use bovigo\assert\AssertionFailure;
-use Generator;
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use stdClass;
@@ -21,12 +21,11 @@ use function bovigo\assert\predicate\isNumeric;
 use function bovigo\assert\predicate\isNotNumeric;
 /**
  * Test for bovigo\assert\assert\predicate\isNumeric() and bovigo\assert\assert\predicate\isNotNumeric().
- *
- * @group predicate
  */
+#[Group('predicate')]
 class IsNumericTest extends TestCase
 {
-    public static function validNumerics(): Generator
+    public static function provideValidNumerics(): iterable
     {
         yield 'default int'             => [0];
         yield 'normal int'              => [303];
@@ -38,7 +37,7 @@ class IsNumericTest extends TestCase
         yield 'negative numeric string' => ['-42'];
     }
 
-    public static function invalidNumerics(): Generator
+    public static function provideInvalidNumerics(): iterable
     {
         yield 'string' => ['foo'];
         yield 'array'  => [[30.3]];
@@ -46,14 +45,14 @@ class IsNumericTest extends TestCase
     }
 
     #[Test]
-    #[DataProvider('validNumerics')]
+    #[DataProvider('provideValidNumerics')]
     public function validNumericsAreRecognized(int|float|string $value): void
     {
         assertThat($value, isNumeric());
     }
 
     #[Test]
-    #[DataProvider('invalidNumerics')]
+    #[DataProvider('provideInvalidNumerics')]
     public function invalidNumericsAreRejected(mixed $value): void
     {
         expect(fn() => assertThat($value, isNumeric()))
@@ -61,14 +60,14 @@ class IsNumericTest extends TestCase
     }
 
     #[Test]
-    #[DataProvider('invalidNumerics')]
+    #[DataProvider('provideInvalidNumerics')]
     public function invalidArraysAreRecognizedOnNegation(mixed $value): void
     {
         assertThat($value, isNotNumeric());
     }
 
     #[Test]
-    #[DataProvider('validNumerics')]
+    #[DataProvider('provideValidNumerics')]
     public function validNumericsAreRejectedOnNegation(int|float|string $value): void
     {
         expect(fn() => assertThat($value, isNotNumeric()))

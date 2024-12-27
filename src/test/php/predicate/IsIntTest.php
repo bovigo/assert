@@ -9,8 +9,8 @@ declare(strict_types=1);
 namespace bovigo\assert\predicate;
 
 use bovigo\assert\AssertionFailure;
-use Generator;
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use stdClass;
@@ -21,19 +21,18 @@ use function bovigo\assert\predicate\isInt;
 use function bovigo\assert\predicate\isNotInt;
 /**
  * Test for bovigo\assert\assert\predicate\isInt() and bovigo\assert\assert\predicate\isNotInt().
- *
- * @group predicate
  */
+#[Group('predicate')]
 class IsIntTest extends TestCase
 {
-    public static function validInts(): Generator
+    public static function provideValidInts(): iterable
     {
         yield 'default int'  => [0];
         yield 'normal int'   => [303];
         yield 'negative int' => [-313];
     }
 
-    public static function invalidInts(): Generator
+    public static function provideInvalidInts(): iterable
     {
         yield 'string' => ['foo'];
         yield 'float'  => [30.3];
@@ -41,14 +40,14 @@ class IsIntTest extends TestCase
     }
 
     #[Test]
-    #[DataProvider('validInts')]
+    #[DataProvider('provideValidInts')]
     public function validIntsAreRecognized(int $value): void
     {
         assertThat($value, isInt());
     }
 
     #[Test]
-    #[DataProvider('invalidInts')]
+    #[DataProvider('provideInvalidInts')]
     public function invalidIntsAreRejected(mixed $value): void
     {
         expect(fn() => assertThat($value, isInt()))
@@ -56,14 +55,14 @@ class IsIntTest extends TestCase
     }
 
     #[Test]
-    #[DataProvider('invalidInts')]
+    #[DataProvider('provideInvalidInts')]
     public function invalidIntsAreRecognizedOnNegation(mixed $value): void
     {
         assertThat($value, isNotInt());
     }
 
     #[Test]
-    #[DataProvider('validInts')]
+    #[DataProvider('provideValidInts')]
     public function validIntsAreRejectedOnNegation(int $value): void
     {
         expect(fn() => assertThat($value, isNotInt()))

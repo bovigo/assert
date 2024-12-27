@@ -9,8 +9,8 @@ declare(strict_types=1);
 namespace bovigo\assert\predicate;
 
 use bovigo\assert\AssertionFailure;
-use Generator;
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use stdClass;
@@ -21,12 +21,11 @@ use function bovigo\assert\assertTrue;
 use function bovigo\assert\expect;
 /**
  * Tests for bovigo\assert\predicate\IsIdentical.
- *
- * @group predicate
  */
+#[Group('predicate')]
 class IsIdenticalTest extends TestCase
 {
-    public static function identicalValues(): Generator
+    public static function provideIdenticalValues(): iterable
     {
         yield 'boolean true'  => [true];
         yield 'boolean false' => [false];
@@ -37,7 +36,7 @@ class IsIdenticalTest extends TestCase
     }
 
     #[Test]
-    #[DataProvider('identicalValues')]
+    #[DataProvider('provideIdenticalValues')]
     public function evaluatesToTrueIfGivenValueIsIdentical(mixed $value): void
     {
         assertTrue(isSameAs($value)->test($value));

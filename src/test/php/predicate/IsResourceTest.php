@@ -9,8 +9,8 @@ declare(strict_types=1);
 namespace bovigo\assert\predicate;
 
 use bovigo\assert\AssertionFailure;
-use Generator;
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use stdClass;
@@ -22,9 +22,8 @@ use function bovigo\assert\predicate\isResource;
 use function bovigo\assert\predicate\isNotAResource;
 /**
  * Test for bovigo\assert\assert\predicate\isResource() and bovigo\assert\assert\predicate\isNotAResource().
- *
- * @group predicate
  */
+#[Group('predicate')]
 class IsResourceTest extends TestCase
 {
     /** @var  resource */
@@ -51,7 +50,7 @@ class IsResourceTest extends TestCase
         assertThat($this->resource, isResource());
     }
 
-    public static function invalidResources(): Generator
+    public static function provideInvalidResources(): iterable
     {
         yield 'string' => ['foo'];
         yield 'float'  => [30.3];
@@ -59,7 +58,7 @@ class IsResourceTest extends TestCase
     }
 
     #[Test]
-    #[DataProvider('invalidResources')]
+    #[DataProvider('provideInvalidResources')]
     public function invalidResourcesAreRejected(mixed $value): void
     {
         expect(fn() => assertThat($value, isResource()))
@@ -67,7 +66,7 @@ class IsResourceTest extends TestCase
     }
 
     #[Test]
-    #[DataProvider('invalidResources')]
+    #[DataProvider('provideInvalidResources')]
     public function invalidResourcesAreRecognizedOnNegation(mixed $value): void
     {
         assertThat($value, isNotAResource());

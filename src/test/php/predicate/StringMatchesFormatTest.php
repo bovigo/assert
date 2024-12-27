@@ -9,7 +9,6 @@ declare(strict_types=1);
 namespace bovigo\assert\predicate;
 
 use bovigo\assert\AssertionFailure;
-use Generator;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
@@ -27,13 +26,13 @@ use function bovigo\assert\expect;
 class StringMatchesFormatTest extends TestCase
 {
     #[Test]
-    #[DataProvider('validValues')]
+    #[DataProvider('provideValidValues')]
     public function validValueEvaluatesToTrue(string $format, string $value): void
     {
         assertTrue(matchesFormat($format)->test($value));
     }
 
-    public static function validValues(): Generator
+    public static function provideValidValues(): iterable
     {
         yield 'Simple %e' => ['%e', DIRECTORY_SEPARATOR];
         yield 'Simple %s' => ['%s', 'string'];
@@ -53,13 +52,13 @@ class StringMatchesFormatTest extends TestCase
     }
 
     #[Test]
-    #[DataProvider('invalidValues')]
+    #[DataProvider('provideInvalidValues')]
     public function invalidValueEvaluatesToFalse(string $format, string $value): void
     {
         assertFalse(matchesFormat($format)->test($value));
     }
 
-    public static function invalidValues(): Generator
+    public static function provideInvalidValues(): iterable
     {
         yield 'Negative %e' => ['%e', 'a'];
         yield 'Negative %s' => ['%s', "\n"];

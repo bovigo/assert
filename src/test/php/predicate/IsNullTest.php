@@ -9,8 +9,8 @@ declare(strict_types=1);
 namespace bovigo\assert\predicate;
 
 use bovigo\assert\AssertionFailure;
-use Generator;
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
@@ -23,9 +23,8 @@ use function bovigo\assert\{
 };
 /**
  * Tests for bovigo\assert\predicate\IsNull.
- *
- * @group predicate
  */
+#[Group('predicate')]
 class IsNullTest extends TestCase
 {
     #[Test]
@@ -34,7 +33,7 @@ class IsNullTest extends TestCase
         assertTrue(isNull()->test(null));
     }
 
-    public static function nonNullValues(): Generator
+    public static function provideNonNullValues(): iterable
     {
         yield 'boolean true'     => [true];
         yield 'boolean false'    => [false];
@@ -47,7 +46,7 @@ class IsNullTest extends TestCase
     }
 
     #[Test]
-    #[DataProvider('nonNullValues')]
+    #[DataProvider('provideNonNullValues')]
     public function evaluatesToFalseIfGivenValueIsNotNull(mixed $nonNullValue): void
     {
         assertFalse(isNull()->test($nonNullValue));

@@ -9,8 +9,8 @@ declare(strict_types=1);
 namespace bovigo\assert\predicate;
 
 use bovigo\assert\AssertionFailure;
-use Generator;
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use stdClass;
@@ -21,12 +21,11 @@ use function bovigo\assert\predicate\isScalar;
 use function bovigo\assert\predicate\isNotScalar;
 /**
  * Test for bovigo\assert\assert\predicate\isScalar() and bovigo\assert\assert\predicate\isNotScalar().
- *
- * @group predicate
  */
+#[Group('predicate')]
 class IsScalarTest extends TestCase
 {
-    public static function validScalars(): Generator
+    public static function provideValidScalars(): iterable
     {
         yield 'empty string'  => [''];
         yield 'normal string' => ['example'];
@@ -34,21 +33,21 @@ class IsScalarTest extends TestCase
         yield 'float'         => [3.13];
     }
 
-    public static function invalidScalars(): Generator
+    public static function provideInvalidScalars(): iterable
     {
         yield 'array'  => [['foo']];
         yield 'object' => [new stdClass()];
     }
 
     #[Test]
-    #[DataProvider('validScalars')]
+    #[DataProvider('provideValidScalars')]
     public function validScalarsAreRecognized(mixed $value): void
     {
         assertThat($value, isScalar());
     }
 
     #[Test]
-    #[DataProvider('invalidScalars')]
+    #[DataProvider('provideInvalidScalars')]
     public function invalidScalarsAreRejected(mixed $value): void
     {
         expect(fn() => assertThat($value, isScalar()))
@@ -56,14 +55,14 @@ class IsScalarTest extends TestCase
     }
 
     #[Test]
-    #[DataProvider('invalidScalars')]
+    #[DataProvider('provideInvalidScalars')]
     public function invalidScalarsAreRecognizedOnNegation(mixed $value): void
     {
         assertThat($value, isNotScalar());
     }
 
     #[Test]
-    #[DataProvider('validScalars')]
+    #[DataProvider('provideValidScalars')]
     public function validScalarsAreRejectedOnNegation(mixed $value): void
     {
         expect(fn() => assertThat($value, isNotScalar()))

@@ -9,8 +9,8 @@ declare(strict_types=1);
 namespace bovigo\assert\predicate;
 
 use bovigo\assert\AssertionFailure;
-use Generator;
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use stdClass;
@@ -21,18 +21,17 @@ use function bovigo\assert\predicate\isString;
 use function bovigo\assert\predicate\isNotAString;
 /**
  * Test for bovigo\assert\assert\predicate\isString() and bovigo\assert\assert\predicate\isNotAString().
- *
- * @group predicate
  */
+#[Group('predicate')]
 class IsStringTest extends TestCase
 {
-    public static function validStrings(): Generator
+    public static function provideValidStrings(): iterable
     {
         yield 'empty string'  => [''];
         yield 'normal string' => ['example'];
     }
 
-    public static function invalidStrings(): Generator
+    public static function provideInvalidStrings(): iterable
     {
         yield 'array'  => [['foo']];
         yield 'float'  => [30.3];
@@ -40,14 +39,14 @@ class IsStringTest extends TestCase
     }
 
     #[Test]
-    #[DataProvider('validStrings')]
+    #[DataProvider('provideValidStrings')]
     public function validStringsAreRecognized(string $value): void
     {
         assertThat($value, isString());
     }
 
     #[Test]
-    #[DataProvider('invalidStrings')]
+    #[DataProvider('provideInvalidStrings')]
     public function invalidStringsAreRejected(mixed $value): void
     {
         expect(fn() => assertThat($value, isString()))
@@ -55,14 +54,14 @@ class IsStringTest extends TestCase
     }
 
     #[Test]
-    #[DataProvider('invalidStrings')]
+    #[DataProvider('provideInvalidStrings')]
     public function invalidStringsAreRecognizedOnNegation(mixed $value): void
     {
         assertThat($value, isNotAString());
     }
 
     #[Test]
-    #[DataProvider('validStrings')]
+    #[DataProvider('provideValidStrings')]
     public function validStringsAreRejectedOnNegation(string $value): void
     {
         expect(fn() => assertThat($value, isNotAString()))

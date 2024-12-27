@@ -9,8 +9,8 @@ declare(strict_types=1);
 namespace bovigo\assert\predicate;
 
 use bovigo\assert\AssertionFailure;
-use Generator;
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
@@ -24,12 +24,11 @@ use function bovigo\assert\{
 };
 /**
  * Tests for bovigo\assert\predicate\IsEmpty.
- *
- * @group  predicate
  */
+#[Group('predicate')]
 class IsEmptyTest extends TestCase
 {
-    public static function emptyValues(): Generator
+    public static function provideEmptyValues(): iterable
     {
         yield 'null'                  => [null];
         yield 'boolean false'         => [false];
@@ -40,13 +39,13 @@ class IsEmptyTest extends TestCase
     }
 
     #[Test]
-    #[DataProvider('emptyValues')]
+    #[DataProvider('provideEmptyValues')]
     public function evaluatesToTrueIfGivenValueIsEmpty(mixed $emptyValue): void
     {
         assertTrue(isEmpty()->test($emptyValue));
     }
 
-    public static function nonEmptyValues(): Generator
+    public static function provideNonEmptyValues(): iterable
     {
         yield 'boolean true'            => [true];
         yield 'non-empty string'        => ['foo'];
@@ -55,7 +54,7 @@ class IsEmptyTest extends TestCase
     }
 
     #[Test]
-    #[DataProvider('nonEmptyValues')]
+    #[DataProvider('provideNonEmptyValues')]
     public function evaluatesToFalseIfGivenValueIsNotEmpty(mixed $nonEmptyValue): void
     {
         assertFalse(isEmpty()->test($nonEmptyValue));

@@ -9,8 +9,8 @@ declare(strict_types=1);
 namespace bovigo\assert\predicate;
 
 use bovigo\assert\AssertionFailure;
-use Generator;
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
@@ -19,9 +19,8 @@ use function bovigo\assert\assertThat;
 use function bovigo\assert\expect;
 /**
  * Tests for bovigo\assert\predicate\IsFalse.
- *
- * @group predicate
  */
+#[Group('predicate')]
 class IsFalseTest extends TestCase
 {
     #[Test]
@@ -30,7 +29,7 @@ class IsFalseTest extends TestCase
         assertThat(isFalse()->test(false), isSameAs(true));
     }
 
-    public static function trueValues(): Generator
+    public static function provideTrueValues(): iterable
     {
         yield 'boolean true'     => [true];
         yield 'non-empty string' => ['foo'];
@@ -40,7 +39,7 @@ class IsFalseTest extends TestCase
     }
 
     #[Test]
-    #[DataProvider('trueValues')]
+    #[DataProvider('provideTrueValues')]
     public function evaluatesToFalseIfGivenValueIsFalse(mixed $true): void
     {
         assertThat(isFalse()->test($true), isSameAs(false));

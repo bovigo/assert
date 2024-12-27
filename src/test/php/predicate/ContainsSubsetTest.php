@@ -8,7 +8,6 @@ declare(strict_types=1);
  */
 namespace bovigo\assert\predicate;
 
-use Generator;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
@@ -25,7 +24,7 @@ use function bovigo\assert\assertTrue;
 #[Group('issue_22')]
 class ContainsSubsetTest extends TestCase
 {
-    public static function tuplesEvaluatingToTrue(): Generator
+    public static function provideTuplesEvaluatingToTrue(): iterable
     {
         yield [range('a', 'e'), range('a', 'e')];
         yield [range('a', 'e'), range('a', 'c')];
@@ -40,13 +39,13 @@ class ContainsSubsetTest extends TestCase
      * @param array<mixed> $other
      */
     #[Test]
-    #[DataProvider('tuplesEvaluatingToTrue')]
+    #[DataProvider('provideTuplesEvaluatingToTrue')]
     public function evaluatesToTrue(array $other, array $subset): void
     {
         assertTrue(containsSubset($other)->test($subset));
     }
 
-    public static function tuplesEvaluatingToFalse(): Generator
+    public static function provideTuplesEvaluatingToFalse(): iterable
     {
         yield [range('a', 'e'), range('o', 't')];
         yield [['a' => 'b', 'c' => 'd'], ['o' => 'p', 'q' => 'r']];
@@ -57,7 +56,7 @@ class ContainsSubsetTest extends TestCase
      * @param array<mixed> $other
      */
     #[Test]
-    #[DataProvider('tuplesEvaluatingToFalse')]
+    #[DataProvider('provideTuplesEvaluatingToFalse')]
     public function evaluatesToFalse(array $other, array $subset): void
     {
         assertFalse(containsSubset($other)->test($subset));

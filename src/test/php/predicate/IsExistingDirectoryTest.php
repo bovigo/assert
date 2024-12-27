@@ -9,9 +9,9 @@ declare(strict_types=1);
 namespace bovigo\assert\predicate;
 
 use bovigo\assert\AssertionFailure;
-use Generator;
 use org\bovigo\vfs\vfsStream;
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
@@ -21,10 +21,9 @@ use function bovigo\assert\assertTrue;
 use function bovigo\assert\expect;
 /**
  * Tests for bovigo\assert\predicate\IsExistingDirectory.
- *
- * @group filesystem
- * @group predicate
  */
+#[Group('predicate')]
+#[Group('filesystem')]
 class IsExistingDirectoryTest extends TestCase
 {
     protected function setUp(): void
@@ -100,7 +99,7 @@ class IsExistingDirectoryTest extends TestCase
         assertFalse(isExistingDirectory()->test(__FILE__));
     }
 
-    public static function instances(): Generator
+    public static function provideInstances(): iterable
     {
         yield [
             'instance' => new IsExistingDirectory(),
@@ -113,7 +112,7 @@ class IsExistingDirectoryTest extends TestCase
     }
 
     #[Test]
-    #[DataProvider('instances')]
+    #[DataProvider('provideInstances')]
     public function hasStringRepresentation(IsExistingDirectory $instance, string $message): void
     {
         assertThat((string) $instance, equals($message));

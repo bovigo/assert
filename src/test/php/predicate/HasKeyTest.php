@@ -10,8 +10,8 @@ namespace bovigo\assert\predicate;
 
 use ArrayAccess;
 use bovigo\assert\AssertionFailure;
-use Generator;
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
@@ -21,12 +21,11 @@ use function bovigo\assert\assertTrue;
 use function bovigo\assert\expect;
 /**
  * Tests for bovigo\assert\predicate\HasKey.
- *
- * @group predicate
  */
+#[Group('predicate')]
 class HasKeyTest extends TestCase
 {
-    public static function tuplesEvaluatingToTrue(): Generator
+    public static function provideTuplesEvaluatingToTrue(): iterable
     {
         yield [0, ['foo']];
         yield ['bar', ['bar' => 'foo5']];
@@ -35,13 +34,13 @@ class HasKeyTest extends TestCase
     }
 
     #[Test]
-    #[DataProvider('tuplesEvaluatingToTrue')]
+    #[DataProvider('provideTuplesEvaluatingToTrue')]
     public function evaluatesToTrue(int|string $key, array|ArrayAccess $array): void
     {
         assertTrue(hasKey($key)->test($array));
     }
 
-    public static function tuplesEvaluatingToFalse(): Generator
+    public static function provideTuplesEvaluatingToFalse(): iterable
     {
         yield [5, []];
         yield ['foo', []];
@@ -50,7 +49,7 @@ class HasKeyTest extends TestCase
     }
 
     #[Test]
-    #[DataProvider('tuplesEvaluatingToFalse')]
+    #[DataProvider('provideTuplesEvaluatingToFalse')]
     public function evaluatesToFalse(int|string $key, array|ArrayAccess $array): void
     {
         assertFalse(hasKey($key)->test($array));

@@ -9,7 +9,6 @@ declare(strict_types=1);
 namespace bovigo\assert\predicate;
 
 use bovigo\assert\AssertionFailure;
-use Generator;
 use InvalidArgumentException;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
@@ -35,27 +34,27 @@ class StringEndsWithTest extends TestCase
             ->throws(InvalidArgumentException::class);
     }
 
-    public static function trueValues(): Generator
+    public static function provideTrueValues(): iterable
     {
         yield 'string which ends with and contains foo' => ['barfoobazfoo'];
         yield 'string which ends with foo'              => ['barbazfoo'];
     }
 
     #[Test]
-    #[DataProvider('trueValues')]
+    #[DataProvider('provideTrueValues')]
     public function evaluatesToTrueIfStringStartsWithPrefix(string $value): void
     {
         assertTrue(endsWith('foo')->test($value));
     }
 
-    public static function falseValues(): Generator
+    public static function provideFalseValues(): iterable
     {
         yield 'string which contains foo'    => ['barfoobaz'];
         yield 'string which starts with foo' => ['foobarbaz'];
     }
 
     #[Test]
-    #[DataProvider('falseValues')]
+    #[DataProvider('provideFalseValues')]
     public function evaluatesToFalseIfStringDoesNotEndWithSuffix(string $value): void
     {
         assertFalse(endsWith('foo')->test($value));

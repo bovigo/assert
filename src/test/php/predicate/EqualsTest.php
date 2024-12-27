@@ -10,7 +10,6 @@ namespace bovigo\assert\predicate;
 
 use bovigo\assert\AssertionFailure;
 use DateTime;
-use Generator;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
@@ -28,7 +27,7 @@ use function bovigo\assert\expect;
 #[Group('predicate')]
 class EqualsTest extends TestCase
 {
-    public static function tuplesEvaluatingToTrue(): Generator
+    public static function provideTuplesEvaluatingToTrue(): iterable
     {
         yield [true, true];
         yield [false, false];
@@ -41,13 +40,13 @@ class EqualsTest extends TestCase
     }
 
     #[Test]
-    #[DataProvider('tuplesEvaluatingToTrue')]
+    #[DataProvider('provideTuplesEvaluatingToTrue')]
     public function evaluatesToTrue(mixed $expected, mixed $value): void
     {
         assertTrue(equals($expected)->test($value));
     }
 
-    public static function tuplesEvaluatingToFalse(): Generator
+    public static function provideTuplesEvaluatingToFalse(): iterable
     {
         yield [true, false];
         yield [false, true];
@@ -61,7 +60,7 @@ class EqualsTest extends TestCase
     }
 
     #[Test]
-    #[DataProvider('tuplesEvaluatingToFalse')]
+    #[DataProvider('provideTuplesEvaluatingToFalse')]
     public function evaluatesToFalse(mixed $expected, mixed $value): void
     {
         assertFalse(equals($expected)->test($value));

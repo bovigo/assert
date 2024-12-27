@@ -11,6 +11,7 @@ namespace bovigo\assert\predicate;
 use bovigo\assert\AssertionFailure;
 use bovigo\assert\predicate\IsInstanceOf;
 use InvalidArgumentException;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use stdClass;
@@ -21,9 +22,8 @@ use function bovigo\assert\assertTrue;
 use function bovigo\assert\expect;
 /**
  * Tests for bovigo\assert\predicate\IsInstanceOf.
- *
- * @group predicate
  */
+#[Group('predicate')]
 class IsInstanceOfTest extends TestCase
 {
     #[Test]

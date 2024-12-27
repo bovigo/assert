@@ -9,6 +9,7 @@ declare(strict_types=1);
 namespace bovigo\assert\predicate;
 
 use bovigo\assert\AssertionFailure;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
@@ -18,9 +19,8 @@ use function bovigo\assert\assertTrue;
 use function bovigo\assert\expect;
 /**
  * Test for bovigo\assert\predicate\OrPredicate.
- *
- * @group predicate
  */
+#[Group('predicate')]
 class OrPredicateTest extends TestCase
 {
     private OrPredicate $orPredicate;

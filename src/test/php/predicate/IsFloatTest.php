@@ -9,8 +9,8 @@ declare(strict_types=1);
 namespace bovigo\assert\predicate;
 
 use bovigo\assert\AssertionFailure;
-use Generator;
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use stdClass;
@@ -21,19 +21,18 @@ use function bovigo\assert\predicate\isFloat;
 use function bovigo\assert\predicate\isNotFloat;
 /**
  * Test for bovigo\assert\assert\predicate\isFloat() and bovigo\assert\assert\predicate\isNotFloat().
- *
- * @group predicate
  */
+#[Group('predicate')]
 class IsFloatTest extends TestCase
 {
-    public static function validFloats(): Generator
+    public static function provideValidFloats(): iterable
     {
         yield 'zero float'     => [0.0];
         yield 'positive float' => [30.3];
         yield 'negative float' => [-31.3];
     }
 
-    public static function invalidFloats(): Generator
+    public static function provideInvalidFloats(): iterable
     {
         yield 'string' => ['foo'];
         yield 'int'    => [303];
@@ -41,14 +40,14 @@ class IsFloatTest extends TestCase
     }
 
     #[Test]
-    #[DataProvider('validFloats')]
+    #[DataProvider('provideValidFloats')]
     public function validFloatsAreRecognized(float $value): void
     {
         assertThat($value, isFloat());
     }
 
     #[Test]
-    #[DataProvider('invalidFloats')]
+    #[DataProvider('provideInvalidFloats')]
     public function invalidFloatsAreRejected(mixed $value): void
     {
         expect(fn() => assertThat($value, isFloat()))
@@ -56,14 +55,14 @@ class IsFloatTest extends TestCase
     }
 
     #[Test]
-    #[DataProvider('invalidFloats')]
+    #[DataProvider('provideInvalidFloats')]
     public function invalidAFloatsAreRecognizedOnNegation(mixed $value): void
     {
         assertThat($value, isNotFloat());
     }
 
     #[Test]
-    #[DataProvider('validFloats')]
+    #[DataProvider('provideValidFloats')]
     public function validFloatsAreRejectedOnNegation(float $value): void
     {
         expect(fn() => assertThat($value, isNotFloat()))

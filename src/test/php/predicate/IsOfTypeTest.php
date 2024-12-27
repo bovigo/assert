@@ -9,9 +9,9 @@ declare(strict_types=1);
 namespace bovigo\assert\predicate;
 
 use bovigo\assert\AssertionFailure;
-use Generator;
 use InvalidArgumentException;
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use stdClass;
@@ -22,9 +22,8 @@ use function bovigo\assert\assertTrue;
 use function bovigo\assert\expect;
 /**
  * Tests for bovigo\assert\predicate\IsOfType.
- *
- * @group predicate
  */
+#[Group('predicate')]
 class IsOfTypeTest extends TestCase
 {
     #[Test]
@@ -37,7 +36,7 @@ class IsOfTypeTest extends TestCase
     /** only here for test purposes */
     public static function dummy(): void {}
 
-    public static function validValuesAndTypes(): Generator
+    public static function provideValidValuesAndTypes(): iterable
     {
         yield 'array'                   => ['array', []];
         yield 'boolean true'            => ['boolean', true];
@@ -71,7 +70,7 @@ class IsOfTypeTest extends TestCase
     }
 
     #[Test]
-    #[DataProvider('validValuesAndTypes')]
+    #[DataProvider('provideValidValuesAndTypes')]
     public function evaluatesToTrueIfTypeOfValueEqualsExpectedType(
         string $expectedType,
         mixed $value

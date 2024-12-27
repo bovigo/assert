@@ -9,7 +9,6 @@ declare(strict_types=1);
 namespace bovigo\assert\predicate;
 
 use bovigo\assert\AssertionFailure;
-use Generator;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
@@ -26,7 +25,7 @@ use function bovigo\assert\expect;
 #[Group('predicate')]
 class ContainsTest extends TestCase
 {
-    public static function tuplesEvaluatingToTrue(): Generator
+    public static function provideTuplesEvaluatingToTrue(): iterable
     {
         yield [null, null];
         yield [5, 'foo5'];
@@ -41,13 +40,13 @@ class ContainsTest extends TestCase
      * @param string|array<mixed>|Traversable<mixed>|null $haystack
      */
     #[Test]
-    #[DataProvider('tuplesEvaluatingToTrue')]
+    #[DataProvider('provideTuplesEvaluatingToTrue')]
     public function evaluatesToTrue(mixed $needle, string|array|Traversable|null $haystack): void
     {
         assertTrue(contains($needle)->test($haystack));
     }
 
-    public static function tuplesEvaluatingToFalse(): Generator
+    public static function provideTuplesEvaluatingToFalse(): iterable
     {
         yield [5, 'foo'];
         yield [true, 'blub'];
@@ -59,7 +58,7 @@ class ContainsTest extends TestCase
      * @param string|array<mixed>|Traversable<mixed> $haystack
      */
     #[Test]
-    #[DataProvider('tuplesEvaluatingToFalse')]
+    #[DataProvider('provideTuplesEvaluatingToFalse')]
     public function evaluatesToFalse(mixed $needle, string|array|Traversable $haystack): void
     {
         assertFalse(contains($needle)->test($haystack));

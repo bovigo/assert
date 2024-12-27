@@ -9,9 +9,9 @@ declare(strict_types=1);
 namespace bovigo\assert\predicate;
 
 use bovigo\assert\AssertionFailure;
-use Generator;
 use InvalidArgumentException;
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
@@ -21,12 +21,11 @@ use function bovigo\assert\assertTrue;
 use function bovigo\assert\expect;
 /**
  * Tests for bovigo\assert\predicate\Regex.
- *
- * @group  predicate
  */
+#[Group('predicate')]
 class RegexTest extends TestCase
 {
-    public static function validValues(): Generator
+    public static function provideValidValues(): iterable
     {
         yield ['/^([a-z]{3})$/', 'foo'];
         yield ['/^([a-z]{3})$/i', 'foo'];
@@ -34,13 +33,13 @@ class RegexTest extends TestCase
     }
 
     #[Test]
-    #[DataProvider('validValues')]
+    #[DataProvider('provideValidValues')]
     public function validValueEvaluatesToTrue(string $pattern, string $value): void
     {
         assertTrue(matches($pattern)->test($value));
     }
 
-    public static function invalidValues(): Generator
+    public static function provideInvalidValues(): iterable
     {
         yield ['/^([a-z]{3})$/', 'Bar'];
         yield ['/^([a-z]{3})$/', 'baz0123'];
@@ -48,7 +47,7 @@ class RegexTest extends TestCase
     }
 
     #[Test]
-    #[DataProvider('invalidValues')]
+    #[DataProvider('provideInvalidValues')]
     public function invalidValueEvaluatesToFalse(string $pattern, string $value): void
     {
         assertFalse(matches($pattern)->test($value));

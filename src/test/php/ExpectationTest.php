@@ -13,7 +13,6 @@ use bovigo\assert\predicate\ExpectedError;
 use bovigo\assert\predicate\ExpectedException;
 use Error;
 use Exception;
-use Generator;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
@@ -34,7 +33,7 @@ use function bovigo\assert\predicate\{
  */
 class ExpectationTest extends TestCase
 {
-    public static function throwables(): Generator
+    public static function provideThrowables(): iterable
     {
         yield 'exception against exception' => [
             new Exception('not catched', 2),
@@ -55,7 +54,7 @@ class ExpectationTest extends TestCase
     }
 
     #[Test]
-    #[DataProvider('throwables')]
+    #[DataProvider('provideThrowables')]
     public function expectationReturnsCatchedExceptionWhenThrowsSucceeds(
         Throwable $throwable
     ): void {
@@ -118,7 +117,7 @@ class ExpectationTest extends TestCase
     }
 
     #[Test]
-    #[DataProvider('throwables')]
+    #[DataProvider('provideThrowables')]
     public function expectationThrowsAssertionFailureWhenCodeDoesNotThrowExpectedExceptionType(
         Throwable $throwable
     ): void {
@@ -131,7 +130,7 @@ class ExpectationTest extends TestCase
     }
 
     #[Test]
-    #[DataProvider('throwables')]
+    #[DataProvider('provideThrowables')]
     public function expectationThrowsAssertionFailureWhenCodeDoesNotThrowExpectedException(
         Throwable $throwable
     ): void {
@@ -158,7 +157,7 @@ class ExpectationTest extends TestCase
     }
 
     #[Test]
-    #[DataProvider('throwables')]
+    #[DataProvider('provideThrowables')]
     public function expectationDoesNotThrowAssertionFailureWhenCodeThrowsAnyExpectedException(
         Throwable $throwable
     ): void {
@@ -167,7 +166,7 @@ class ExpectationTest extends TestCase
     }
 
     #[Test]
-    #[DataProvider('throwables')]
+    #[DataProvider('provideThrowables')]
     public function expectationDoesNotThrowAssertionFailureWhenCodeThrowsExpectedExceptionType(
         Throwable $throwable
     ): void {
@@ -205,7 +204,7 @@ class ExpectationTest extends TestCase
     }
 
     #[Test]
-    #[DataProvider('throwables')]
+    #[DataProvider('provideThrowables')]
     public function expectationDoesNotThrowAssertionFailureIfCodeDoesNotThrowExpectedExceptionType(
         Throwable $throwable
     ): void {
@@ -216,7 +215,7 @@ class ExpectationTest extends TestCase
     }
 
     #[Test]
-    #[DataProvider('throwables')]
+    #[DataProvider('provideThrowables')]
     public function expectationDoesThrowAssertionFailureWhenCodeThrowsUnexpectedException(
         Throwable $throwable
     ): void {
@@ -229,7 +228,7 @@ class ExpectationTest extends TestCase
     }
 
     #[Test]
-    #[DataProvider('throwables')]
+    #[DataProvider('provideThrowables')]
     public function expectationDoesThrowAssertionFailureWhenCodeThrowsUnexpectedExceptionType(
         Throwable $throwable
     ): void {
@@ -245,7 +244,7 @@ class ExpectationTest extends TestCase
     }
 
     #[Test]
-    #[DataProvider('throwables')]
+    #[DataProvider('provideThrowables')]
     public function expectationDoesNotThrowAssertionFailureWhenCodeThrowsOtherExceptionType(
         Throwable $throwable, string $other
     ): void {
@@ -276,7 +275,7 @@ class ExpectationTest extends TestCase
     }
 
     #[Test]
-    #[DataProvider('throwables')]
+    #[DataProvider('provideThrowables')]
     public function expectationThrowsAssertionFailureWhenResultNotAvailableBecauseCodeThrowsException(
         Throwable $throwable
     ): void {
@@ -290,7 +289,7 @@ class ExpectationTest extends TestCase
     }
 
     #[Test]
-    #[DataProvider('throwables')]
+    #[DataProvider('provideThrowables')]
     public function expectationThrowsAssertionFailureWhenResultNotAvailableBecauseCodeThrowsExceptionWithCallable(
         Throwable $throwable
     ): void {
@@ -310,7 +309,7 @@ class ExpectationTest extends TestCase
     }
 
     #[Test]
-    #[DataProvider('throwables')]
+    #[DataProvider('provideThrowables')]
     public function expectationCanAssertAfterCodeExecutionEvenIfExceptionThrown(Throwable $throwable): void
     {
         $expectation = expect(fn() => throw $throwable);
@@ -318,7 +317,7 @@ class ExpectationTest extends TestCase
     }
 
     #[Test]
-    #[DataProvider('throwables')]
+    #[DataProvider('provideThrowables')]
     public function codeIsOnlyExecutedOnce(Throwable $throwable): void
     {
         $expectation = expect(function() use($throwable) {
@@ -365,7 +364,7 @@ class ExpectationTest extends TestCase
      * @since  1.6.1
      */
     #[Test]
-    #[DataProvider('throwables')]
+    #[DataProvider('provideThrowables')]
     #[Group('issue_1')]
     public function outputOfUnexpectedExceptionTypeIsHelpful(Throwable $throwable, string $other): void
     {
@@ -384,7 +383,7 @@ class ExpectationTest extends TestCase
      * @since  2.1.0
      */
     #[Test]
-    #[DataProvider('throwables')]
+    #[DataProvider('provideThrowables')]
     public function outputOfUnexpectedExceptionIsHelpful(Throwable $throwable, string $other): void
     {
         expect(fn() => expect(fn() => throw $throwable)->throws(new $other()))

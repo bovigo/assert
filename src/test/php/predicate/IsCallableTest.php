@@ -9,8 +9,8 @@ declare(strict_types=1);
 namespace bovigo\assert\predicate;
 
 use bovigo\assert\AssertionFailure;
-use Generator;
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use stdClass;
@@ -21,14 +21,13 @@ use function bovigo\assert\predicate\isCallable;
 use function bovigo\assert\predicate\isNotCallable;
 /**
  * Test for bovigo\assert\assert\predicate\isCallable() and bovigo\assert\assert\predicate\isNotCallable().
- *
- * @group predicate
  */
+#[Group('predicate')]
 class IsCallableTest extends TestCase
 {
     public static function exampleStaticCallable(): void {}
 
-    public static function validCallables(): Generator
+    public static function provideValidCallables(): iterable
     {
         yield 'anonymous function' => [function() {}];
         yield 'arrow function'     => [fn() => 303];
@@ -40,7 +39,7 @@ class IsCallableTest extends TestCase
         yield 'callable on object' => [[$foo, 'exampleCallable']];
     }
 
-    public static function invalidCallables(): Generator
+    public static function provideInvalidCallables(): iterable
     {
         yield 'array'  => [['foo']];
         yield 'float'  => [30.3];
@@ -48,14 +47,14 @@ class IsCallableTest extends TestCase
     }
 
     #[Test]
-    #[DataProvider('validCallables')]
+    #[DataProvider('provideValidCallables')]
     public function validCallablesAreRecognized(callable $value): void
     {
         assertThat($value, isCallable());
     }
 
     #[Test]
-    #[DataProvider('invalidCallables')]
+    #[DataProvider('provideInvalidCallables')]
     public function invalidCallablesAreRejected(mixed $value): void
     {
         expect(fn() => assertThat($value, isCallable()))
@@ -63,14 +62,14 @@ class IsCallableTest extends TestCase
     }
 
     #[Test]
-    #[DataProvider('invalidCallables')]
+    #[DataProvider('provideInvalidCallables')]
     public function invalidCallablesAreRecognizedOnNegation(mixed $value): void
     {
         assertThat($value, isNotCallable());
     }
 
     #[Test]
-    #[DataProvider('validCallables')]
+    #[DataProvider('provideValidCallables')]
     public function validCallablesAreRejectedOnNegation(callable $value): void
     {
         expect(fn() => assertThat($value, isNotCallable()))

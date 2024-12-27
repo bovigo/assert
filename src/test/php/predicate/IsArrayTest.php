@@ -9,8 +9,8 @@ declare(strict_types=1);
 namespace bovigo\assert\predicate;
 
 use bovigo\assert\AssertionFailure;
-use Generator;
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use stdClass;
@@ -21,19 +21,18 @@ use function bovigo\assert\predicate\isArray;
 use function bovigo\assert\predicate\isNotAnArray;
 /**
  * Test for bovigo\assert\assert\predicate\isArray() and bovigo\assert\assert\predicate\isNotAnArray().
- *
- * @group predicate
  */
+#[Group('predicate')]
 class IsArrayTest extends TestCase
 {
-    public static function validArrays(): Generator
+    public static function provideValidArrays(): iterable
     {
         yield 'empty array'       => [[]];
         yield'normal array'       => [[1, 2, 3]];
         yield 'associative array' => [['one' => 1, 'two' => 2, 'three' => 3]];
     }
 
-    public static function invalidArrays(): Generator
+    public static function provideInvalidArrays(): iterable
     {
         yield 'string' => ['foo'];
         yield 'number' => [303];
@@ -44,14 +43,14 @@ class IsArrayTest extends TestCase
      * @param array<mixed> $value
      */
     #[Test]
-    #[DataProvider('validArrays')]
+    #[DataProvider('provideValidArrays')]
     public function validArraysAreRecognized(array $value): void
     {
         assertThat($value, isArray());
     }
 
     #[Test]
-    #[DataProvider('invalidArrays')]
+    #[DataProvider('provideInvalidArrays')]
     public function invalidArraysAreRejected(mixed $value): void
     {
         expect(fn() => assertThat($value, isArray()))
@@ -59,7 +58,7 @@ class IsArrayTest extends TestCase
     }
 
     #[Test]
-    #[DataProvider('invalidArrays')]
+    #[DataProvider('provideInvalidArrays')]
     public function invalidArraysAreRecognizedOnNegation(mixed $value): void
     {
         assertThat($value, isNotAnArray());
@@ -69,7 +68,7 @@ class IsArrayTest extends TestCase
      * @param array<mixed> $value
      */
     #[Test]
-    #[DataProvider('validArrays')]
+    #[DataProvider('provideValidArrays')]
     public function validArraysAreRejectedOnNegation(array $value): void
     {
         expect(fn() => assertThat($value, isNotAnArray()))
