@@ -21,23 +21,15 @@ use function bovigo\assert\predicate\isSameAs;
 class Expectation
 {
     /**
-     * @var  callable
+     * @var callable
      */
     private $code;
     /**
      * marker on whether code was already executed
-     *
-     * @var  bool
      */
     private bool $executed = false;
-    /**
-     * @var  mixed
-     */
-    private $result;
-    /**
-     * @var  Throwable|null
-     */
-    private $exception;
+    private mixed $result = null;
+    private ?Throwable $exception = null;
     private ?TriggeredError $error = null;
 
     public function __construct(callable $code)
@@ -45,13 +37,10 @@ class Expectation
         $this->code = $code;
     }
 
-    /**
-     * runs code and returns result
-     */
-    private function runCode(): mixed
+    private function runCode(): void
     {
         if ($this->executed) {
-            return $this->result;
+            return;
         }
 
         $code = $this->code;
@@ -62,8 +51,6 @@ class Expectation
         } finally {
             $this->executed = true;
         }
-
-        return $this->result;
     }
 
     /**
@@ -205,8 +192,11 @@ class Expectation
      *
      * @api
      */
-    public function after(mixed $value, Predicate|callable $predicate, ?string $description = null): self
-    {
+    public function after(
+        mixed $value,
+        Predicate|callable $predicate,
+        ?string $description = null
+    ): self {
         $this->runCode();
         assertThat($value, $predicate, $description);
         return $this;
