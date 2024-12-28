@@ -61,7 +61,7 @@ class Expectation
      * @api
      * @throws  AssertionFailure
      */
-    public function throws(string|Throwable|null $expected = null): CatchedException
+    public function throws(string|Throwable|null $expected = null): CaughtThrowable
     {
         $this->runCode();
         if (null === $this->exception) {
@@ -83,7 +83,7 @@ class Expectation
             assertThat($this->exception, $isExpected);
         }
 
-        return new CatchedException($this->exception);
+        return new CaughtThrowable($this->exception);
     }
 
     private function getType(string|Throwable $expected): string

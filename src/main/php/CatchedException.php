@@ -17,6 +17,7 @@ use function bovigo\assert\predicate\equals;
  * Allows to make assertions on a catched exception.
  *
  * @since  1.6.0
+ * @deprecated will be replaced by CaughtThrowable in release 9.0.0
  */
 class CatchedException
 {

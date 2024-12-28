@@ -60,7 +60,7 @@ class ExpectationTest extends TestCase
     ): void {
         assertThat(
             expect(fn() => throw $throwable)->throws(),
-            isInstanceOf(CatchedException::class)
+            isInstanceOf(CaughtThrowable::class)
         );
     }
 
