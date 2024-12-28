@@ -3,6 +3,7 @@
 ## 8.1.0 (2024-12-??)
 
 * Raised minimum required PHP version to 8.3.0
+* Deprecated `bovigo\assert\CatchedError`, introduced `bovigo\assert\TriggeredError` instead
 * Fixed implicitly nullable type declarations
 * Prevented deprecation notice about used const E_STRICT
 

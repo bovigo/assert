@@ -17,35 +17,32 @@ use function bovigo\assert\predicate\{
     isSameAs
 };
 /**
- * Tests for bovigo\assert\CatchedError.
+ * Tests for bovigo\assert\TriggeredError.
  *
  * @since  2.1.0
  */
-class CatchedErrorTest extends TestCase
+class TriggeredErrorTest extends TestCase
 {
-    /**
-     * @var  CatchedError
-     */
-    private $catchedError;
+    private TriggeredError $triggeredError;
 
     public function setup(): void
     {
-        $this->catchedError = new CatchedError(E_NOTICE , 'error', __FILE__, 303);
+        $this->triggeredError = new TriggeredError(E_NOTICE , 'error', __FILE__, 303);
     }
 
     #[Test]
     public function withMessageComparesUsingEquals(): void
     {
         assertThat(
-            $this->catchedError->withMessage('error'),
-            isInstanceOf(CatchedError::class)
+            $this->triggeredError->withMessage('error'),
+            isInstanceOf(TriggeredError::class)
         );
     }
 
     #[Test]
     public function withMessageFailsThrowsAssertionFailure(): void
     {
-        expect(fn() => $this->catchedError->withMessage('failure'))
+        expect(fn() => $this->triggeredError->withMessage('failure'))
             ->throws(AssertionFailure::class)
             ->withMessage(
                 "Failed asserting that error message 'error' is equal to <string:failure>.
@@ -62,8 +59,8 @@ class CatchedErrorTest extends TestCase
     public function messageAssertsWithGivenPredicate(): void
     {
         assertThat(
-            $this->catchedError->message(contains('err')),
-            isInstanceOf(CatchedError::class)
+            $this->triggeredError->message(contains('err')),
+            isInstanceOf(TriggeredError::class)
         );
     }
 
@@ -74,15 +71,15 @@ class CatchedErrorTest extends TestCase
     public function messageAssertsWithGivenCallable(): void
     {
         assertThat(
-            $this->catchedError->message('is_string'),
-            isInstanceOf(CatchedError::class)
+            $this->triggeredError->message('is_string'),
+            isInstanceOf(TriggeredError::class)
         );
     }
 
     #[Test]
     public function messageAssertsWithGivenPredicateThrowsAssertionFailureWhenPredicateFails(): void
     {
-        expect(fn() => $this->catchedError->message(contains('fail')))
+        expect(fn() => $this->triggeredError->message(contains('fail')))
             ->throws(AssertionFailure::class)
             ->withMessage(
                 "Failed asserting that error message 'error' contains 'fail'."
@@ -92,6 +89,6 @@ class CatchedErrorTest extends TestCase
     #[Test]
     public function afterExecutesGivenPredicateWithGivenValue(): void
     {
-        $this->catchedError->after($this->catchedError, isSameAs($this->catchedError));
+        $this->triggeredError->after($this->triggeredError, isSameAs($this->triggeredError));
     }
 }

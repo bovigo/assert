@@ -16,6 +16,7 @@ use function bovigo\assert\predicate\equals;
  * Allows to make assertions on a catched error.
  *
  * @since  2.1.0
+ * @deprecated will be replaced by TriggeredError in release 9.0.0
  */
 class CatchedError
 {

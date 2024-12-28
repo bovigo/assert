@@ -9,6 +9,7 @@ declare(strict_types=1);
 namespace bovigo\assert\predicate;
 
 use bovigo\assert\CatchedError;
+use bovigo\assert\TriggeredError;
 use InvalidArgumentException;
 use SebastianBergmann\Exporter\Exporter;
 /**
@@ -39,7 +40,7 @@ class ExpectedError extends Predicate
      */
     public function __toString(): string
     {
-        return 'matches expected error "' . CatchedError::nameOf($this->expectedError) . '"';
+        return 'matches expected error "' . TriggeredError::nameOf($this->expectedError) . '"';
     }
 
     /**

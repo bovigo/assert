@@ -73,7 +73,7 @@ class ExpectationTest extends TestCase
     {
         assertThat(
             expect(fn() => trigger_error('error'))->triggers(),
-            isInstanceOf(CatchedError::class)
+            isInstanceOf(TriggeredError::class)
         );
     }
 

@@ -38,10 +38,7 @@ class Expectation
      * @var  Throwable|null
      */
     private $exception;
-    /**
-     * @var  CatchedError|null
-     */
-    private $error;
+    private ?TriggeredError $error = null;
 
     public function __construct(callable $code)
     {
@@ -151,16 +148,16 @@ class Expectation
      * @throws  AssertionFailure
      * @since   2.1.0
      */
-    public function triggers(?int $expectedError = null): CatchedError
+    public function triggers(?int $expectedError = null): TriggeredError
     {
-        if (null !== $expectedError && !CatchedError::knowsLevel($expectedError)) {
+        if (null !== $expectedError && !TriggeredError::knowsLevel($expectedError)) {
             throw new InvalidArgumentException('Unknown error level ' . $expectedError);
         }
 
         set_error_handler(
             function(int $errno , string $errstr, string $errfile, int $errline, ?array $errcontext = null): bool
             {
-                $this->error = new CatchedError($errno, $errstr, $errfile, $errline, $errcontext ?? []);
+                $this->error = new TriggeredError($errno, $errstr, $errfile, $errline, $errcontext ?? []);
                 return true;
             }
         );
@@ -170,7 +167,7 @@ class Expectation
             throw new AssertionFailure(
                 'Failed asserting that '
                 . (null !== $expectedError
-                    ? 'error of type "' . CatchedError::nameOf($expectedError) . '"'
+                    ? 'error of type "' . TriggeredError::nameOf($expectedError) . '"'
                     : 'an error'
                 )
                 . ' is triggered.'
