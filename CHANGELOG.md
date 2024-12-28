@@ -1,6 +1,6 @@
 # Changelog
 
-## 8.1.0 (2024-12-??)
+## 8.1.0 (2024-12-28)
 
 * Raised minimum required PHP version to 8.3.0
 * Deprecated `bovigo\assert\CatchedError`, introduced `bovigo\assert\TriggeredError` instead
