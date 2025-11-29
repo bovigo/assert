@@ -30,6 +30,13 @@ class CaughtThrowableTest extends TestCase
 {
     public static function provideThrowables(): iterable
     {
+        foreach (static::provideThrowablesWithCause() as $key => $arguments) {
+            yield $key => [$arguments[0]];
+        }
+    }
+
+    public static function provideThrowablesWithCause(): iterable
+    {
         $exception = new Exception('failure', 2);
         yield 'exception' => [new CaughtThrowable($exception), $exception];
         $error = new Error('failure', 2);
@@ -120,7 +127,7 @@ class CaughtThrowableTest extends TestCase
     }
 
     #[Test]
-    #[DataProvider('provideThrowables')]
+    #[DataProvider('provideThrowablesWithCause')]
     public function withAppliesPredicateToException(
         CaughtThrowable $caughtThrowable,
         Throwable $throwable
@@ -139,7 +146,7 @@ class CaughtThrowableTest extends TestCase
     }
 
     #[Test]
-    #[DataProvider('provideThrowables')]
+    #[DataProvider('provideThrowablesWithCause')]
     public function withThrowsAssertionFailureWhenPredicateFails(
         CaughtThrowable $caughtThrowable,
         Throwable $throwable

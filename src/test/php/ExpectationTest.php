@@ -37,19 +37,15 @@ class ExpectationTest extends TestCase
     {
         yield 'exception against exception' => [
             new Exception('not catched', 2),
-            BadFunctionCallException::class
         ];
         yield 'exception against error' => [
             new Exception('not catched', 2),
-            TypeError::class
         ];
         yield 'error against error' => [
             new Error('not catched', 2),
-            TypeError::class
         ];
         yield 'error against exception' => [
             new Error('not catched', 2),
-            BadFunctionCallException::class
         ];
     }
 
@@ -243,12 +239,33 @@ class ExpectationTest extends TestCase
             );
     }
 
+    public static function provideThrowablesWithUnexpectedException(): iterable
+    {
+        yield 'exception against exception' => [
+            new Exception('not catched', 2),
+            BadFunctionCallException::class
+        ];
+        yield 'exception against error' => [
+            new Exception('not catched', 2),
+            TypeError::class
+        ];
+        yield 'error against error' => [
+            new Error('not catched', 2),
+            TypeError::class
+        ];
+        yield 'error against exception' => [
+            new Error('not catched', 2),
+            BadFunctionCallException::class
+        ];
+    }
+
     #[Test]
-    #[DataProvider('provideThrowables')]
+    #[DataProvider('provideThrowablesWithUnexpectedException')]
     public function expectationDoesNotThrowAssertionFailureWhenCodeThrowsOtherExceptionType(
-        Throwable $throwable, string $other
+        Throwable $throwable,
+        string $unexpectedThrowableClass
     ): void {
-        expect(fn() => expect(fn() => throw $throwable)->doesNotThrow($other))
+        expect(fn() => expect(fn() => throw $throwable)->doesNotThrow($unexpectedThrowableClass))
             ->doesNotThrow();
     }
 
@@ -364,10 +381,12 @@ class ExpectationTest extends TestCase
      * @since  1.6.1
      */
     #[Test]
-    #[DataProvider('provideThrowables')]
+    #[DataProvider('provideThrowablesWithUnexpectedException')]
     #[Group('issue_1')]
-    public function outputOfUnexpectedExceptionTypeIsHelpful(Throwable $throwable, string $other): void
-    {
+    public function outputOfUnexpectedExceptionTypeIsHelpful(
+        Throwable $throwable,
+        string $other
+    ): void {
         expect(fn() => expect(fn() => throw $throwable)->throws($other))
             ->throws(AssertionFailure::class)
             ->withMessage(
@@ -383,16 +402,18 @@ class ExpectationTest extends TestCase
      * @since  2.1.0
      */
     #[Test]
-    #[DataProvider('provideThrowables')]
-    public function outputOfUnexpectedExceptionIsHelpful(Throwable $throwable, string $other): void
-    {
-        expect(fn() => expect(fn() => throw $throwable)->throws(new $other()))
+    #[DataProvider('provideThrowablesWithUnexpectedException')]
+    public function outputOfUnexpectedExceptionIsHelpful(
+        Throwable $throwable,
+        string $unexpectedThrowableClass
+    ): void {
+        expect(fn() => expect(fn() => throw $throwable)->throws(new $unexpectedThrowableClass()))
             ->throws(AssertionFailure::class)
             ->withMessage(
                 'Failed asserting that object of type "'
                 . get_class($throwable)
                 . '" is identical to object of type "'
-                . $other . '".'
+                . $unexpectedThrowableClass . '".'
             );
     }
 
