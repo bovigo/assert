@@ -1,5 +1,9 @@
 # Changelog
 
+## 8.1.1 (2025-11-29)
+
+* Ensured compatibility with sebastian/comparator 7.1, sebastian/exporter 7.0 and phpunit/phpunit 12.4 while keeping compatibility with their predecessor versions 6.2, 6.3 and 11.5
+
 ## 8.1.0 (2024-12-28)
 
 * Raised minimum required PHP version to 8.3.0
