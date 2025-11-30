@@ -21,6 +21,7 @@ use Throwable;
 use TypeError;
 
 use function bovigo\assert\predicate\{
+    equals,
     isFalse,
     isInstanceOf,
     isSameAs,
@@ -437,5 +438,26 @@ class ExpectationTest extends TestCase
                 . 'message "error" triggered in ' . __FILE__
                 . ' on line ' . $line . ' matches expected error "E_USER_NOTICE".'
             );
+    }
+
+    #[Test]
+    #[Group('issue_135')]
+    public function assertionCounterIsIncreasedWhenExpectationOfThrownExceptionNotMet(): void
+    {
+        if (!class_exists('\PHPUnit\Framework\Assert')) {
+            $this->markTestSkipped('Can not test this without PHPUnit');
+        }
+
+        $countBeforeAssertion = \PHPUnit\Framework\Assert::getCount();
+
+        try {
+            expect(fn() => null)
+                ->throws(Exception::class);
+        } catch (AssertionFailure $af) {
+            assertThat(
+                \PHPUnit\Framework\Assert::getCount(),
+                equals($countBeforeAssertion + 1)
+            );
+        }
     }
 }

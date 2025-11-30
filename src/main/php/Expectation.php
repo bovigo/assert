@@ -65,6 +65,7 @@ class Expectation
     {
         $this->runCode();
         if (null === $this->exception) {
+            increaseAssertionCounter(1);
             throw new AssertionFailure(
                 'Failed asserting that '
                 . (null !== $expected
